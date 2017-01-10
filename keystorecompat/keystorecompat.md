@@ -20,8 +20,9 @@ TBD. (temporarily look for installation in security-showcase-android app)
 TBD. (temporarily look for usage in security-showcase-android app)
 
 ## Android keystore in existing libraries ##
-https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as this library,
-but designed rather for saving encrypted data generally. KeystoreCompat is designed rather for store credentials (for login to secured part of the app).
+https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
+but designed rather for saving encrypted data generally.
+KeystoreCompat is designed rather for store credentials (for login to secured part of the app).
 
 
 ## Licence ##
