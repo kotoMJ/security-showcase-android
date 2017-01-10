@@ -3,13 +3,17 @@
 This simple wrapper library is designed to save credentials
 to local shared preferences (encrypted using Android default security and Android Keystore).
 
+KeystoreCompat also keeps in mind existing Keystore-related vulnerabilities
+and therefore follow the minimum API and also inform about existing caveats/enhancements in all supported API version.
+
 ## UseCase ##
 
-Does your app use classic credentials (e.g. username & password) to connect to secured part of the app.
-`Want to let user access your application using just Android default security`
+Does your app use classic credentials (e.g. username & password) to connect to secured part of the app?
+
+**Want to let user access your application using just Android default security**
 (PIN/password/gesture/fingerprint) and do not force let user type username/password again and again?
 
-`If so, this library is designed for you.`
+**If so, this library is designed for you.**
 
 ## Installation ##
 
@@ -18,6 +22,12 @@ TBD. (temporarily look for installation in security-showcase-android app)
 ## Usage ##
 
 TBD. (temporarily look for usage in security-showcase-android app)
+
+## Caveats ##
+
+The Keystore itself is encrypted using the user’s own lockscreen pin/password,
+hence, when the device screen is locked the Keystore is unavailable.
+Keep this in mind if you have a background service that could need to access your application secrets.
 
 ## Android keystore in existing libraries ##
 https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
@@ -44,15 +54,18 @@ Therefore it tends to use Android keystore rather as temporary secure storage.
 
 
 
-### Android keystore - min API ###
-[Android keystore](https://developer.android.com/training/articles/keystore.html) is relatively usable since Android 4.3 /API 18 when it was introduced
-Android keystore provider
+### Android Keystore - min API ###
+The Android Keystore itself has been available since API 1 (restricted to use by VPN and WiFi systems).
 
-Because of some known security issues it is safer to use Android keystore since Android KitKat / API 19.
+The [Android keystore provider](https://developer.android.com/training/articles/keystore.html) which is typically
+backed by hardware (but not necessarily so) was formally introduced in Android 4.3 /API 18
+
+Because of [stack-based buffer overflow vulnerability](https://threatpost.com/patched-code-execution-bug-affects-most-android-users/106880/)
+it is safer to use Android keystore since Android KitKat / API 19.
 
 When you wanna use standard Android security screen (PIN/Password/Gesture/Fingerprint) the safe support is since Android Lollipop / API 21.
 
-Enhanced/Improved security of keystore is then since Android Marshmallow / API 23.
+Enhanced/Improved security of Keystore is then since Android Marshmallow / API 23.
 
 ### Android keystore - enough secured for me? or NOT ? ###
 
