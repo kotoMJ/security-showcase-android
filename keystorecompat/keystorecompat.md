@@ -55,9 +55,9 @@ Therefore it tends to use Android keystore rather as temporary secure storage.
 
 
 ### Android Keystore - min API ###
-The Android Keystore itself has been available since API 1 (restricted to use by VPN and WiFi systems).
+[The Keystore](https://developer.android.com/reference/java/security/KeyStore.html) itself has been available since API 1 (restricted to use by VPN and WiFi systems).
 
-The [Android keystore provider](https://developer.android.com/training/articles/keystore.html) which is typically
+The [Android keystore System](https://developer.android.com/training/articles/keystore.html) which is typically
 backed by hardware (but not necessarily so) was formally introduced in Android 4.3 /API 18
 
 Because of [stack-based buffer overflow vulnerability](https://threatpost.com/patched-code-execution-bug-affects-most-android-users/106880/)
@@ -87,5 +87,9 @@ The two point out in their paper "Breaking Into the KeyStore: A Practical Forger
 that it's the hash-then-encrypt (HtE) authenticated encryption (AE) scheme in cipher block chaining mode (CBC)
 in KeyStore that fails to guarantee the integrity of keys.
 
+
+### Related Articles ###
+http://www.androidauthority.com/use-android-keystore-store-passwords-sensitive-information-623779/
+https://threatpost.com/android-keystore-encryption-scheme-broken-researchers-say/119092/
 
 
