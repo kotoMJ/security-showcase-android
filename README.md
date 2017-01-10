@@ -1,2 +1,15 @@
-# security-showcase-android
-Sample application pointing some security related practices on Android device.
+# Security showcase #
+
+![DbShowcase](./app/src/main/res/mipmap-hdpi/ic_launcher.png "DbShowcase") <a href="https://play.google.com/store/apps/details?id=cz.koto.misak.dbshowcase.android"><img src="./extras/banner/google-play-badge.png" height="72"/></a>
+
+This is sample application pointing some security related practices on Android device.
+
+## Android keystore ##
+
+First sample contains using standard Android Security with the Keystore.
+All Android Keystore related stuff is bundled in KeystoreCompat library (available in this source code).
+
+KeystoreCompat library should help to prevent pain when starting work with keystore from the official documentation
+or StackOverflow discussion.
+
+Read more about [KeystoreCompat](keystorecompat/keystorecompat.md)

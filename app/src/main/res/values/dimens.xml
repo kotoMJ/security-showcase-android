@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="global_spacing_1">1dp</dimen>
+	<dimen name="global_spacing_2">2dp</dimen>
+	<dimen name="global_spacing_4">4dp</dimen>
+	<dimen name="global_spacing_8">8dp</dimen>
+	<dimen name="global_spacing_12">12dp</dimen>
+	<dimen name="global_spacing_16">16dp</dimen>
+	<dimen name="global_spacing_24">24dp</dimen>
+	<dimen name="global_spacing_32">32dp</dimen>
+	<dimen name="global_spacing_40">40dp</dimen>
+	<dimen name="global_spacing_48">48dp</dimen>
+	<dimen name="global_spacing_52">52dp</dimen>
+	<dimen name="global_spacing_56">56dp</dimen>
+	<dimen name="global_spacing_64">64dp</dimen>
+	<dimen name="global_spacing_72">72dp</dimen>
+	<dimen name="global_spacing_80">80dp</dimen>
+	<dimen name="global_spacing_88">88dp</dimen>
+	<dimen name="global_spacing_96">96dp</dimen>
+	<dimen name="global_spacing_104">104dp</dimen>
+	<dimen name="global_spacing_112">112dp</dimen>
+	<dimen name="global_spacing_120">120dp</dimen>
+	<dimen name="global_spacing_140">140dp</dimen>
+	<dimen name="global_spacing_176">176dp</dimen>
+	<dimen name="global_spacing_220">220dp</dimen>
+	<dimen name="global_spacing_248">248dp</dimen>
+	<dimen name="global_spacing_320">320dp</dimen>
+
+	<dimen name="global_font_spacing_0">0sp</dimen>
+	<dimen name="global_font_spacing_2">2sp</dimen>
+	<dimen name="global_font_spacing_4">4sp</dimen>
+	<dimen name="global_font_spacing_8">8sp</dimen>
+
+	<dimen name="account_card_goal_progressbar_4">4dp</dimen>
+	<dimen name="account_card_goal_progressbar_4_lollipop">4dp</dimen>
+	<dimen name="account_card_goal_progressbar_8">8dp</dimen>
+	<dimen name="account_card_goal_progressbar_8_lollipop">8dp</dimen>
+
+	<dimen name="global_text_size_display_4">112sp</dimen>
+	<dimen name="global_text_size_display_3">56sp</dimen>
+	<dimen name="global_text_size_display_2">45sp</dimen>
+	<dimen name="global_text_size_display_1">32sp</dimen>
+	<dimen name="global_text_size_headline">24sp</dimen>
+	<dimen name="global_text_size_title">20sp</dimen>
+	<dimen name="global_text_size_subhead">16sp</dimen>
+	<dimen name="global_text_size_body_2">14sp</dimen>
+	<dimen name="global_text_size_body_1">14sp</dimen>
+	<dimen name="global_text_size_caption">12sp</dimen>
+	<dimen name="global_text_size_button">14sp</dimen>
+	<dimen name="global_text_size_menu">16sp</dimen>
+
+	<dimen name="blue_circle_button_size">@dimen/global_spacing_88</dimen>
+
+	<dimen name="card_elevation_resting">2dp</dimen>
+	<dimen name="card_elevation_raised">8dp</dimen>
+
+	<dimen name="card_corner_radius">2dp</dimen>
+
+</resources>

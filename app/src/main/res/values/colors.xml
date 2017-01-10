@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="theme_primary">@color/color_a</color>
+	<color name="theme_primary_dark">@color/color_b</color>
+	<color name="theme_primary_light">#C5CAE9</color>
+	<color name="theme_accent">@color/color_c</color>
+	<color name="theme_background">#FAFAFA</color>
+	<color name="theme_background_dark">#EEEEEE</color>
+
+	<color name="theme_window_background">#f9f9f9</color>
+	<color name="theme_text_icons">#ffffff</color>
+	<color name="theme_text_primary">@color/text_primary</color>
+	<color name="theme_text_secondary">#757575</color>
+	<color name="theme_text_divider">#BDBDBD</color>
+	<color name="theme_text_divider_inverse">#22ffffff</color>
+	<color name="theme_text_tab_unselected">#b3ffffff</color>
+	<color name="theme_button_disabled">#A9A9A9</color>
+
+	<color name="theme_button_gray_dark">#656565</color>
+	<color name="theme_button_gray">#CACACA</color>
+	<color name="theme_button_gray_half_dark">#e4e4e4</color>
+
+
+	<color name="black_semi_transparent">#B2000000</color>
+	<color name="half_black">#808080</color>
+	<color name="white">#fafafa</color>
+	<color name="black">#000</color>
+	<color name="white_pressed">#f1f1f1</color>
+
+	<color name="text_huge_number">#ffffff</color>
+	<color name="text_toolbar">#ffffff</color>
+	<color name="text_primary">#dd2f2f2f</color>
+	<color name="text_title">#dd000000</color>
+	<color name="text_hint_dark">#7fffffff</color>
+	<color name="text_hint_light">#4c2f2f2f</color>
+	<color name="text_tab_inactive">#b2ffffff</color>
+	<color name="text_tab_active">#e4ffffff</color>
+	<color name="text_label">#E4B14A</color>
+
+	<color name="color_a">#808F3D</color>
+	<color name="color_b">#5D672D</color>
+	<color name="color_c">#D0E95F</color>
+	<color name="half_color_c">#FCFF72</color>
+
+</resources>

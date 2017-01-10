@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<data>
+		<variable
+			name="viewModel"
+			type="cz.koto.misak.securityshowcase.ui.login.LoginViewModel" />
+	</data>
+
+	<cz.kinst.jakub.view.StatefulLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/theme_primary"
+		android:animateLayoutChanges="true"
+		app:progressLayout="@layout/include_progress"
+		app:state="@{viewModel.state}">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:padding="@dimen/global_spacing_16"
+			android:animateLayoutChanges="true"
+			android:orientation="vertical">
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:minHeight="@dimen/global_spacing_140">
+
+				<ImageView
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/global_spacing_140"
+					android:layout_gravity="center"
+					android:alpha='0.04'
+					app:srcCompat="@drawable/ic_security_24dp" />
+
+
+			</FrameLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:theme="@style/Theme.SecurityShow.Login">
+
+				<android.support.design.widget.TextInputEditText
+					android:id="@+id/user_name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/login_username_hint"
+					android:text="@={viewModel.username}" />
+
+			</android.support.design.widget.TextInputLayout>
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:theme="@style/Theme.SecurityShow.Login"
+				app:passwordToggleEnabled="true"
+				app:passwordToggleTint="@color/white">
+
+				<android.support.design.widget.TextInputEditText
+					android:id="@+id/password"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="textPassword"
+					android:hint="@string/login_password_hint"
+					android:text="@={viewModel.password}" />
+
+			</android.support.design.widget.TextInputLayout>
+
+			<Button
+				android:id="@+id/fillTest"
+				android:layout_width="match_parent"
+				android:layout_height="56dp"
+				android:gravity="center"
+				android:text="Fill in test account"
+				android:onClick="@{()-> viewModel.fillTest()}"
+				app:show="@{viewModel.devAvailable}" />
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:layout_marginTop="@dimen/global_spacing_56"
+				android:minHeight="@dimen/global_spacing_48"
+				android:orientation="horizontal"
+				android:background="@drawable/login_location_background"
+				android:foreground="?attr/selectableItemBackground"
+				android:paddingLeft="@dimen/global_spacing_16"
+				android:paddingRight="@dimen/global_spacing_16"
+				android:paddingTop="@dimen/global_spacing_8"
+				android:paddingBottom="@dimen/global_spacing_8"
+				android:onClick="@{()->viewModel.followGithub()}">
+
+				<android.support.v7.widget.AppCompatImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_marginRight="@dimen/global_spacing_16"
+					android:tint="@color/white"
+					app:srcCompat="@drawable/ic_github_simple_black_24dp" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:textColor="@color/white"
+					android:gravity="center"
+					android:textAllCaps="false"
+					android:text="@string/login_follow_github" />
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<TextView
+			android:text="@string/login_sign_in"
+			android:onClick="@{() -> viewModel.signIn()}"
+			style="@style/BottomConfirmationAppearance"
+			app:show="@{viewModel.showSignIn}" />
+
+	</cz.kinst.jakub.view.StatefulLayout>
+
+</layout>

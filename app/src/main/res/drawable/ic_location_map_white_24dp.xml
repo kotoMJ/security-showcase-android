@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="21dp"
+	android:height="20dp"
+	android:viewportWidth="21"
+	android:viewportHeight="20">
+	<group
+		android:translateX="-17.5"
+		android:translateY="-17.5">
+		<path
+			android:name="Shape"
+			android:fillColor="#FFFFFF"
+			android:fillType="evenOdd"
+			android:strokeWidth="1"
+			android:pathData="M37.7025,27.2925 L28.7025,18.2925
+C28.3125,17.9025,27.6825,17.9025,27.2925,18.2925 L18.2925,27.2925
+C17.9025,27.6825,17.9025,28.3125,18.2925,28.7025 L27.2925,37.7025
+C27.6825,38.0925,28.3125,38.0925,28.7025,37.7025 L37.7025,28.7025
+C38.0925,28.3225,38.0925,27.6925,37.7025,27.2925 L37.7025,27.2925 Z
+M29.9925,30.5025 L29.9925,28.0025 L25.9925,28.0025 L25.9925,31.0025
+L23.9925,31.0025 L23.9925,27.0025
+C23.9925,26.4525,24.4425,26.0025,24.9925,26.0025 L29.9925,26.0025
+L29.9925,23.5025 L33.4925,27.0025 L29.9925,30.5025 L29.9925,30.5025 Z" />
+	</group>
+</vector>

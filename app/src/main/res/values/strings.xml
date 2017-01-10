@@ -1,0 +1,30 @@
+<resources>
+	<string name="app_name">Secure Show</string>
+
+	<string name="processing">Processing</string>
+	<string name="frequency">Frequency</string>
+	<string name="button_next_continue">Continue</string>
+
+	<string name="error_unknown">Unknown error</string>
+	<string name="error_network">Network error</string>
+	<string name="error_wrong_parameter">Wrong value in parameter</string>
+
+	<string name="menu_info">Info</string>
+	<string name="menu_settings">Settings</string>
+	<string name="menu_logout">Logout</string>
+
+	<string name="login_username_hint">Username</string>
+	<string name="login_password_hint">Password</string>
+	<string name="login_sign_in">Sign-in</string>
+	<string name="login_multi_confirm">Submit</string>
+	<string name="login_multi_input_hint">Your answer</string>
+	<string name="login_show_locations">Show bank locations</string>
+	<string name="login_follow_github">Follow on Github</string>
+
+	<string name="settings_security_label">Security</string>
+	<string name="settings_security_empty">No security options available for your device.</string>
+	<string name="settings_security_label_android_security">Android security</string>
+	<string name="settings_security_tip_android_security">Enable Android Security to use this option.</string>
+	<string name="settings_security_link_android_security">Go to Android Security Settings</string>
+
+</resources>

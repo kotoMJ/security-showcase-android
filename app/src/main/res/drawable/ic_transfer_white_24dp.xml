@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+	android:width="24dp"
+	android:height="24dp"
+	android:viewportWidth="24"
+	android:viewportHeight="24">
+
+	<path
+		android:name="Rectangle-5"
+		android:fillColor="#FF0000"
+		android:fillAlpha="1.49011614e-09"
+		android:fillType="evenOdd"
+		android:strokeWidth="1"
+		android:pathData="M0,0 L24,0 L24,24 L0,24 L0,0 Z" />
+	<path
+		android:name="Shape"
+		android:fillColor="#FFFFFF"
+		android:fillType="evenOdd"
+		android:strokeWidth="1"
+		android:pathData="M21,15 L17.01,19 L17.01,16 L10,16 L10,14 L17.01,14 L17.01,11 L21,15 Z M6.99,8
+L14,8 L14,10 L6.99,10 L6.99,13 L3,9 L6.99,5 L6.99,8 Z" />
+</vector>
