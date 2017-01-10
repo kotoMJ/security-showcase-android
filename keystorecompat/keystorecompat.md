@@ -69,8 +69,8 @@ Enhanced/Improved security of Keystore is then since Android Marshmallow / API 2
 
 ### Android keystore - enough secured for me? or NOT ? ###
 
-Using Android keystore itself has some known issues.
-The more you know them, the better you can decide whether to use keystore or not (in some use-cases these issues not matter).
+Using Android keystore itself has known issues.
+The more you know them, the better you can decide whether to use keystore or not (in some conditions these issues are not threads).
 
 
 #### Attacker can modify stored keys  ####
