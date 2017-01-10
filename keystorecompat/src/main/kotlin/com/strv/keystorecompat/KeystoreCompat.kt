@@ -11,7 +11,7 @@ object KeystoreCompat {
 
     fun initialize(context: Context) {
         this.context = context
-        runSinceLollipop { CredentialsKeystoreProvider.init() }
+        runSinceLollipop { KeystoreProvider.init() }
         PrefDelegate.initialize(context)
     }
 

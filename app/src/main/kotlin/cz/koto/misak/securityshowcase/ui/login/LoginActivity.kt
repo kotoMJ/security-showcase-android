@@ -3,7 +3,7 @@ package cz.koto.misak.securityshowcase.ui.login
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.strv.keystorecompat.CredentialsKeystoreProvider
+import com.strv.keystorecompat.KeystoreProvider
 import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.ActivityLoginBinding
@@ -23,11 +23,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == FORCE_SIGNUP_REQUEST) {
             if (resultCode == Activity.RESULT_CANCELED) {
-                CredentialsKeystoreProvider.increaseSignUpCancel()
+                KeystoreProvider.increaseSignUpCancel()
                 activity.finish()
             } else {
                 if (resultCode == Activity.RESULT_OK) {
-                    CredentialsKeystoreProvider.forceTypeCredentials = false
+                    KeystoreProvider.forceTypeCredentials = false
                 }
                 viewModel.onViewAttached(false)
             }

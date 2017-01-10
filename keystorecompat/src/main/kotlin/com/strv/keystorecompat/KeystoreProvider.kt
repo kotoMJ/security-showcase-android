@@ -10,21 +10,14 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
 import android.security.keystore.UserNotAuthenticatedException
-import android.util.Base64
 import android.util.Log
 import com.strv.keystorecompat.KeystoreCompat.encryptedUserData
 import com.strv.keystorecompat.utility.intPref
 import com.strv.keystorecompat.utility.runSinceMarshmallow
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore
-import java.security.interfaces.RSAPublicKey
 import java.util.*
-import javax.crypto.Cipher
-import javax.crypto.CipherInputStream
-import javax.crypto.CipherOutputStream
 import javax.security.auth.x500.X500Principal
 
 
@@ -38,7 +31,7 @@ import javax.security.auth.x500.X500Principal
  * CredentialsKeystoreProvider is intended to be called with Lollipop&Up versions.
  * Call by KitKat is mysteriously failing on M-specific code (even when it is not called).
  */
-object CredentialsKeystoreProvider {
+object KeystoreProvider {
 
     /**
      * SECURITY CONFIG
@@ -130,7 +123,7 @@ object CredentialsKeystoreProvider {
         Log.d(LOG_TAG, "Before load KeyPair...")
         if (isProviderAvailable() && isSecurityEnabled()) {
             initKeyPairIfNecessary(uniqueId)
-            encryptCredentials(composedCredentials, uniqueId)
+            KeystoreCrypto.encryptCredentials(composedCredentials, KeystoreProvider.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry)
         } else {
             onError.invoke()
         }
@@ -164,7 +157,7 @@ object CredentialsKeystoreProvider {
     private fun loadCredentialsKitKat(onSuccess: (cre: String) -> Unit, onPermanentFailure: () -> Unit) {
         try {
             SecurityDeviceAdmin.INSTANCE.forceLockPreLollipop(onPermanentFailure)
-            onSuccess.invoke(decryptCredentials(uniqueId))
+            onSuccess.invoke(KeystoreCrypto.decryptCredentials(KeystoreProvider.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry))
         } catch (e: Exception) {
 
         }
@@ -180,7 +173,7 @@ object CredentialsKeystoreProvider {
                 //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(decryptCredentials(uniqueId))
+                onSuccess.invoke(KeystoreCrypto.decryptCredentials(KeystoreProvider.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry))
             }
         } catch (e: Exception) {
             //TODO call this in app: forceSignUpLollipop(acrivity)
@@ -199,7 +192,7 @@ object CredentialsKeystoreProvider {
                 //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure.invoke(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(decryptCredentials(uniqueId))
+                onSuccess.invoke(KeystoreCrypto.decryptCredentials(KeystoreProvider.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry))
             }
         } catch (e: UserNotAuthenticatedException) {
             onFailure.invoke(e)//forceSignUpLollipop(activity)//TODO call this in app: forceSignUpLollipop(activity)
@@ -301,71 +294,6 @@ object CredentialsKeystoreProvider {
             throw RuntimeException("KeyPair was NOT stored!")
     }
 
-    private fun encryptCredentials(composedCredentials: String, alias: String) {
-        try {
-            val privateKeyEntry = keyStore.getEntry(alias, null) as KeyStore.PrivateKeyEntry
-            val publicKey = privateKeyEntry.certificate.publicKey as RSAPublicKey
-
-            /**
-             * AndroidOpenSSL works on Lollipop.
-             * But on marshmallow it throws: java.security.InvalidKeyException: Need RSA private or public key
-             *
-             * On Android 6.0 you should Not use "AndroidOpenSSL" for cipher creation,
-             * it would fail with "Need RSA private or public key" at cipher init for decryption.
-             * Simply use Cipher.getInstance("RSA/ECB/PKCS1Padding")
-             */
-            val inCipher = Cipher.getInstance(cipherMode/*, "AndroidOpenSSL"*/)
-            inCipher.init(Cipher.ENCRYPT_MODE, publicKey)
-            val outputStream = ByteArrayOutputStream()
-            val cipherOutputStream = CipherOutputStream(outputStream, inCipher)
-            cipherOutputStream.write(composedCredentials.toByteArray(Charsets.UTF_8))
-            cipherOutputStream.close()
-
-            encryptedUserData = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
-        } catch (e: Exception) {
-            Log.e(LOG_TAG, /*ContextProvider.getString(R.string.keystore_label_encryption_error)*/"Encryption error", e)
-            throw e
-        }
-    }
-
-
-    private fun decryptCredentials(alias: String): String {
-        try {
-            val privateKeyEntry = keyStore.getEntry(alias, null) as KeyStore.PrivateKeyEntry
-
-            /**
-             * AndroidOpenSSL works on Lollipop.
-             * But on marshmallow it throws: java.security.InvalidKeyException: Need RSA private or public key
-             *
-             * On Android 6.0 you should Not use "AndroidOpenSSL" for cipher creation,
-             * it would fail with "Need RSA private or public key" at cipher init for decryption.
-             * Simply use Cipher.getInstance("RSA/ECB/PKCS1Padding")
-             */
-            val output = Cipher.getInstance(cipherMode/*, "AndroidOpenSSL"*/)
-            output.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey)
-
-            val cipherInputStream = CipherInputStream(
-                    ByteArrayInputStream(Base64.decode(encryptedUserData, Base64.DEFAULT)), output)
-            val values = ArrayList<Byte>()
-            var nextByte: Int = -1
-
-            while ({ nextByte = cipherInputStream.read(); nextByte }() != -1) {
-                values.add(nextByte.toByte())
-            }
-
-            val bytes = ByteArray(values.size)
-            for (i in bytes.indices) {
-                bytes[i] = values[i]
-            }
-            val ret = String(bytes, 0, bytes.size, Charsets.UTF_8)
-            Log.d(LOG_TAG, "Credentials encrypted as [%s]" + ret)
-            return ret
-
-        } catch (e: Exception) {
-            Log.e(LOG_TAG, /*ContextProvider.getString(R.string.keystore_label_decryption_error)*/"decryption error", e)
-            throw e
-        }
-    }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private fun isKeyguardSecuredLollipop(): Boolean {
