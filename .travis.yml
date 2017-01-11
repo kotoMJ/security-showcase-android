@@ -1,0 +1,52 @@
+language: android
+sudo: false
+jdk: oraclejdk8
+
+env:
+  matrix:
+    - ANDROID_TARGET=android-25 ANDROID_ABI=armeabi-v7a
+  global:
+    # wait up to 10 minutes for adb to connect to emulator
+    - ADB_INSTALL_TIMEOUT=10
+
+android:
+  components:
+  - platform-tools
+  - tools
+  - build-tools-25.0.2
+  - android-25
+
+  # Additional components
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - extra-android-support
+
+  # Emulator for the tests
+  - sys-img-armeabi-v7a-android-23
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/3.3
+    - $HOME/.gradle/caches/jars-1
+    - $HOME/.gradle/daemon
+    - $HOME/.gradle/native
+    - $HOME/.gradle/wrapper
+
+#before_script:
+#  - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
+#  - emulator -avd test -no-skin -no-audio -no-window &
+
+script:
+# Instrumentation tests
+#  - ./gradlew check -PdisablePreDex --continue --stacktrace
+#  - android-wait-for-emulator
+#  - adb devices
+#  - adb shell input keyevent 82 &
+#  - ./gradlew connectedAndroidTest -PdisablePreDex --continue --stacktrace
+#  - rm /home/travis/.gradle/caches/2.8/plugin-resolution/cache.properties.lock
+# Unit tests
+#  - ./gradlew testDevReleaseUnitTest -q
+# If successful and Git TAG ends with "BETA" - release to Crashlytics BETA
+#  - '[[ $TRAVIS_TAG != *BETA ]]  || ./gradlew assembleLiveRelease crashlyticsUploadDistributionLiveRelease -q'
+#
+  - './gradlew assembleRostiDebug'

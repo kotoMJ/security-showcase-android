@@ -1,7 +1,7 @@
 package cz.koto.misak.securityshowcase.ui.profile.settings
 
 import android.databinding.ObservableBoolean
-import com.strv.keystorecompat.CredentialsKeystoreProvider
+import com.strv.keystorecompat.KeystoreProvider
 import com.strv.keystorecompat.utility.showLockScreenSettings
 import cz.koto.misak.securityshowcase.databinding.FragmentSettingsBinding
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
@@ -29,12 +29,12 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
 
 
         runOnLollipop {
-            binding.settingsAndroidSecuritySwitch.isChecked = CredentialsKeystoreProvider.hasCredentialsLoadable()
+            binding.settingsAndroidSecuritySwitch.isChecked = KeystoreProvider.hasCredentialsLoadable()
             binding.settingsAndroidSecuritySwitch.setOnCheckedChangeListener { switch, b ->
                 if (b) {
                     binding.settingsAndroidSecuritySwitch.isEnabled = false
                     Flowable.fromCallable {
-                        CredentialsKeystoreProvider.storeCredentials(
+                        KeystoreProvider.storeCredentials(
                                 "${CredentialStorage.getUserName()};${CredentialStorage.getPassword()}",
                                 { Logcat.e("Store credentials failed!") })
                     }
@@ -49,7 +49,7 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
                                 //CredentialsKeystoreProvider.loadCredentials({ loaded -> Logcat.w("LOAD test %s", loaded) }, { Logcat.e("LOAD test FAILURE") }, false)
                             })
                 } else {
-                    CredentialsKeystoreProvider.clearCredentials()
+                    KeystoreProvider.clearCredentials()
                 }
             }
         }
@@ -57,8 +57,8 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
 
     private fun setVisibility() {
         runOnLollipop {
-            androidSecurityAvailable.set(CredentialsKeystoreProvider.isProviderAvailable())
-            androidSecuritySelectable.set(CredentialsKeystoreProvider.isSecurityEnabled())
+            androidSecurityAvailable.set(KeystoreProvider.isProviderAvailable())
+            androidSecuritySelectable.set(KeystoreProvider.isSecurityEnabled())
         }
     }
 

@@ -2,7 +2,7 @@ package cz.koto.misak.securityshowcase.ui.main
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatDelegate
-import com.strv.keystorecompat.CredentialsKeystoreProvider
+import com.strv.keystorecompat.KeystoreProvider
 import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.ActivityMainBinding
@@ -27,7 +27,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         super.onCreate(savedInstanceState)
-        runOnLollipop { CredentialsKeystoreProvider.successSignUp() }
+        runOnLollipop { KeystoreProvider.successSignUp() }
 
         if (savedInstanceState == null)
             switchToFragment(InfoFragment.newInstance(), false)

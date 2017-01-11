@@ -22,10 +22,6 @@
 		android:supportsRtl="true"
 		android:theme="@style/Theme.SecurityShow">
 
-		<meta-data
-			android:name="com.google.android.geo.API_KEY"
-			android:value="@string/google_maps_key" />
-
 		<activity
 			android:name=".ui.main.MainActivity"
 			android:screenOrientation="portrait" />
