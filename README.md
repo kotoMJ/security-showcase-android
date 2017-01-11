@@ -1,6 +1,5 @@
 # Security showcase #
 
-# Otto Radio for Android
 ![DbShowcase](./app/src/main/res/mipmap-hdpi/ic_launcher.png "DbShowcase") <a href="https://play.google.com/store/apps/details?id=cz.koto.misak.dbshowcase.android"><img src="./extras/banner/google-play-badge.png" height="72"/></a>
 
 [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg)](https://travis-ci.org/kotomisak/security-showcase-android)
