@@ -12,4 +12,4 @@ All Android Keystore related stuff is bundled in KeystoreCompat library (availab
 KeystoreCompat library should help to prevent pain when starting work with keystore from the official documentation
 or StackOverflow discussion.
 
-Read more about [KeystoreCompat](keystorecompat/keystorecompat.md)
+Read more about [KeystoreCompat](keystorecompat/readme.md)
