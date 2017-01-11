@@ -51,4 +51,4 @@ script:
 # If successful and Git TAG ends with "BETA" - release to Crashlytics BETA
 #  - '[[ $TRAVIS_TAG != *BETA ]]  || ./gradlew assembleLiveRelease crashlyticsUploadDistributionLiveRelease -q'
 #
-'./gradlew assembleRostiRelease'
+  - './gradlew assembleRostiRelease'
