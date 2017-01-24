@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="cz.koto.misak.securityshowcase">
+	xmlns:tools="http://schemas.android.com/tools" package="cz.koto.misak.securityshowcase">
 
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.CAMERA" />
@@ -13,6 +13,8 @@
 			 location permissions for the 'MyLocation' functionality.
 		-->
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+	<uses-sdk tools:overrideLibrary="com.strv.keystorecompat" />
 
 	<application
 		android:name=".SecurityApplication"

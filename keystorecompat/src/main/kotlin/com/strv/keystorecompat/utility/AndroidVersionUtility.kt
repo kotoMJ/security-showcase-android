@@ -3,10 +3,14 @@ package com.strv.keystorecompat.utility
 import android.os.Build
 
 
+inline fun runSinceKitKat(crossinline action: () -> Unit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) action()
+}
+
 inline fun runSinceLollipop(crossinline action: () -> Unit) {
-    if (Build.VERSION.SDK_INT >= 21) action()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) action()
 }
 
 inline fun runSinceMarshmallow(crossinline action: () -> Unit) {
-    if (Build.VERSION.SDK_INT >= 23) action()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) action()
 }

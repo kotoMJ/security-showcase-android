@@ -2,7 +2,7 @@ package com.strv.keystorecompat
 
 import android.util.Base64
 import android.util.Log
-import com.strv.keystorecompat.KeystoreProvider.LOG_TAG
+import com.strv.keystorecompat.KeystoreCompat.LOG_TAG
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.security.KeyStore
@@ -26,7 +26,7 @@ object KeystoreCrypto {
              * it would fail with "Need RSA private or public key" at cipher init for decryption.
              * Simply use Cipher.getInstance("RSA/ECB/PKCS1Padding")
              */
-            val inCipher = Cipher.getInstance(KeystoreProvider.cipherMode/*, "AndroidOpenSSL"*/)
+            val inCipher = Cipher.getInstance(KeystoreCompat.cipherMode/*, "AndroidOpenSSL"*/)
             inCipher.init(Cipher.ENCRYPT_MODE, publicKey)
             val outputStream = ByteArrayOutputStream()
             val cipherOutputStream = CipherOutputStream(outputStream, inCipher)
@@ -35,7 +35,7 @@ object KeystoreCrypto {
 
             KeystoreCompat.encryptedUserData = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
         } catch (e: Exception) {
-            Log.e(KeystoreProvider.LOG_TAG, /*ContextProvider.getString(R.string.keystore_label_encryption_error)*/"Encryption error", e)
+            Log.e(KeystoreCompat.LOG_TAG, /*ContextProvider.getString(R.string.keystore_label_encryption_error)*/"Encryption error", e)
             throw e
         }
     }
@@ -51,7 +51,7 @@ object KeystoreCrypto {
              * it would fail with "Need RSA private or public key" at cipher init for decryption.
              * Simply use Cipher.getInstance("RSA/ECB/PKCS1Padding")
              */
-            val output = Cipher.getInstance(KeystoreProvider.cipherMode/*, "AndroidOpenSSL"*/)
+            val output = Cipher.getInstance(KeystoreCompat.cipherMode/*, "AndroidOpenSSL"*/)
             output.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey)
 
             val cipherInputStream = CipherInputStream(

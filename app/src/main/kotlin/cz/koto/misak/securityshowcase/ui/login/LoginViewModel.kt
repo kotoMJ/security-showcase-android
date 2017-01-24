@@ -5,7 +5,7 @@ import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.net.Uri
-import com.strv.keystorecompat.KeystoreProvider
+import com.strv.keystorecompat.KeystoreCompat
 import com.strv.keystorecompat.utility.forceAndroidAuth
 import cz.kinst.jakub.view.StatefulLayout
 import cz.koto.misak.securityshowcase.ContextProvider
@@ -54,8 +54,8 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
     override fun onViewAttached(firstAttachment: Boolean) {
         super.onViewAttached(firstAttachment)
         runOnLollipop {
-            if (KeystoreProvider.hasCredentialsLoadable()) {
-                KeystoreProvider.loadCredentials({ decryptResult ->
+            if (KeystoreCompat.hasCredentialsLoadable()) {
+                KeystoreCompat.loadCredentials({ decryptResult ->
                     decryptResult.split(';').let {
                         username.set(it[0])
                         password.set(it[1])
