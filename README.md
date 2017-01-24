@@ -6,6 +6,8 @@
 
 This is sample application pointing some security related practices on Android device.
 
+ `./gradlew assembleRostiRelease`
+
 ## Android keystore ##
 
 First sample contains using standard Android Security with the Keystore.

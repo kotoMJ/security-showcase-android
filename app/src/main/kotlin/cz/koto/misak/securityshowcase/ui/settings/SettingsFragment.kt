@@ -5,7 +5,7 @@ import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.FragmentSettingsBinding
 import cz.koto.misak.securityshowcase.ui.BaseFragment
-import cz.koto.misak.securityshowcase.ui.profile.settings.SettingViewModel
+import cz.koto.misak.securityshowcase.ui.settings.SettingViewModel
 
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingViewModel>() {
