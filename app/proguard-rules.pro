@@ -16,8 +16,10 @@
 #   public *;
 #}
 
+-dontwarn cz.koto.misak.securityshowcase.ui.settings.**
+-keep class cz.koto.misak.securityshowcase.ui.settings.** { *; }
 
--keep class cz.koto.misak.securityshowcase.model.** { *; }
+
 
 # support design
 -dontwarn android.support.design.**

@@ -1,4 +1,4 @@
-package cz.koto.misak.securityshowcase.ui.profile.settings
+package cz.koto.misak.securityshowcase.ui.settings
 
 import android.databinding.ObservableBoolean
 import com.strv.keystorecompat.KeystoreProvider
