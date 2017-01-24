@@ -16,6 +16,8 @@
 #   public *;
 #}
 
+-keep class cz.koto.misak.securityshowcase.model.** { *; }
+
 -dontwarn cz.koto.misak.securityshowcase.ui.settings.**
 -keep class cz.koto.misak.securityshowcase.ui.settings.** { *; }
 
