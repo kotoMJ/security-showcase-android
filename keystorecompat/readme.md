@@ -28,10 +28,10 @@ For detail usage check for sample implementation in SecurityShowcase application
 ### KeystoreCompat verify methods ###
 - `fun isKeystoreCompatAvailable(): Boolean`
 - `fun isSecurityEnabled(): Boolean`
+- `fun hasCredentialsLoadable(): Boolean`
 
 ### KeystoreCompat data manipulation methods ###
 - `fun storeCredentials(composedCredentials: String, onError: () -> Unit)`
-- `fun hasCredentialsLoadable(): Boolean`
 - `fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?)`
 - `fun clearCredentials()`
 
