@@ -36,7 +36,7 @@ internal object KeystoreCrypto {
 
             return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
         } catch (e: Exception) {
-            Log.e(LOG_TAG, /*ContextProvider.getString(R.string.keystore_label_encryption_error)*/"Encryption error", e)
+            Log.e(LOG_TAG, "Encryption error", e)
             throw e
         }
     }
@@ -73,7 +73,7 @@ internal object KeystoreCrypto {
             return ret
 
         } catch (e: Exception) {
-            Log.e(LOG_TAG, /*ContextProvider.getString(R.string.keystore_label_decryption_error)*/"decryption error", e)
+            Log.e(LOG_TAG, "decryption error", e)
             throw e
         }
     }

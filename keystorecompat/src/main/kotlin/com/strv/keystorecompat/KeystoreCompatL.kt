@@ -13,18 +13,11 @@ import java.util.*
 import javax.security.auth.x500.X500Principal
 
 /**
- * The Keystore itself is encrypted using (not only) the user’s own lockScreen pin/password,
- * hence, when the device screen is locked the Keystore is unavailable.
- * Keep this in mind if you have a background service that could need to access your application secrets.
- *
- * With KeyStoreProvider each app can only access to their KeyStore instances or aliases!
- *
- * CredentialsKeystoreProvider is intended to be called with Lollipop&Up versions.
- * Call by KitKat is mysteriously failing on M-specific code (even when it is not called).
+ * Lollipop specific Keystore implementation.
  */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 internal object KeystoreCompatL : KeystoreCompatFacade {
-    val LOG_TAG = javaClass.name
+    private val LOG_TAG = javaClass.name
 
     override fun loadCredentials(onSuccess: (String) -> Unit,
                                  onFailure: (Exception) -> Unit,
@@ -50,7 +43,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
 
     override fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            throw RuntimeException("Don't use KeyPairGeneratorSpec under Android version LOLLIPOP!")
+            throw RuntimeException("${LOG_TAG} Unsupported usage of version ${Build.VERSION.SDK_INT}")
         }
         return KeyPairGeneratorSpec.Builder(context)
                 .setAlias(alias)
