@@ -64,8 +64,8 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
 
     override fun isSecurityEnabled(context: Context): Boolean {
         var km: KeyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-        Log.d(LOG_TAG, "KEYGUARD-SECURE:%s" + km.isKeyguardSecure)
-        Log.d(LOG_TAG, "KEYGUARD-LOCKED:%s" + km.isKeyguardLocked)
+        Log.d(LOG_TAG, "KEYGUARD-SECURE:%s${km.isKeyguardSecure}")
+        Log.d(LOG_TAG, "KEYGUARD-LOCKED:%s${km.isKeyguardLocked}")
         return km.isKeyguardSecure
     }
 

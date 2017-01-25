@@ -2,7 +2,7 @@ package com.strv.keystorecompat
 
 import android.os.Build
 
-internal object KeystoreCompatProvider {
+internal object KeystoreCompatImpl {
     lateinit var keystoreCompat: KeystoreCompatFacade
 
     fun init(version: Int) = if (version >= Build.VERSION_CODES.M) {

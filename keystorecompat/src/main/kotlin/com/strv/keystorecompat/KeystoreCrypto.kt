@@ -69,7 +69,7 @@ internal object KeystoreCrypto {
                 bytes[i] = values[i]
             }
             val ret = String(bytes, 0, bytes.size, Charsets.UTF_8)
-            Log.d(LOG_TAG, "Credentials encrypted as [%s]" + ret)
+            Log.d(LOG_TAG, "Credentials encrypted as $ret")
             return ret
 
         } catch (e: Exception) {

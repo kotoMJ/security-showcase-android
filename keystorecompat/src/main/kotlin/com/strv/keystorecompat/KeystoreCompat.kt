@@ -61,7 +61,7 @@ object KeystoreCompat {
         this.context = context
         this.uniqueId = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
         PrefDelegate.initialize(this.context)
-        certSubject = X500Principal("CN=" + uniqueId + ", O=Android Authority")
+        certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
 
         algorithm = "RSA"
         runSinceMarshmallow {
@@ -73,7 +73,7 @@ object KeystoreCompat {
             logUnsupportedVersionForKeystore()
         }
 
-        KeystoreCompatProvider.init(Build.VERSION.SDK_INT)
+        KeystoreCompatImpl.init(Build.VERSION.SDK_INT)
     }
 
     fun clearCredentials() {
@@ -100,18 +100,21 @@ object KeystoreCompat {
         signUpCancelCount = 0
     }
 
-    fun signUpCancelled(): Boolean {
-        return signUpCancelCount >= KEYSTORE_CANCEL_THRESHOLD
+    fun initKeyPairIfNecessary(alias: String) {
+        if (isProviderAvailable() && isSecurityEnabled()) {
+            if (keyStore.containsAlias(alias) && isCertificateValid()) return
+            else createNewKeyPair(alias)
+        }
     }
 
-
     /**
-     * Keystore is available since API1. CredentialsKeystoreProvider is since API18.
-     * Trusted secure keystore is known since API19.
+     * Keystore is available since API1.
+     * CredentialsKeystoreProvider is since API18.
+     * Relatively trusted secure keystore is known since API19.
      * Improved security is then since API 23.
      */
     fun isProviderAvailable(): Boolean {
-        //Pre-Lollipop solution must be in different/isolated class (because of run-time exception)!
+        //Pre-KitKat version are not supported
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
     }
 
@@ -122,7 +125,7 @@ object KeystoreCompat {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return false
         } else {
-            return KeystoreCompatProvider.keystoreCompat.isSecurityEnabled(KeystoreCompat.context)
+            return KeystoreCompatImpl.keystoreCompat.isSecurityEnabled(KeystoreCompat.context)
         }
     }
 
@@ -141,21 +144,17 @@ object KeystoreCompat {
 
     fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?) {
         val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
-        KeystoreCompatProvider.keystoreCompat.loadCredentials(onSuccess, onFailure, { clearCredentials() }, forceFlag, this.encryptedUserData, privateEntry)
+        KeystoreCompatImpl.keystoreCompat.loadCredentials(onSuccess, onFailure, { clearCredentials() }, forceFlag, this.encryptedUserData, privateEntry)
     }
 
+    internal fun signUpCancelled(): Boolean {
+        return signUpCancelCount >= KEYSTORE_CANCEL_THRESHOLD
+    }
 
     private fun logUnsupportedVersionForKeystore() {
-        Log.w(LOG_TAG, "Device Android version[%s] doesn't offer trusted keystore functionality!" + Build.VERSION.SDK_INT)
+        Log.w(LOG_TAG, "Device Android version[${Build.VERSION.SDK_INT}] doesn't offer trusted keystore functionality!")
     }
 
-
-    fun initKeyPairIfNecessary(alias: String) {
-        if (isProviderAvailable() && isSecurityEnabled()) {
-            if (keyStore.containsAlias(alias) && isCertificateValid()) return
-            else createNewKeyPair(alias)
-        }
-    }
 
     private fun isCertificateValid(): Boolean {
         //TODO solve real certificate validity
@@ -177,7 +176,7 @@ object KeystoreCompat {
 
     private fun generateKeyPair(alias: String, start: Date, end: Date) {
         val generator = KeyPairGenerator.getInstance(algorithm, KEYSTORE_KEYWORD)
-        generator.initialize(KeystoreCompatProvider.keystoreCompat.getAlgorithmParameterSpec(this.certSubject, alias, start, end, this.context))
+        generator.initialize(KeystoreCompatImpl.keystoreCompat.getAlgorithmParameterSpec(this.certSubject, alias, start, end, this.context))
         generator.generateKeyPair()
         if (!keyStore.containsAlias(alias))
             throw RuntimeException("KeyPair was NOT stored!")
