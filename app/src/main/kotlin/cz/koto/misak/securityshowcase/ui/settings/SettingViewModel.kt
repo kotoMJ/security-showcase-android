@@ -1,13 +1,13 @@
 package cz.koto.misak.securityshowcase.ui.settings
 
 import android.databinding.ObservableBoolean
-import com.strv.keystorecompat.KeystoreProvider
+import com.strv.keystorecompat.KeystoreCompat
+import com.strv.keystorecompat.utility.runSinceKitKat
 import com.strv.keystorecompat.utility.showLockScreenSettings
 import cz.koto.misak.securityshowcase.databinding.FragmentSettingsBinding
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
 import cz.koto.misak.securityshowcase.ui.BaseViewModel
 import cz.koto.misak.securityshowcase.utility.Logcat
-import cz.koto.misak.securityshowcase.utility.runOnLollipop
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -28,13 +28,13 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
         setVisibility()
 
 
-        runOnLollipop {
-            binding.settingsAndroidSecuritySwitch.isChecked = KeystoreProvider.hasCredentialsLoadable()
+        runSinceKitKat {
+            binding.settingsAndroidSecuritySwitch.isChecked = KeystoreCompat.hasCredentialsLoadable()
             binding.settingsAndroidSecuritySwitch.setOnCheckedChangeListener { switch, b ->
                 if (b) {
                     binding.settingsAndroidSecuritySwitch.isEnabled = false
                     Flowable.fromCallable {
-                        KeystoreProvider.storeCredentials(
+                        KeystoreCompat.storeCredentials(
                                 "${CredentialStorage.getUserName()};${CredentialStorage.getPassword()}",
                                 { Logcat.e("Store credentials failed!") })
                     }
@@ -49,16 +49,16 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
                                 //CredentialsKeystoreProvider.loadCredentials({ loaded -> Logcat.w("LOAD test %s", loaded) }, { Logcat.e("LOAD test FAILURE") }, false)
                             })
                 } else {
-                    KeystoreProvider.clearCredentials()
+                    KeystoreCompat.clearCredentials()
                 }
             }
         }
     }
 
     private fun setVisibility() {
-        runOnLollipop {
-            androidSecurityAvailable.set(KeystoreProvider.isProviderAvailable())
-            androidSecuritySelectable.set(KeystoreProvider.isSecurityEnabled())
+        runSinceKitKat {
+            androidSecurityAvailable.set(KeystoreCompat.isProviderAvailable())
+            androidSecuritySelectable.set(KeystoreCompat.isSecurityEnabled())
         }
     }
 

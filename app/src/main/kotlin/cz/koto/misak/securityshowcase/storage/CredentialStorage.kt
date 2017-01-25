@@ -1,9 +1,9 @@
 package cz.koto.misak.securityshowcase.storage
 
-import com.strv.keystorecompat.KeystoreProvider
+import com.strv.keystorecompat.KeystoreCompat
+import com.strv.keystorecompat.utility.runSinceKitKat
 import cz.koto.misak.securityshowcase.model.AuthResponseSimple
 import cz.koto.misak.securityshowcase.utility.Logcat
-import cz.koto.misak.securityshowcase.utility.runOnLollipop
 
 
 object CredentialStorage {
@@ -36,7 +36,7 @@ object CredentialStorage {
         accessToken = null
         userName = null
         password = null
-        runOnLollipop { KeystoreProvider.forceTypeCredentials = true }
+        runSinceKitKat { KeystoreCompat.enableForceTypeCredentials() }
     }
 
 }

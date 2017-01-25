@@ -32,8 +32,8 @@ Keep this in mind if you have a background service that could need to access you
 ## Android keystore in existing libraries ##
 https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
 but designed rather for saving encrypted data generally.
-KeystoreCompat is designed rather for securing login related credentials only
-(For securing complex data to be stored rather permanently use secured database, e.g. Realm.io).
+KeystoreCompat is designed rather for securing login related credentials only(see below mentioned chapter UNSTABLE STORAGE).
+For securing complex data to be stored rather permanently use secured database, e.g. Realm.io.
 
 
 ## Licence ##
@@ -42,15 +42,15 @@ TBD.
 ## More about Android keystore ##
 
 Android keystore is evolving mechanism from one Android version to other.
-This library concentrate handling Android keystore for all Android versions
-(of course starting with API when Keystore is relatively safe for use).
+This library concentrate handling Android keystore since Android API19 (KitKat).
+
 
 
 
 ### Android keystore usability - unstable storage ###
-Keep in mind, that [Android keystore delete all keys](https://code.google.com/p/android/issues/detail?id=61989)
+Keep in mind, that [Android keystore can delete all keys](https://code.google.com/p/android/issues/detail?id=61989)
 if you change screen lock type (or update fingerprint/PIN/Password/Gesture).
-It practically means information encrypted using keystore can be lost any time.
+[It practically means information encrypted using keystore can be lost any time.](https://doridori.github.io/android-security-the-forgetful-keystore/#sthash.gFJfhQs6.dpbs)
 Therefore it tends to use Android keystore rather as temporary secure storage.
 
 
