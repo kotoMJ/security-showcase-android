@@ -127,7 +127,7 @@ in KeyStore that fails to guarantee the integrity of keys.
 http://www.androidauthority.com/use-android-keystore-store-passwords-sensitive-information-623779/
 https://threatpost.com/android-keystore-encryption-scheme-broken-researchers-say/119092/
 https://duo.com/blog/more-than-half-of-android-phones-vulnerable-to-encryption-bypass-attacks
-
+https://doridori.github.io/android-security-the-forgetful-keystore/#sthash.gFJfhQs6.dpbs
 ..
 
 
