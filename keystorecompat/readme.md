@@ -69,6 +69,10 @@ but designed rather for saving encrypted data generally.<br/>
 _In comparison:_ **_KeystoreCompat_** _is designed rather for securing login related credentials only(see below mentioned chapter UNSTABLE STORAGE).
 For securing complex data to be stored rather permanently use secured database, e.g. Realm.io._
 
+## Omit the keystore approach ##
+https://github.com/scottyab/secure-preferences - you can use encryption based on some phrase and encrypt data directly.
+But be careful, this approach force user handle with another secret (besides the own device secret) and list of
+potential vulnerabilities will be always smaller than using the Android defaults.
 
 ## Licence ##
 TBD.
@@ -104,8 +108,12 @@ Enhanced/Improved security of Keystore is then since Android Marshmallow / API 2
 
 ### Android keystore - enough secured for me? or NOT ? ###
 
-Using Android keystore itself has known issues.
-The more you know them, the better you can decide whether to use keystore or not (in some conditions these issues are not threads).
+Again, cecurity trust of Keystore grows with every new version.<br/>
+Suggested usage is since API23(Android M), but this library support usage since API19(Android KitKat).<br/>
+Every keystore is breakable (at least when device is rooted).<br/>
+Using Android keystore itself has known issues.<br/>
+
+The more you know existing vulnerabilities, the better you can decide whether to use keystore or not for your use-case.
 
 
 #### Attacker can modify stored keys  ####
