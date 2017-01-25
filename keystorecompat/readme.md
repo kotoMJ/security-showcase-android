@@ -59,7 +59,7 @@ Keep this in mind if you have a background service that could need to access you
 
 The Keystore can be lost anytime! Permament content is not guaranteed.
 
-Security trust of Keystore grows with every new version.
+Security trust of Keystore grows with every new Android version.
 Suggested usage is since API23(Android M), but this library support usage since API19(Android KitKat).
 Every keystore is breakable (at least when device is rooted).
 
@@ -108,7 +108,7 @@ Enhanced/Improved security of Keystore is then since Android Marshmallow / API 2
 
 ### Android keystore - enough secured for me? or NOT ? ###
 
-Again, cecurity trust of Keystore grows with every new version.<br/>
+Again, cecurity trust of Keystore grows with every new Android version.<br/>
 Suggested usage is since API23(Android M), but this library support usage since API19(Android KitKat).<br/>
 Every keystore is breakable (at least when device is rooted).<br/>
 Using Android keystore itself has known issues.<br/>
