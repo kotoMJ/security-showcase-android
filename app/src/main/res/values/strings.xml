@@ -20,6 +20,7 @@
 	<string name="login_multi_input_hint">Your answer</string>
 	<string name="login_show_locations">Show bank locations</string>
 	<string name="login_follow_github">Follow on Github</string>
+	<string name="login_fill_in_test_account">Fill in test account</string>
 
 	<string name="settings_security_label">Security</string>
 	<string name="settings_security_empty">No security options available for your device.</string>
