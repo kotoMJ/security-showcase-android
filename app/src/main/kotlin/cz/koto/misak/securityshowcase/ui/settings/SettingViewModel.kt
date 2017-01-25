@@ -8,7 +8,6 @@ import cz.koto.misak.securityshowcase.databinding.FragmentSettingsBinding
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
 import cz.koto.misak.securityshowcase.ui.BaseViewModel
 import cz.koto.misak.securityshowcase.utility.Logcat
-import cz.koto.misak.securityshowcase.utility.runOnLollipop
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -29,7 +28,7 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
         setVisibility()
 
 
-        runOnLollipop {
+        runSinceKitKat {
             binding.settingsAndroidSecuritySwitch.isChecked = KeystoreCompat.hasCredentialsLoadable()
             binding.settingsAndroidSecuritySwitch.setOnCheckedChangeListener { switch, b ->
                 if (b) {
