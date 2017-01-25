@@ -20,26 +20,36 @@ Minimum API is 19!
 Running on lower version will not crash, but will do nothing.
 
 Initialize KeystoreCompat in your application class.
- `com.strv.keystorecompat.KeystoreCompat.init(this)`
+`com.strv.keystorecompat.KeystoreCompat.init(this)`
 
 ## Usage ##
 For detail usage check for sample implementation in SecurityShowcase application
 
-### Checking methods ###
-`fun isKeystoreCompatAvailable(): Boolean`
-`fun isSecurityEnabled(): Boolean`
+### KeystoreCompat verify methods ###
+- `fun isKeystoreCompatAvailable(): Boolean`
+- `fun isSecurityEnabled(): Boolean`
+- `fun hasCredentialsLoadable(): Boolean`
 
-### Data manipulation methods ###
-`fun storeCredentials(composedCredentials: String, onError: () -> Unit)`
-`fun hasCredentialsLoadable(): Boolean`
-`fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?)`
-`fun clearCredentials()`
+### KeystoreCompat data manipulation methods ###
+- `fun storeCredentials(composedCredentials: String, onError: () -> Unit)`
+- `fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?)`
+- `fun clearCredentials()`
 
-### Data flow helper methods ###
-`fun disableForceTypeCredentials()`
-`fun enableForceTypeCredentials()`
-`fun increaseSignUpCancel()`
-`fun signUpSuccessful() `
+### KeystoreCompat data flow helper methods ###
+- `fun disableForceTypeCredentials()`
+- `fun enableForceTypeCredentials()`
+- `fun increaseSignUpCancel()`
+- `fun signUpSuccessful() `
+
+### IntentUtility ###
+- `inline fun showLockScreenSettings(context: Context)`
+- @TargetApi(Build.VERSION_CODES.LOLLIPOP) <br/>
+`inline fun forceAndroidAuth(title: String, desc: String, onIntentReady: (intent: Intent) -> Unit, context: Context)`
+
+### AndroidVersionUtility ###
+- `inline fun runSinceKitKat(crossinline action: () -> Unit)`
+- `inline fun runSinceLollipop(crossinline action: () -> Unit)`
+- `inline fun runSinceMarshmallow(crossinline action: () -> Unit)`
 
 ## Caveats ##
 
@@ -55,9 +65,9 @@ Every keystore is breakable (at least when device is rooted).
 
 ## Android keystore in existing libraries ##
 https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
-but designed rather for saving encrypted data generally.
-KeystoreCompat is designed rather for securing login related credentials only(see below mentioned chapter UNSTABLE STORAGE).
-For securing complex data to be stored rather permanently use secured database, e.g. Realm.io.
+but designed rather for saving encrypted data generally.<br/>
+_In comparison:_ **_KeystoreCompat_** _is designed rather for securing login related credentials only(see below mentioned chapter UNSTABLE STORAGE).
+For securing complex data to be stored rather permanently use secured database, e.g. Realm.io._
 
 
 ## Licence ##
@@ -117,7 +127,7 @@ in KeyStore that fails to guarantee the integrity of keys.
 http://www.androidauthority.com/use-android-keystore-store-passwords-sensitive-information-623779/
 https://threatpost.com/android-keystore-encryption-scheme-broken-researchers-say/119092/
 https://duo.com/blog/more-than-half-of-android-phones-vulnerable-to-encryption-bypass-attacks
-
+https://doridori.github.io/android-security-the-forgetful-keystore/#sthash.gFJfhQs6.dpbs
 ..
 
 
