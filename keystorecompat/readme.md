@@ -16,18 +16,42 @@ Does your app use classic credentials (e.g. username & password) to connect to s
 **If so, this library is designed for you.**
 
 ## Installation ##
+Minimum API is 19!
+Running on lower version will not crash, but will do nothing.
 
-TBD. (temporarily look for installation in security-showcase-android app)
+Initialize KeystoreCompat in your application class.
+ `com.strv.keystorecompat.KeystoreCompat.init(this)`
 
 ## Usage ##
+For detail usage check for sample implementation in SecurityShowcase application
 
-TBD. (temporarily look for usage in security-showcase-android app)
+### Checking methods ###
+`fun isKeystoreCompatAvailable(): Boolean`
+`fun isSecurityEnabled(): Boolean`
+
+### Data manipulation methods ###
+`fun storeCredentials(composedCredentials: String, onError: () -> Unit)`
+`fun hasCredentialsLoadable(): Boolean`
+`fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?)`
+`fun clearCredentials()`
+
+### Data flow helper methods ###
+`fun disableForceTypeCredentials()`
+`fun enableForceTypeCredentials()`
+`fun increaseSignUpCancel()`
+`fun signUpSuccessful() `
 
 ## Caveats ##
 
 The Keystore itself is encrypted using the user’s own lockscreen pin/password,
 hence, when the device screen is locked the Keystore is unavailable.
 Keep this in mind if you have a background service that could need to access your application secrets.
+
+The Keystore can be lost anytime! Permament content is not guaranteed.
+
+Security trust of Keystore grows with every new version.
+Suggested usage is since API23(Android M), but this library support usage since API19(Android KitKat).
+Every keystore is breakable (at least when device is rooted).
 
 ## Android keystore in existing libraries ##
 https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,

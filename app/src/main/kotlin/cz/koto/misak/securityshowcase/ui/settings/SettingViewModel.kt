@@ -57,7 +57,7 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
 
     private fun setVisibility() {
         runSinceKitKat {
-            androidSecurityAvailable.set(KeystoreCompat.isProviderAvailable())
+            androidSecurityAvailable.set(KeystoreCompat.isKeystoreCompatAvailable())
             androidSecuritySelectable.set(KeystoreCompat.isSecurityEnabled())
         }
     }

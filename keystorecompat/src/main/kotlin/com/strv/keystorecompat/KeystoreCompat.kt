@@ -6,10 +6,7 @@ import android.os.Build
 import android.provider.Settings
 import android.security.keystore.KeyProperties
 import android.util.Log
-import com.strv.keystorecompat.utility.PrefDelegate
-import com.strv.keystorecompat.utility.intPref
-import com.strv.keystorecompat.utility.runSinceMarshmallow
-import com.strv.keystorecompat.utility.stringPref
+import com.strv.keystorecompat.utility.*
 import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.util.*
@@ -46,31 +43,23 @@ object KeystoreCompat {
 
 
     fun init(context: Context) {
-        this.context = context
-        this.uniqueId = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
-        PrefDelegate.initialize(this.context)
-        certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
-
-        algorithm = "RSA"
-        runSinceMarshmallow {
-            algorithm = KeyProperties.KEY_ALGORITHM_RSA
-        }
-        keyStore = KeyStore.getInstance(KEYSTORE_KEYWORD)
-        keyStore.load(null)
-        if (!isProviderAvailable()) {
+        if (!isKeystoreCompatAvailable()) {
             logUnsupportedVersionForKeystore()
         }
+        runSinceKitKat {
+            this.context = context
+            this.uniqueId = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
+            PrefDelegate.initialize(this.context)
+            certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
 
-        KeystoreCompatImpl.init(Build.VERSION.SDK_INT)
-    }
-
-
-    fun hasCredentialsLoadable(): Boolean {
-        if (isProviderAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
-            if (signUpCancelled()) return false
-            return ((encryptedUserData?.isNotBlank() ?: false) //Is there content to decrypt
-                    && (keyStore.getEntry(uniqueId, null) != null))//Is there a key for decryption?
-        } else return false
+            algorithm = "RSA"
+            runSinceMarshmallow {
+                algorithm = KeyProperties.KEY_ALGORITHM_RSA
+            }
+            keyStore = KeyStore.getInstance(KEYSTORE_KEYWORD)
+            keyStore.load(null)
+            KeystoreCompatImpl.init(Build.VERSION.SDK_INT)
+        }
     }
 
     /**
@@ -79,7 +68,7 @@ object KeystoreCompat {
      * Relatively trusted secure keystore is known since API19.
      * Improved security is then since API 23.
      */
-    fun isProviderAvailable(): Boolean {
+    fun isKeystoreCompatAvailable(): Boolean {
         //Pre-KitKat version are not supported
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
     }
@@ -100,51 +89,78 @@ object KeystoreCompat {
      * Call this function in separated thread, as eventual keyPair init may takes longer time
      */
     fun storeCredentials(composedCredentials: String, onError: () -> Unit) {
-        Log.d(LOG_TAG, "Before load KeyPair...")
-        if (isProviderAvailable() && isSecurityEnabled()) {
-            initKeyPairIfNecessary(uniqueId)
-            KeystoreCompat.encryptedUserData = KeystoreCrypto.encryptCredentials(composedCredentials, KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry)
-        } else {
-            onError.invoke()
+        runSinceKitKat {
+            Log.d(LOG_TAG, "Before load KeyPair...")
+            if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
+                initKeyPairIfNecessary(uniqueId)
+                KeystoreCompat.encryptedUserData = KeystoreCrypto.encryptCredentials(composedCredentials, KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry)
+            } else {
+                onError.invoke()
+            }
         }
+    }
+
+    /**
+     * Check if shared preferences contains some secret to be loadable.
+     */
+    fun hasCredentialsLoadable(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (isKeystoreCompatAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
+                if (signUpCancelled()) return false
+                return ((encryptedUserData?.isNotBlank() ?: false) //Is there content to decrypt
+                        && (keyStore.getEntry(uniqueId, null) != null))//Is there a key for decryption?
+            } else return false
+        } else return false
     }
 
     /**
      * Load credentials string in decrypted form from shared preferences
      */
     fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?) {
-        val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
-        KeystoreCompatImpl.keystoreCompat.loadCredentials(onSuccess, onFailure, { clearCredentials() }, forceFlag, this.encryptedUserData, privateEntry)
+        runSinceKitKat {
+            val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
+            KeystoreCompatImpl.keystoreCompat.loadCredentials(onSuccess, onFailure, { clearCredentials() }, forceFlag, this.encryptedUserData, privateEntry)
+        }
     }
 
     /**
      * CleanUp credentials string from shared preferences.
      */
     fun clearCredentials() {
-        encryptedUserData = ""
-        keyStore.deleteEntry(uniqueId)
-        if (keyStore.containsAlias(uniqueId))
-            throw RuntimeException("Cert delete wasn't successful!")
+        runSinceKitKat {
+            encryptedUserData = ""
+            keyStore.deleteEntry(uniqueId)
+            if (keyStore.containsAlias(uniqueId))
+                throw RuntimeException("Cert delete wasn't successful!")
+        }
     }
 
     fun disableForceTypeCredentials() {
-        forceTypeCredentials = false
+        runSinceKitKat {
+            forceTypeCredentials = false
+        }
     }
 
     fun enableForceTypeCredentials() {
-        forceTypeCredentials = true
+        runSinceKitKat {
+            forceTypeCredentials = true
+        }
     }
 
     fun increaseSignUpCancel() {
-        signUpCancelCount++
+        runSinceKitKat {
+            signUpCancelCount++
+        }
     }
 
-    fun successSignUp() {
-        signUpCancelCount = 0
+    fun signUpSuccessful() {
+        runSinceKitKat {
+            signUpCancelCount = 0
+        }
     }
 
     internal fun initKeyPairIfNecessary(alias: String) {
-        if (isProviderAvailable() && isSecurityEnabled()) {
+        if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
             if (keyStore.containsAlias(alias) && isCertificateValid()) return
             else createNewKeyPair(alias)
         }

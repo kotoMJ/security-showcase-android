@@ -27,7 +27,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         super.onCreate(savedInstanceState)
-        runOnLollipop { KeystoreCompat.successSignUp() }
+        runOnLollipop { KeystoreCompat.signUpSuccessful() }
 
         if (savedInstanceState == null)
             switchToFragment(InfoFragment.newInstance(), false)
