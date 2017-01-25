@@ -18,6 +18,8 @@ import com.strv.keystorecompat.utility.stringPref
 import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore
+import java.security.spec.AlgorithmParameterSpec
+import java.security.spec.RSAKeyGenParameterSpec
 import java.util.*
 import javax.security.auth.x500.X500Principal
 
@@ -42,7 +44,7 @@ object KeystoreCompat {
     lateinit var certSubject: X500Principal
     val cipherMode: String = "RSA/None/PKCS1Padding"
     lateinit var algorithm: String
-    val uniqueId: String = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
+    lateinit var uniqueId: String
 
     val KEYSTORE_CANCEL_THRESHOLD = 2 //how many cancellation is necessary to forbid this provider
 
@@ -56,6 +58,7 @@ object KeystoreCompat {
 
     fun init(context: Context) {
         this.context = context
+        this.uniqueId = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
         PrefDelegate.initialize(this.context)
         certSubject = X500Principal("CN=" + uniqueId + ", O=Android Authority")
 
@@ -243,31 +246,30 @@ object KeystoreCompat {
     }
 
     private fun generateKeyPair(alias: String, start: Date, end: Date) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            generateKeyPairMarshMellow(alias, start, end, algorithm)
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            generateKeyPairKitKat(alias, start, end, algorithm)
-        } else throw RuntimeException("Device Android version " + Build.VERSION.SDK_INT + " doesn't offer trusted keystore functionality!")
-    }
-
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private fun generateKeyPairKitKat(alias: String, startDate: Date, endDate: Date, algorithm: String) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            throw RuntimeException("Don't use KeyPairGeneratorSpec under Android version KITKAT!")
-        }
         val generator = KeyPairGenerator.getInstance(algorithm, KEYSTORE_KEYWORD)
-        generator.initialize(KeyPairGeneratorSpec.Builder(KeystoreCompat.context)
-                .setAlias(alias)
-                .setSubject(certSubject)
-                .setSerialNumber(BigInteger.ONE)
-                .setStartDate(startDate)
-                .setEndDate(endDate)
-                .setEncryptionRequired()
-                .build())
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            generator.initialize(getAlgorithmParameterSpecSinceMarshmallow(alias, start, end))
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            generator.initialize(getAlgorithmParameterSpecSinceKitKat(alias, start, end))
+        } else throw RuntimeException("Device Android version " + Build.VERSION.SDK_INT + " doesn't offer trusted keystore functionality!")
         generator.generateKeyPair()
         if (!keyStore.containsAlias(alias))
             throw RuntimeException("KeyPair was NOT stored!")
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private fun getAlgorithmParameterSpecSinceKitKat(alias: String, startDate: Date, endDate: Date): AlgorithmParameterSpec {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            throw RuntimeException("Don't use KeyPairGeneratorSpec under Android version KITKAT!")
+        }
+        return KeyPairGeneratorSpec.Builder(KeystoreCompat.context)
+                .setAlias(alias)
+                .setSubject(certSubject)
+                .setSerialNumber(BigInteger.ONE)//TODO verify this number
+                .setStartDate(startDate)
+                .setEndDate(endDate)
+                .setEncryptionRequired()
+                .build()
     }
 
     /**
@@ -279,23 +281,20 @@ object KeystoreCompat {
      * so even if an attacker roots the device the key can still only be used in the defined ways.
      */
     @TargetApi(Build.VERSION_CODES.M)
-    private fun generateKeyPairMarshMellow(alias: String, startDate: Date, endDate: Date, algorithm: String) {
+    private fun getAlgorithmParameterSpecSinceMarshmallow(alias: String, startDate: Date, endDate: Date): AlgorithmParameterSpec {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             throw RuntimeException("Don't use generateKeyPairMarshMellow under Android version M!")
         }
-        val generator = KeyPairGenerator.getInstance(algorithm, KEYSTORE_KEYWORD)
-        generator.initialize(KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT.or(KeyProperties.PURPOSE_DECRYPT))
+        return KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT.or(KeyProperties.PURPOSE_DECRYPT))
                 .setCertificateSubject(certSubject)
                 .setKeyValidityStart(startDate)
                 .setKeyValidityEnd(endDate)
                 .setDigests(KeyProperties.DIGEST_SHA512)
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
+                .setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
                 .setUserAuthenticationRequired(true)
-                .setUserAuthenticationValidityDurationSeconds(10)//User has to type challeng in 10 seconds
-                .build())
-        generator.generateKeyPair()
-        if (!keyStore.containsAlias(alias))
-            throw RuntimeException("KeyPair was NOT stored!")
+                .setUserAuthenticationValidityDurationSeconds(10)//User has to type challenge in 10 seconds
+                .build()
     }
 
 
