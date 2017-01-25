@@ -72,7 +72,7 @@ For securing complex data to be stored rather permanently use secured database, 
 ## Omit the keystore approach ##
 https://github.com/scottyab/secure-preferences - you can use encryption based on some phrase and encrypt data directly.
 But be careful, this approach force user handle with another secret (besides the own device secret) and list of
-potential vulnerabilities will be always smaller than using the Android defaults.
+potential vulnerabilities will be always rather uknown than using the Android defaults.
 
 ## Licence ##
 TBD.
