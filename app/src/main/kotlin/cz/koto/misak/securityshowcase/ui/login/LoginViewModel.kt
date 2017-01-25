@@ -115,7 +115,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
     }
 
     fun followGithub() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/kotomisak/db-showcase-android"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/kotomisak/security-showcase-android"))
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         ContextProvider.context.startActivity(intent)
     }
