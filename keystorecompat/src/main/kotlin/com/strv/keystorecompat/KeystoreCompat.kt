@@ -119,7 +119,12 @@ object KeystoreCompat {
     fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?) {
         runSinceKitKat {
             val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
-            KeystoreCompatImpl.keystoreCompat.loadCredentials(onSuccess, onFailure, { clearCredentials() }, forceFlag, this.encryptedUserData, privateEntry)
+            KeystoreCompatImpl.keystoreCompat.loadCredentials(onSuccess,
+                    onFailure,
+                    { clearCredentials() },
+                    forceFlag,
+                    this.encryptedUserData,
+                    privateEntry)
         }
     }
 

@@ -5,6 +5,7 @@ import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.net.Uri
+import com.strv.keystorecompat.ForceLockScreenKitKatException
 import com.strv.keystorecompat.KeystoreCompat
 import com.strv.keystorecompat.utility.forceAndroidAuth
 import com.strv.keystorecompat.utility.runSinceKitKat
@@ -64,10 +65,14 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
                         signIn()
                     }
                 }, { exception ->
-                    Logcat.e(exception, "")
-                    CredentialStorage.performLogout()
-                    runSinceLollipop {
-                        forceAndroidAuth("my title", "my desc", { intent -> activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) }, KeystoreCompat.context)
+                    if (exception is ForceLockScreenKitKatException) {
+                        activity.startActivityForResult(exception.lockIntent, FORCE_SIGNUP_REQUEST)
+                    } else {
+                        Logcat.e(exception, "")
+                        CredentialStorage.performLogout()
+                        runSinceLollipop {
+                            forceAndroidAuth("my title", "my desc", { intent -> activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) }, KeystoreCompat.context)
+                        }
                     }
                 }, null)
             } else {
