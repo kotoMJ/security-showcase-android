@@ -2,6 +2,7 @@ package cz.koto.misak.securityshowcase.ui.settings
 
 import android.databinding.ObservableBoolean
 import com.strv.keystorecompat.KeystoreCompat
+import com.strv.keystorecompat.utility.runSinceKitKat
 import com.strv.keystorecompat.utility.showLockScreenSettings
 import cz.koto.misak.securityshowcase.databinding.FragmentSettingsBinding
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
@@ -56,7 +57,7 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
     }
 
     private fun setVisibility() {
-        runOnLollipop {
+        runSinceKitKat {
             androidSecurityAvailable.set(KeystoreCompat.isProviderAvailable())
             androidSecuritySelectable.set(KeystoreCompat.isSecurityEnabled())
         }

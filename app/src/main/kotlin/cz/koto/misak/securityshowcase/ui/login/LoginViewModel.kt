@@ -7,6 +7,8 @@ import android.databinding.ObservableField
 import android.net.Uri
 import com.strv.keystorecompat.KeystoreCompat
 import com.strv.keystorecompat.utility.forceAndroidAuth
+import com.strv.keystorecompat.utility.runSinceKitKat
+import com.strv.keystorecompat.utility.runSinceLollipop
 import cz.kinst.jakub.view.StatefulLayout
 import cz.koto.misak.securityshowcase.ContextProvider
 import cz.koto.misak.securityshowcase.SecurityConfig
@@ -53,7 +55,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
 
     override fun onViewAttached(firstAttachment: Boolean) {
         super.onViewAttached(firstAttachment)
-        runOnLollipop {
+        runSinceKitKat {
             if (KeystoreCompat.hasCredentialsLoadable()) {
                 KeystoreCompat.loadCredentials({ decryptResult ->
                     decryptResult.split(';').let {
@@ -64,7 +66,9 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
                 }, { exception ->
                     Logcat.e(exception, "")
                     CredentialStorage.performLogout()
-                    forceAndroidAuth("my title", "my desc", { intent -> activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) })
+                    runSinceLollipop {
+                        forceAndroidAuth("my title", "my desc", { intent -> activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) })
+                    }
                 }, null)
             } else {
                 Logcat.d("Use standard login.")

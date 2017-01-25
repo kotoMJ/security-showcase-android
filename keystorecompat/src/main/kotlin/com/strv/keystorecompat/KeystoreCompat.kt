@@ -34,6 +34,7 @@ import javax.security.auth.x500.X500Principal
  * CredentialsKeystoreProvider is intended to be called with Lollipop&Up versions.
  * Call by KitKat is mysteriously failing on M-specific code (even when it is not called).
  */
+@TargetApi(Build.VERSION_CODES.KITKAT)
 object KeystoreCompat {
 
     /**
@@ -109,17 +110,19 @@ object KeystoreCompat {
      */
     fun isProviderAvailable(): Boolean {
         //Pre-Lollipop solution must be in different/isolated class (because of run-time exception)!
-        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
     }
 
     /**
      * Keystore is available only for secured devices!
      */
     fun isSecurityEnabled(): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return isKeyguardSecuredLollipop()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return false
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return isKeyguardSecuredSinceKitKat()
         } else {
-            return isDeviceSecuredMarshmallow()
+            return isDeviceSecuredSinceMarshmallow()
         }
     }
 
@@ -249,10 +252,10 @@ object KeystoreCompat {
         val generator = KeyPairGenerator.getInstance(algorithm, KEYSTORE_KEYWORD)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             generator.initialize(getAlgorithmParameterSpecSinceMarshmallow(alias, start, end))
-            //Log.w(LOG_TAG, "" + isDeviceSecuredMarshmallow())
+            //Log.w(LOG_TAG, "" + isDeviceSecuredSinceMarshmallow())
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             generator.initialize(getAlgorithmParameterSpecSinceKitKat(alias, start, end))
-            //Log.w(LOG_TAG, "" + isKeyguardSecuredLollipop())
+            //Log.w(LOG_TAG, "" + isKeyguardSecuredSinceKitKat())
         } else throw RuntimeException("Device Android version " + Build.VERSION.SDK_INT + " doesn't offer trusted keystore functionality!")
         generator.generateKeyPair()
         if (!keyStore.containsAlias(alias))
@@ -301,7 +304,7 @@ object KeystoreCompat {
 
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private fun isKeyguardSecuredLollipop(): Boolean {
+    private fun isKeyguardSecuredSinceKitKat(): Boolean {
         var km: KeyguardManager = KeystoreCompat.context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
         Log.d(LOG_TAG, "KEYGUARD-SECURE:%s" + km.isKeyguardSecure)
         Log.d(LOG_TAG, "KEYGUARD-LOCKED:%s" + km.isKeyguardLocked)
@@ -309,7 +312,7 @@ object KeystoreCompat {
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    private fun isDeviceSecuredMarshmallow(): Boolean {
+    private fun isDeviceSecuredSinceMarshmallow(): Boolean {
         var km: KeyguardManager = KeystoreCompat.context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
         Log.d(LOG_TAG, "DEVICE-SECURE:%s" + km.isDeviceSecure)
         Log.d(LOG_TAG, "DEVICE-LOCKED:%s" + km.isDeviceLocked)
