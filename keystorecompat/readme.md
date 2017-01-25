@@ -65,9 +65,9 @@ Every keystore is breakable (at least when device is rooted).
 
 ## Android keystore in existing libraries ##
 https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
-but designed rather for saving encrypted data generally.
-KeystoreCompat is designed rather for securing login related credentials only(see below mentioned chapter UNSTABLE STORAGE).
-For securing complex data to be stored rather permanently use secured database, e.g. Realm.io.
+but designed rather for saving encrypted data generally.<br/>
+_In comparison:_ **_KeystoreCompat_** _is designed rather for securing login related credentials only(see below mentioned chapter UNSTABLE STORAGE).
+For securing complex data to be stored rather permanently use secured database, e.g. Realm.io._
 
 
 ## Licence ##
