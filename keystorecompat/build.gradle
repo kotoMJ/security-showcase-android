@@ -12,6 +12,8 @@ android {
 		versionCode 1
 		versionName "1.0"
 
+		manifestPlaceholders = [kitkatDeviceAdminLabel: "KestoreCompat default label"]
+
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
 	}

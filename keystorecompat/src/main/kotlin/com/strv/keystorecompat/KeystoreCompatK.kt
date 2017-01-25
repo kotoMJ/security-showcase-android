@@ -27,10 +27,11 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
                                  encryptedUserData: String,
                                  privateKeyEntry: KeyStore.PrivateKeyEntry) {
         try {
-            SecurityDeviceAdmin.INSTANCE.forceLockPreLollipop(onFailure)
-            onSuccess.invoke(KeystoreCrypto.decryptCredentials(privateKeyEntry, encryptedUserData))
+            SecurityDeviceAdmin.INSTANCE.forceLockPreLollipop(
+                    { lockIntent -> onFailure.invoke(ForceLockScreenKitKatException(lockIntent)) },
+                    { onSuccess.invoke(KeystoreCrypto.decryptCredentials(privateKeyEntry, encryptedUserData)) })
         } catch (e: Exception) {
-
+            onFailure.invoke(e)
         }
     }
 

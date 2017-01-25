@@ -28,13 +28,15 @@ object KeystoreCompat {
 
     val cipherMode: String = "RSA/None/PKCS1Padding"
     lateinit var context: Context
+    lateinit var config: KeystoreCompatConfig
 
     private val KEYSTORE_KEYWORD = "AndroidKeyStore"
     private lateinit var keyStore: KeyStore
     private lateinit var certSubject: X500Principal
     private lateinit var algorithm: String
     private lateinit var uniqueId: String
-    private val KEYSTORE_CANCEL_THRESHOLD = 2 //how many cancellation is necessary to forbid this provider
+
+
     private val LOG_TAG = javaClass.name
     // In memory baypass/way how to force typing Android credentials for LOLLIPOP based generated keyPairs
     private var forceTypeCredentials = true
@@ -42,12 +44,13 @@ object KeystoreCompat {
     private var signUpCancelCount by intPref("sign_up_cancel_count")
 
 
-    fun init(context: Context) {
+    fun <T : KeystoreCompatConfig> init(context: Context, config: T) {
         if (!isKeystoreCompatAvailable()) {
             logUnsupportedVersionForKeystore()
         }
         runSinceKitKat {
             this.context = context
+            this.config = config
             this.uniqueId = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
             PrefDelegate.initialize(this.context)
             certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
@@ -119,7 +122,12 @@ object KeystoreCompat {
     fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?) {
         runSinceKitKat {
             val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
-            KeystoreCompatImpl.keystoreCompat.loadCredentials(onSuccess, onFailure, { clearCredentials() }, forceFlag, this.encryptedUserData, privateEntry)
+            KeystoreCompatImpl.keystoreCompat.loadCredentials(onSuccess,
+                    onFailure,
+                    { clearCredentials() },
+                    forceFlag,
+                    this.encryptedUserData,
+                    privateEntry)
         }
     }
 
@@ -167,7 +175,7 @@ object KeystoreCompat {
     }
 
     internal fun signUpCancelled(): Boolean {
-        return signUpCancelCount >= KEYSTORE_CANCEL_THRESHOLD
+        return signUpCancelCount >= config.getProviderForbidThreshold()
     }
 
     private fun logUnsupportedVersionForKeystore() {

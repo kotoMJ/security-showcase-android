@@ -3,6 +3,7 @@ package cz.koto.misak.securityshowcase.ui.main
 import android.os.Bundle
 import android.support.v7.app.AppCompatDelegate
 import com.strv.keystorecompat.KeystoreCompat
+import com.strv.keystorecompat.utility.runSinceKitKat
 import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.ActivityMainBinding
@@ -11,7 +12,6 @@ import cz.koto.misak.securityshowcase.ui.BaseActivity
 import cz.koto.misak.securityshowcase.ui.info.InfoFragment
 import cz.koto.misak.securityshowcase.ui.info.SettingsFragment
 import cz.koto.misak.securityshowcase.ui.login.LoginActivity
-import cz.koto.misak.securityshowcase.utility.runOnLollipop
 import cz.koto.misak.securityshowcase.utility.start
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -27,7 +27,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         super.onCreate(savedInstanceState)
-        runOnLollipop { KeystoreCompat.signUpSuccessful() }
+        runSinceKitKat { KeystoreCompat.signUpSuccessful() }
 
         if (savedInstanceState == null)
             switchToFragment(InfoFragment.newInstance(), false)
