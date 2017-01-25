@@ -270,7 +270,7 @@ object KeystoreCompat {
                 .setSerialNumber(BigInteger.ONE)//TODO verify this number
                 .setStartDate(startDate)
                 .setEndDate(endDate)
-                .setEncryptionRequired()
+                .setEncryptionRequired()//This can be source of pain sometimes - generateKeyPair can complain with strange exception
                 .build()
     }
 
