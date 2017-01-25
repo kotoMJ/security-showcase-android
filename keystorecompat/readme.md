@@ -44,6 +44,7 @@ For detail usage check for sample implementation in SecurityShowcase application
 ### IntentUtility ###
 - `inline fun showLockScreenSettings(context: Context)`
 - `@TargetApi(Build.VERSION_CODES.LOLLIPOP) inline fun forceAndroidAuth(title: String, desc: String, onIntentReady: (intent: Intent) -> Unit, context: Context)`
+
 ### AndroidVersionUtility ###
 - `inline fun runSinceKitKat(crossinline action: () -> Unit)`
 - `inline fun runSinceLollipop(crossinline action: () -> Unit)`
