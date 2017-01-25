@@ -249,8 +249,10 @@ object KeystoreCompat {
         val generator = KeyPairGenerator.getInstance(algorithm, KEYSTORE_KEYWORD)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             generator.initialize(getAlgorithmParameterSpecSinceMarshmallow(alias, start, end))
+            //Log.w(LOG_TAG, "" + isDeviceSecuredMarshmallow())
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             generator.initialize(getAlgorithmParameterSpecSinceKitKat(alias, start, end))
+            //Log.w(LOG_TAG, "" + isKeyguardSecuredLollipop())
         } else throw RuntimeException("Device Android version " + Build.VERSION.SDK_INT + " doesn't offer trusted keystore functionality!")
         generator.generateKeyPair()
         if (!keyStore.containsAlias(alias))
