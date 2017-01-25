@@ -36,7 +36,7 @@ object CredentialStorage {
         accessToken = null
         userName = null
         password = null
-        runSinceKitKat { KeystoreCompat.forceTypeCredentials = true }
+        runSinceKitKat { KeystoreCompat.enableForceTypeCredentials() }
     }
 
 }

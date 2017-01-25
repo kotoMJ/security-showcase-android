@@ -2,7 +2,6 @@ package com.strv.keystorecompat
 
 import android.util.Base64
 import android.util.Log
-import com.strv.keystorecompat.KeystoreCompat.LOG_TAG
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.security.KeyStore
@@ -12,9 +11,11 @@ import javax.crypto.Cipher
 import javax.crypto.CipherInputStream
 import javax.crypto.CipherOutputStream
 
-object KeystoreCrypto {
+internal object KeystoreCrypto {
 
-    fun encryptCredentials(composedCredentials: String, privateKeyEntry: KeyStore.PrivateKeyEntry) {
+    private val LOG_TAG = javaClass.name
+
+    fun encryptCredentials(composedCredentials: String, privateKeyEntry: KeyStore.PrivateKeyEntry): String {
         try {
             val publicKey = privateKeyEntry.certificate.publicKey as RSAPublicKey
 
@@ -33,14 +34,14 @@ object KeystoreCrypto {
             cipherOutputStream.write(composedCredentials.toByteArray(Charsets.UTF_8))
             cipherOutputStream.close()
 
-            KeystoreCompat.encryptedUserData = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
+            return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
         } catch (e: Exception) {
-            Log.e(KeystoreCompat.LOG_TAG, /*ContextProvider.getString(R.string.keystore_label_encryption_error)*/"Encryption error", e)
+            Log.e(LOG_TAG, /*ContextProvider.getString(R.string.keystore_label_encryption_error)*/"Encryption error", e)
             throw e
         }
     }
 
-    fun decryptCredentials(privateKeyEntry: KeyStore.PrivateKeyEntry): String {
+    fun decryptCredentials(privateKeyEntry: KeyStore.PrivateKeyEntry, encryptedUserData: String): String {
         try {
 
             /**
@@ -55,7 +56,7 @@ object KeystoreCrypto {
             output.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey)
 
             val cipherInputStream = CipherInputStream(
-                    ByteArrayInputStream(Base64.decode(KeystoreCompat.encryptedUserData, Base64.DEFAULT)), output)
+                    ByteArrayInputStream(Base64.decode(encryptedUserData, Base64.DEFAULT)), output)
             val values = ArrayList<Byte>()
             var nextByte: Int = -1
 

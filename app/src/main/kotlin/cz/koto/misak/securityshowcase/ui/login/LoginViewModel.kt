@@ -67,7 +67,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
                     Logcat.e(exception, "")
                     CredentialStorage.performLogout()
                     runSinceLollipop {
-                        forceAndroidAuth("my title", "my desc", { intent -> activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) })
+                        forceAndroidAuth("my title", "my desc", { intent -> activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) }, KeystoreCompat.context)
                     }
                 }, null)
             } else {

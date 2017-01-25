@@ -27,7 +27,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 activity.finish()
             } else {
                 if (resultCode == Activity.RESULT_OK) {
-                    KeystoreCompat.forceTypeCredentials = false
+                    KeystoreCompat.disableForceTypeCredentials()
                 }
                 viewModel.onViewAttached(false)
             }

@@ -1,25 +1,17 @@
 package com.strv.keystorecompat
 
 import android.annotation.TargetApi
-import android.app.KeyguardManager
 import android.content.Context
 import android.os.Build
 import android.provider.Settings
-import android.security.KeyPairGeneratorSpec
-import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
-import android.security.keystore.UserNotAuthenticatedException
 import android.util.Log
 import com.strv.keystorecompat.utility.PrefDelegate
 import com.strv.keystorecompat.utility.intPref
 import com.strv.keystorecompat.utility.runSinceMarshmallow
 import com.strv.keystorecompat.utility.stringPref
-import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore
-import java.security.spec.AlgorithmParameterSpec
-import java.security.spec.RSAKeyGenParameterSpec
 import java.util.*
 import javax.security.auth.x500.X500Principal
 
@@ -40,22 +32,30 @@ object KeystoreCompat {
     /**
      * SECURITY CONFIG
      */
-    val KEYSTORE_KEYWORD = "AndroidKeyStore"
-    lateinit var keyStore: KeyStore
-    lateinit var certSubject: X500Principal
+    private val KEYSTORE_KEYWORD = "AndroidKeyStore"
+    private lateinit var keyStore: KeyStore
+    private lateinit var certSubject: X500Principal
     val cipherMode: String = "RSA/None/PKCS1Padding"
-    lateinit var algorithm: String
-    lateinit var uniqueId: String
+    private lateinit var algorithm: String
+    private lateinit var uniqueId: String
 
-    val KEYSTORE_CANCEL_THRESHOLD = 2 //how many cancellation is necessary to forbid this provider
+    private val KEYSTORE_CANCEL_THRESHOLD = 2 //how many cancellation is necessary to forbid this provider
 
-    val LOG_TAG = javaClass.name
+    private val LOG_TAG = javaClass.name
     // In memory baypass/way how to force typing Android credentials for LOLLIPOP based generated keyPairs
-    var forceTypeCredentials = true
+    private var forceTypeCredentials = true
     lateinit var context: Context
-    var encryptedUserData by stringPref("secure_pin_data")
+    private var encryptedUserData by stringPref("secure_pin_data")
 
     private var signUpCancelCount by intPref("sign_up_cancel_count")
+
+    fun disableForceTypeCredentials() {
+        forceTypeCredentials = false
+    }
+
+    fun enableForceTypeCredentials() {
+        forceTypeCredentials = true
+    }
 
     fun init(context: Context) {
         this.context = context
@@ -72,6 +72,8 @@ object KeystoreCompat {
         if (!isProviderAvailable()) {
             logUnsupportedVersionForKeystore()
         }
+
+        KeystoreCompatProvider.init(Build.VERSION.SDK_INT)
     }
 
     fun clearCredentials() {
@@ -119,10 +121,8 @@ object KeystoreCompat {
     fun isSecurityEnabled(): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return false
-        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return isKeyguardSecuredSinceKitKat()
         } else {
-            return isDeviceSecuredSinceMarshmallow()
+            return KeystoreCompatProvider.keystoreCompat.isSecurityEnabled(KeystoreCompat.context)
         }
     }
 
@@ -133,23 +133,15 @@ object KeystoreCompat {
         Log.d(LOG_TAG, "Before load KeyPair...")
         if (isProviderAvailable() && isSecurityEnabled()) {
             initKeyPairIfNecessary(uniqueId)
-            KeystoreCrypto.encryptCredentials(composedCredentials, KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry)
+            KeystoreCompat.encryptedUserData = KeystoreCrypto.encryptCredentials(composedCredentials, KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry)
         } else {
             onError.invoke()
         }
     }
 
     fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?) {
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-//            loadCredentialsKitKat(activity, onSuccess)
-//        } else {
-//        }
-
-        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)) {
-            loadCredentialsMarshmallow(onSuccess, onFailure, forceFlag ?: forceTypeCredentials)
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            loadCredentialsLollipop(onSuccess, onFailure, forceFlag ?: forceTypeCredentials)
-        }
+        val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
+        KeystoreCompatProvider.keystoreCompat.loadCredentials(onSuccess, onFailure, { clearCredentials() }, forceFlag, this.encryptedUserData, privateEntry)
     }
 
 
@@ -157,71 +149,6 @@ object KeystoreCompat {
         Log.w(LOG_TAG, "Device Android version[%s] doesn't offer trusted keystore functionality!" + Build.VERSION.SDK_INT)
     }
 
-    /**
-     * This will not work to be called from CredentialsKeystoreProvider because of attempt to evaluate
-     * M-related code on KitKat (will fail on runtime).
-     *
-     * TODO prepare different KitKat related CredentialsKeystoreProvider to support pre-lollipop (but KitKat only!)
-     */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private fun loadCredentialsKitKat(onSuccess: (cre: String) -> Unit, onPermanentFailure: () -> Unit) {
-        try {
-            SecurityDeviceAdmin.INSTANCE.forceLockPreLollipop(onPermanentFailure)
-            onSuccess.invoke(KeystoreCrypto.decryptCredentials(KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry))
-        } catch (e: Exception) {
-
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun loadCredentialsLollipop(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean) {
-        try {
-
-            if (forceFlag) {
-                //Force signUp by using in memory flag:forceTypeCredentials
-                //This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
-                //TODO call this in app: forceSignUpLollipop(activity)
-                onFailure(RuntimeException("Force flag enabled!"))
-            } else {
-                onSuccess.invoke(KeystoreCrypto.decryptCredentials(KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry))
-            }
-        } catch (e: Exception) {
-            //TODO call this in app: forceSignUpLollipop(acrivity)
-            onFailure(e)
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private fun loadCredentialsMarshmallow(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean) {
-        try {
-
-            if (forceFlag) {
-                //Force signUp by using in memory flag:forceTypeCredentials
-                //This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
-
-                //TODO call this in app: forceSignUpLollipop(activity)
-                onFailure.invoke(RuntimeException("Force flag enabled!"))
-            } else {
-                onSuccess.invoke(KeystoreCrypto.decryptCredentials(KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry))
-            }
-        } catch (e: UserNotAuthenticatedException) {
-            onFailure.invoke(e)//forceSignUpLollipop(activity)//TODO call this in app: forceSignUpLollipop(activity)
-        } catch (e: KeyPermanentlyInvalidatedException) {
-            Log.w(LOG_TAG, "KeyPermanentlyInvalidatedException: cleanUp credentials for storage!")
-            clearCredentials()
-            onFailure.invoke(e) //TODO call this in app: activity.start<LoginActivity>()
-        }
-    }
-
-//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-//    private fun forceSignUpLollipop(activity: AppCompatActivity) {
-//        var km: KeyguardManager = KeystoreCompat.context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-//        val intent = km.createConfirmDeviceCredentialIntent(/*KeystoreCompat.context.getString(R.string.keystore_android_auth_title)*/"TODO TITLE",
-//                /*KeystoreCompat.context.getString(R.string.keystore_android_auth_desc)*/"TODO DESC")
-//        if (intent != null) {
-//            activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST)
-//        }
-//    }
 
     fun initKeyPairIfNecessary(alias: String) {
         if (isProviderAvailable() && isSecurityEnabled()) {
@@ -250,75 +177,11 @@ object KeystoreCompat {
 
     private fun generateKeyPair(alias: String, start: Date, end: Date) {
         val generator = KeyPairGenerator.getInstance(algorithm, KEYSTORE_KEYWORD)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            generator.initialize(getAlgorithmParameterSpecSinceMarshmallow(alias, start, end))
-            //Log.w(LOG_TAG, "" + isDeviceSecuredSinceMarshmallow())
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            generator.initialize(getAlgorithmParameterSpecSinceKitKat(alias, start, end))
-            //Log.w(LOG_TAG, "" + isKeyguardSecuredSinceKitKat())
-        } else throw RuntimeException("Device Android version " + Build.VERSION.SDK_INT + " doesn't offer trusted keystore functionality!")
+        generator.initialize(KeystoreCompatProvider.keystoreCompat.getAlgorithmParameterSpec(this.certSubject, alias, start, end, this.context))
         generator.generateKeyPair()
         if (!keyStore.containsAlias(alias))
             throw RuntimeException("KeyPair was NOT stored!")
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private fun getAlgorithmParameterSpecSinceKitKat(alias: String, startDate: Date, endDate: Date): AlgorithmParameterSpec {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            throw RuntimeException("Don't use KeyPairGeneratorSpec under Android version KITKAT!")
-        }
-        return KeyPairGeneratorSpec.Builder(KeystoreCompat.context)
-                .setAlias(alias)
-                .setSubject(certSubject)
-                .setSerialNumber(BigInteger.ONE)//TODO verify this number
-                .setStartDate(startDate)
-                .setEndDate(endDate)
-                .setEncryptionRequired()//This can be source of pain sometimes - generateKeyPair can complain with strange exception
-                .build()
-    }
-
-    /**
-     * Since Marshmallow set digest and padding mode are required.
-     * This is because, following good crypto security practices,
-     * AndroidKeyStore now locks down the ways a key can be used (signing vs decryption, digest and padding modes, etc.)
-     * to a specified set. If you try to use a key in a way you didn't specify when you created it, it will fail.
-     * This failure is actually enforced by the secure hardware, if your device has it,
-     * so even if an attacker roots the device the key can still only be used in the defined ways.
-     */
-    @TargetApi(Build.VERSION_CODES.M)
-    private fun getAlgorithmParameterSpecSinceMarshmallow(alias: String, startDate: Date, endDate: Date): AlgorithmParameterSpec {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            throw RuntimeException("Don't use generateKeyPairMarshMellow under Android version M!")
-        }
-        return KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT.or(KeyProperties.PURPOSE_DECRYPT))
-                .setCertificateSubject(certSubject)
-                .setKeyValidityStart(startDate)
-                .setKeyValidityEnd(endDate)
-                .setDigests(KeyProperties.DIGEST_SHA512)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
-                .setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
-                .setUserAuthenticationRequired(true)
-                .setUserAuthenticationValidityDurationSeconds(10)//User has to type challenge in 10 seconds
-                .build()
-    }
-
-
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private fun isKeyguardSecuredSinceKitKat(): Boolean {
-        var km: KeyguardManager = KeystoreCompat.context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-        Log.d(LOG_TAG, "KEYGUARD-SECURE:%s" + km.isKeyguardSecure)
-        Log.d(LOG_TAG, "KEYGUARD-LOCKED:%s" + km.isKeyguardLocked)
-        return km.isKeyguardSecure
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private fun isDeviceSecuredSinceMarshmallow(): Boolean {
-        var km: KeyguardManager = KeystoreCompat.context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-        Log.d(LOG_TAG, "DEVICE-SECURE:%s" + km.isDeviceSecure)
-        Log.d(LOG_TAG, "DEVICE-LOCKED:%s" + km.isDeviceLocked)
-        Log.d(LOG_TAG, "KEYGUARD-SECURE:%s" + km.isKeyguardSecure)
-        Log.d(LOG_TAG, "KEYGUARD-LOCKED:%s" + km.isKeyguardLocked)
-        return km.isDeviceSecure
-    }
 }
 
