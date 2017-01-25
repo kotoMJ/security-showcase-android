@@ -1,6 +1,5 @@
 package com.strv.keystorecompat.utility
 
-import android.annotation.TargetApi
 import android.app.KeyguardManager
 import android.app.admin.DevicePolicyManager
 import android.content.Context
@@ -15,11 +14,12 @@ inline fun showLockScreenSettings(context: Context) {
     context.startActivity(intent)
 }
 
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 inline fun forceAndroidAuth(title: String, desc: String, onIntentReady: (intent: Intent) -> Unit, context: Context) {
-    var km: KeyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-    val intent = km.createConfirmDeviceCredentialIntent(title, desc)
-    if (intent != null) {
-        onIntentReady.invoke(intent)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        var km: KeyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        val intent = km.createConfirmDeviceCredentialIntent(title, desc)
+        if (intent != null) {
+            onIntentReady.invoke(intent)
+        }
     }
 }

@@ -9,7 +9,6 @@ import com.strv.keystorecompat.ForceLockScreenKitKatException
 import com.strv.keystorecompat.KeystoreCompat
 import com.strv.keystorecompat.utility.forceAndroidAuth
 import com.strv.keystorecompat.utility.runSinceKitKat
-import com.strv.keystorecompat.utility.runSinceLollipop
 import cz.kinst.jakub.view.StatefulLayout
 import cz.koto.misak.securityshowcase.ContextProvider
 import cz.koto.misak.securityshowcase.SecurityConfig
@@ -70,9 +69,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
                     } else {
                         Logcat.e(exception, "")
                         CredentialStorage.performLogout()
-                        runSinceLollipop {
-                            forceAndroidAuth("my title", "my desc", { intent -> activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) }, KeystoreCompat.context)
-                        }
+                        forceAndroidAuth("my title", "my desc", { intent -> activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) }, KeystoreCompat.context)
                     }
                 }, null)
             } else {

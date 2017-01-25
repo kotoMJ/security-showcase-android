@@ -20,7 +20,6 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
 
     private val LOG_TAG = javaClass.name
 
-
     override fun loadCredentials(onSuccess: (String) -> Unit,
                                  onFailure: (Exception) -> Unit,
                                  clearCredentials: () -> Unit,
