@@ -29,33 +29,21 @@ import javax.security.auth.x500.X500Principal
 @TargetApi(Build.VERSION_CODES.KITKAT)
 object KeystoreCompat {
 
-    /**
-     * SECURITY CONFIG
-     */
+    val cipherMode: String = "RSA/None/PKCS1Padding"
+    lateinit var context: Context
+
     private val KEYSTORE_KEYWORD = "AndroidKeyStore"
     private lateinit var keyStore: KeyStore
     private lateinit var certSubject: X500Principal
-    val cipherMode: String = "RSA/None/PKCS1Padding"
     private lateinit var algorithm: String
     private lateinit var uniqueId: String
-
     private val KEYSTORE_CANCEL_THRESHOLD = 2 //how many cancellation is necessary to forbid this provider
-
     private val LOG_TAG = javaClass.name
     // In memory baypass/way how to force typing Android credentials for LOLLIPOP based generated keyPairs
     private var forceTypeCredentials = true
-    lateinit var context: Context
     private var encryptedUserData by stringPref("secure_pin_data")
-
     private var signUpCancelCount by intPref("sign_up_cancel_count")
 
-    fun disableForceTypeCredentials() {
-        forceTypeCredentials = false
-    }
-
-    fun enableForceTypeCredentials() {
-        forceTypeCredentials = true
-    }
 
     fun init(context: Context) {
         this.context = context
@@ -76,13 +64,6 @@ object KeystoreCompat {
         KeystoreCompatImpl.init(Build.VERSION.SDK_INT)
     }
 
-    fun clearCredentials() {
-        encryptedUserData = ""
-        keyStore.deleteEntry(uniqueId)
-        if (keyStore.containsAlias(uniqueId))
-            throw RuntimeException("Cert delete wasn't successful!")
-    }
-
 
     fun hasCredentialsLoadable(): Boolean {
         if (isProviderAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
@@ -90,21 +71,6 @@ object KeystoreCompat {
             return ((encryptedUserData?.isNotBlank() ?: false) //Is there content to decrypt
                     && (keyStore.getEntry(uniqueId, null) != null))//Is there a key for decryption?
         } else return false
-    }
-
-    fun increaseSignUpCancel() {
-        signUpCancelCount++
-    }
-
-    fun successSignUp() {
-        signUpCancelCount = 0
-    }
-
-    fun initKeyPairIfNecessary(alias: String) {
-        if (isProviderAvailable() && isSecurityEnabled()) {
-            if (keyStore.containsAlias(alias) && isCertificateValid()) return
-            else createNewKeyPair(alias)
-        }
     }
 
     /**
@@ -130,6 +96,7 @@ object KeystoreCompat {
     }
 
     /**
+     * Store credentials string in encrypted form to shared preferences.
      * Call this function in separated thread, as eventual keyPair init may takes longer time
      */
     fun storeCredentials(composedCredentials: String, onError: () -> Unit) {
@@ -142,9 +109,45 @@ object KeystoreCompat {
         }
     }
 
+    /**
+     * Load credentials string in decrypted form from shared preferences
+     */
     fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?) {
         val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
         KeystoreCompatImpl.keystoreCompat.loadCredentials(onSuccess, onFailure, { clearCredentials() }, forceFlag, this.encryptedUserData, privateEntry)
+    }
+
+    /**
+     * CleanUp credentials string from shared preferences.
+     */
+    fun clearCredentials() {
+        encryptedUserData = ""
+        keyStore.deleteEntry(uniqueId)
+        if (keyStore.containsAlias(uniqueId))
+            throw RuntimeException("Cert delete wasn't successful!")
+    }
+
+    fun disableForceTypeCredentials() {
+        forceTypeCredentials = false
+    }
+
+    fun enableForceTypeCredentials() {
+        forceTypeCredentials = true
+    }
+
+    fun increaseSignUpCancel() {
+        signUpCancelCount++
+    }
+
+    fun successSignUp() {
+        signUpCancelCount = 0
+    }
+
+    internal fun initKeyPairIfNecessary(alias: String) {
+        if (isProviderAvailable() && isSecurityEnabled()) {
+            if (keyStore.containsAlias(alias) && isCertificateValid()) return
+            else createNewKeyPair(alias)
+        }
     }
 
     internal fun signUpCancelled(): Boolean {
