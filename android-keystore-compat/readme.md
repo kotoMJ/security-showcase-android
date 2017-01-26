@@ -20,7 +20,7 @@ Minimum API is 19!
 Running on lower version will not crash, but will do nothing.
 
 Initialize KeystoreCompat in your application class.
-`com.strv.keystorecompat.KeystoreCompat.init(this)`
+`cz.koto.misak.keystorecompat.KeystoreCompat.init(this)`
 
 ## Usage ##
 For detail usage check for sample implementation in SecurityShowcase application

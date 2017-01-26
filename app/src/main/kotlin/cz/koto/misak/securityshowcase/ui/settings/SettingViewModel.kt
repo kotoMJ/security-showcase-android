@@ -1,9 +1,9 @@
 package cz.koto.misak.securityshowcase.ui.settings
 
 import android.databinding.ObservableBoolean
-import com.strv.keystorecompat.KeystoreCompat
-import com.strv.keystorecompat.utility.runSinceKitKat
-import com.strv.keystorecompat.utility.showLockScreenSettings
+import cz.koto.misak.keystorecompat.KeystoreCompat
+import cz.koto.misak.keystorecompat.utility.runSinceKitKat
+import cz.koto.misak.keystorecompat.utility.showLockScreenSettings
 import cz.koto.misak.securityshowcase.databinding.FragmentSettingsBinding
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
 import cz.koto.misak.securityshowcase.ui.BaseViewModel
