@@ -4,10 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 
 // App ID base (package name)
 final APPLICATION_ID = 'cz.koto.misak.securityshowcase'
+final SHOWCASE_GIT_TAG_REGEX = "SHOWCASE*"
 // Last Git tag name on current branch
-final SHOWCASE_GIT_TAG_NAME = 'git describe --tags --abbrev=0 --match "SHOWCASE*"'.execute([], project.rootDir).text.trim()
+final SHOWCASE_GIT_TAG_NAME = "git describe --tags --abbrev=0 --match ${SHOWCASE_GIT_TAG_REGEX}".execute([], project.rootDir).text.trim()
 // Total number of tags in the app
-final SHOWCASE_GIT_TAG_COUNT = 'git tag --list "SHOWCASE*"'.execute([], project.rootDir).text.split("\n").size()
+final SHOWCASE_GIT_TAG_COUNT = "git tag --list ${SHOWCASE_GIT_TAG_REGEX}".execute([], project.rootDir).text.split("\n").size()
 
 apply from: 'common.gradle'
 
@@ -21,7 +22,7 @@ android {
 		targetSdkVersion 25
 		multiDexEnabled false
 		versionCode SHOWCASE_GIT_TAG_COUNT
-		versionName SHOWCASE_GIT_TAG_NAME
+		versionName SHOWCASE_GIT_TAG_NAME.replaceAll("SHOWCASE-", "")
 		vectorDrawables.useSupportLibrary = true
 	}
 
