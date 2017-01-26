@@ -38,8 +38,6 @@ object KeystoreCompat {
 
 
     private val LOG_TAG = javaClass.name
-    // In memory baypass/way how to force typing Android credentials for LOLLIPOP based generated keyPairs
-    private var forceTypeCredentials = true
     private var encryptedUserData by stringPref("secure_pin_data")
     private var signUpCancelCount by intPref("sign_up_cancel_count")
 
@@ -140,18 +138,6 @@ object KeystoreCompat {
             keyStore.deleteEntry(uniqueId)
             if (keyStore.containsAlias(uniqueId))
                 throw RuntimeException("Cert delete wasn't successful!")
-        }
-    }
-
-    fun disableForceTypeCredentials() {
-        runSinceKitKat {
-            forceTypeCredentials = false
-        }
-    }
-
-    fun enableForceTypeCredentials() {
-        runSinceKitKat {
-            forceTypeCredentials = true
         }
     }
 

@@ -36,8 +36,6 @@ For detail usage check for sample implementation in SecurityShowcase application
 - `fun clearCredentials()`
 
 ### KeystoreCompat data flow helper methods ###
-- `fun disableForceTypeCredentials()`
-- `fun enableForceTypeCredentials()`
 - `fun increaseSignUpCancel()`
 - `fun signUpSuccessful() `
 
@@ -60,7 +58,7 @@ Keep this in mind if you have a background service that could need to access you
 The Keystore can be lost anytime! Permament content is not guaranteed.
 
 Security trust of Keystore grows with every new Android version.
-Suggested usage is since API23(Android M), but this library support usage since API19(Android KitKat).
+KeystoreCompat library suggest usage is since API23(Android M), but support usage since API19(Android KitKat).
 Every keystore is breakable (at least when device is rooted).
 
 ## Android keystore in existing libraries ##
@@ -80,7 +78,7 @@ TBD.
 ## More about Android keystore ##
 
 Android keystore is evolving mechanism from one Android version to other.
-This library concentrate handling Android keystore since Android API19 (KitKat).
+This library ensure handling Android Keystore since Android API19 (KitKat).
 
 
 
@@ -108,13 +106,21 @@ Enhanced/Improved security of Keystore is then since Android Marshmallow / API 2
 
 ### Android keystore - enough secured for me? or NOT ? ###
 
-Again, cecurity trust of Keystore grows with every new Android version.<br/>
-Suggested usage is since API23(Android M), but this library support usage since API19(Android KitKat).<br/>
-Every keystore is breakable (at least when device is rooted).<br/>
-Using Android keystore itself has known issues.<br/>
+**API 19(KitKat)** - user has to grant DEVICE ADMIN rights for KeystoreCompat library in order make this library working relatively securely with API19.
+If user don't grant device admin rights, library can't do the job.
 
-The more you know existing vulnerabilities, the better you can decide whether to use keystore or not for your use-case.
+**API 21(Lollipop)** - Since Lollipop is KeystoreCompat using standard Android's ScreenLock.
+Force to display ScreenLock is still not defined in the certificate it self,
+but user has to handle forcing LockScreen in `onFailure` block of `KeystoreCompat.loadCredentials` method.
 
+**API 23(Marshmallow)** - Since Marshmallow there is ScreenLock force ensured directly in the certificate definition.
+Marshmallow targets to [hardware-backed keystore](https://source.android.com/security/keystore/) and bring lots of (look for 23+)
+[security options](https://developer.android.com/training/articles/keystore.html).
+The way of key-pair generation is completely new. Marshmallow also starts support fingerprint authentication.
+
+**KeystoreCompat library suggests to use Keystore since `Marshmallow`, but supports usage since `KitKat`.**
+
+### List of known vulnerabilites ###
 
 #### Attacker can modify stored keys  ####
 
@@ -131,7 +137,7 @@ that it's the hash-then-encrypt (HtE) authenticated encryption (AE) scheme in ci
 in KeyStore that fails to guarantee the integrity of keys.
 
 
-### Related Articles ###
+### Keystore related articles ###
 http://www.androidauthority.com/use-android-keystore-store-passwords-sensitive-information-623779/
 https://threatpost.com/android-keystore-encryption-scheme-broken-researchers-say/119092/
 https://duo.com/blog/more-than-half-of-android-phones-vulnerable-to-encryption-bypass-attacks

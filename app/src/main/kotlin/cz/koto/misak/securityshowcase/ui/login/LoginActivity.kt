@@ -26,9 +26,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
                 KeystoreCompat.increaseSignUpCancel()
                 activity.finish()
             } else {
-                if (resultCode == Activity.RESULT_OK) {
-                    KeystoreCompat.disableForceTypeCredentials()
-                }
                 viewModel.onViewAttached(false)
             }
         } else
