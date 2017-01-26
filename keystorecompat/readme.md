@@ -73,7 +73,8 @@ But be careful, this approach force user handle with another secret (besides the
 potential vulnerabilities will be always rather uknown than using the Android defaults.
 
 ## Licence ##
-TBD.
+The Apache Software License, Version 2.0
+http://www.apache.org/licenses/LICENSE-2.0.txt
 
 ## More about Android keystore ##
 

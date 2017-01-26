@@ -1,6 +1,5 @@
 <resources>
-	<string name="app_name">Keystore Compat</string>
-
-	<string name="keystore_android_auth_title">AuthTitle</string>
-	<string name="keystore_android_auth_desc">AuthDesc</string>
+	<string name="kc_app_name">Keystore Compat</string>
+	<string name="kc_auth_title">AuthTitle</string>
+	<string name="kc_auth_desc">AuthDesc</string>
 </resources>
