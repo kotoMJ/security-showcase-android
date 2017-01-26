@@ -19,4 +19,5 @@ KeystoreCompat library should help to prevent pain when starting work with keyst
 or StackOverflow discussion.
 
 Read more about [KeystoreCompat](android-keystore-compat/readme.md)
+<br/>
 [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)

@@ -1,6 +1,7 @@
 # KeystoreCompat #
 
 [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)
+<br/><br/>
 This simple wrapper library is designed to save credentials
 to local shared preferences (encrypted using Android default security and Android Keystore).
 
