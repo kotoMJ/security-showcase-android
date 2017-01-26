@@ -39,7 +39,7 @@ object KeystoreCompat {
 
     private val LOG_TAG = javaClass.name
     private var encryptedUserData by stringPref("secure_pin_data")
-    private var signUpCancelCount by intPref("sign_up_cancel_count")
+    private var lockScreenCancelCount by intPref("sign_up_cancel_count")
 
 
     fun <T : KeystoreCompatConfig> init(context: Context, config: T) {
@@ -107,7 +107,7 @@ object KeystoreCompat {
     fun hasCredentialsLoadable(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (isKeystoreCompatAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
-                if (signUpCancelled()) return false
+                if (lockScreenCancelled()) return false
                 return ((encryptedUserData?.isNotBlank() ?: false) //Is there content to decrypt
                         && (keyStore.getEntry(uniqueId, null) != null))//Is there a key for decryption?
             } else return false
@@ -141,15 +141,22 @@ object KeystoreCompat {
         }
     }
 
-    fun increaseSignUpCancel() {
+    /**
+     * Call this for every Android's LockScreen cancellation to be able dismiss
+     * KeystoreCompat LockScreen feature after certain amount of users cancellation.
+     */
+    fun increaseLockScreenCancel() {
         runSinceKitKat {
-            signUpCancelCount++
+            lockScreenCancelCount++
         }
     }
 
-    fun signUpSuccessful() {
+    /**
+     * Call this for every successful signIn to activate eventually dismissed KeystoreCompat LockScreen feature.
+     */
+    fun signInSuccessful() {
         runSinceKitKat {
-            signUpCancelCount = 0
+            lockScreenCancelCount = 0
         }
     }
 
@@ -160,8 +167,8 @@ object KeystoreCompat {
         }
     }
 
-    internal fun signUpCancelled(): Boolean {
-        return signUpCancelCount >= config.getProviderForbidThreshold()
+    internal fun lockScreenCancelled(): Boolean {
+        return lockScreenCancelCount >= config.getProviderForbidThreshold()
     }
 
     private fun logUnsupportedVersionForKeystore() {

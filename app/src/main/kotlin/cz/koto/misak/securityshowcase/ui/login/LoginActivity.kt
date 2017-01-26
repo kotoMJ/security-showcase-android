@@ -23,7 +23,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == FORCE_SIGNUP_REQUEST) {
             if (resultCode == Activity.RESULT_CANCELED) {
-                KeystoreCompat.increaseSignUpCancel()
+                KeystoreCompat.increaseLockScreenCancel()
                 activity.finish()
             } else {
                 viewModel.onViewAttached(false)

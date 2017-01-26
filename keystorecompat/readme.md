@@ -35,9 +35,9 @@ For detail usage check for sample implementation in SecurityShowcase application
 - `fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?)`
 - `fun clearCredentials()`
 
-### KeystoreCompat data flow helper methods ###
-- `fun increaseSignUpCancel()`
-- `fun signUpSuccessful() `
+### KeystoreCompat lockScreen dismiss helpers ###
+- `fun increaseLockScreenCancel()`
+- `fun signInSuccessful() `
 
 ### IntentUtility ###
 - `inline fun showLockScreenSettings(context: Context)`
