@@ -14,7 +14,7 @@
 		-->
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-	<uses-sdk tools:overrideLibrary="com.strv.keystorecompat" />
+	<uses-sdk tools:overrideLibrary="cz.koto.misak.keystorecompat" />
 
 	<application
 		android:name=".SecurityApplication"

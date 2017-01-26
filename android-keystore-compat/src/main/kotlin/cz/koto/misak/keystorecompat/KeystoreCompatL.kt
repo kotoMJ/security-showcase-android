@@ -1,4 +1,4 @@
-package com.strv.keystorecompat
+package cz.koto.misak.keystorecompat
 
 import android.annotation.TargetApi
 import android.app.KeyguardManager
@@ -13,11 +13,10 @@ import java.util.*
 import javax.security.auth.x500.X500Principal
 
 /**
- * KitKat specific Keystore implementation.
+ * Lollipop specific Keystore implementation.
  */
-@TargetApi(Build.VERSION_CODES.KITKAT)
-internal object KeystoreCompatK : KeystoreCompatFacade {
-
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+internal object KeystoreCompatL : KeystoreCompatFacade {
     private val LOG_TAG = javaClass.name
 
     override fun loadCredentials(onSuccess: (String) -> Unit,
@@ -27,16 +26,23 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
                                  encryptedUserData: String,
                                  privateKeyEntry: KeyStore.PrivateKeyEntry) {
         try {
-            SecurityDeviceAdmin.INSTANCE.forceLockPreLollipop(
-                    { lockIntent -> onFailure.invoke(ForceLockScreenKitKatException(lockIntent)) },
-                    { onSuccess.invoke(KeystoreCrypto.decryptCredentials(privateKeyEntry, encryptedUserData)) })
+            if (forceFlag != null && forceFlag) {
+                //Force signUp by using in memory flag:forceTypeCredentials
+                //This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
+                //TODO call this in app: forceSignUpLollipop(activity)
+                onFailure(RuntimeException("Force flag enabled!"))
+            } else {
+                onSuccess.invoke(KeystoreCrypto.decryptCredentials(privateKeyEntry, encryptedUserData))
+            }
+
         } catch (e: Exception) {
-            onFailure.invoke(e)
+            //TODO call this in app: forceSignUpLollipop(acrivity)
+            onFailure(e)
         }
     }
 
     override fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             throw RuntimeException("${LOG_TAG} Unsupported usage of version ${Build.VERSION.SDK_INT}")
         }
         return KeyPairGeneratorSpec.Builder(context)
@@ -51,18 +57,10 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
 
     override fun isSecurityEnabled(context: Context): Boolean {
         var km: KeyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-        Log.d(LOG_TAG, "KEYGUARD-SECURE:${km.isKeyguardSecure}")
-        Log.d(LOG_TAG, "KEYGUARD-LOCKED:${km.isKeyguardLocked}")
+        Log.d(LOG_TAG, "KEYGUARD-SECURE:%s${km.isKeyguardSecure}")
+        Log.d(LOG_TAG, "KEYGUARD-LOCKED:%s${km.isKeyguardLocked}")
         return km.isKeyguardSecure
     }
 
-    //    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-//    private fun forceSignUpLollipop(activity: AppCompatActivity) {
-//        var km: KeyguardManager = KeystoreCompat.context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-//        val intent = km.createConfirmDeviceCredentialIntent(/*KeystoreCompat.context.getString(R.string.keystore_android_auth_title)*/"TODO TITLE",
-//                /*KeystoreCompat.context.getString(R.string.keystore_android_auth_desc)*/"TODO DESC")
-//        if (intent != null) {
-//            activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST)
-//        }
-//    }
+
 }

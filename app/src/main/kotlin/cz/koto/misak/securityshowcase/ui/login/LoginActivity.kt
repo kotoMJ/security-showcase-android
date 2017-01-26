@@ -3,8 +3,8 @@ package cz.koto.misak.securityshowcase.ui.login
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.strv.keystorecompat.KeystoreCompat
 import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig
+import cz.koto.misak.keystorecompat.KeystoreCompat
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.ActivityLoginBinding
 import cz.koto.misak.securityshowcase.ui.BaseActivity

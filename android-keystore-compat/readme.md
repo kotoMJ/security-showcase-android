@@ -20,7 +20,7 @@ Minimum API is 19!
 Running on lower version will not crash, but will do nothing.
 
 Initialize KeystoreCompat in your application class.
-`com.strv.keystorecompat.KeystoreCompat.init(this)`
+`cz.koto.misak.keystorecompat.KeystoreCompat.init(this)`
 
 ## Usage ##
 For detail usage check for sample implementation in SecurityShowcase application
@@ -73,7 +73,8 @@ But be careful, this approach force user handle with another secret (besides the
 potential vulnerabilities will be always rather uknown than using the Android defaults.
 
 ## Licence ##
-TBD.
+The Apache Software License, Version 2.0
+http://www.apache.org/licenses/LICENSE-2.0.txt
 
 ## More about Android keystore ##
 

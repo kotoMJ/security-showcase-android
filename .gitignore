@@ -72,3 +72,8 @@ hs_err_pid*
 /extras/**/*.properties
 /extras/**/*.jks
 /**/*-config.xml
+app/src/androidTest/
+app/src/test/
+extras/keystore/
+extras/sreens/
+keystorecompat/local.properties
