@@ -1,4 +1,4 @@
-package com.strv.keystorecompat
+package cz.koto.misak.keystorecompat
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -6,7 +6,7 @@ import android.os.Build
 import android.provider.Settings
 import android.security.keystore.KeyProperties
 import android.util.Log
-import com.strv.keystorecompat.utility.*
+import cz.koto.misak.keystorecompat.utility.*
 import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.util.*

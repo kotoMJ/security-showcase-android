@@ -5,11 +5,11 @@ import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.net.Uri
-import com.strv.keystorecompat.ForceLockScreenKitKatException
-import com.strv.keystorecompat.KeystoreCompat
-import com.strv.keystorecompat.utility.forceAndroidAuth
-import com.strv.keystorecompat.utility.runSinceKitKat
 import cz.kinst.jakub.view.StatefulLayout
+import cz.koto.misak.keystorecompat.ForceLockScreenKitKatException
+import cz.koto.misak.keystorecompat.KeystoreCompat
+import cz.koto.misak.keystorecompat.utility.forceAndroidAuth
+import cz.koto.misak.keystorecompat.utility.runSinceKitKat
 import cz.koto.misak.securityshowcase.ContextProvider
 import cz.koto.misak.securityshowcase.SecurityConfig
 import cz.koto.misak.securityshowcase.api.base.SecurityShowcaseApiProvider

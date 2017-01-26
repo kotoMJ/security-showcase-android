@@ -1,6 +1,6 @@
 package cz.koto.misak.securityshowcase
 
-import com.strv.keystorecompat.KeystoreCompatConfig
+import cz.koto.misak.keystorecompat.KeystoreCompatConfig
 
 /**
  * Define you own confi to be able override default KeystoreCompat configuration

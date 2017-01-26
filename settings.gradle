@@ -1,1 +1,1 @@
-include ':app', ':keystorecompat'
+include ':app', ':android-keystore-compat'

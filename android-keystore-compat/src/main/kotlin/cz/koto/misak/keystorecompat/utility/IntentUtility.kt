@@ -1,4 +1,4 @@
-package com.strv.keystorecompat.utility
+package cz.koto.misak.keystorecompat.utility
 
 import android.app.KeyguardManager
 import android.app.admin.DevicePolicyManager

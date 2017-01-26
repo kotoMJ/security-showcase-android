@@ -2,9 +2,9 @@ package cz.koto.misak.securityshowcase.ui.main
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatDelegate
-import com.strv.keystorecompat.KeystoreCompat
-import com.strv.keystorecompat.utility.runSinceKitKat
 import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig
+import cz.koto.misak.keystorecompat.KeystoreCompat
+import cz.koto.misak.keystorecompat.utility.runSinceKitKat
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.ActivityMainBinding
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
