@@ -7,7 +7,6 @@ import android.provider.Settings
 import android.security.keystore.KeyProperties
 import android.util.Log
 import cz.koto.misak.keystorecompat.utility.*
-import java.nio.charset.Charset
 import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.util.*
@@ -69,15 +68,12 @@ object KeystoreCompat {
         }
     }
 
-    fun createByteArrayKey(basePassword: String): ByteArray {
-        return KeystoreCrypto.createHashKey(basePassword, basePassword.toByteArray(Charset.forName("UTF-32")), basePassword.length)
-    }
 
     /**
      * Store byteArray key in encrypted form to shared preferences.
      * Call this function in separated thread, as eventual keyPair init may takes longer time
      */
-    fun storeIvAndEncryptedKey(byteArrayKey: ByteArray, onError: () -> Unit) {
+    fun storeByteArrayKey(byteArrayKey: ByteArray, onError: () -> Unit) {
         runSinceKitKat {
             Log.d(LOG_TAG, "Before load KeyPair...")
             if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
@@ -106,7 +102,7 @@ object KeystoreCompat {
     }
 
     /**
-     * Check if shared preferences contains some secret to be loadable.
+     * Check if shared preferences contains secret credentials to be loadable.
      */
     fun hasCredentialsLoadable(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -119,9 +115,22 @@ object KeystoreCompat {
     }
 
     /**
+     * Check if shared preferences contains secret key to be loadable.
+     */
+    fun hasByteArrayKeyLoadable(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (isKeystoreCompatAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
+                if (lockScreenCancelled()) return false
+                return ((encryptedUserKey.isNotEmpty()) //Is there content to decrypt
+                        && (keyStore.getEntry(uniqueId, null) != null))//Is there a key for decryption?
+            } else return false
+        } else return false
+    }
+
+    /**
      * Load byte key in decrypted form from shared preferences.
      */
-    fun loadIvAndEncryptedKey(onSuccess: (byteArrayKey: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?) {
+    fun loadByteArrayKey(onSuccess: (byteArrayKey: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?) {
         runSinceKitKat {
             val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
             KeystoreCompatImpl.keystoreCompat.loadIvAndEncryptedKey(onSuccess,
