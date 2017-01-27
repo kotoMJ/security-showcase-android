@@ -19,6 +19,28 @@ import javax.security.auth.x500.X500Principal
 internal object KeystoreCompatL : KeystoreCompatFacade {
     private val LOG_TAG = javaClass.name
 
+    override fun loadIvAndEncryptedKey(onSuccess: (ByteArray) -> Unit,
+                                       onFailure: (Exception) -> Unit,
+                                       clearCredentials: () -> Unit,
+                                       forceFlag: Boolean?,
+                                       ivAndEncryptedKey: ByteArray,
+                                       privateKeyEntry: KeyStore.PrivateKeyEntry) {
+        try {
+            if (forceFlag != null && forceFlag) {
+                //Force signUp by using in memory flag:forceTypeCredentials
+                //This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
+                //TODO call this in app: forceSignUpLollipop(activity)
+                onFailure(RuntimeException("Force flag enabled!"))
+            } else {
+                onSuccess.invoke(KeystoreCrypto.decryptKey(privateKeyEntry, ivAndEncryptedKey))
+            }
+
+        } catch (e: Exception) {
+            //TODO call this in app: forceSignUpLollipop(acrivity)
+            onFailure(e)
+        }
+    }
+
     override fun loadCredentials(onSuccess: (String) -> Unit,
                                  onFailure: (Exception) -> Unit,
                                  clearCredentials: () -> Unit,

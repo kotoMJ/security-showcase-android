@@ -25,6 +25,32 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
     private val LOG_TAG = javaClass.name
 
 
+    override fun loadIvAndEncryptedKey(onSuccess: (ByteArray) -> Unit,
+                                       onFailure: (Exception) -> Unit,
+                                       clearCredentials: () -> Unit,
+                                       forceFlag: Boolean?,
+                                       ivAndEncryptedKey: ByteArray,
+                                       privateKeyEntry: KeyStore.PrivateKeyEntry) {
+        try {
+
+            if (forceFlag != null && forceFlag) {
+                //Force signUp by using in memory flag:forceTypeCredentials
+                //This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
+
+                //TODO call this in app: forceSignUpLollipop(activity)
+                onFailure.invoke(RuntimeException("Force flag enabled!"))
+            } else {
+                onSuccess.invoke(KeystoreCrypto.decryptKey(privateKeyEntry, ivAndEncryptedKey))
+            }
+        } catch (e: UserNotAuthenticatedException) {
+            onFailure.invoke(e)//forceSignUpLollipop(activity)//TODO call this in app: forceSignUpLollipop(activity)
+        } catch (e: KeyPermanentlyInvalidatedException) {
+            Log.w(LOG_TAG, "KeyPermanentlyInvalidatedException: cleanUp credentials for storage!")
+            clearCredentials.invoke()
+            onFailure.invoke(e) //TODO call this in app: activity.start<LoginActivity>()
+        }
+    }
+
     override fun loadCredentials(onSuccess: (cre: String) -> Unit,
                                  onFailure: (e: Exception) -> Unit,
                                  clearCredentials: () -> Unit,

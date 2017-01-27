@@ -8,6 +8,13 @@ import javax.security.auth.x500.X500Principal
 
 internal interface KeystoreCompatFacade {
 
+    fun loadIvAndEncryptedKey(onSuccess: (cre: ByteArray) -> Unit,
+                              onFailure: (e: Exception) -> Unit,
+                              clearCredentials: () -> Unit,
+                              forceFlag: Boolean?,
+                              ivAndEncryptedKey: ByteArray,
+                              privateKeyEntry: KeyStore.PrivateKeyEntry)
+
     fun loadCredentials(onSuccess: (cre: String) -> Unit,
                         onFailure: (e: Exception) -> Unit,
                         clearCredentials: () -> Unit,

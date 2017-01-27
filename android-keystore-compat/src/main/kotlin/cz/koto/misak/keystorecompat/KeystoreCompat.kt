@@ -7,6 +7,7 @@ import android.provider.Settings
 import android.security.keystore.KeyProperties
 import android.util.Log
 import cz.koto.misak.keystorecompat.utility.*
+import java.nio.charset.Charset
 import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.util.*
@@ -38,7 +39,8 @@ object KeystoreCompat {
 
 
     private val LOG_TAG = javaClass.name
-    private var encryptedUserData by stringPref("secure_pin_data")
+    private var encryptedUserString by stringPref("secure_string")
+    private var encryptedUserKey by byteArrayPref("secure_key")
     private var lockScreenCancelCount by intPref("sign_up_cancel_count")
 
     fun <T : KeystoreCompatConfig> overrideConfig(config: T) {
@@ -67,6 +69,26 @@ object KeystoreCompat {
         }
     }
 
+    fun createByteArrayKey(basePassword: String): ByteArray {
+        return KeystoreCrypto.createHashKey(basePassword, basePassword.toByteArray(Charset.forName("UTF-32")), basePassword.length)
+    }
+
+    /**
+     * Store byteArray key in encrypted form to shared preferences.
+     * Call this function in separated thread, as eventual keyPair init may takes longer time
+     */
+    fun storeIvAndEncryptedKey(byteArrayKey: ByteArray, onError: () -> Unit) {
+        runSinceKitKat {
+            Log.d(LOG_TAG, "Before load KeyPair...")
+            if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
+                initKeyPairIfNecessary(uniqueId)
+                KeystoreCompat.encryptedUserKey = KeystoreCrypto.encryptKey(byteArrayKey, KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry)
+            } else {
+                onError.invoke()
+            }
+        }
+    }
+
     /**
      * Store credentials string in encrypted form to shared preferences.
      * Call this function in separated thread, as eventual keyPair init may takes longer time
@@ -76,7 +98,7 @@ object KeystoreCompat {
             Log.d(LOG_TAG, "Before load KeyPair...")
             if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
                 initKeyPairIfNecessary(uniqueId)
-                KeystoreCompat.encryptedUserData = KeystoreCrypto.encryptCredentials(composedCredentials, KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry)
+                KeystoreCompat.encryptedUserString = KeystoreCrypto.encryptCredentials(composedCredentials, KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry)
             } else {
                 onError.invoke()
             }
@@ -90,10 +112,25 @@ object KeystoreCompat {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (isKeystoreCompatAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
                 if (lockScreenCancelled()) return false
-                return ((encryptedUserData?.isNotBlank() ?: false) //Is there content to decrypt
+                return ((encryptedUserString?.isNotBlank() ?: false) //Is there content to decrypt
                         && (keyStore.getEntry(uniqueId, null) != null))//Is there a key for decryption?
             } else return false
         } else return false
+    }
+
+    /**
+     * Load byte key in decrypted form from shared preferences.
+     */
+    fun loadIvAndEncryptedKey(onSuccess: (byteArrayKey: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?) {
+        runSinceKitKat {
+            val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
+            KeystoreCompatImpl.keystoreCompat.loadIvAndEncryptedKey(onSuccess,
+                    onFailure,
+                    { clearCredentials() },
+                    forceFlag,
+                    this.encryptedUserKey,
+                    privateEntry)
+        }
     }
 
     /**
@@ -106,7 +143,7 @@ object KeystoreCompat {
                     onFailure,
                     { clearCredentials() },
                     forceFlag,
-                    this.encryptedUserData,
+                    this.encryptedUserString,
                     privateEntry)
         }
     }
@@ -116,7 +153,7 @@ object KeystoreCompat {
      */
     fun clearCredentials() {
         runSinceKitKat {
-            encryptedUserData = ""
+            encryptedUserString = ""
             keyStore.deleteEntry(uniqueId)
             if (keyStore.containsAlias(uniqueId))
                 throw RuntimeException("Cert delete wasn't successful!")
@@ -153,6 +190,7 @@ object KeystoreCompat {
         runSinceKitKat {
             this.context = context
             this.uniqueId = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
+            Log.d(LOG_TAG, "uniqueId:${uniqueId}")
             PrefDelegate.initialize(this.context)
             certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
 
