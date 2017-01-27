@@ -64,6 +64,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
                         signIn()
                     }
                 }, { exception ->
+                    CredentialStorage.dismissForceLockScreenFlag()
                     if (exception is ForceLockScreenKitKatException) {
                         activity.startActivityForResult(exception.lockIntent, FORCE_SIGNUP_REQUEST)
                     } else {
@@ -71,7 +72,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
                         CredentialStorage.performLogout()
                         forceAndroidAuth("my title", "my desc", { intent -> activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) }, KeystoreCompat.context)
                     }
-                }, null)
+                }, CredentialStorage.forceLockScreenFlag)
             } else {
                 Logcat.d("Use standard login.")
             }

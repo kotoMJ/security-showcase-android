@@ -10,6 +10,8 @@ object CredentialStorage {
     private var userName: String? = null
     private var password: String? = null
 
+    var forceLockScreenFlag: Boolean? = true
+
     fun getAccessToken(): String? {
         if (accessToken != null)
             Logcat.d("getToken %s", accessToken!!)
@@ -34,6 +36,21 @@ object CredentialStorage {
         accessToken = null
         userName = null
         password = null
+    }
+
+    /**
+     * Set forceLockScreenFlag to avoid automatic login just after logout.
+     */
+    fun forceLockScreenFlag() {
+        forceLockScreenFlag = true
+    }
+
+    /**
+     * Dismiss requirement to display LockScreen given by application.
+     * Requirement given by certificate definition remains.
+     */
+    fun dismissForceLockScreenFlag() {
+        this.forceLockScreenFlag = null
     }
 
 }

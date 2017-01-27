@@ -37,6 +37,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 R.id.menu_info -> switchToFragment(InfoFragment.newInstance(), false)
                 R.id.menu_settings -> switchToFragment(SettingsFragment.newInstance(), false)
                 R.id.menu_logout -> {
+                    CredentialStorage.forceLockScreenFlag()
                     CredentialStorage.performLogout()
                     activity.start<LoginActivity>()
                     activity.finish()

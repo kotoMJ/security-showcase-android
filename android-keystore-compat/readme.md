@@ -11,7 +11,7 @@ and therefore follow the minimum API and also inform about existing caveats/enha
 KeystoreCompat library is written in Kotlin language.
 
 So in case of usage this library from java project (without existing dependency on Kotlin) you need also
-to add dependency on `org.jetbrains.kotlin:kotlin-stdlib:1.0.6` or `org.jetbrains.kotlin:kotlin-stdlib:1.1-M04`
+to add dependency on `org.jetbrains.kotlin:kotlin-stdlib:1.0.6`
 
 ## UseCase ##
 
