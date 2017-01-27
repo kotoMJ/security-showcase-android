@@ -1,5 +1,6 @@
 package cz.koto.misak.securityshowcase
 
+import android.os.Build
 import cz.koto.misak.keystorecompat.KeystoreCompatConfig
 
 /**
@@ -7,7 +8,14 @@ import cz.koto.misak.keystorecompat.KeystoreCompatConfig
  */
 class ShowcaseKeystoreCompatConfig : KeystoreCompatConfig() {
 
-    override fun getKitkatDeviceAdminExplanatory(): String {
-        return "OVERRIDEN EXPLANATORY"
+    /**
+     * How many cancellation is necessary to suppress AndroidLoginScreen / KitkatAdminRequestDialog .
+     */
+    override open fun getProviderForbidThreshold(): Int {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            return 1 //In case of Admin request dialog on KitKat escape after first cancel click.
+        } else {
+            return 2 //In case of standard Android security dialog dismiss dialog after second CANCEL button click
+        }
     }
 }

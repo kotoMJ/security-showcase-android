@@ -34,11 +34,20 @@ The only pre-condition is, that hosted application has applicationId defined.
 
 ## Configuration ##
 
+### KeystoreCompatConfig ###
 KeystoreCompat offer possibility to override default configuration using:
 `cz.koto.misak.keystorecompat.KeystoreCompat.overrideConfig(T : KeystoreCompatConfig)`
 
 In case of overriding default configuration, call overrideConfig method before the first KeystoreCompat usage.
 
+### String resources ###
+Define customized strings in your application string.xml
+<br/><br/>
+`<string name="kc_lock_screen_title">Custom lock screen title</string>`
+<br/><br/>
+`<string name="kc_lock_screen_description">Custom lock screen description</string>`
+<br/><br/>
+`<string name="kc_kitkat_admin_explanatory">"Custom explanatory, explain to the user, that your application needs DeviceAdmin rights. For API 19 (KitKat) only."</string>`
 ## Usage ##
 For detail usage check for sample implementation in SecurityShowcase application
 

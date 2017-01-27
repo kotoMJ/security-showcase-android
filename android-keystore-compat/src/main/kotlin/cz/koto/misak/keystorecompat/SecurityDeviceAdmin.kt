@@ -30,7 +30,7 @@ class SecurityDeviceAdmin : DeviceAdminReceiver {
         //try become active
         val intent: Intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
         intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mAdminName)
-        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, KeystoreCompat.config.getKitkatDeviceAdminExplanatory());
+        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, KeystoreCompat.context.getString(R.string.kc_kitkat_admin_explanatory));
         onLockActivityShouldBeInvoked.invoke(intent)
     } else {
         //already a device administrator, can do security opertations now

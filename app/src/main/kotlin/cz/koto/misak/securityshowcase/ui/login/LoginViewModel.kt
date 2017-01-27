@@ -11,6 +11,7 @@ import cz.koto.misak.keystorecompat.KeystoreCompat
 import cz.koto.misak.keystorecompat.utility.forceAndroidAuth
 import cz.koto.misak.keystorecompat.utility.runSinceKitKat
 import cz.koto.misak.securityshowcase.ContextProvider
+import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.SecurityConfig
 import cz.koto.misak.securityshowcase.api.base.SecurityShowcaseApiProvider
 import cz.koto.misak.securityshowcase.databinding.ActivityLoginBinding
@@ -70,7 +71,9 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
                     } else {
                         Logcat.e(exception, "")
                         CredentialStorage.performLogout()
-                        forceAndroidAuth("my title", "my desc", { intent -> activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) }, KeystoreCompat.context)
+                        forceAndroidAuth(getString(R.string.kc_lock_screen_title), getString(R.string.kc_lock_screen_description),
+                                { intent -> activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) },
+                                KeystoreCompat.context)
                     }
                 }, CredentialStorage.forceLockScreenFlag)
             } else {
