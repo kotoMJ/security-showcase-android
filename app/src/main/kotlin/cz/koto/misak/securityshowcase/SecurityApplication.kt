@@ -14,7 +14,12 @@ open class SecurityApplication : Application() {
         ContextProvider.initialize(this)
         LeakCanary.install(this)
         PrefDelegate.initialize(this)
-        KeystoreCompat.init(this, ShowcaseKeystoreCompatConfig())
+
+        /**
+         * Not necessarily to be set at all (defaults are available inside the library).
+         * Nor necessarily to be set in Application class (enough to set it before first usage of KeystoreCompat)
+         */
+        KeystoreCompat.overrideConfig(ShowcaseKeystoreCompatConfig())
     }
 }
 

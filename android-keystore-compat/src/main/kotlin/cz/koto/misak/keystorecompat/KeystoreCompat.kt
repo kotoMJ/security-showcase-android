@@ -41,26 +41,12 @@ object KeystoreCompat {
     private var encryptedUserData by stringPref("secure_pin_data")
     private var lockScreenCancelCount by intPref("sign_up_cancel_count")
 
+    fun <T : KeystoreCompatConfig> overrideConfig(config: T) {
+        this.config = config
+    }
 
-    fun <T : KeystoreCompatConfig> init(context: Context, config: T) {
-        if (!isKeystoreCompatAvailable()) {
-            logUnsupportedVersionForKeystore()
-        }
-        runSinceKitKat {
-            this.context = context
-            this.config = config
-            this.uniqueId = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
-            PrefDelegate.initialize(this.context)
-            certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
+    internal fun initFallback(context: Context) {
 
-            algorithm = "RSA"
-            runSinceMarshmallow {
-                algorithm = KeyProperties.KEY_ALGORITHM_RSA
-            }
-            keyStore = KeyStore.getInstance(KEYSTORE_KEYWORD)
-            keyStore.load(null)
-            KeystoreCompatImpl.init(Build.VERSION.SDK_INT)
-        }
     }
 
     /**
@@ -157,6 +143,30 @@ object KeystoreCompat {
     fun signInSuccessful() {
         runSinceKitKat {
             lockScreenCancelCount = 0
+        }
+    }
+
+    internal fun init(context: Context) {
+        /**
+         * Developer note: don't access config object in init!
+         * Why? auto-init in KeystoreCompatInitProvider might be initialized before user overrides the config.
+         */
+        if (!isKeystoreCompatAvailable()) {
+            logUnsupportedVersionForKeystore()
+        }
+        runSinceKitKat {
+            this.context = context
+            this.uniqueId = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
+            PrefDelegate.initialize(this.context)
+            certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
+
+            algorithm = "RSA"
+            runSinceMarshmallow {
+                algorithm = KeyProperties.KEY_ALGORITHM_RSA
+            }
+            keyStore = KeyStore.getInstance(KEYSTORE_KEYWORD)
+            keyStore.load(null)
+            KeystoreCompatImpl.init(Build.VERSION.SDK_INT)
         }
     }
 
