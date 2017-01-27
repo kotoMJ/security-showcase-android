@@ -38,7 +38,9 @@ The only pre-condition is, that hosted application has applicationId defined.
 KeystoreCompat offer possibility to override default configuration using:
 `cz.koto.misak.keystorecompat.KeystoreCompat.overrideConfig(T : KeystoreCompatConfig)`
 
-In case of overriding default configuration, call overrideConfig method before the first KeystoreCompat usage.
+- `fun getDialogDismissThreshold(): Int` Define how many times can be KeystoreCompat dialog displayed when it was previously cancelled.
+
+In case of overriding KeystoreCompatConfig, call overrideConfig method before the first KeystoreCompat usage.
 
 ### String resources ###
 Define customized strings in your application string.xml

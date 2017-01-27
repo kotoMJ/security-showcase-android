@@ -174,7 +174,7 @@ object KeystoreCompat {
     }
 
     internal fun lockScreenCancelled(): Boolean {
-        return lockScreenCancelCount >= config.getProviderForbidThreshold()
+        return lockScreenCancelCount >= config.getDialogDismissThreshold()
     }
 
     private fun logUnsupportedVersionForKeystore() {
