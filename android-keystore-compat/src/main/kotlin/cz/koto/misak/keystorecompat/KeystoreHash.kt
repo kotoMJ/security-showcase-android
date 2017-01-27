@@ -6,6 +6,17 @@ import java.security.SecureRandom
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 
+/**
+ * Notes about hashing:
+ * https://crackstation.net/hashing-security.htm
+ * https://www.owasp.org/index.php/Hashing_Java
+ *
+ * Discussion for above mentioned source:
+ * http://security.stackexchange.com/questions/91447/understanding-salted-password-hashing-using-java
+ *
+ * Good source for hashing sources:
+ * https://github.com/defuse/password-hashing/blob/master/PasswordStorage.java
+ */
 
 val PBKDF2WithHmacSHA512: String = "PBKDF2WithHmacSHA512"
 val PBKDF2WithHmacSHA1: String = "PBKDF2WithHmacSHA1"
