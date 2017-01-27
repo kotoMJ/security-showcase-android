@@ -24,8 +24,8 @@ Does your app use classic credentials (e.g. username & password) to connect to s
 
 ## Installation ##
 
-Add following dependency to your build.gradle: `compile 'cz.koto.misak:android-keystore-compat:0.3.0-BETA'`
-
+Add following dependency to your build.gradle: [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)
+<br/>
 Minimum API is 19!
 Running on lower version will not crash, but will do nothing.
 
