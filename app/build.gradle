@@ -69,7 +69,7 @@ dependencies {
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 	compile project(':android-keystore-compat')
-	//compile 'cz.koto.misak:android-keystore-compat:0.3.0-BETA'
+	//compile 'cz.koto.misak:android-keystore-compat:0.4.0-BETA'
 
 	final SUPPORT_LIBRARY_VERSION = "25.1.0"
 	compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
