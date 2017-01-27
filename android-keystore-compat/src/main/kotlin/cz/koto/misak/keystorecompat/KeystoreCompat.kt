@@ -45,10 +45,6 @@ object KeystoreCompat {
         this.config = config
     }
 
-    internal fun initFallback(context: Context) {
-
-    }
-
     /**
      * Keystore is available since API1.
      * CredentialsKeystoreProvider is since API18.

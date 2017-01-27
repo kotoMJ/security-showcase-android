@@ -1,5 +1,4 @@
 # KeystoreCompat #
-
 [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)
 <br/><br/>
 This simple wrapper library is designed to save credentials
@@ -7,6 +6,12 @@ to local shared preferences (encrypted using Android default security and Androi
 
 KeystoreCompat also keeps in mind existing Keystore-related vulnerabilities
 and therefore follow the minimum API and also inform about existing caveats/enhancements in all supported API version.
+
+## Kotlin language ##
+KeystoreCompat library is written in Kotlin language.
+
+So in case of usage this library from java project (without existing dependency on Kotlin) you need also
+to add dependency on `org.jetbrains.kotlin:kotlin-stdlib:1.0.6`
 
 ## UseCase ##
 
@@ -21,8 +26,15 @@ Does your app use classic credentials (e.g. username & password) to connect to s
 Minimum API is 19!
 Running on lower version will not crash, but will do nothing.
 
-Initialize KeystoreCompat in your application class.
-`cz.koto.misak.keystorecompat.KeystoreCompat.init(this)`
+KeystoreCompat initialize itself automatically with hosted application context.
+The only pre-condition is, that hosted application has applicationId defined.
+
+## Configuration ##
+
+KeystoreCompat offer possibility to override default configuration using:
+`cz.koto.misak.keystorecompat.KeystoreCompat.overrideConfig(T : KeystoreCompatConfig)`
+
+In case of overriding default configuration, call overrideConfig method before the first KeystoreCompat usage.
 
 ## Usage ##
 For detail usage check for sample implementation in SecurityShowcase application
