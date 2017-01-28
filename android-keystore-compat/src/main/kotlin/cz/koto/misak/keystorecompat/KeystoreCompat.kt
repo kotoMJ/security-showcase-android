@@ -198,6 +198,7 @@ object KeystoreCompat {
         }
         runSinceKitKat {
             this.context = context
+            this.config = KeystoreCompatConfig() // default config can be overriden externally later!
             this.uniqueId = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
             Log.d(LOG_TAG, "uniqueId:${uniqueId}")
             PrefDelegate.initialize(this.context)
