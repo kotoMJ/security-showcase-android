@@ -7,7 +7,6 @@ buildscript {
 	repositories {
 		jcenter()
 		maven {url 'https://maven.fabric.io/public'}
-		maven {url "http://dl.bintray.com/kotlin/kotlin-eap-1.1"}
 	}
 	dependencies {
 		classpath "com.android.tools.build:gradle:$android_tools_version"
@@ -21,7 +20,6 @@ allprojects {
 	repositories {
 		jcenter()
 		maven {url 'https://maven.fabric.io/public'}
-		maven {url "http://dl.bintray.com/kotlin/kotlin-eap-1.1"}
 	}
 
 	// Put this in 'root' `build.gradle`, in allprojects or subprojects

@@ -43,8 +43,10 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
                             .subscribe({}, {
                                 it.printStackTrace()
                                 binding.settingsAndroidSecuritySwitch.isEnabled = true
+                                binding.settingsAndroidSecuritySwitch.isChecked = false
                             }, {
                                 binding.settingsAndroidSecuritySwitch.isEnabled = true
+                                binding.settingsAndroidSecuritySwitch.isChecked = true
                                 /* DEV test to load stored credentials (don't forget to increase setUserAuthenticationValidityDurationSeconds() to fulfill this test!) */
                                 //CredentialsKeystoreProvider.loadCredentials({ loaded -> Logcat.w("LOAD test %s", loaded) }, { Logcat.e("LOAD test FAILURE") }, false)
                             })
