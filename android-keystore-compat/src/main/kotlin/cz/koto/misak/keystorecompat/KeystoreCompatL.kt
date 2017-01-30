@@ -19,12 +19,17 @@ import javax.security.auth.x500.X500Principal
 internal object KeystoreCompatL : KeystoreCompatFacade {
     private val LOG_TAG = javaClass.name
 
-    override fun loadCredentials(onSuccess: (String) -> Unit,
-                                 onFailure: (Exception) -> Unit,
-                                 clearCredentials: () -> Unit,
-                                 forceFlag: Boolean?,
-                                 encryptedUserData: String,
-                                 privateKeyEntry: KeyStore.PrivateKeyEntry) {
+    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
+        return KeystoreCrypto.encryptRSA(secret, privateKeyEntry, useBase64Encoding)
+    }
+
+    override fun loadSecret(onSuccess: (ByteArray) -> Unit,
+                            onFailure: (Exception) -> Unit,
+                            clearCredentials: () -> Unit,
+                            forceFlag: Boolean?,
+                            encryptedUserData: String,
+                            privateKeyEntry: KeyStore.PrivateKeyEntry,
+                            isBase64Encoded: Boolean) {
         try {
             if (forceFlag != null && forceFlag) {
                 //Force signUp by using in memory flag:forceTypeCredentials
@@ -32,7 +37,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
                 //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(KeystoreCrypto.decryptCredentials(privateKeyEntry, encryptedUserData))
+                onSuccess.invoke(KeystoreCrypto.decryptRSA(privateKeyEntry, encryptedUserData, isBase64Encoded))
             }
 
         } catch (e: Exception) {

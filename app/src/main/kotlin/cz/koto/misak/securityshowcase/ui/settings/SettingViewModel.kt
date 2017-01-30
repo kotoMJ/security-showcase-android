@@ -29,22 +29,25 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
 
 
         runSinceKitKat {
-            binding.settingsAndroidSecuritySwitch.isChecked = KeystoreCompat.hasCredentialsLoadable()
+            binding.settingsAndroidSecuritySwitch.isChecked = KeystoreCompat.hasSecretLoadable()
             binding.settingsAndroidSecuritySwitch.setOnCheckedChangeListener { switch, b ->
                 if (b) {
                     binding.settingsAndroidSecuritySwitch.isEnabled = false
                     Flowable.fromCallable {
-                        KeystoreCompat.storeCredentials(
+                        KeystoreCompat.storeSecret(
                                 "${CredentialStorage.getUserName()};${CredentialStorage.getPassword()}",
-                                { Logcat.e("Store credentials failed!") })
+                                { Logcat.e("Store credentials failed!") },
+                                { Logcat.d("Credentials stored.") })
                     }
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({}, {
                                 it.printStackTrace()
                                 binding.settingsAndroidSecuritySwitch.isEnabled = true
+                                binding.settingsAndroidSecuritySwitch.isChecked = false
                             }, {
                                 binding.settingsAndroidSecuritySwitch.isEnabled = true
+                                binding.settingsAndroidSecuritySwitch.isChecked = true
                                 /* DEV test to load stored credentials (don't forget to increase setUserAuthenticationValidityDurationSeconds() to fulfill this test!) */
                                 //CredentialsKeystoreProvider.loadCredentials({ loaded -> Logcat.w("LOAD test %s", loaded) }, { Logcat.e("LOAD test FAILURE") }, false)
                             })
