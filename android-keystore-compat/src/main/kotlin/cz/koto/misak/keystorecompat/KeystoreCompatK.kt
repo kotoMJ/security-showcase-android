@@ -20,16 +20,22 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
 
     private val LOG_TAG = javaClass.name
 
-    override fun loadCredentials(onSuccess: (String) -> Unit,
-                                 onFailure: (Exception) -> Unit,
-                                 clearCredentials: () -> Unit,
-                                 forceFlag: Boolean?,
-                                 encryptedUserData: String,
-                                 privateKeyEntry: KeyStore.PrivateKeyEntry) {
+    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
+        return KeystoreCrypto.encryptRSA(secret, privateKeyEntry, useBase64Encoding)
+    }
+
+
+    override fun loadSecret(onSuccess: (ByteArray) -> Unit,
+                            onFailure: (Exception) -> Unit,
+                            clearCredentials: () -> Unit,
+                            forceFlag: Boolean?,
+                            encryptedUserData: String,
+                            privateKeyEntry: KeyStore.PrivateKeyEntry,
+                            isBase64Encoded: Boolean) {
         try {
             SecurityDeviceAdmin.INSTANCE.forceLockPreLollipop(
                     { lockIntent -> onFailure.invoke(ForceLockScreenKitKatException(lockIntent)) },
-                    { onSuccess.invoke(KeystoreCrypto.decryptCredentials(privateKeyEntry, encryptedUserData)) })
+                    { onSuccess.invoke(KeystoreCrypto.decryptRSA(privateKeyEntry, encryptedUserData, isBase64Encoded)) })
         } catch (e: Exception) {
             onFailure.invoke(e)
         }

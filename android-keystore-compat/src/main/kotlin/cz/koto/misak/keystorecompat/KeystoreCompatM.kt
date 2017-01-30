@@ -24,13 +24,17 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
 
     private val LOG_TAG = javaClass.name
 
+    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
+        return KeystoreCrypto.encryptRSA(secret, privateKeyEntry, useBase64Encoding)
+    }
 
-    override fun loadCredentials(onSuccess: (cre: String) -> Unit,
-                                 onFailure: (e: Exception) -> Unit,
-                                 clearCredentials: () -> Unit,
-                                 forceFlag: Boolean?,
-                                 encryptedUserData: String,
-                                 privateKeyEntry: KeyStore.PrivateKeyEntry) {
+    override fun loadSecret(onSuccess: (cre: ByteArray) -> Unit,
+                            onFailure: (e: Exception) -> Unit,
+                            clearCredentials: () -> Unit,
+                            forceFlag: Boolean?,
+                            encryptedUserData: String,
+                            privateKeyEntry: KeyStore.PrivateKeyEntry,
+                            isBase64Encoded: Boolean) {
         try {
 
             if (forceFlag != null && forceFlag) {
@@ -40,10 +44,10 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                 //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure.invoke(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(KeystoreCrypto.decryptCredentials(privateKeyEntry, encryptedUserData))
+                onSuccess.invoke(KeystoreCrypto.decryptRSA(privateKeyEntry, encryptedUserData, isBase64Encoded))
             }
         } catch (e: UserNotAuthenticatedException) {
-            onFailure.invoke(e)//forceSignUpLollipop(activity)//TODO call this in app: forceSignUpLollipop(activity)
+            onFailure.invoke(e)
         } catch (e: KeyPermanentlyInvalidatedException) {
             Log.w(LOG_TAG, "KeyPermanentlyInvalidatedException: cleanUp credentials for storage!")
             clearCredentials.invoke()

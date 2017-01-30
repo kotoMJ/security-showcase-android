@@ -3,6 +3,7 @@ package cz.koto.misak.keystorecompat.utility
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import android.util.Base64
 import kotlin.reflect.KProperty
 
 /*
@@ -43,6 +44,7 @@ abstract class PrefDelegate<T>(val prefName: String?, val prefKey: String) {
     abstract operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T)
 }
 
+
 internal fun stringPref(prefKey: String, defaultValue: String? = null) = StringPrefDelegate(null, prefKey, defaultValue)
 //fun stringPref(prefName: String, prefKey: String, defaultValue: String? = null) = StringPrefDelegate(prefName, prefKey, defaultValue)
 internal class StringPrefDelegate(prefName: String?, prefKey: String, val defaultValue: String?) : PrefDelegate<String?>(prefName, prefKey) {
@@ -55,6 +57,13 @@ internal fun intPref(prefKey: String, defaultValue: Int = 0) = IntPrefDelegate(n
 internal class IntPrefDelegate(prefName: String?, prefKey: String, val defaultValue: Int) : PrefDelegate<Int>(prefName, prefKey) {
     override fun getValue(thisRef: Any?, property: KProperty<*>) = prefs.getInt(prefKey, defaultValue)
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: Int) = prefs.edit().putInt(prefKey, value).apply()
+}
+
+internal fun byteArrayPref(prefKey: String) = byteArrayPrefDelegate(null, prefKey)
+//fun booleanPref(prefName: String, prefKey: String, defaultValue: Boolean = false) = BooleanPrefDelegate(prefName, prefKey, defaultValue)
+internal class byteArrayPrefDelegate(prefName: String?, prefKey: String) : PrefDelegate<ByteArray>(prefName, prefKey) {
+    override fun getValue(thisRef: Any?, property: KProperty<*>) = Base64.decode(prefs.getString(prefKey, null), Base64.DEFAULT)
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: ByteArray) = prefs.edit().putString(prefKey, Base64.encodeToString(value, Base64.NO_WRAP)).apply()
 }
 
 //fun floatPref(prefKey: String, defaultValue: Float = 0f) = FloatPrefDelegate(null, prefKey, defaultValue)

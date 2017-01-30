@@ -57,8 +57,8 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
     override fun onViewAttached(firstAttachment: Boolean) {
         super.onViewAttached(firstAttachment)
         runSinceKitKat {
-            if (KeystoreCompat.hasCredentialsLoadable()) {
-                KeystoreCompat.loadCredentials({ decryptResult ->
+            if (KeystoreCompat.hasSecretLoadable()) {
+                KeystoreCompat.loadSecretAsString({ decryptResult ->
                     decryptResult.split(';').let {
                         username.set(it[0])
                         password.set(it[1])
