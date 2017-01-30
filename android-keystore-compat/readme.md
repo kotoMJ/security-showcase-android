@@ -20,7 +20,11 @@ Does your app use classic credentials (e.g. username & password) to connect to s
 **Want to let user access your application using just Android default security**
 (PIN/password/gesture/fingerprint) and do not force let user type username/password again and again?
 
-**If so, this library is designed for you.**
+**If so, this library is designed for you!**
+
+Sample application available on Github (also distributed via Google Play)
+* [Realm Security - java project](https://github.com/kotomisak/db-showcase-android)
+* [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android)
 
 ## Installation ##
 
