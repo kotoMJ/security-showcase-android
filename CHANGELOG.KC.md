@@ -1,6 +1,8 @@
-# Release notes for Security Showcase app
 
+# Release notes for Keystore Compat library
 
+## KC-0.5.0-BETA
+ * API of KeystoreCompat is refactored according to new experience during implementation of [Support for encrypted Realm](https://github.com/kotomisak/db-showcase-android)
 
-## SHOWCASE-1.0.0
- * First stable version with usage of Keystore KC-0.5.0-BETA (ready for usage even with Realm encryption)
+## KC-0.4.0-BETA
+ * First stable version ready for usage in Security Showcase app.
