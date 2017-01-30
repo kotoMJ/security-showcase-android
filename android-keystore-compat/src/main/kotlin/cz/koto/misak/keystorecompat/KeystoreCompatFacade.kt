@@ -8,19 +8,15 @@ import javax.security.auth.x500.X500Principal
 
 internal interface KeystoreCompatFacade {
 
-    fun loadIvAndEncryptedKey(onSuccess: (cre: ByteArray) -> Unit,
-                              onFailure: (e: Exception) -> Unit,
-                              clearCredentials: () -> Unit,
-                              forceFlag: Boolean?,
-                              ivAndEncryptedKey: ByteArray,
-                              privateKeyEntry: KeyStore.PrivateKeyEntry)
+    fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String
 
-    fun loadCredentials(onSuccess: (cre: String) -> Unit,
-                        onFailure: (e: Exception) -> Unit,
-                        clearCredentials: () -> Unit,
-                        forceFlag: Boolean?,
-                        encryptedUserData: String,
-                        privateKeyEntry: KeyStore.PrivateKeyEntry)
+    fun loadSecret(onSuccess: (cre: ByteArray) -> Unit,
+                   onFailure: (e: Exception) -> Unit,
+                   clearCredentials: () -> Unit,
+                   forceFlag: Boolean?,
+                   encryptedUserData: String,
+                   privateKeyEntry: KeyStore.PrivateKeyEntry,
+                   isBase64Encoded: Boolean)
 
     fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec
 

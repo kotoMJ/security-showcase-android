@@ -21,6 +21,9 @@ import javax.crypto.spec.PBEKeySpec
 val PBKDF2WithHmacSHA512: String = "PBKDF2WithHmacSHA512"
 val PBKDF2WithHmacSHA1: String = "PBKDF2WithHmacSHA1"
 
+val LENGTH32BYTES = 256
+val LENGTH64BYTES = 512
+
 inline fun createRandomHashKey(): ByteArray {
     val KEY_LENGTH = 64
     val key = ByteArray(KEY_LENGTH)
@@ -31,7 +34,7 @@ inline fun createRandomHashKey(): ByteArray {
 
 /**
  * Safe way to hash password based on: https://www.owasp.org/index.php/Hashing_Java
- *
+ * Function is using @JvmOverloads to force optional parameters be optional even in java code.
  * @param basePassword
  * @param salt
  * @param iterationCount
@@ -39,11 +42,12 @@ inline fun createRandomHashKey(): ByteArray {
  * set sha512 to false (PBKDF2WithHmacSHA1).
  * Both are adequate to the task but you may be criticized when people see "SHA1"
  * in the specification (SHA1 can be unsafe outside of the context of PBKDF2).
+ * @param keyLengthInBit - define max/preferred bits of the key (256bits means 32bytes output),look at LENGTH32BYTES,LENGTH64BYTES constants.
  */
-inline fun createHashKey(basePassword: String, salt: ByteArray, iterationCount: Int, sha512: Boolean): ByteArray {
+@JvmOverloads inline fun createHashKey(basePassword: String, salt: ByteArray, iterationCount: Int, sha512: Boolean, keyLengthInBit: Int = LENGTH32BYTES): ByteArray {
     try {
         val skf = SecretKeyFactory.getInstance(if (sha512) PBKDF2WithHmacSHA512 else PBKDF2WithHmacSHA1)
-        val spec = PBEKeySpec(basePassword.toCharArray(), salt, iterationCount, 256)
+        val spec = PBEKeySpec(basePassword.toCharArray(), salt, iterationCount, keyLengthInBit)//65536, 256
         val key = skf.generateSecret(spec)
         return key.encoded
     } catch (e: Exception) {
@@ -55,14 +59,15 @@ inline fun createHashKey(basePassword: String, salt: ByteArray, iterationCount: 
 /**
  * Simplified and less secure way to hash password (salt and iterationCount are derived from basePassword).
  * Use createHashKey with salt and iterationCount instead, if possible.
+ * Function is using @JvmOverloads to force optional parameters be optional even in java code.
  *
  * @param basePassword
  * @param sha512 - If sha512 (PBKDF2WithHmacSHA512) set to true generates a NoSuchAlgorithmException,
  * set sha512 to false (PBKDF2WithHmacSHA1).
  * Both are adequate to the task but you may be criticized when people see "SHA1"
  * in the specification (SHA1 can be unsafe outside of the context of PBKDF2).
-
+ * @param keyLengthInBit - define max/preferred bits of the key (256bits means 32bytes output), look at LENGTH32BYTES,LENGTH64BYTES constants.
  */
-inline fun createHashKey(basePassword: String, sha512: Boolean): ByteArray {
-    return createHashKey(basePassword, basePassword.toByteArray(Charset.forName("UTF-32")), basePassword.length, sha512)
+@JvmOverloads inline fun createHashKey(basePassword: String, sha512: Boolean, keyLengthInBit: Int = LENGTH32BYTES): ByteArray {
+    return createHashKey(basePassword, basePassword.toByteArray(Charset.forName("UTF-32")), basePassword.length, sha512, keyLengthInBit)
 }

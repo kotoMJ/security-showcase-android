@@ -26,7 +26,7 @@ import javax.security.auth.x500.X500Principal
 @TargetApi(Build.VERSION_CODES.KITKAT)
 object KeystoreCompat {
 
-    val cipherMode: String = "RSA/None/PKCS1Padding"
+    val rsaCipherMode: String = "RSA/None/PKCS1Padding"
     lateinit var context: Context
     lateinit var config: KeystoreCompatConfig
 
@@ -38,8 +38,7 @@ object KeystoreCompat {
 
 
     private val LOG_TAG = javaClass.name
-    private var encryptedUserString by stringPref("secure_string")
-    private var encryptedUserKey by byteArrayPref("secure_key")
+    private var encryptedSecret by stringPref("secure_string")
     private var lockScreenCancelCount by intPref("sign_up_cancel_count")
 
     fun <T : KeystoreCompatConfig> overrideConfig(config: T) {
@@ -70,15 +69,18 @@ object KeystoreCompat {
 
 
     /**
-     * Store byteArray key in encrypted form to shared preferences.
+     * Store credentials string in encrypted form to shared preferences.
      * Call this function in separated thread, as eventual keyPair init may takes longer time
+     * Function is using @JvmOverloads to force optional parameters be optional even in java code.
      */
-    fun storeByteArrayKey(byteArrayKey: ByteArray, onError: () -> Unit) {
+    @JvmOverloads fun storeSecret(secret: ByteArray, onError: () -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true) {
         runSinceKitKat {
             Log.d(LOG_TAG, "Before load KeyPair...")
             if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
                 initKeyPairIfNecessary(uniqueId)
-                KeystoreCompat.encryptedUserKey = KeystoreCrypto.encryptKey(byteArrayKey, KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry)
+                KeystoreCompat.encryptedSecret = KeystoreCompatImpl.keystoreCompat.storeSecret(secret,
+                        KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry, useBase64Encoding)
+                onSuccess.invoke()
             } else {
                 onError.invoke()
             }
@@ -88,13 +90,18 @@ object KeystoreCompat {
     /**
      * Store credentials string in encrypted form to shared preferences.
      * Call this function in separated thread, as eventual keyPair init may takes longer time
+     * Function is using @JvmOverloads to force optional parameters be optional even in java code.
+     *
+     * @param secret - UTF-8 based non-null string
      */
-    fun storeCredentials(composedCredentials: String, onError: () -> Unit) {
+    @JvmOverloads fun storeSecret(secret: String, onError: () -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true) {
         runSinceKitKat {
             Log.d(LOG_TAG, "Before load KeyPair...")
             if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
                 initKeyPairIfNecessary(uniqueId)
-                KeystoreCompat.encryptedUserString = KeystoreCrypto.encryptCredentials(composedCredentials, KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry)
+                KeystoreCompat.encryptedSecret = KeystoreCompatImpl.keystoreCompat.storeSecret(secret.toByteArray(Charsets.UTF_8),
+                        KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry, useBase64Encoding)
+                onSuccess.invoke()
             } else {
                 onError.invoke()
             }
@@ -104,56 +111,53 @@ object KeystoreCompat {
     /**
      * Check if shared preferences contains secret credentials to be loadable.
      */
-    fun hasCredentialsLoadable(): Boolean {
+    fun hasSecretLoadable(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (isKeystoreCompatAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
                 if (lockScreenCancelled()) return false
-                return ((encryptedUserString?.isNotBlank() ?: false) //Is there content to decrypt
+                return ((encryptedSecret?.isNotBlank() ?: false) //Is there content to decrypt
                         && (keyStore.getEntry(uniqueId, null) != null))//Is there a key for decryption?
             } else return false
         } else return false
     }
 
-    /**
-     * Check if shared preferences contains secret key to be loadable.
-     */
-    fun hasByteArrayKeyLoadable(): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (isKeystoreCompatAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
-                if (lockScreenCancelled()) return false
-                return ((encryptedUserKey.isNotEmpty()) //Is there content to decrypt
-                        && (keyStore.getEntry(uniqueId, null) != null))//Is there a key for decryption?
-            } else return false
-        } else return false
-    }
 
     /**
-     * Load byte key in decrypted form from shared preferences.
+     * Load secret byteArray in decrypted form from shared preferences
+     * Function is using @JvmOverloads to force optional parameters be optional even in java code.
      */
-    fun loadByteArrayKey(onSuccess: (byteArrayKey: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?) {
+    @JvmOverloads fun loadSecret(onSuccess: (cre: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
         runSinceKitKat {
-            val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
-            KeystoreCompatImpl.keystoreCompat.loadIvAndEncryptedKey(onSuccess,
-                    onFailure,
-                    { clearCredentials() },
-                    forceFlag,
-                    this.encryptedUserKey,
-                    privateEntry)
+            val privateEntry: KeyStore.PrivateKeyEntry? = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
+            if (privateEntry == null) {
+                onFailure.invoke(RuntimeException("No entry in keystore available."))
+            } else {
+                KeystoreCompatImpl.keystoreCompat.loadSecret(onSuccess,
+                        onFailure,
+                        { clearCredentials() },
+                        forceFlag,
+                        this.encryptedSecret,
+                        privateEntry, isBase64Encoded)
+            }
         }
     }
 
     /**
-     * Load credentials string in decrypted form from shared preferences
+     * Load secret string in decrypted form from shared preferences
+     * Function is using @JvmOverloads to force optional parameters be optional even in java code.
      */
-    fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?) {
+    @JvmOverloads fun loadSecretAsString(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
         runSinceKitKat {
             val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
-            KeystoreCompatImpl.keystoreCompat.loadCredentials(onSuccess,
+            KeystoreCompatImpl.keystoreCompat.loadSecret(
+                    { byteArray ->
+                        onSuccess.invoke(String(byteArray, 0, byteArray.size, Charsets.UTF_8))
+                    },
                     onFailure,
                     { clearCredentials() },
                     forceFlag,
-                    this.encryptedUserString,
-                    privateEntry)
+                    this.encryptedSecret,
+                    privateEntry, isBase64Encoded)
         }
     }
 
@@ -162,7 +166,7 @@ object KeystoreCompat {
      */
     fun clearCredentials() {
         runSinceKitKat {
-            encryptedUserString = ""
+            encryptedSecret = ""
             keyStore.deleteEntry(uniqueId)
             if (keyStore.containsAlias(uniqueId))
                 throw RuntimeException("Cert delete wasn't successful!")
