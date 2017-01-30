@@ -25,8 +25,8 @@ Does your app use classic credentials (e.g. username & password) to connect to s
 **If so, this library is designed for you!**
 
 Sample application available on Github (also distributed via Google Play)
-* [Realm Security - java project](https://github.com/kotomisak/db-showcase-android)
-* [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android)
+<br/> * [Realm Security - java project](https://github.com/kotomisak/db-showcase-android)
+<br/> * [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android)
 
 ## Installation ##
 
@@ -57,9 +57,10 @@ Define customized strings in your application string.xml
 `<string name="kc_lock_screen_description">Custom lock screen description</string>`
 <br/><br/>
 `<string name="kc_kitkat_admin_explanatory">"Custom explanatory, explain to the user, that your application needs DeviceAdmin rights. For API 19 (KitKat) only."</string>`
-## KeystoreCompat API ##
-For detail usage check for sample implementation [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android)
 
+## KeystoreCompat API
+
+For detail usage check for sample implementation [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android)
 
 ### KeystoreCompat verify methods ###
 - `fun isKeystoreCompatAvailable(): Boolean`
@@ -107,8 +108,8 @@ Every keystore is breakable (at least when device is rooted).
 ## Android keystore in existing libraries ##
 https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
 but designed rather for saving encrypted data generally.<br/>
-_In comparison:_ **_KeystoreCompat_** _is designed rather to simplify work with the secret(e.g. [login credentials](https://github.com/kotomisak/security-showcase-android)).
-For securing complex data to be stored rather permanently use this library with combination of secured persistence(e.g. [Encrypted Realm](https://github.com/kotomisak/db-showcase-android))_
+_In comparison:_ **KeystoreCompat: is designed rather to simplify work with the secret AND offer valuable functionality for work with the LockScreen (covering all API versions since 19)**(check e.g. [login credentials](https://github.com/kotomisak/security-showcase-android)).
+For securing complex data to be stored rather permanently use this library with combination of secured persistence(chek e.g. [encrypting Realm](https://github.com/kotomisak/db-showcase-android))
 
 ## Omit the keystore approach ##
 https://github.com/scottyab/secure-preferences - you can use encryption based on some phrase and encrypt data directly.
