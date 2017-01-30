@@ -39,12 +39,13 @@ KeystoreCompat initialize itself automatically with hosted application context.
 The only pre-condition is, that hosted application has applicationId defined.
 
 ## Configuration ##
+All mentioned configurations are voluntary (KeystoreCompat is shipped with default configuration).
 
 ### KeystoreCompatConfig ###
 KeystoreCompat offer possibility to override default configuration using:
 `cz.koto.misak.keystorecompat.KeystoreCompat.overrideConfig(T : KeystoreCompatConfig)`
 
-- `fun getDialogDismissThreshold(): Int` Define how many times can be KeystoreCompat dialog displayed when it was previously cancelled.
+- `fun getDialogDismissThreshold(): Int` Define how many times can be screenLock/KitKatAdmin dialog displayed when it was previously cancelled.
 
 In case of overriding KeystoreCompatConfig, call overrideConfig method before the first KeystoreCompat usage.
 
@@ -56,17 +57,20 @@ Define customized strings in your application string.xml
 `<string name="kc_lock_screen_description">Custom lock screen description</string>`
 <br/><br/>
 `<string name="kc_kitkat_admin_explanatory">"Custom explanatory, explain to the user, that your application needs DeviceAdmin rights. For API 19 (KitKat) only."</string>`
-## Usage ##
-For detail usage check for sample implementation in SecurityShowcase application
+## KeystoreCompat API ##
+For detail usage check for sample implementation [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android)
+
 
 ### KeystoreCompat verify methods ###
 - `fun isKeystoreCompatAvailable(): Boolean`
 - `fun isSecurityEnabled(): Boolean`
-- `fun hasCredentialsLoadable(): Boolean`
+- `fun hasSecretLoadable(): Boolean`
 
 ### KeystoreCompat data manipulation methods ###
-- `fun storeCredentials(composedCredentials: String, onError: () -> Unit)`
-- `fun loadCredentials(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?)`
+- `fun storeSecret(secret: ByteArray, onError: () -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true)`
+- `fun storeSecret(secret: String, onError: () -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true)`
+- `fun loadSecret(onSuccess: (cre: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true)`
+- `fun loadSecretAsString(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true)`
 - `fun clearCredentials()`
 
 ### KeystoreCompat lockScreen dismiss helpers ###
@@ -83,10 +87,15 @@ For detail usage check for sample implementation in SecurityShowcase application
 - `inline fun runSinceLollipop(crossinline action: () -> Unit)`
 - `inline fun runSinceMarshmallow(crossinline action: () -> Unit)`
 
+### HashUtility ###
+- `fun createRandomHashKey(): ByteArray`
+- `fun createHashKey(basePassword: String, salt: ByteArray, iterationCount: Int, sha512: Boolean, keyLengthInBit: Int = LENGTH32BYTES): ByteArray`
+- `fun createHashKey(basePassword: String, sha512: Boolean, keyLengthInBit: Int = LENGTH32BYTES): ByteArray`
+
 ## Caveats ##
 
 The Keystore itself is encrypted using the user’s own lockscreen pin/password,
-hence, when the device screen is locked the Keystore is unavailable.
+hence the device screen is locked the Keystore is unavailable.
 Keep this in mind if you have a background service that could need to access your application secrets.
 
 The Keystore can be lost anytime! Permament content is not guaranteed.
@@ -98,12 +107,12 @@ Every keystore is breakable (at least when device is rooted).
 ## Android keystore in existing libraries ##
 https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
 but designed rather for saving encrypted data generally.<br/>
-_In comparison:_ **_KeystoreCompat_** _is designed rather for securing login related credentials only(see below mentioned chapter UNSTABLE STORAGE).
-For securing complex data to be stored rather permanently use secured database, e.g. Realm.io._
+_In comparison:_ **_KeystoreCompat_** _is designed rather to simplify work with the secret(e.g. [login credentials](https://github.com/kotomisak/security-showcase-android)).
+For securing complex data to be stored rather permanently use this library with combination of secured persistence(e.g. [Encrypted Realm](https://github.com/kotomisak/db-showcase-android))_
 
 ## Omit the keystore approach ##
 https://github.com/scottyab/secure-preferences - you can use encryption based on some phrase and encrypt data directly.
-But be careful, this approach force user handle with another secret (besides the own device secret) and list of
+But be careful, this approach force developers handle with another secret (besides the own device secret) and list of
 potential vulnerabilities will be always rather uknown than using the Android defaults.
 
 ## Licence ##
@@ -177,6 +186,7 @@ http://www.androidauthority.com/use-android-keystore-store-passwords-sensitive-i
 https://threatpost.com/android-keystore-encryption-scheme-broken-researchers-say/119092/
 https://duo.com/blog/more-than-half-of-android-phones-vulnerable-to-encryption-bypass-attacks
 https://doridori.github.io/android-security-the-forgetful-keystore/#sthash.gFJfhQs6.dpbs
-..
+https://crackstation.net/hashing-security.htm
+https://www.owasp.org/index.php/Hashing_Java
 
 
