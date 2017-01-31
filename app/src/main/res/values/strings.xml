@@ -11,6 +11,7 @@
 
 	<string name="menu_info">Info</string>
 	<string name="menu_settings">Settings</string>
+	<string name="menu_github">Github</string>
 	<string name="menu_logout">Logout</string>
 
 	<string name="login_username_hint">Username</string>

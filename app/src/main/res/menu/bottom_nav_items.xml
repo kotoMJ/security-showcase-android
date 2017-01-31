@@ -11,6 +11,13 @@
 		android:icon="@drawable/ic_settings_black_24dp" />
 
 	<item
+		android:id="@+id/menu_gihub"
+		android:title="@string/menu_github"
+		android:icon="@drawable/ic_github_simple_black_24dp"
+	/>
+
+
+	<item
 		android:id="@+id/menu_logout"
 		android:title="@string/menu_logout"
 		android:icon="@drawable/ic_power_black_24dp" />

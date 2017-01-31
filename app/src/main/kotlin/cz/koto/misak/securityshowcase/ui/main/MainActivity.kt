@@ -1,10 +1,13 @@
 package cz.koto.misak.securityshowcase.ui.main
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatDelegate
 import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig
 import cz.koto.misak.keystorecompat.KeystoreCompat
 import cz.koto.misak.keystorecompat.utility.runSinceKitKat
+import cz.koto.misak.securityshowcase.ContextProvider
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.ActivityMainBinding
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
@@ -18,10 +21,6 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
-    companion object {
-        val RC_WIZARD_PAYMENT = 1
-    }
-
     override fun getViewModelBindingConfig() = ViewModelBindingConfig<MainViewModel>(R.layout.activity_main, MainViewModel::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,17 +32,31 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             switchToFragment(InfoFragment.newInstance(), false)
 
         binding.navigation.setOnNavigationItemSelectedListener { selectedItem ->
+            var ret: Boolean = false
             when (selectedItem.itemId) {
-                R.id.menu_info -> switchToFragment(InfoFragment.newInstance(), false)
-                R.id.menu_settings -> switchToFragment(SettingsFragment.newInstance(), false)
+                R.id.menu_info -> {
+                    switchToFragment(InfoFragment.newInstance(), false)
+                    ret = true
+                }
+                R.id.menu_settings -> {
+                    switchToFragment(SettingsFragment.newInstance(), false)
+                    ret = true
+                }
                 R.id.menu_logout -> {
                     CredentialStorage.forceLockScreenFlag()
                     CredentialStorage.performLogout()
                     activity.start<LoginActivity>()
                     activity.finish()
+                    ret = true
+                }
+                R.id.menu_gihub -> {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/kotomisak/security-showcase-android"))
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    ContextProvider.context.startActivity(intent)
+                    ret = false
                 }
             }
-            true
+            ret
         }
 
         setSupportActionBar(toolbar)
