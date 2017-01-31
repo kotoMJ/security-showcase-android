@@ -2,7 +2,9 @@
 [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)
 <br/><br/>
 This simple wrapper library is designed to save secret
-to local shared preferences (encrypted using Android default security and Android Keystore).
+to local shared preferences using Android default security and Android Keystore.
+KeystoreCompat ensures handling LockScreen and compatibility among diversity of Android versions.
+
 
 KeystoreCompat also keeps in mind existing Keystore-related vulnerabilities
 and therefore follow the minimum API and also inform about existing caveats/enhancements in all supported API version.
