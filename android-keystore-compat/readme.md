@@ -75,7 +75,9 @@ Define customized strings in your application string.xml
 
 ## KeystoreCompat API
 
-For detail usage check for sample implementation [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android)
+For detail usage check for sample implementations :<br/>
+ [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android) <br/>
+ [Realm Security - java project](https://github.com/kotomisak/db-showcase-android) <br/>
 
 ### KeystoreCompat verify methods ###
 - `fun isKeystoreCompatAvailable(): Boolean`
