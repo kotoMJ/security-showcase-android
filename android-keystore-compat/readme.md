@@ -31,6 +31,18 @@ Sample application available on Github (also distributed via Google Play)
 <br/> * [Realm Security - java project](https://github.com/kotomisak/db-showcase-android)
 <br/> * [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android)
 
+## Android keystore in existing libraries ##
+https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
+but designed rather for saving encrypted data generally.<br/>
+_In comparison:_ **KeystoreCompat: is designed rather to simplify work with the secret AND offer valuable functionality for work with the LockScreen (covering all API versions since 19)**(check e.g. [login credentials](https://github.com/kotomisak/security-showcase-android)).
+For securing complex data to be stored rather permanently use this library with combination of secured persistence(chek e.g. [encrypting Realm](https://github.com/kotomisak/db-showcase-android))
+
+## Omit the keystore approach ##
+https://github.com/scottyab/secure-preferences - you can use encryption based on some phrase and encrypt data directly.
+But be careful, this approach force developers handle with another secret (besides the own device secret) and list of
+potential vulnerabilities will be always rather uknown than using the Android defaults.
+
+
 ## Installation ##
 
 Add following dependency to your build.gradle: [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)
@@ -107,17 +119,6 @@ The Keystore can be lost anytime! Permament content is not guaranteed.
 Security trust of Keystore grows with every new Android version.
 KeystoreCompat library suggest usage is since API23(Android M), but support usage since API19(Android KitKat).
 Every keystore is breakable (at least when device is rooted).
-
-## Android keystore in existing libraries ##
-https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
-but designed rather for saving encrypted data generally.<br/>
-_In comparison:_ **KeystoreCompat: is designed rather to simplify work with the secret AND offer valuable functionality for work with the LockScreen (covering all API versions since 19)**(check e.g. [login credentials](https://github.com/kotomisak/security-showcase-android)).
-For securing complex data to be stored rather permanently use this library with combination of secured persistence(chek e.g. [encrypting Realm](https://github.com/kotomisak/db-showcase-android))
-
-## Omit the keystore approach ##
-https://github.com/scottyab/secure-preferences - you can use encryption based on some phrase and encrypt data directly.
-But be careful, this approach force developers handle with another secret (besides the own device secret) and list of
-potential vulnerabilities will be always rather uknown than using the Android defaults.
 
 ## Licence ##
 The Apache Software License, Version 2.0
