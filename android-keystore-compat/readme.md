@@ -35,7 +35,7 @@ Sample application available on Github (also distributed via Google Play)
 https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
 but designed rather for saving encrypted data generally.<br/>
 _In comparison:_ **KeystoreCompat: is designed rather to simplify work with the secret AND offer valuable functionality for work with the LockScreen (covering all API versions since 19)**(check e.g. [login credentials](https://github.com/kotomisak/security-showcase-android)).
-For securing complex data to be stored rather permanently use this library with combination of secured persistence(chek e.g. [encrypting Realm](https://github.com/kotomisak/db-showcase-android))
+For securing complex data to be stored rather permanently use KeystoreCompat with combination of secured persistence(chek e.g. [encrypting Realm](https://github.com/kotomisak/db-showcase-android))
 
 ## Omit the keystore approach ##
 https://github.com/scottyab/secure-preferences - you can use encryption based on some phrase and encrypt data directly.
