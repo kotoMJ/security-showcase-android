@@ -9,6 +9,8 @@ KeystoreCompat ensures handling LockScreen and compatibility among diversity of 
 KeystoreCompat also keeps in mind existing Keystore-related vulnerabilities
 and therefore follow the minimum API and also inform about existing caveats/enhancements in all supported API version.
 
+![KeystoreCompat princip](./extras/diagram/KeystoreCompat.png "KeystoreCompat princip")
+
 ## Kotlin language ##
 KeystoreCompat library is written in Kotlin language.
 
