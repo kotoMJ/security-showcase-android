@@ -162,7 +162,7 @@ If user don't grant device admin rights, library can't do the job.
 
 **API 21(Lollipop)** - Since Lollipop is KeystoreCompat using standard Android's ScreenLock.
 Force to display ScreenLock is still not defined in the certificate it self,
-but user has to handle forcing LockScreen in `onFailure` block of `KeystoreCompat.loadCredentials` method.
+but user has to handle forcing LockScreen.
 
 **API 23(Marshmallow)** - Since Marshmallow there is ScreenLock force ensured directly in the certificate definition.
 Marshmallow targets to [hardware-backed keystore](https://source.android.com/security/keystore/) and bring lots of (look for 23+)
