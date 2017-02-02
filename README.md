@@ -10,6 +10,12 @@ This is sample application pointing some security related practices on Android d
 
  `./gradlew assembleRostiRelease`
 
+## Dependency diagnostic ##
+
+  `./gradlew dependencyReport --configuration compile`
+  `./gradlew dependencyInsighty --configuration compile --dependency com.android.support:appcompat-v7`
+  `./gradlew dependencyInsighty --configuration compile --dependency org.jetbrains.kotlin:kotlin-stdlib`
+
 ## Android keystore ##
 
 SecurityShowcase application contains example of using standard Android Security with the Keystore.

@@ -6,6 +6,8 @@ import android.os.Build
 import android.provider.Settings
 import android.security.keystore.KeyProperties
 import android.util.Log
+import com.scottyab.rootbeer.RootBeer
+import com.scottyab.rootbeer.util.Utils
 import cz.koto.misak.keystorecompat.utility.*
 import java.security.KeyPairGenerator
 import java.security.KeyStore
@@ -36,6 +38,7 @@ object KeystoreCompat {
     private lateinit var algorithm: String
     private lateinit var uniqueId: String
 
+    private var isRooted: Boolean? = null
 
     private val LOG_TAG = javaClass.name
     private var encryptedSecret by stringPref("secure_string")
@@ -46,15 +49,17 @@ object KeystoreCompat {
     }
 
     /**
-     * Keystore is available since API1.
-     * CredentialsKeystoreProvider is since API18.
-     * Relatively trusted secure keystore is known since API19.
-     * Improved security is then since API 23.
+     * KeystoreCompat is available only for non-rooted devices!
+     * KeystoreCompat is available since API 19 (KitKat)
      */
     fun isKeystoreCompatAvailable(): Boolean {
-        //Pre-KitKat version are not supported
-        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
+        val ret = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) && !isDeviceRooted(context);
+        if (!ret) {
+            logUnsupportedVersionForKeystore()
+        }
+        return ret
     }
+
 
     /**
      * Keystore is available only for secured devices!
@@ -193,16 +198,19 @@ object KeystoreCompat {
     }
 
     internal fun init(context: Context) {
+
+
         /**
-         * Developer note: don't access config object in init!
+         * Developer note:
+         * - don't access config object in init!
+         * - it means dont't call isDeviceRooted() or isKeystoreCompatAvailable() in init()
          * Why? auto-init in KeystoreCompatInitProvider might be initialized before user overrides the config.
          */
-        if (!isKeystoreCompatAvailable()) {
-            logUnsupportedVersionForKeystore()
-        }
+
         runSinceKitKat {
             this.context = context
             this.config = KeystoreCompatConfig() // default config can be overriden externally later!
+
             this.uniqueId = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
             Log.d(LOG_TAG, "uniqueId:${uniqueId}")
             PrefDelegate.initialize(this.context)
@@ -258,6 +266,33 @@ object KeystoreCompat {
         generator.generateKeyPair()
         if (!keyStore.containsAlias(alias))
             throw RuntimeException("KeyPair was NOT stored!")
+    }
+
+    private fun isDeviceRooted(context: Context): Boolean {
+        val ret = RootBeer(context).isRooted
+
+        if (this.isRooted == null) {
+            if (ret) {
+                val check: RootBeer = RootBeer(context)
+                Log.w(LOG_TAG, "RootDetection enabled ${config.isRootDetectionEnabled()}")
+                Log.w(LOG_TAG, "Root Management Apps ${if (check.detectRootManagementApps()) "detected" else "not detected"}")
+                Log.w(LOG_TAG, "PotentiallyDangerousApps ${if (check.detectPotentiallyDangerousApps()) "detected" else "not detected"}")
+                Log.w(LOG_TAG, "TestKeys ${if (check.detectTestKeys()) "detected" else "not detected"}")
+                Log.w(LOG_TAG, "BusyBoxBinary ${if (check.checkForBusyBoxBinary()) "detected" else "not detected"}")
+                Log.w(LOG_TAG, "SU Binary ${if (check.checkForSuBinary()) "detected" else "not detected"}")
+                Log.w(LOG_TAG, "2nd SU Binary check ${if (check.checkSuExists()) "detected" else "not detected"}")
+                Log.w(LOG_TAG, "ForRWPaths ${if (check.checkForRWPaths()) "detected" else "not detected"}")
+                Log.w(LOG_TAG, "DangerousProps ${if (check.checkForDangerousProps()) "detected" else "not detected"}")
+                Log.w(LOG_TAG, "Root via native check ${if (check.checkForRootNative()) "detected" else "not detected"}")
+                Log.w(LOG_TAG, "RootCloakingApps ${if (check.detectRootCloakingApps()) "detected" else "not detected"}")
+                Log.w(LOG_TAG, "Selinux Flag Is Enabled ${if (Utils.isSelinuxFlagInEnabled()) "true" else "false"}")
+            }
+            this.isRooted = ret && config.isRootDetectionEnabled()
+        }
+
+        if (this.isRooted!!) clearCredentials()
+
+        return this.isRooted!!
     }
 
 }

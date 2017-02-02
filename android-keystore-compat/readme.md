@@ -51,9 +51,23 @@ Add following dependency to your build.gradle: [ ![Download](https://api.bintray
 <br/>
 Minimum API is 19!
 Running on lower version will not crash, but will do nothing.
+<br/>
+Rooted device is NOT supported as trusted for KeystoreCompat (in default configuration).
+Running on rooted device will not crash, but will do nothing and will return isKeystoreCompatAvailable()==false
 
 KeystoreCompat initialize itself automatically with hosted application context.
 The only pre-condition is, that hosted application has applicationId defined.
+
+## Dependency cleanup ##
+KeystoreCompat is using [RootBeer](https://github.com/scottyab/rootbeer) library to detect some signs of rooted device.
+Used RootBeer library has dependency on old appCompat(appcompat-v7:22.2.0, support-annotations:22.2.0, support-v4:22.2.0).
+If you wanna to avoid eventual library clash, use exclude as this:
+
+```
+compile ('cz.koto.misak:android-keystore-compat:x.y.z') {
+		exclude group: 'com.android.support'
+	}
+```
 
 ## Configuration ##
 All mentioned configurations are voluntary (KeystoreCompat is shipped with default configuration).
@@ -63,6 +77,7 @@ KeystoreCompat offer possibility to override default configuration using:
 `cz.koto.misak.keystorecompat.KeystoreCompat.overrideConfig(T : KeystoreCompatConfig)`
 
 - `fun getDialogDismissThreshold(): Int` Define how many times can be screenLock/KitKatAdmin dialog displayed when it was previously cancelled.
+- `open fun isRootDetectionEnabled(): Boolean` You can disable root detection by this method, but it is on your risk (it's good e.g. for debug variant because of Emulator)!
 
 In case of overriding KeystoreCompatConfig, call overrideConfig method before the first KeystoreCompat usage.
 

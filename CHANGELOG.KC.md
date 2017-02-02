@@ -2,8 +2,11 @@
 # Release notes for Keystore Compat library
 
 ## Not released yet
- * Use detection of rooted device to disable work with Android Keystore with any sign of rooted device
+ * Use advanced SafetyNet detection of rooted device.
  * Use AES for keypair-generation since Android M
+
+## KC-0.6.0-BETA
+ * Add new feature to disable KeystoreCompat (by default) when rooted device is detected.
 
 ## KC-0.5.0-BETA
  * API of KeystoreCompat is refactored according to new experience during implementation of [Support for encrypted Realm](https://github.com/kotomisak/db-showcase-android)

@@ -18,4 +18,11 @@ class ShowcaseKeystoreCompatConfig : KeystoreCompatConfig() {
             return 2 //In case of standard Android security dialog dismiss dialog after second CANCEL button click
         }
     }
+
+    override fun isRootDetectionEnabled(): Boolean {
+        if (BuildConfig.DEBUG) {
+            return false
+        } else
+            return super.isRootDetectionEnabled()
+    }
 }
