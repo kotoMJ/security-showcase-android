@@ -21,7 +21,7 @@ If it is too much for your java project, **feel free to grab constructions from 
 
 ## UseCase ##
 
-Does your app use classic credentials (e.g. username & password || JWT || hash) to connect to secured part of the API OR encrypted database?
+Does your app use classic credentials (e.g. username & password / JWT / hash) to connect to secured part of the API OR encrypted database?
 
 
 **Want to let user access your application using just Android default security**
