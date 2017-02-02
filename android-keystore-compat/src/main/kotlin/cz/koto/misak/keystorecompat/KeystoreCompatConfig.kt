@@ -14,4 +14,8 @@ open class KeystoreCompatConfig {
             return 1 //In case of standard Android security dialog dismiss dialog after first CANCEL button click.
         }
     }
+
+    open fun isRootDetectionEnabled(): Boolean {
+        return true
+    }
 }

@@ -34,3 +34,10 @@ allprojects {
 task clean(type: Delete) {
 	delete rootProject.buildDir
 }
+
+subprojects {
+	task dependencyInsighty(type: org.gradle.api.tasks.diagnostics.DependencyInsightReportTask) << {}
+}
+subprojects {
+	task dependencyReport(type: org.gradle.api.tasks.diagnostics.DependencyReportTask) {}
+}
