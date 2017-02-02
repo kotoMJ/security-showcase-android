@@ -77,7 +77,7 @@ KeystoreCompat offer possibility to override default configuration using:
 `cz.koto.misak.keystorecompat.KeystoreCompat.overrideConfig(T : KeystoreCompatConfig)`
 
 - `fun getDialogDismissThreshold(): Int` Define how many times can be screenLock/KitKatAdmin dialog displayed when it was previously cancelled.
-- `open fun isRootDetectionEnabled(): Boolean` You can disable root detection by this method, but it is on your risk (it's good e.g. for debug variant because of Emulator)!
+- `open fun isRootDetectionEnabled(): Boolean` You can disable root detection by this method, but it is on your risk (**it's good e.g. for debug variant because of Emulator**)!
 
 In case of overriding KeystoreCompatConfig, call overrideConfig method before the first KeystoreCompat usage.
 

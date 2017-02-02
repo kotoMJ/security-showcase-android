@@ -74,8 +74,8 @@ dependencies {
 	}
 
 //	compile project(':android-keystore-compat')
-	//compile(name: "android-keystore-compat-0.4.0-BETA", ext: "aar")
-	compile('cz.koto.misak:android-keystore-compat:0.5.0-BETA') {
+	//compile(name: "android-keystore-compat-0.6.0-BETA", ext: "aar")
+	compile('cz.koto.misak:android-keystore-compat:0.6.0-BETA') {
 		exclude group: 'com.android.support'
 	}
 
