@@ -6,16 +6,6 @@
 
 This is sample application pointing some security related practices on Android device.
 
-## Build sample app ##
-
- `./gradlew assembleRostiRelease`
-
-## Dependency diagnostic ##
-
-  `./gradlew dependencyReport --configuration compile`
-  `./gradlew dependencyInsighty --configuration compile --dependency com.android.support:appcompat-v7`
-  `./gradlew dependencyInsighty --configuration compile --dependency org.jetbrains.kotlin:kotlin-stdlib`
-
 ## Android keystore ##
 
 SecurityShowcase application contains example of using standard Android Security with the Keystore.
@@ -27,3 +17,15 @@ or StackOverflow discussion.
 Read more about [KeystoreCompat](android-keystore-compat/readme.md)
 <br/>
 [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)
+
+
+## SecurityShowcase gradle notes
+**Build sample app**
+
+ `./gradlew assembleRostiRelease`
+
+**Dependency diagnostic**
+
+  `./gradlew dependencyReport --configuration compile`
+  `./gradlew dependencyInsighty --configuration compile --dependency com.android.support:appcompat-v7`
+  `./gradlew dependencyInsighty --configuration compile --dependency org.jetbrains.kotlin:kotlin-stdlib`
