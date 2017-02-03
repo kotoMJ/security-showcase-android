@@ -22,10 +22,10 @@ Read more about [KeystoreCompat](android-keystore-compat/readme.md)
 ## SecurityShowcase gradle notes
 **Build sample app**
 
- `./gradlew assembleRostiRelease`
+ * `./gradlew assembleRostiRelease`
 
 **Dependency diagnostic**
 
-  `./gradlew dependencyReport --configuration compile`
-  `./gradlew dependencyInsighty --configuration compile --dependency com.android.support:appcompat-v7`
-  `./gradlew dependencyInsighty --configuration compile --dependency org.jetbrains.kotlin:kotlin-stdlib`
+  * `./gradlew dependencyReport --configuration compile`<br/>
+  * `./gradlew dependencyInsighty --configuration compile --dependency com.android.support:appcompat-v7`<br/>
+  * `./gradlew dependencyInsighty --configuration compile --dependency org.jetbrains.kotlin:kotlin-stdlib`<br/>
