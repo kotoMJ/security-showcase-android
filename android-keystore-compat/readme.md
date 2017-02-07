@@ -44,6 +44,10 @@ https://github.com/scottyab/secure-preferences - you can use encryption based on
 But be careful, this approach force developers handle with another secret (besides the own device secret) and list of
 potential vulnerabilities will be always rather uknown than using the Android defaults.
 
+https://github.com/Mauin/RxFingerprint - you can use custom fingerprint handling with RXFingerprint.
+It uses also Android Keystore for baking keys.
+This completely omit android default security/screen and you can implement your own.
+The caveat could be the custom access to Keystore.
 
 ## Installation ##
 
