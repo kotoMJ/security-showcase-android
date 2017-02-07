@@ -2,8 +2,6 @@ package cz.koto.misak.securityshowcase.utility
 
 import android.databinding.ObservableField
 import android.os.Build
-import android.text.Spannable
-import android.text.SpannableString
 import cz.kinst.jakub.view.StatefulLayout
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,9 +40,3 @@ fun ObservableField<StatefulLayout.State>.emptyWhen(action: () -> Boolean) =
         if (action()) set(StatefulLayout.State.EMPTY) else set(StatefulLayout.State.CONTENT)
 
 operator fun <A, B> ((A) -> B).get(a: A): () -> B = { this(a) }
-
-fun Double.spannedCents() = SpannableString(String.format("$ %,.2f", this)).apply {
-    //	setSpan(SuperscriptSpan(), length - 2, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-    setSpan(SuperAlignedSpan(), length - 2, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-//	setSpan(AbsoluteSizeSpan(dpHeight, true), length - 2, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-}
