@@ -204,6 +204,13 @@ The two point out in their paper "Breaking Into the KeyStore: A Practical Forger
 that it's the hash-then-encrypt (HtE) authenticated encryption (AE) scheme in cipher block chaining mode (CBC)
 in KeyStore that fails to guarantee the integrity of keys.
 
+#### OpenSSLX509Certificate ####
+The problem is in a single vulnerable class in the Android platform, called OpenSSLX509Certificate,
+that the researchers were able to create an exploit for.<br/>
+http://www.itworldcanada.com/post/new-android-vulnerability-could-give-attackers-full-privileges <br/>
+The good news is that Google has fixed the two OpenSSLX509Certificate instances,
+patched Android 5.1 ,5.0, Android M and backported the patch to Android 4.4.
+
 
 ### Keystore related articles ###
 http://www.androidauthority.com/use-android-keystore-store-passwords-sensitive-information-623779/
