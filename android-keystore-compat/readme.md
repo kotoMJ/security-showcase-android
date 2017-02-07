@@ -190,7 +190,7 @@ The way of key-pair generation is completely new. Marshmallow also starts suppor
 
 ### List of known vulnerabilites ###
 
-#### Attacker can modify stored keys  ####
+#### 2016 July - Attacker can modify stored keys  ####
 
 In an academic paper published in July 2016, researchers argue that the particular encryption scheme that KeyStore uses
 [fails to protect the integrity of keys](https://threatpost.com/android-keystore-encryption-scheme-broken-researchers-say/119092/)
@@ -204,7 +204,7 @@ The two point out in their paper "Breaking Into the KeyStore: A Practical Forger
 that it's the hash-then-encrypt (HtE) authenticated encryption (AE) scheme in cipher block chaining mode (CBC)
 in KeyStore that fails to guarantee the integrity of keys.
 
-#### OpenSSLX509Certificate ####
+#### 2015 August - OpenSSLX509Certificate ####
 The problem is in a single vulnerable class in the Android platform, called OpenSSLX509Certificate,
 that the researchers were able to create an exploit for.<br/>
 http://www.itworldcanada.com/post/new-android-vulnerability-could-give-attackers-full-privileges <br/>
