@@ -211,6 +211,13 @@ http://www.itworldcanada.com/post/new-android-vulnerability-could-give-attackers
 The good news is that Google has fixed the two OpenSSLX509Certificate instances,
 patched Android 5.1 ,5.0, Android M and backported the patch to Android 4.4.
 
+#### 2014 June - stack-based buffer overflow vulnerability ####
+A successful exploit would compromise a device completely,
+allowing an attacker to execute code of their choosing under the keystore process.<br />
+https://threatpost.com/patched-code-execution-bug-affects-most-android-users/106880/ <br/>
+This serious code-execution vulnerability in Android 4.3 and earlier was patched in KitKat,
+the latest version of the operating system.
+
 
 ### Keystore related articles ###
 http://www.androidauthority.com/use-android-keystore-store-passwords-sensitive-information-623779/
