@@ -16,7 +16,7 @@ or StackOverflow discussion.
 
 Read more about [KeystoreCompat](android-keystore-compat/readme.md)<br/>
 [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)<br/><br/>
-[ ![STRV](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)
+[ ![STRV](./extras/strv-talk/STRV-Black_small.png) ](https://strv.com_STRV)
 
 
 * [STRV Keystore compat mini-talk google slides](https://docs.google.com/presentation/d/1KVMmK59jRQSequ_Ib157ZttFor9k14qZ3938IPxOAKg/edit?usp=sharing)
