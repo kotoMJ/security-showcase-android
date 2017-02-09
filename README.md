@@ -20,7 +20,7 @@ Read more about [KeystoreCompat](android-keystore-compat/readme.md)<br/>
 
 
 * [STRV Keystore compat mini-talk google slides](https://docs.google.com/presentation/d/1KVMmK59jRQSequ_Ib157ZttFor9k14qZ3938IPxOAKg/edit?usp=sharing)
-* [STRV Keystore compat mini-talk pdf](./extras/strv-talk/Android-Keystore-handling.png)
+* [STRV Keystore compat mini-talk pdf](./extras/strv-talk/Android-Keystore-handling.pdf)
 
 ## SecurityShowcase gradle notes
 **Build sample app**
