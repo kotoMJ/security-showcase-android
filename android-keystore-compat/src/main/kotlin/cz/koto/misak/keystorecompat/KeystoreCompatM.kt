@@ -9,6 +9,7 @@ import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
 import android.security.keystore.UserNotAuthenticatedException
 import android.util.Log
+import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.security.spec.RSAKeyGenParameterSpec
@@ -24,8 +25,16 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
 
     private val LOG_TAG = javaClass.name
 
+    override fun getAlgorithm(): String {
+        return KeyProperties.KEY_ALGORITHM_AES
+    }
+
+    override fun getCipherMode(): String {
+        return "AES/GCM/NoPadding"
+    }
+
     override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
-        return KeystoreCrypto.encryptRSA(secret, privateKeyEntry, useBase64Encoding)
+        return KeystoreCrypto.encryptAES(secret, privateKeyEntry, useBase64Encoding)
     }
 
     override fun loadSecret(onSuccess: (cre: ByteArray) -> Unit,
@@ -44,7 +53,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                 //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure.invoke(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(KeystoreCrypto.decryptRSA(privateKeyEntry, encryptedUserData, isBase64Encoded))
+                onSuccess.invoke(KeystoreCrypto.decryptAES(privateKeyEntry, encryptedUserData, isBase64Encoded))
             }
         } catch (e: UserNotAuthenticatedException) {
             onFailure.invoke(e)
@@ -86,6 +95,12 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
         Log.d(LOG_TAG, "KEYGUARD-SECURE:${km.isKeyguardSecure}")
         Log.d(LOG_TAG, "KEYGUARD-LOCKED:${km.isKeyguardLocked}")
         return km.isDeviceSecure
+    }
+
+    override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
+        val generator = KeyPairGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
+        generator.initialize(KeystoreCompatImpl.keystoreCompat.getAlgorithmParameterSpec(certSubject, alias, start, end, context))
+        generator.generateKeyPair()
     }
 }
 

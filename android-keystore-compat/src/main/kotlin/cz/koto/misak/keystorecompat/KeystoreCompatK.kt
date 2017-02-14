@@ -7,6 +7,7 @@ import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.util.Log
 import java.math.BigInteger
+import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.util.*
@@ -19,6 +20,14 @@ import javax.security.auth.x500.X500Principal
 internal object KeystoreCompatK : KeystoreCompatFacade {
 
     private val LOG_TAG = javaClass.name
+
+    override fun getAlgorithm(): String {
+        return "RSA"
+    }
+
+    override fun getCipherMode(): String {
+        return "RSA/None/PKCS1Padding"
+    }
 
     override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
         return KeystoreCrypto.encryptRSA(secret, privateKeyEntry, useBase64Encoding)
@@ -62,13 +71,10 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
         return km.isKeyguardSecure
     }
 
-    //    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-//    private fun forceSignUpLollipop(activity: AppCompatActivity) {
-//        var km: KeyguardManager = KeystoreCompat.context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-//        val intent = km.createConfirmDeviceCredentialIntent(/*KeystoreCompat.context.getString(R.string.keystore_android_auth_title)*/"TODO TITLE",
-//                /*KeystoreCompat.context.getString(R.string.keystore_android_auth_desc)*/"TODO DESC")
-//        if (intent != null) {
-//            activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST)
-//        }
-//    }
+    override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
+        val generator = KeyPairGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
+        generator.initialize(KeystoreCompatImpl.keystoreCompat.getAlgorithmParameterSpec(certSubject, alias, start, end, context))
+        generator.generateKeyPair()
+    }
+
 }

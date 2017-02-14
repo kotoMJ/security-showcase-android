@@ -20,16 +20,16 @@ internal object KeystoreCrypto {
     val ORDER_FOR_ENCRYPTED_DATA = ByteOrder.BIG_ENDIAN
 
     @TargetApi(Build.VERSION_CODES.M)
-    fun encryptAES(key: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry): ByteArray {
+    fun encryptAES(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
         var iv: ByteArray
         var encryptedKeyForRealm: ByteArray
         try {
             val publicKey = privateKeyEntry.certificate.publicKey
 
-            val inCipher = Cipher.getInstance(KeystoreCompat.rsaCipherMode)
+            val inCipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode())
             inCipher.init(Cipher.ENCRYPT_MODE, publicKey)
 
-            encryptedKeyForRealm = inCipher.doFinal(key)
+            encryptedKeyForRealm = inCipher.doFinal(secret)
             iv = inCipher.iv
 
         } catch (e: Exception) {
@@ -44,11 +44,19 @@ internal object KeystoreCrypto {
         buffer.put(iv)
         buffer.put(encryptedKeyForRealm)
 
-        return ivAndEncryptedKey
+
+        if (useBase64Encoding) {
+            return Base64.encodeToString(ivAndEncryptedKey, Base64.DEFAULT)
+        } else {
+            return String(ivAndEncryptedKey, Charsets.UTF_8)
+        }
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    fun decryptAES(privateKeyEntry: KeyStore.PrivateKeyEntry, ivAndEncryptedKey: ByteArray): ByteArray {
+    @TargetApi(Build.VERSION_CODES.M) //ivAndEncryptedKey
+    fun decryptAES(privateKeyEntry: KeyStore.PrivateKeyEntry, encryptedSecret: String, isBase64Encoded: Boolean): ByteArray {
+
+        var ivAndEncryptedKey: ByteArray = if (isBase64Encoded) Base64.decode(encryptedSecret, Base64.DEFAULT) else encryptedSecret.toByteArray(Charsets.UTF_8)
+
 
         val buffer = ByteBuffer.wrap(ivAndEncryptedKey)
         buffer.order(ORDER_FOR_ENCRYPTED_DATA)
@@ -61,7 +69,7 @@ internal object KeystoreCrypto {
         buffer.get(encryptedKey)
 
         try {
-            val cipher = Cipher.getInstance(KeystoreCompat.rsaCipherMode)
+            val cipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode())
             val ivSpec = IvParameterSpec(iv)
             cipher.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey, ivSpec)
 
@@ -108,7 +116,7 @@ internal object KeystoreCrypto {
              * it would fail with "Need RSA private or public key" at cipher init for decryption.
              * Simply use Cipher.getInstance("RSA/ECB/PKCS1Padding")
              */
-            val inCipher = Cipher.getInstance(KeystoreCompat.rsaCipherMode/*, "AndroidOpenSSL"*/)
+            val inCipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode()/*, "AndroidOpenSSL"*/)
             inCipher.init(Cipher.ENCRYPT_MODE, publicKey)
             val outputStream = ByteArrayOutputStream()
             val cipherOutputStream = CipherOutputStream(outputStream, inCipher)
@@ -143,7 +151,7 @@ internal object KeystoreCrypto {
              * it would fail with "Need RSA private or public key" at cipher init for decryption.
              * Simply use Cipher.getInstance("RSA/ECB/PKCS1Padding")
              */
-            val output = Cipher.getInstance(KeystoreCompat.rsaCipherMode/*, "AndroidOpenSSL"*/)
+            val output = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode()/*, "AndroidOpenSSL"*/)
             output.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey)
 
             val cipherInputStream = CipherInputStream(ByteArrayInputStream(inputByteArray), output)

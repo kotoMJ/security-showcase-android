@@ -4,12 +4,13 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
 import android.provider.Settings
-import android.security.keystore.KeyProperties
 import android.util.Log
 import com.scottyab.rootbeer.RootBeer
 import com.scottyab.rootbeer.util.Utils
-import cz.koto.misak.keystorecompat.utility.*
-import java.security.KeyPairGenerator
+import cz.koto.misak.keystorecompat.utility.PrefDelegate
+import cz.koto.misak.keystorecompat.utility.intPref
+import cz.koto.misak.keystorecompat.utility.runSinceKitKat
+import cz.koto.misak.keystorecompat.utility.stringPref
 import java.security.KeyStore
 import java.util.*
 import javax.security.auth.x500.X500Principal
@@ -28,14 +29,12 @@ import javax.security.auth.x500.X500Principal
 @TargetApi(Build.VERSION_CODES.KITKAT)
 object KeystoreCompat {
 
-    val rsaCipherMode: String = "RSA/None/PKCS1Padding"
     lateinit var context: Context
     lateinit var config: KeystoreCompatConfig
 
-    private val KEYSTORE_KEYWORD = "AndroidKeyStore"
+    val KEYSTORE_KEYWORD = "AndroidKeyStore"
     private lateinit var keyStore: KeyStore
     private lateinit var certSubject: X500Principal
-    private lateinit var algorithm: String
     private lateinit var uniqueId: String
 
     private var isRooted: Boolean? = null
@@ -216,10 +215,7 @@ object KeystoreCompat {
             PrefDelegate.initialize(this.context)
             certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
 
-            algorithm = "RSA"
-            runSinceMarshmallow {
-                algorithm = KeyProperties.KEY_ALGORITHM_RSA
-            }
+
             keyStore = KeyStore.getInstance(KEYSTORE_KEYWORD)
             keyStore.load(null)
             KeystoreCompatImpl.init(Build.VERSION.SDK_INT)
@@ -253,19 +249,13 @@ object KeystoreCompat {
             val start = Calendar.getInstance()
             val end = Calendar.getInstance()
             end.add(Calendar.YEAR, 1)//TODO handle with outdated certificates!
-            generateKeyPair(aliasText, start.time, end.time)
+            KeystoreCompatImpl.keystoreCompat.generateKeyPair(aliasText, start.time, end.time, this.certSubject, this.context)
+            if (!keyStore.containsAlias(aliasText))
+                throw RuntimeException("KeyPair was NOT stored!")
         } catch (e: Exception) {
             Log.e(LOG_TAG, "Unable to create keys!", e)
             throw e
         }
-    }
-
-    private fun generateKeyPair(alias: String, start: Date, end: Date) {
-        val generator = KeyPairGenerator.getInstance(algorithm, KEYSTORE_KEYWORD)
-        generator.initialize(KeystoreCompatImpl.keystoreCompat.getAlgorithmParameterSpec(this.certSubject, alias, start, end, this.context))
-        generator.generateKeyPair()
-        if (!keyStore.containsAlias(alias))
-            throw RuntimeException("KeyPair was NOT stored!")
     }
 
     private fun isDeviceRooted(context: Context): Boolean {

@@ -7,6 +7,7 @@ import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.util.Log
 import java.math.BigInteger
+import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.util.*
@@ -18,6 +19,14 @@ import javax.security.auth.x500.X500Principal
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 internal object KeystoreCompatL : KeystoreCompatFacade {
     private val LOG_TAG = javaClass.name
+
+    override fun getAlgorithm(): String {
+        return "RSA"
+    }
+
+    override fun getCipherMode(): String {
+        return "RSA/None/PKCS1Padding"
+    }
 
     override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
         return KeystoreCrypto.encryptRSA(secret, privateKeyEntry, useBase64Encoding)
@@ -67,5 +76,10 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
         return km.isKeyguardSecure
     }
 
+    override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
+        val generator = KeyPairGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
+        generator.initialize(KeystoreCompatImpl.keystoreCompat.getAlgorithmParameterSpec(certSubject, alias, start, end, context))
+        generator.generateKeyPair()
+    }
 
 }
