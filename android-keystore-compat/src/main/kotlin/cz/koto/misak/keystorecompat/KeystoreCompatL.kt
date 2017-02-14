@@ -28,8 +28,8 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
         return "RSA/None/PKCS1Padding"
     }
 
-    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
-        return KeystoreCrypto.encryptRSA(secret, privateKeyEntry, useBase64Encoding)
+    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String {
+        return KeystoreCrypto.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
     }
 
     override fun loadSecret(onSuccess: (ByteArray) -> Unit,
@@ -37,7 +37,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
                             clearCredentials: () -> Unit,
                             forceFlag: Boolean?,
                             encryptedUserData: String,
-                            privateKeyEntry: KeyStore.PrivateKeyEntry,
+                            privateKeyEntry: KeyStore.Entry,
                             isBase64Encoded: Boolean) {
         try {
             if (forceFlag != null && forceFlag) {
@@ -46,7 +46,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
                 //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(KeystoreCrypto.decryptRSA(privateKeyEntry, encryptedUserData, isBase64Encoded))
+                onSuccess.invoke(KeystoreCrypto.decryptRSA(privateKeyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded))
             }
 
         } catch (e: Exception) {
@@ -78,7 +78,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
 
     override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
         val generator = KeyPairGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
-        generator.initialize(KeystoreCompatImpl.keystoreCompat.getAlgorithmParameterSpec(certSubject, alias, start, end, context))
+        generator.initialize(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
         generator.generateKeyPair()
     }
 

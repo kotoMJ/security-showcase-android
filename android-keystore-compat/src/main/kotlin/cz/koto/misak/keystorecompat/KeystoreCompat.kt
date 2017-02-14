@@ -103,8 +103,9 @@ object KeystoreCompat {
             Log.d(LOG_TAG, "Before load KeyPair...")
             if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
                 initKeyPairIfNecessary(uniqueId)
+                //java.security.KeyStore$SecretKeyEntry cannot be cast to java.security.KeyStore$PrivateKeyEntry
                 KeystoreCompat.encryptedSecret = KeystoreCompatImpl.keystoreCompat.storeSecret(secret.toByteArray(Charsets.UTF_8),
-                        KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry, useBase64Encoding)
+                        KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
                 onSuccess.invoke()
             } else {
                 onError.invoke()

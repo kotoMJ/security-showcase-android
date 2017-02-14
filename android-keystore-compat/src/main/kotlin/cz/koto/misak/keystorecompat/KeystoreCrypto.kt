@@ -20,14 +20,14 @@ internal object KeystoreCrypto {
     val ORDER_FOR_ENCRYPTED_DATA = ByteOrder.BIG_ENDIAN
 
     @TargetApi(Build.VERSION_CODES.M)
-    fun encryptAES(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
+    fun encryptAES(secret: ByteArray, privateKeyEntry: KeyStore.SecretKeyEntry, useBase64Encoding: Boolean): String {
         var iv: ByteArray
         var encryptedKeyForRealm: ByteArray
         try {
-            val publicKey = privateKeyEntry.certificate.publicKey
+            val key = privateKeyEntry.secretKey
 
             val inCipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode())
-            inCipher.init(Cipher.ENCRYPT_MODE, publicKey)
+            inCipher.init(Cipher.ENCRYPT_MODE, key)
 
             encryptedKeyForRealm = inCipher.doFinal(secret)
             iv = inCipher.iv
@@ -53,7 +53,7 @@ internal object KeystoreCrypto {
     }
 
     @TargetApi(Build.VERSION_CODES.M) //ivAndEncryptedKey
-    fun decryptAES(privateKeyEntry: KeyStore.PrivateKeyEntry, encryptedSecret: String, isBase64Encoded: Boolean): ByteArray {
+    fun decryptAES(secretKeyEntry: KeyStore.SecretKeyEntry, encryptedSecret: String, isBase64Encoded: Boolean): ByteArray {
 
         var ivAndEncryptedKey: ByteArray = if (isBase64Encoded) Base64.decode(encryptedSecret, Base64.DEFAULT) else encryptedSecret.toByteArray(Charsets.UTF_8)
 
@@ -71,7 +71,7 @@ internal object KeystoreCrypto {
         try {
             val cipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode())
             val ivSpec = IvParameterSpec(iv)
-            cipher.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey, ivSpec)
+            cipher.init(Cipher.DECRYPT_MODE, secretKeyEntry.secretKey, ivSpec)
 
             return cipher.doFinal(encryptedKey)
 

@@ -9,11 +9,11 @@ import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
 import android.security.keystore.UserNotAuthenticatedException
 import android.util.Log
-import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.security.spec.RSAKeyGenParameterSpec
 import java.util.*
+import javax.crypto.KeyGenerator
 import javax.security.auth.x500.X500Principal
 
 
@@ -33,8 +33,8 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
         return "AES/GCM/NoPadding"
     }
 
-    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
-        return KeystoreCrypto.encryptAES(secret, privateKeyEntry, useBase64Encoding)
+    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String {
+        return KeystoreCrypto.encryptAES(secret, privateKeyEntry as KeyStore.SecretKeyEntry, useBase64Encoding)
     }
 
     override fun loadSecret(onSuccess: (cre: ByteArray) -> Unit,
@@ -42,7 +42,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                             clearCredentials: () -> Unit,
                             forceFlag: Boolean?,
                             encryptedUserData: String,
-                            privateKeyEntry: KeyStore.PrivateKeyEntry,
+                            privateKeyEntry: KeyStore.Entry,
                             isBase64Encoded: Boolean) {
         try {
 
@@ -53,7 +53,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                 //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure.invoke(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(KeystoreCrypto.decryptAES(privateKeyEntry, encryptedUserData, isBase64Encoded))
+                onSuccess.invoke(KeystoreCrypto.decryptAES(privateKeyEntry as KeyStore.SecretKeyEntry, encryptedUserData, isBase64Encoded))
             }
         } catch (e: UserNotAuthenticatedException) {
             onFailure.invoke(e)
@@ -77,11 +77,12 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
             throw RuntimeException("${LOG_TAG} Unsupported usage of version ${Build.VERSION.SDK_INT}")
         }
         return KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT.or(KeyProperties.PURPOSE_DECRYPT))
+                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)//follow used getCipherMode
                 .setCertificateSubject(certSubject)
                 .setKeyValidityStart(startDate)
                 .setKeyValidityEnd(endDate)
                 .setDigests(KeyProperties.DIGEST_SHA512)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)//follow used getCipherMode
                 .setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
                 .setUserAuthenticationRequired(true)
                 .setUserAuthenticationValidityDurationSeconds(10)//User has to type challenge in 10 seconds
@@ -98,9 +99,10 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
     }
 
     override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
-        val generator = KeyPairGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
-        generator.initialize(KeystoreCompatImpl.keystoreCompat.getAlgorithmParameterSpec(certSubject, alias, start, end, context))
-        generator.generateKeyPair()
+        //val generator = KeyPairGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
+        val generator = KeyGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
+        generator.init(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
+        generator.generateKey()
     }
 }
 
