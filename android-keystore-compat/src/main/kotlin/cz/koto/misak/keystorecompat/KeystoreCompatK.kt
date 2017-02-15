@@ -30,7 +30,7 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
     }
 
     override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String {
-        return KeystoreCrypto.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
+        return KeystoreCryptoK.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
     }
 
 
@@ -44,7 +44,7 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
         try {
             SecurityDeviceAdmin.INSTANCE.forceLockPreLollipop(
                     { lockIntent -> onFailure.invoke(ForceLockScreenKitKatException(lockIntent)) },
-                    { onSuccess.invoke(KeystoreCrypto.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded)) })
+                    { onSuccess.invoke(KeystoreCryptoK.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded)) })
         } catch (e: Exception) {
             onFailure.invoke(e)
         }

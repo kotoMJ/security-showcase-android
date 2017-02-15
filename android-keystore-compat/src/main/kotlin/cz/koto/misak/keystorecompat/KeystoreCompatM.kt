@@ -34,7 +34,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
     }
 
     override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String {
-        return KeystoreCrypto.encryptAES(secret, privateKeyEntry as KeyStore.SecretKeyEntry, useBase64Encoding)
+        return KeystoreCryptoM.encryptAES(secret, privateKeyEntry as KeyStore.SecretKeyEntry, useBase64Encoding)
     }
 
     override fun loadSecret(onSuccess: (cre: ByteArray) -> Unit,
@@ -53,7 +53,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                 //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure.invoke(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(KeystoreCrypto.decryptAES(keyEntry as KeyStore.SecretKeyEntry, encryptedUserData, isBase64Encoded))
+                onSuccess.invoke(KeystoreCryptoM.decryptAES(keyEntry as KeyStore.SecretKeyEntry, encryptedUserData, isBase64Encoded))
             }
         } catch (e: UserNotAuthenticatedException) {
             onFailure.invoke(e)
@@ -99,7 +99,6 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
     }
 
     override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
-        //val generator = KeyPairGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
         val generator = KeyGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
         generator.init(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
         generator.generateKey()

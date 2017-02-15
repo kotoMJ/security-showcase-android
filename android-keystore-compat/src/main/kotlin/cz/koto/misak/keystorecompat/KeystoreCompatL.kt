@@ -29,7 +29,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
     }
 
     override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String {
-        return KeystoreCrypto.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
+        return KeystoreCryptoK.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
     }
 
     override fun loadSecret(onSuccess: (ByteArray) -> Unit,
@@ -46,7 +46,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
                 //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(KeystoreCrypto.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded))
+                onSuccess.invoke(KeystoreCryptoK.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded))
             }
 
         } catch (e: Exception) {
