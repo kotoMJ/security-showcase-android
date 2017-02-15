@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     companion object {
-        val FORCE_ENCRYPTION_REQUEST = 1112
+        val FORCE_ENCRYPTION_REQUEST_M = 1112
     }
 
     override fun getViewModelBindingConfig() = ViewModelBindingConfig<MainViewModel>(R.layout.activity_main, MainViewModel::class.java)
@@ -81,7 +81,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == FORCE_ENCRYPTION_REQUEST) {
+        if (requestCode == FORCE_ENCRYPTION_REQUEST_M) {
             if (resultCode == Activity.RESULT_CANCELED) {
                 switchToFragment(SettingsFragment.newInstance())
             } else if (resultCode == Activity.RESULT_OK) {

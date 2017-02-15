@@ -11,7 +11,7 @@ import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.FragmentSettingsBinding
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
 import cz.koto.misak.securityshowcase.ui.BaseViewModel
-import cz.koto.misak.securityshowcase.ui.main.MainActivity.Companion.FORCE_ENCRYPTION_REQUEST
+import cz.koto.misak.securityshowcase.ui.main.MainActivity.Companion.FORCE_ENCRYPTION_REQUEST_M
 import cz.koto.misak.securityshowcase.utility.Logcat
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,12 +24,12 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
     val androidSecuritySelectable = ObservableBoolean(false)
 
     companion object {
-        val EXTRA_ENCRYPTION_REQUESTED = "EXTRA_ENCRYPTION_REQUESTED"
+        val EXTRA_ENCRYPTION_REQUEST_SCHEDULED = "EXTRA_ENCRYPTION_REQUEST_SCHEDULED"
     }
 
     override fun onViewModelCreated() {
         super.onViewModelCreated()
-        if (view.bundle.get(SettingViewModel.EXTRA_ENCRYPTION_REQUESTED) == true) storeSecret()
+        if (view.bundle.get(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED) == true) storeSecret()
     }
 
     override fun onViewAttached(firstAttachment: Boolean) {
@@ -48,6 +48,22 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
         }
     }
 
+    private fun setVisibility() {
+        runSinceKitKat {
+            androidSecurityAvailable.set(KeystoreCompat.isKeystoreCompatAvailable())
+            androidSecuritySelectable.set(KeystoreCompat.isSecurityEnabled())
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setVisibility()
+    }
+
+    fun onClickSecuritySettings() {
+        showLockScreenSettings(context)
+    }
+
     private fun storeSecret() {
         KeystoreCompat.clearCredentials()
         Flowable.fromCallable {
@@ -57,7 +73,7 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
                         Logcat.e("Store credentials failed!", it)
                         if (it is ForceLockScreenMarshmallowException) {
                             forceAndroidAuth(getString(R.string.kc_lock_screen_title), getString(R.string.kc_lock_screen_description),
-                                    { intent -> activity.startActivityForResult(intent, FORCE_ENCRYPTION_REQUEST) }, KeystoreCompat.context)
+                                    { intent -> activity.startActivityForResult(intent, FORCE_ENCRYPTION_REQUEST_M) }, KeystoreCompat.context)
                         }
                     },
                     { Logcat.d("Credentials stored.") })
@@ -75,21 +91,5 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
                     /* DEV test to load stored credentials (don't forget to increase setUserAuthenticationValidityDurationSeconds() to fulfill this test!) */
                     //CredentialsKeystoreProvider.loadCredentials({ loaded -> Logcat.w("LOAD test %s", loaded) }, { Logcat.e("LOAD test FAILURE") }, false)
                 })
-    }
-
-    private fun setVisibility() {
-        runSinceKitKat {
-            androidSecurityAvailable.set(KeystoreCompat.isKeystoreCompatAvailable())
-            androidSecuritySelectable.set(KeystoreCompat.isSecurityEnabled())
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        setVisibility()
-    }
-
-    fun onClickSecuritySettings() {
-        showLockScreenSettings(context)
     }
 }

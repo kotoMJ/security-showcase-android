@@ -23,13 +23,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingViewModel>
     companion object {
         fun newInstance() = SettingsFragment().apply {
             arguments = Bundle().apply {
-                putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUESTED, false)
+                putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED, false)
             }
         }
 
         fun newInstance(encryptionRequested: Boolean) = SettingsFragment().apply {
             arguments = Bundle().apply {
-                putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUESTED, encryptionRequested)
+                putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED, encryptionRequested)
             }
         }
     }
