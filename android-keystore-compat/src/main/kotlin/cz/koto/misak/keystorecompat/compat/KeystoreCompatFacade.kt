@@ -11,7 +11,7 @@ import javax.security.auth.x500.X500Principal
  * This interface has to define them generally as java.security.Keystore$Entry
  * Cast to specific implementation in specific KeystoreCompat implementation.
  *
- * Implementation rule of thumb:
+ * Experienced implementation rule of thumb:
  * RSA:java.security.KeyStore$PrivateKeyEntry
  * AES:java.security.KeyStore$SecretKeyEntry
  */
