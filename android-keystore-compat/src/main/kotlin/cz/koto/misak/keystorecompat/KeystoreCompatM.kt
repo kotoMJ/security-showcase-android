@@ -49,8 +49,6 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
             if (forceFlag == null || forceFlag) {
                 //Force signUp by using in memory flag:forceTypeCredentials
                 //This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
-
-                //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure.invoke(RuntimeException("Force flag enabled!"))
             } else {
                 onSuccess.invoke(KeystoreCryptoM.decryptAES(keyEntry as KeyStore.SecretKeyEntry, encryptedUserData, isBase64Encoded))
@@ -60,7 +58,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
         } catch (e: KeyPermanentlyInvalidatedException) {
             Log.w(LOG_TAG, "KeyPermanentlyInvalidatedException: cleanUp credentials for storage!")
             clearCredentials.invoke()
-            onFailure.invoke(e) //TODO call this in app: activity.start<LoginActivity>()
+            onFailure.invoke(e)
         }
     }
 

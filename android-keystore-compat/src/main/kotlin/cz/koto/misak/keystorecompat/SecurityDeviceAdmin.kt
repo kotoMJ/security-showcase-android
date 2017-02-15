@@ -34,7 +34,7 @@ class SecurityDeviceAdmin : DeviceAdminReceiver {
         onLockActivityShouldBeInvoked.invoke(intent)
     } else {
         //already a device administrator, can do security opertations now
-        mDPM.lockNow(); //TODO lock works, but with strange black screen, needs to be tuned additionally
+        mDPM.lockNow();
         onSuccess.invoke()
     }
 

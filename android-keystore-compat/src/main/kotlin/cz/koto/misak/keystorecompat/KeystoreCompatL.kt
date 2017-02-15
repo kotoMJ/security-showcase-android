@@ -43,14 +43,12 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
             if (forceFlag == null || forceFlag) {
                 //Force signUp by using in memory flag:forceTypeCredentials
                 //This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
-                //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure(RuntimeException("Force flag enabled!"))
             } else {
                 onSuccess.invoke(KeystoreCryptoK.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded))
             }
 
         } catch (e: Exception) {
-            //TODO call this in app: forceSignUpLollipop(acrivity)
             onFailure(e)
         }
     }

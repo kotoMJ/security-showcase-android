@@ -14,8 +14,7 @@ object SecurityConfig : SecurityBaseConfig() {
 
     val API_KOTINODE_PORT = "8080";
 
-    //TODO use http temporarily - for https is necessary to provide trust to certificate
-    val API_KOTINODE_PROTOCOL = "http"
+    val API_KOTINODE_PROTOCOL = "http"//HTTP is used for local development purpose only.
 
     fun getApiEndpoint(): String = "$API_KOTINODE_PROTOCOL://$API_KOTINODE_IP:$API_KOTINODE_PORT"
 

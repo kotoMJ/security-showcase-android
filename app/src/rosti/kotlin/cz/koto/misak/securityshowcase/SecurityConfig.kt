@@ -7,7 +7,6 @@ package cz.koto.misak.securityshowcase
 object SecurityConfig : SecurityBaseConfig() {
 
 
-    //TODO use http temporarily - for https is necessary to provide trust to certificate
     val API_KOTINODE_PROTOCOL = "https"
 
     fun getApiEndpoint(): String = "$API_KOTINODE_PROTOCOL://kotopeky.cz/api/kotinode/"
