@@ -95,7 +95,11 @@ object KeystoreCompat {
                             KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry, useBase64Encoding)
                     onSuccess.invoke()
                 } catch (fle: ForceLockScreenMarshmallowException) {
+                    KeystoreCompat.clearCredentials()
                     onError.invoke(fle)
+                } catch (e: Exception) {
+                    KeystoreCompat.clearCredentials()
+                    throw e
                 }
             } else {
                 onError.invoke(EncryptionNotAllowedException(isKeystoreCompatAvailable(), isSecurityEnabled()))
