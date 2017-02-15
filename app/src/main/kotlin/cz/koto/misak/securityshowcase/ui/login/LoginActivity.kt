@@ -8,9 +8,12 @@ import cz.koto.misak.keystorecompat.KeystoreCompat
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.ActivityLoginBinding
 import cz.koto.misak.securityshowcase.ui.BaseActivity
-import cz.koto.misak.securityshowcase.ui.login.LoginViewModel.Companion.FORCE_SIGNUP_REQUEST
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
+
+    companion object {
+        val FORCE_SIGNUP_REQUEST = 1111
+    }
 
     override fun getViewModelBindingConfig() =
             ViewModelBindingConfig(R.layout.activity_login, LoginViewModel::class.java)

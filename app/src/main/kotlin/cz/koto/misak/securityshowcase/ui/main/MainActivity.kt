@@ -1,5 +1,6 @@
 package cz.koto.misak.securityshowcase.ui.main
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -21,12 +22,16 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
+    companion object {
+        val FORCE_ENCRYPTION_REQUEST_M = 1112
+    }
+
     override fun getViewModelBindingConfig() = ViewModelBindingConfig<MainViewModel>(R.layout.activity_main, MainViewModel::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         super.onCreate(savedInstanceState)
-        runSinceKitKat { KeystoreCompat.signInSuccessful() }
+        runSinceKitKat { KeystoreCompat.lockScreenSuccessful() }
 
         if (savedInstanceState == null)
             switchToFragment(InfoFragment.newInstance(), false)
@@ -73,6 +78,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == FORCE_ENCRYPTION_REQUEST_M) {
+            if (resultCode == Activity.RESULT_CANCELED) {
+                switchToFragment(SettingsFragment.newInstance())
+            } else if (resultCode == Activity.RESULT_OK) {
+                switchToFragment(SettingsFragment.newInstance(true))
+            } else {
+                switchToFragment(SettingsFragment.newInstance())
+            }
+        } else
+            super.onActivityResult(requestCode, resultCode, data)
     }
 
 }

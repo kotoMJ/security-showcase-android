@@ -1,4 +1,4 @@
-package cz.koto.misak.keystorecompat
+package cz.koto.misak.keystorecompat.compat
 
 import android.annotation.TargetApi
 import android.app.KeyguardManager
@@ -6,7 +6,12 @@ import android.content.Context
 import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.util.Log
+import cz.koto.misak.keystorecompat.KeystoreCompat
+import cz.koto.misak.keystorecompat.SecurityDeviceAdmin
+import cz.koto.misak.keystorecompat.crypto.KeystoreCryptoK
+import cz.koto.misak.keystorecompat.exception.ForceLockScreenKitKatException
 import java.math.BigInteger
+import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.util.*
@@ -20,8 +25,16 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
 
     private val LOG_TAG = javaClass.name
 
-    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
-        return KeystoreCrypto.encryptRSA(secret, privateKeyEntry, useBase64Encoding)
+    override fun getAlgorithm(): String {
+        return "RSA"
+    }
+
+    override fun getCipherMode(): String {
+        return "RSA/None/PKCS1Padding"
+    }
+
+    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String {
+        return KeystoreCryptoK.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
     }
 
 
@@ -30,12 +43,12 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
                             clearCredentials: () -> Unit,
                             forceFlag: Boolean?,
                             encryptedUserData: String,
-                            privateKeyEntry: KeyStore.PrivateKeyEntry,
+                            keyEntry: KeyStore.Entry,
                             isBase64Encoded: Boolean) {
         try {
             SecurityDeviceAdmin.INSTANCE.forceLockPreLollipop(
                     { lockIntent -> onFailure.invoke(ForceLockScreenKitKatException(lockIntent)) },
-                    { onSuccess.invoke(KeystoreCrypto.decryptRSA(privateKeyEntry, encryptedUserData, isBase64Encoded)) })
+                    { onSuccess.invoke(KeystoreCryptoK.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded)) })
         } catch (e: Exception) {
             onFailure.invoke(e)
         }
@@ -62,13 +75,10 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
         return km.isKeyguardSecure
     }
 
-    //    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-//    private fun forceSignUpLollipop(activity: AppCompatActivity) {
-//        var km: KeyguardManager = KeystoreCompat.context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-//        val intent = km.createConfirmDeviceCredentialIntent(/*KeystoreCompat.context.getString(R.string.keystore_android_auth_title)*/"TODO TITLE",
-//                /*KeystoreCompat.context.getString(R.string.keystore_android_auth_desc)*/"TODO DESC")
-//        if (intent != null) {
-//            activity.startActivityForResult(intent, FORCE_SIGNUP_REQUEST)
-//        }
-//    }
+    override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
+        val generator = KeyPairGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
+        generator.initialize(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
+        generator.generateKeyPair()
+    }
+
 }

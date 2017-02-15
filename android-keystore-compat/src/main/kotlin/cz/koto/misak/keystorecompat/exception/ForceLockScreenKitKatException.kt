@@ -1,8 +1,8 @@
-package cz.koto.misak.keystorecompat
+package cz.koto.misak.keystorecompat.exception
 
 import android.content.Intent
 
-class ForceLockScreenKitKatException : RuntimeException {
+class ForceLockScreenKitKatException : KeystoreCompatException {
 
     var lockIntent: Intent
 

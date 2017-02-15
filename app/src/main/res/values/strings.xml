@@ -28,6 +28,7 @@
 	<string name="settings_security_label_android_security">Android security</string>
 	<string name="settings_security_tip_android_security">Enable Android Security to use this option.</string>
 	<string name="settings_security_link_android_security">Go to Android Security Settings</string>
+	<string name="settings_security_store_failed">Store credentails failed unexpctedly!</string>
 
 	<!-- Override KeystoreCompat default string -->
 	<string name="kc_lock_screen_title">SecurityShowcase LockScreen</string>

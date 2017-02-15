@@ -1,4 +1,4 @@
-package cz.koto.misak.keystorecompat
+package cz.koto.misak.keystorecompat.compat
 
 import android.os.Build
 

@@ -8,6 +8,11 @@ import android.database.Cursor
 import android.net.Uri
 
 
+/**
+ * Content provider able to initialize library with the context of hosted application without needs to initialize library manually.
+ * The only pre-condition is, that hosted application has applicationId defined.
+ * When missing this pre-condition IllegalStateException is thrown.
+ */
 class KeystoreCompatInitProvider : ContentProvider() {
 
     override fun insert(uri: Uri?, values: ContentValues?): Uri? {

@@ -1,4 +1,4 @@
-package cz.koto.misak.keystorecompat
+package cz.koto.misak.keystorecompat.compat
 
 import android.annotation.TargetApi
 import android.app.KeyguardManager
@@ -9,10 +9,13 @@ import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
 import android.security.keystore.UserNotAuthenticatedException
 import android.util.Log
+import cz.koto.misak.keystorecompat.KeystoreCompat
+import cz.koto.misak.keystorecompat.crypto.KeystoreCryptoM
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.security.spec.RSAKeyGenParameterSpec
 import java.util.*
+import javax.crypto.KeyGenerator
 import javax.security.auth.x500.X500Principal
 
 
@@ -24,8 +27,16 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
 
     private val LOG_TAG = javaClass.name
 
-    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
-        return KeystoreCrypto.encryptRSA(secret, privateKeyEntry, useBase64Encoding)
+    override fun getAlgorithm(): String {
+        return KeyProperties.KEY_ALGORITHM_AES
+    }
+
+    override fun getCipherMode(): String {
+        return "AES/GCM/NoPadding"
+    }
+
+    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String {
+        return KeystoreCryptoM.encryptAES(secret, privateKeyEntry as KeyStore.SecretKeyEntry, useBase64Encoding)
     }
 
     override fun loadSecret(onSuccess: (cre: ByteArray) -> Unit,
@@ -33,25 +44,23 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                             clearCredentials: () -> Unit,
                             forceFlag: Boolean?,
                             encryptedUserData: String,
-                            privateKeyEntry: KeyStore.PrivateKeyEntry,
+                            keyEntry: KeyStore.Entry,
                             isBase64Encoded: Boolean) {
         try {
 
-            if (forceFlag != null && forceFlag) {
+            if (forceFlag == null || forceFlag) {
                 //Force signUp by using in memory flag:forceTypeCredentials
                 //This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
-
-                //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure.invoke(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(KeystoreCrypto.decryptRSA(privateKeyEntry, encryptedUserData, isBase64Encoded))
+                onSuccess.invoke(KeystoreCryptoM.decryptAES(keyEntry as KeyStore.SecretKeyEntry, encryptedUserData, isBase64Encoded))
             }
         } catch (e: UserNotAuthenticatedException) {
             onFailure.invoke(e)
         } catch (e: KeyPermanentlyInvalidatedException) {
             Log.w(LOG_TAG, "KeyPermanentlyInvalidatedException: cleanUp credentials for storage!")
             clearCredentials.invoke()
-            onFailure.invoke(e) //TODO call this in app: activity.start<LoginActivity>()
+            onFailure.invoke(e)
         }
     }
 
@@ -68,14 +77,15 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
             throw RuntimeException("${LOG_TAG} Unsupported usage of version ${Build.VERSION.SDK_INT}")
         }
         return KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT.or(KeyProperties.PURPOSE_DECRYPT))
+                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)//follow used getCipherMode
                 .setCertificateSubject(certSubject)
                 .setKeyValidityStart(startDate)
                 .setKeyValidityEnd(endDate)
                 .setDigests(KeyProperties.DIGEST_SHA512)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)//follow used getCipherMode
                 .setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
                 .setUserAuthenticationRequired(true)
-                .setUserAuthenticationValidityDurationSeconds(10)//User has to type challenge in 10 seconds
+                .setUserAuthenticationValidityDurationSeconds(KeystoreCompat.config.getUserAuthenticationValidityDurationSeconds())
                 .build()
     }
 
@@ -86,6 +96,12 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
         Log.d(LOG_TAG, "KEYGUARD-SECURE:${km.isKeyguardSecure}")
         Log.d(LOG_TAG, "KEYGUARD-LOCKED:${km.isKeyguardLocked}")
         return km.isDeviceSecure
+    }
+
+    override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
+        val generator = KeyGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
+        generator.init(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
+        generator.generateKey()
     }
 }
 

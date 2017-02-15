@@ -1,93 +1,26 @@
-package cz.koto.misak.keystorecompat
+package cz.koto.misak.keystorecompat.crypto
 
 import android.annotation.TargetApi
 import android.os.Build
 import android.util.Base64
 import android.util.Log
+import cz.koto.misak.keystorecompat.compat.KeystoreCompatImpl
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
-import java.security.*
+import java.security.KeyStore
 import java.security.interfaces.RSAPublicKey
 import java.util.*
-import javax.crypto.*
-import javax.crypto.spec.IvParameterSpec
+import javax.crypto.Cipher
+import javax.crypto.CipherInputStream
+import javax.crypto.CipherOutputStream
 
-internal object KeystoreCrypto {
+
+/**
+ * Cryptographic methods for pre-M Android version (but the minimum SDK is Android KitKat)
+ */
+internal object KeystoreCryptoK {
 
     private val LOG_TAG = javaClass.name
-    val ORDER_FOR_ENCRYPTED_DATA = ByteOrder.BIG_ENDIAN
-
-    @TargetApi(Build.VERSION_CODES.M)
-    fun encryptAES(key: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry): ByteArray {
-        var iv: ByteArray
-        var encryptedKeyForRealm: ByteArray
-        try {
-            val publicKey = privateKeyEntry.certificate.publicKey
-
-            val inCipher = Cipher.getInstance(KeystoreCompat.rsaCipherMode)
-            inCipher.init(Cipher.ENCRYPT_MODE, publicKey)
-
-            encryptedKeyForRealm = inCipher.doFinal(key)
-            iv = inCipher.iv
-
-        } catch (e: Exception) {
-            Log.e(LOG_TAG, "Encryption2 error", e)
-            throw e
-        }
-        val ivAndEncryptedKey = ByteArray(Integer.SIZE + iv.size + encryptedKeyForRealm.size)
-
-        val buffer = ByteBuffer.wrap(ivAndEncryptedKey)
-        buffer.order(ORDER_FOR_ENCRYPTED_DATA)
-        buffer.putInt(iv.size)
-        buffer.put(iv)
-        buffer.put(encryptedKeyForRealm)
-
-        return ivAndEncryptedKey
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    fun decryptAES(privateKeyEntry: KeyStore.PrivateKeyEntry, ivAndEncryptedKey: ByteArray): ByteArray {
-
-        val buffer = ByteBuffer.wrap(ivAndEncryptedKey)
-        buffer.order(ORDER_FOR_ENCRYPTED_DATA)
-
-        val ivLength = buffer.int
-        val iv = ByteArray(ivLength)
-        val encryptedKey = ByteArray(ivAndEncryptedKey.size - Integer.SIZE - ivLength)
-
-        buffer.get(iv)
-        buffer.get(encryptedKey)
-
-        try {
-            val cipher = Cipher.getInstance(KeystoreCompat.rsaCipherMode)
-            val ivSpec = IvParameterSpec(iv)
-            cipher.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey, ivSpec)
-
-            return cipher.doFinal(encryptedKey)
-
-        } catch (e: Exception) {
-            when (e) {
-                is InvalidKeyException -> {
-                    throw RuntimeException("key is invalid.")
-                }
-                is UnrecoverableKeyException -> {
-                }
-                is NoSuchAlgorithmException -> {
-                }
-                is BadPaddingException -> {
-                }
-                is KeyStoreException -> {
-                }
-                is IllegalBlockSizeException -> {
-                }
-                is InvalidAlgorithmParameterException -> {
-                }
-            }
-            throw e
-        }
-    }
 
     /**
      * Encrypt bytes to Base64 encoded string.
@@ -108,7 +41,7 @@ internal object KeystoreCrypto {
              * it would fail with "Need RSA private or public key" at cipher init for decryption.
              * Simply use Cipher.getInstance("RSA/ECB/PKCS1Padding")
              */
-            val inCipher = Cipher.getInstance(KeystoreCompat.rsaCipherMode/*, "AndroidOpenSSL"*/)
+            val inCipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode()/*, "AndroidOpenSSL"*/)
             inCipher.init(Cipher.ENCRYPT_MODE, publicKey)
             val outputStream = ByteArrayOutputStream()
             val cipherOutputStream = CipherOutputStream(outputStream, inCipher)
@@ -121,7 +54,7 @@ internal object KeystoreCrypto {
                 return String(outputStream.toByteArray(), Charsets.UTF_8)
             }
         } catch (e: Exception) {
-            Log.e(LOG_TAG, "Encryption error", e)
+            Log.e(LOG_TAG, "encryptRSA error", e)
             throw e
         }
     }
@@ -143,7 +76,7 @@ internal object KeystoreCrypto {
              * it would fail with "Need RSA private or public key" at cipher init for decryption.
              * Simply use Cipher.getInstance("RSA/ECB/PKCS1Padding")
              */
-            val output = Cipher.getInstance(KeystoreCompat.rsaCipherMode/*, "AndroidOpenSSL"*/)
+            val output = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode()/*, "AndroidOpenSSL"*/)
             output.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey)
 
             val cipherInputStream = CipherInputStream(ByteArrayInputStream(inputByteArray), output)
@@ -162,7 +95,7 @@ internal object KeystoreCrypto {
             return bytes
 
         } catch (e: Exception) {
-            Log.e(LOG_TAG, "decryption error", e)
+            Log.e(LOG_TAG, "decryptRSA error", e)
             throw e
         }
     }

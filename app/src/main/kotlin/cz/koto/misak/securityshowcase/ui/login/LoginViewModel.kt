@@ -6,8 +6,8 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.net.Uri
 import cz.kinst.jakub.view.StatefulLayout
-import cz.koto.misak.keystorecompat.ForceLockScreenKitKatException
 import cz.koto.misak.keystorecompat.KeystoreCompat
+import cz.koto.misak.keystorecompat.exception.ForceLockScreenKitKatException
 import cz.koto.misak.keystorecompat.utility.forceAndroidAuth
 import cz.koto.misak.keystorecompat.utility.runSinceKitKat
 import cz.koto.misak.securityshowcase.ContextProvider
@@ -20,6 +20,7 @@ import cz.koto.misak.securityshowcase.model.AuthResponseSimple
 import cz.koto.misak.securityshowcase.model.base.ServerResponseObject
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
 import cz.koto.misak.securityshowcase.ui.BaseViewModel
+import cz.koto.misak.securityshowcase.ui.login.LoginActivity.Companion.FORCE_SIGNUP_REQUEST
 import cz.koto.misak.securityshowcase.ui.main.MainActivity
 import cz.koto.misak.securityshowcase.utility.*
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,9 +28,6 @@ import io.reactivex.schedulers.Schedulers
 
 class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
 
-    companion object {
-        val FORCE_SIGNUP_REQUEST = 1111
-    }
 
     val devAvailable = ObservableBoolean(SecurityConfig.isEndpointDev() && !SecurityConfig.isPackageRelease())
     val state = ObservableField(StatefulLayout.State.CONTENT)
@@ -51,6 +49,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
 
     override fun onViewModelCreated() {
         super.onViewModelCreated()
+        CredentialStorage.forceLockScreenFlag()
         username.addOnPropertyChangedCallback(userNameChanged)
     }
 

@@ -1,4 +1,4 @@
-package cz.koto.misak.keystorecompat
+package cz.koto.misak.keystorecompat.compat
 
 import android.annotation.TargetApi
 import android.app.KeyguardManager
@@ -6,7 +6,10 @@ import android.content.Context
 import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.util.Log
+import cz.koto.misak.keystorecompat.KeystoreCompat
+import cz.koto.misak.keystorecompat.crypto.KeystoreCryptoK
 import java.math.BigInteger
+import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.util.*
@@ -19,8 +22,16 @@ import javax.security.auth.x500.X500Principal
 internal object KeystoreCompatL : KeystoreCompatFacade {
     private val LOG_TAG = javaClass.name
 
-    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.PrivateKeyEntry, useBase64Encoding: Boolean): String {
-        return KeystoreCrypto.encryptRSA(secret, privateKeyEntry, useBase64Encoding)
+    override fun getAlgorithm(): String {
+        return "RSA"
+    }
+
+    override fun getCipherMode(): String {
+        return "RSA/None/PKCS1Padding"
+    }
+
+    override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String {
+        return KeystoreCryptoK.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
     }
 
     override fun loadSecret(onSuccess: (ByteArray) -> Unit,
@@ -28,20 +39,18 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
                             clearCredentials: () -> Unit,
                             forceFlag: Boolean?,
                             encryptedUserData: String,
-                            privateKeyEntry: KeyStore.PrivateKeyEntry,
+                            keyEntry: KeyStore.Entry,
                             isBase64Encoded: Boolean) {
         try {
-            if (forceFlag != null && forceFlag) {
+            if (forceFlag == null || forceFlag) {
                 //Force signUp by using in memory flag:forceTypeCredentials
                 //This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
-                //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(KeystoreCrypto.decryptRSA(privateKeyEntry, encryptedUserData, isBase64Encoded))
+                onSuccess.invoke(KeystoreCryptoK.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded))
             }
 
         } catch (e: Exception) {
-            //TODO call this in app: forceSignUpLollipop(acrivity)
             onFailure(e)
         }
     }
@@ -67,5 +76,10 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
         return km.isKeyguardSecure
     }
 
+    override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
+        val generator = KeyPairGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
+        generator.initialize(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
+        generator.generateKeyPair()
+    }
 
 }
