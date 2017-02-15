@@ -16,6 +16,7 @@ import cz.koto.misak.keystorecompat.utility.intPref
 import cz.koto.misak.keystorecompat.utility.runSinceKitKat
 import cz.koto.misak.keystorecompat.utility.stringPref
 import java.security.KeyStore
+import java.security.KeyStoreException
 import java.util.*
 import javax.security.auth.x500.X500Principal
 
@@ -194,9 +195,11 @@ object KeystoreCompat {
     fun clearCredentials() {
         runSinceKitKat {
             encryptedSecret = ""
-            keyStore.deleteEntry(uniqueId)
-            if (keyStore.containsAlias(uniqueId))
-                throw RuntimeException("Cert delete wasn't successful!")
+            try {
+                keyStore.deleteEntry(uniqueId)
+            } catch (ke: KeyStoreException) {
+                Log.w(LOG_TAG, "Unable to delete entry:" + uniqueId, ke)
+            }
         }
     }
 
