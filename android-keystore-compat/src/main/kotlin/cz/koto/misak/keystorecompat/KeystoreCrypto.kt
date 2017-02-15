@@ -12,7 +12,7 @@ import java.security.*
 import java.security.interfaces.RSAPublicKey
 import java.util.*
 import javax.crypto.*
-import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.GCMParameterSpec
 
 internal object KeystoreCrypto {
 
@@ -31,10 +31,13 @@ internal object KeystoreCrypto {
             iv = inCipher.iv
 
         } catch (e: Exception) {
-            //android.security.keystore.UserNotAuthenticatedException: User not authenticated
-            //at android.security.KeyStore.getInvalidKeyException(KeyStore.java:712)
-            //at javax.crypto.Cipher.init(Cipher.java:1143)
-            Log.e(LOG_TAG, "Encryption2 error", e)
+            /**
+             * TODO solve UserNotAuthenticatedException when user want to encrypt data and user exceeded setUserAuthenticationValidityDurationSeconds
+             * android.security.keystore.UserNotAuthenticatedException: User not authenticated
+             * at android.security.KeyStore.getInvalidKeyException(KeyStore.java:712)
+             * at javax.crypto.Cipher.init(Cipher.java:1143)
+             */
+            Log.e(LOG_TAG, "encryptAES error", e)
             throw e
         }
         val ivAndEncryptedKey = ByteArray(Integer.SIZE + iv.size + encryptedKeyForRealm.size)
@@ -53,7 +56,7 @@ internal object KeystoreCrypto {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.M) //ivAndEncryptedKey
+    @TargetApi(Build.VERSION_CODES.M)
     fun decryptAES(secretKeyEntry: KeyStore.SecretKeyEntry, encryptedSecret: String, isBase64Encoded: Boolean): ByteArray {
 
         var ivAndEncryptedKey: ByteArray = if (isBase64Encoded) Base64.decode(encryptedSecret, Base64.DEFAULT) else encryptedSecret.toByteArray(Charsets.UTF_8)
@@ -71,8 +74,7 @@ internal object KeystoreCrypto {
 
         try {
             val cipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode())
-            val ivSpec = IvParameterSpec(iv)
-            //TODO java.security.InvalidAlgorithmParameterException: Only GCMParameterSpec supported
+            val ivSpec = GCMParameterSpec(128, iv)
             cipher.init(Cipher.DECRYPT_MODE, secretKeyEntry.secretKey, ivSpec)
 
             return cipher.doFinal(encryptedKey)
@@ -95,6 +97,7 @@ internal object KeystoreCrypto {
                 is InvalidAlgorithmParameterException -> {
                 }
             }
+            Log.e(LOG_TAG, "decryptAES error", e)
             throw e
         }
     }
@@ -131,7 +134,7 @@ internal object KeystoreCrypto {
                 return String(outputStream.toByteArray(), Charsets.UTF_8)
             }
         } catch (e: Exception) {
-            Log.e(LOG_TAG, "Encryption error", e)
+            Log.e(LOG_TAG, "encryptRSA error", e)
             throw e
         }
     }
@@ -172,7 +175,7 @@ internal object KeystoreCrypto {
             return bytes
 
         } catch (e: Exception) {
-            Log.e(LOG_TAG, "decryption error", e)
+            Log.e(LOG_TAG, "decryptRSA error", e)
             throw e
         }
     }
