@@ -92,7 +92,7 @@ object KeystoreCompat {
                 initKeyPairIfNecessary(uniqueId)
                 try {
                     KeystoreCompat.encryptedSecret = KeystoreCompatImpl.keystoreCompat.storeSecret(secret,
-                            KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry, useBase64Encoding)
+                            KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
                     onSuccess.invoke()
                 } catch (fle: ForceLockScreenMarshmallowException) {
                     KeystoreCompat.clearCredentials()
@@ -160,7 +160,7 @@ object KeystoreCompat {
      */
     @JvmOverloads fun loadSecret(onSuccess: (cre: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
         runSinceKitKat {
-            val privateEntry: KeyStore.PrivateKeyEntry? = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
+            val privateEntry: KeyStore.Entry? = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null)
             if (privateEntry == null) {
                 onFailure.invoke(RuntimeException("No entry in keystore available."))
             } else {
@@ -180,7 +180,7 @@ object KeystoreCompat {
      */
     @JvmOverloads fun loadSecretAsString(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
         runSinceKitKat {
-            val keyEntry: KeyStore.Entry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.Entry
+            val keyEntry: KeyStore.Entry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null)
             KeystoreCompatImpl.keystoreCompat.loadSecret(
                     { byteArray ->
                         onSuccess.invoke(String(byteArray, 0, byteArray.size, Charsets.UTF_8))
