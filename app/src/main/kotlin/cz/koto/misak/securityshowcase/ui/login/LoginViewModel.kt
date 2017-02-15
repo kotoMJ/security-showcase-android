@@ -51,6 +51,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
 
     override fun onViewModelCreated() {
         super.onViewModelCreated()
+        CredentialStorage.forceLockScreenFlag()
         username.addOnPropertyChangedCallback(userNameChanged)
     }
 

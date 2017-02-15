@@ -50,7 +50,7 @@ object CredentialStorage {
      * Requirement given by certificate definition remains.
      */
     fun dismissForceLockScreenFlag() {
-        this.forceLockScreenFlag = null
+        this.forceLockScreenFlag = false
     }
 
 }

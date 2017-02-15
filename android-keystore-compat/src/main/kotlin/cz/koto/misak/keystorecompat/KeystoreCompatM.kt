@@ -46,7 +46,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                             isBase64Encoded: Boolean) {
         try {
 
-            if (forceFlag != null && forceFlag) {
+            if (forceFlag == null || forceFlag) {
                 //Force signUp by using in memory flag:forceTypeCredentials
                 //This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
 
