@@ -37,7 +37,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
                             clearCredentials: () -> Unit,
                             forceFlag: Boolean?,
                             encryptedUserData: String,
-                            privateKeyEntry: KeyStore.Entry,
+                            keyEntry: KeyStore.Entry,
                             isBase64Encoded: Boolean) {
         try {
             if (forceFlag != null && forceFlag) {
@@ -46,7 +46,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
                 //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(KeystoreCrypto.decryptRSA(privateKeyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded))
+                onSuccess.invoke(KeystoreCrypto.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded))
             }
 
         } catch (e: Exception) {

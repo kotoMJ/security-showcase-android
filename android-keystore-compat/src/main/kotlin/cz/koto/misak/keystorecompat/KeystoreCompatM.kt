@@ -42,7 +42,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                             clearCredentials: () -> Unit,
                             forceFlag: Boolean?,
                             encryptedUserData: String,
-                            privateKeyEntry: KeyStore.Entry,
+                            keyEntry: KeyStore.Entry,
                             isBase64Encoded: Boolean) {
         try {
 
@@ -53,7 +53,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                 //TODO call this in app: forceSignUpLollipop(activity)
                 onFailure.invoke(RuntimeException("Force flag enabled!"))
             } else {
-                onSuccess.invoke(KeystoreCrypto.decryptAES(privateKeyEntry as KeyStore.SecretKeyEntry, encryptedUserData, isBase64Encoded))
+                onSuccess.invoke(KeystoreCrypto.decryptAES(keyEntry as KeyStore.SecretKeyEntry, encryptedUserData, isBase64Encoded))
             }
         } catch (e: UserNotAuthenticatedException) {
             onFailure.invoke(e)
@@ -84,8 +84,8 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                 .setDigests(KeyProperties.DIGEST_SHA512)
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)//follow used getCipherMode
                 .setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
-                .setUserAuthenticationRequired(true)
-                .setUserAuthenticationValidityDurationSeconds(10)//User has to type challenge in 10 seconds
+                .setUserAuthenticationRequired(true)//TODO false is termporarily to overcome init issue...
+                .setUserAuthenticationValidityDurationSeconds(60 * 10)//User has to type challenge in 10 seconds
                 .build()
     }
 

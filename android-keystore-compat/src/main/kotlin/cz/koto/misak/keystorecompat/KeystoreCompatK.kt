@@ -39,12 +39,12 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
                             clearCredentials: () -> Unit,
                             forceFlag: Boolean?,
                             encryptedUserData: String,
-                            privateKeyEntry: KeyStore.Entry,
+                            keyEntry: KeyStore.Entry,
                             isBase64Encoded: Boolean) {
         try {
             SecurityDeviceAdmin.INSTANCE.forceLockPreLollipop(
                     { lockIntent -> onFailure.invoke(ForceLockScreenKitKatException(lockIntent)) },
-                    { onSuccess.invoke(KeystoreCrypto.decryptRSA(privateKeyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded)) })
+                    { onSuccess.invoke(KeystoreCrypto.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded)) })
         } catch (e: Exception) {
             onFailure.invoke(e)
         }

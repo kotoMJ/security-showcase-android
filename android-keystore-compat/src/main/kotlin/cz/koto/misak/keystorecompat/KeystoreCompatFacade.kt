@@ -19,7 +19,7 @@ internal interface KeystoreCompatFacade {
                    clearCredentials: () -> Unit,
                    forceFlag: Boolean?,
                    encryptedUserData: String,
-                   privateKeyEntry: KeyStore.Entry,
+                   keyEntry: KeyStore.Entry,
                    isBase64Encoded: Boolean)
 
     fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec

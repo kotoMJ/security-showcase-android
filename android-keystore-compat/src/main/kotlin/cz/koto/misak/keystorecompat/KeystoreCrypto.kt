@@ -20,19 +20,20 @@ internal object KeystoreCrypto {
     val ORDER_FOR_ENCRYPTED_DATA = ByteOrder.BIG_ENDIAN
 
     @TargetApi(Build.VERSION_CODES.M)
-    fun encryptAES(secret: ByteArray, privateKeyEntry: KeyStore.SecretKeyEntry, useBase64Encoding: Boolean): String {
+    fun encryptAES(secret: ByteArray, secretKeyEntry: KeyStore.SecretKeyEntry, useBase64Encoding: Boolean): String {
         var iv: ByteArray
         var encryptedKeyForRealm: ByteArray
         try {
-            val key = privateKeyEntry.secretKey
-
+            val key = secretKeyEntry.secretKey
             val inCipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode())
             inCipher.init(Cipher.ENCRYPT_MODE, key)
-
             encryptedKeyForRealm = inCipher.doFinal(secret)
             iv = inCipher.iv
 
         } catch (e: Exception) {
+            //android.security.keystore.UserNotAuthenticatedException: User not authenticated
+            //at android.security.KeyStore.getInvalidKeyException(KeyStore.java:712)
+            //at javax.crypto.Cipher.init(Cipher.java:1143)
             Log.e(LOG_TAG, "Encryption2 error", e)
             throw e
         }
@@ -71,6 +72,7 @@ internal object KeystoreCrypto {
         try {
             val cipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode())
             val ivSpec = IvParameterSpec(iv)
+            //TODO java.security.InvalidAlgorithmParameterException: Only GCMParameterSpec supported
             cipher.init(Cipher.DECRYPT_MODE, secretKeyEntry.secretKey, ivSpec)
 
             return cipher.doFinal(encryptedKey)

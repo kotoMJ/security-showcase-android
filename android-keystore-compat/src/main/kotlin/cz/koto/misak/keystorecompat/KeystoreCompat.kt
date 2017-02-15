@@ -153,7 +153,7 @@ object KeystoreCompat {
      */
     @JvmOverloads fun loadSecretAsString(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
         runSinceKitKat {
-            val privateEntry: KeyStore.PrivateKeyEntry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.PrivateKeyEntry
+            val keyEntry: KeyStore.Entry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null) as KeyStore.Entry
             KeystoreCompatImpl.keystoreCompat.loadSecret(
                     { byteArray ->
                         onSuccess.invoke(String(byteArray, 0, byteArray.size, Charsets.UTF_8))
@@ -162,7 +162,7 @@ object KeystoreCompat {
                     { clearCredentials() },
                     forceFlag,
                     this.encryptedSecret,
-                    privateEntry, isBase64Encoded)
+                    keyEntry, isBase64Encoded)
         }
     }
 
