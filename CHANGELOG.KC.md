@@ -5,6 +5,13 @@
  * Use advanced SafetyNet detection of rooted device.
  * Use AES for keypair-generation since Android M
 
+## KC-1.0.0-BETA
+ * API 23+(Android M and above) is now using AES instead of RSA.
+ * New configurable parameter in KeystoreCompatConfig: UserAuthenticationValidityDurationSeconds
+ * Breaking API change (caused by AES implementation in da library)
+ 	* Change package of the ForceLockScreenKitKatException (& add some other helpful exceptions)
+ 	* onError method of both storeSecret() now returns derived KeystoreCompatException
+
 ## KC-0.6.0-BETA
  * Add new feature to disable KeystoreCompat (by default) when rooted device is [detected](https://github.com/scottyab/rootbeer).
 
