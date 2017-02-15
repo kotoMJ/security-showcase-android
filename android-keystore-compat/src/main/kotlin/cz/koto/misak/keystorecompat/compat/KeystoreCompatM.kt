@@ -1,4 +1,4 @@
-package cz.koto.misak.keystorecompat
+package cz.koto.misak.keystorecompat.compat
 
 import android.annotation.TargetApi
 import android.app.KeyguardManager
@@ -9,6 +9,8 @@ import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
 import android.security.keystore.UserNotAuthenticatedException
 import android.util.Log
+import cz.koto.misak.keystorecompat.KeystoreCompat
+import cz.koto.misak.keystorecompat.crypto.KeystoreCryptoM
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.security.spec.RSAKeyGenParameterSpec

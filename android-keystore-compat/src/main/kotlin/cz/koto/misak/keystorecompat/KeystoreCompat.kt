@@ -7,6 +7,7 @@ import android.provider.Settings
 import android.util.Log
 import com.scottyab.rootbeer.RootBeer
 import com.scottyab.rootbeer.util.Utils
+import cz.koto.misak.keystorecompat.compat.KeystoreCompatImpl
 import cz.koto.misak.keystorecompat.exception.EncryptionNotAllowedException
 import cz.koto.misak.keystorecompat.exception.ForceLockScreenMarshmallowException
 import cz.koto.misak.keystorecompat.exception.KeystoreCompatException

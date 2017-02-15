@@ -1,4 +1,4 @@
-package cz.koto.misak.keystorecompat
+package cz.koto.misak.keystorecompat.compat
 
 import android.annotation.TargetApi
 import android.app.KeyguardManager
@@ -6,6 +6,9 @@ import android.content.Context
 import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.util.Log
+import cz.koto.misak.keystorecompat.KeystoreCompat
+import cz.koto.misak.keystorecompat.SecurityDeviceAdmin
+import cz.koto.misak.keystorecompat.crypto.KeystoreCryptoK
 import cz.koto.misak.keystorecompat.exception.ForceLockScreenKitKatException
 import java.math.BigInteger
 import java.security.KeyPairGenerator

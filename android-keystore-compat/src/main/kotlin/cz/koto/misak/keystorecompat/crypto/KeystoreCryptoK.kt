@@ -1,9 +1,10 @@
-package cz.koto.misak.keystorecompat
+package cz.koto.misak.keystorecompat.crypto
 
 import android.annotation.TargetApi
 import android.os.Build
 import android.util.Base64
 import android.util.Log
+import cz.koto.misak.keystorecompat.compat.KeystoreCompatImpl
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.security.KeyStore
