@@ -6,6 +6,15 @@ import java.security.spec.AlgorithmParameterSpec
 import java.util.*
 import javax.security.auth.x500.X500Principal
 
+/**
+ * Be careful when using java.security.KeyStore$SecretKeyEntry & java.security.KeyStore$PrivateKeyEntry
+ * This interface has to define them generally as java.security.Keystore$Entry
+ * Cast to specific implementation in specific KeystoreCompat implementation.
+ *
+ * Implementation rule of thumb:
+ * RSA:java.security.KeyStore$PrivateKeyEntry
+ * AES:java.security.KeyStore$SecretKeyEntry
+ */
 internal interface KeystoreCompatFacade {
 
     fun getAlgorithm(): String

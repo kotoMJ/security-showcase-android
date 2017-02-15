@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.util.Log
+import cz.koto.misak.keystorecompat.exception.ForceLockScreenKitKatException
 import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore

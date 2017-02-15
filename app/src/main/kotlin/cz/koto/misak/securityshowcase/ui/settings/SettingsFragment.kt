@@ -1,6 +1,7 @@
 package cz.koto.misak.securityshowcase.ui.info
 
 import android.content.Intent
+import android.os.Bundle
 import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.FragmentSettingsBinding
@@ -20,6 +21,16 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingViewModel>
     }
 
     companion object {
-        fun newInstance() = SettingsFragment()
+        fun newInstance() = SettingsFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUESTED, false)
+            }
+        }
+
+        fun newInstance(encryptionRequested: Boolean) = SettingsFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUESTED, encryptionRequested)
+            }
+        }
     }
 }

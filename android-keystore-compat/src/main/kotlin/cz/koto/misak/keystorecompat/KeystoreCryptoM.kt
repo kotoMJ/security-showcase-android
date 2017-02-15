@@ -6,6 +6,7 @@ import android.security.keystore.KeyNotYetValidException
 import android.security.keystore.UserNotAuthenticatedException
 import android.util.Base64
 import android.util.Log
+import cz.koto.misak.keystorecompat.exception.ForceLockScreenMarshmallowException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.security.*
@@ -50,7 +51,7 @@ internal object KeystoreCryptoM {
              * at android.security.KeyStore.getInvalidKeyException(KeyStore.java:712)
              * at javax.crypto.Cipher.init(Cipher.java:1143)
              */
-            throw nae
+            throw ForceLockScreenMarshmallowException()
         } catch (e: Exception) {
             Log.e(LOG_TAG, "Unexpected encryptAES error", e)
             throw e

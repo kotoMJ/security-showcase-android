@@ -83,7 +83,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)//follow used getCipherMode
                 .setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
                 .setUserAuthenticationRequired(true)//TODO false is termporarily to overcome init issue...
-                .setUserAuthenticationValidityDurationSeconds(60 * 10)//User has to type challenge in 10 seconds
+                .setUserAuthenticationValidityDurationSeconds(10)//User has to type challenge in 10 seconds
                 .build()
     }
 

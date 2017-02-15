@@ -7,6 +7,9 @@ import android.provider.Settings
 import android.util.Log
 import com.scottyab.rootbeer.RootBeer
 import com.scottyab.rootbeer.util.Utils
+import cz.koto.misak.keystorecompat.exception.EncryptionNotAllowedException
+import cz.koto.misak.keystorecompat.exception.ForceLockScreenMarshmallowException
+import cz.koto.misak.keystorecompat.exception.KeystoreCompatException
 import cz.koto.misak.keystorecompat.utility.PrefDelegate
 import cz.koto.misak.keystorecompat.utility.intPref
 import cz.koto.misak.keystorecompat.utility.runSinceKitKat
@@ -76,17 +79,24 @@ object KeystoreCompat {
      * Store credentials string in encrypted form to shared preferences.
      * Call this function in separated thread, as eventual keyPair init may takes longer time
      * Function is using @JvmOverloads to force optional parameters be optional even in java code.
+     *
+     * @exception EncryptionNotAllowedException
+     * @exception ForceLockScreenMarshmallowException
      */
-    @JvmOverloads fun storeSecret(secret: ByteArray, onError: () -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true) {
+    @JvmOverloads fun storeSecret(secret: ByteArray, onError: (e: KeystoreCompatException) -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true) {
         runSinceKitKat {
             Log.d(LOG_TAG, "Before load KeyPair...")
             if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
                 initKeyPairIfNecessary(uniqueId)
-                KeystoreCompat.encryptedSecret = KeystoreCompatImpl.keystoreCompat.storeSecret(secret,
-                        KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry, useBase64Encoding)
-                onSuccess.invoke()
+                try {
+                    KeystoreCompat.encryptedSecret = KeystoreCompatImpl.keystoreCompat.storeSecret(secret,
+                            KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.PrivateKeyEntry, useBase64Encoding)
+                    onSuccess.invoke()
+                } catch (fle: ForceLockScreenMarshmallowException) {
+                    onError.invoke(fle)
+                }
             } else {
-                onError.invoke()
+                onError.invoke(EncryptionNotAllowedException(isKeystoreCompatAvailable(), isSecurityEnabled()))
             }
         }
     }
@@ -97,18 +107,29 @@ object KeystoreCompat {
      * Function is using @JvmOverloads to force optional parameters be optional even in java code.
      *
      * @param secret - UTF-8 based non-null string
+     *
+     * @exception EncryptionNotAllowedException
+     * @exception ForceLockScreenMarshmallowException
      */
-    @JvmOverloads fun storeSecret(secret: String, onError: () -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true) {
+    @JvmOverloads fun storeSecret(secret: String, onError: (e: KeystoreCompatException) -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true) {
         runSinceKitKat {
             Log.d(LOG_TAG, "Before load KeyPair...")
             if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
                 initKeyPairIfNecessary(uniqueId)
-                //java.security.KeyStore$SecretKeyEntry cannot be cast to java.security.KeyStore$PrivateKeyEntry
-                KeystoreCompat.encryptedSecret = KeystoreCompatImpl.keystoreCompat.storeSecret(secret.toByteArray(Charsets.UTF_8),
-                        KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
-                onSuccess.invoke()
+                try {
+                    KeystoreCompat.encryptedSecret = KeystoreCompatImpl.keystoreCompat.storeSecret(secret.toByteArray(Charsets.UTF_8),
+                            KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
+                    onSuccess.invoke()
+                } catch (fle: ForceLockScreenMarshmallowException) {
+                    KeystoreCompat.clearCredentials()
+                    onError.invoke(fle)
+                } catch (e: Exception) {
+                    KeystoreCompat.clearCredentials()
+                    throw e
+                }
             } else {
-                onError.invoke()
+                KeystoreCompat.clearCredentials()
+                onError.invoke(EncryptionNotAllowedException(isKeystoreCompatAvailable(), isSecurityEnabled()))
             }
         }
     }
@@ -191,10 +212,14 @@ object KeystoreCompat {
     /**
      * Call this for every successful signIn to activate eventually dismissed KeystoreCompat LockScreen feature.
      */
-    fun signInSuccessful() {
+    fun lockScreenSuccessful() {
         runSinceKitKat {
             lockScreenCancelCount = 0
         }
+    }
+
+    internal fun lockScreenCancelled(): Boolean {
+        return lockScreenCancelCount >= config.getDialogDismissThreshold()
     }
 
     internal fun init(context: Context) {
@@ -228,10 +253,6 @@ object KeystoreCompat {
             if (keyStore.containsAlias(alias) && isCertificateValid()) return
             else createNewKeyPair(alias)
         }
-    }
-
-    internal fun lockScreenCancelled(): Boolean {
-        return lockScreenCancelCount >= config.getDialogDismissThreshold()
     }
 
     private fun logUnsupportedVersionForKeystore() {
