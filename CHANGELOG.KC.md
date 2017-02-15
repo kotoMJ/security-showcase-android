@@ -2,8 +2,7 @@
 # Release notes for Keystore Compat library
 
 ## Not released yet
- * Use advanced SafetyNet detection of rooted device.
- * Use AES for keypair-generation since Android M
+ * Think about advanced root detection with SafetyNet
 
 ## KC-1.0.0-BETA
  * API 23+(Android M and above) is now using AES instead of RSA.
