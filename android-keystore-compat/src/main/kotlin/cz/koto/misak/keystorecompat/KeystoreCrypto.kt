@@ -2,6 +2,8 @@ package cz.koto.misak.keystorecompat
 
 import android.annotation.TargetApi
 import android.os.Build
+import android.security.keystore.KeyNotYetValidException
+import android.security.keystore.UserNotAuthenticatedException
 import android.util.Base64
 import android.util.Log
 import java.io.ByteArrayInputStream
@@ -30,14 +32,24 @@ internal object KeystoreCrypto {
             encryptedKeyForRealm = inCipher.doFinal(secret)
             iv = inCipher.iv
 
-        } catch (e: Exception) {
+        } catch (nve: KeyNotYetValidException) {
+            Log.e(LOG_TAG, "encryptAES error: key's validity start date is probably in the future", nve)
             /**
-             * TODO solve UserNotAuthenticatedException when user want to encrypt data and user exceeded setUserAuthenticationValidityDurationSeconds
+             * TODO solve android.security.keystore.KeyNotYetValidException: Key not yet valid
+             * - Indicates that a cryptographic operation failed because the employed key's validity start date is in the future.
+             */
+            throw nve
+        } catch (nae: UserNotAuthenticatedException) {
+            Log.e(LOG_TAG, "encryptAES error: user probably exceeded setUserAuthenticationValidityDurationSeconds", nae)
+            /**
+             *  TODO solve UserNotAuthenticatedException when user want to encrypt data and user exceeded setUserAuthenticationValidityDurationSeconds
              * android.security.keystore.UserNotAuthenticatedException: User not authenticated
              * at android.security.KeyStore.getInvalidKeyException(KeyStore.java:712)
              * at javax.crypto.Cipher.init(Cipher.java:1143)
              */
-            Log.e(LOG_TAG, "encryptAES error", e)
+            throw nae
+        } catch (e: Exception) {
+            Log.e(LOG_TAG, "Unexpected encryptAES error", e)
             throw e
         }
         val ivAndEncryptedKey = ByteArray(Integer.SIZE + iv.size + encryptedKeyForRealm.size)

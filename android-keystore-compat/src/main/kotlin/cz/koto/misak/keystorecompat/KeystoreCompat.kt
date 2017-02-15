@@ -248,6 +248,7 @@ object KeystoreCompat {
     private fun createNewKeyPair(aliasText: String) {
         try {
             val start = Calendar.getInstance()
+            start.add(Calendar.MINUTE, -1)//Prevent KeyNotYetValidException for encryption
             val end = Calendar.getInstance()
             end.add(Calendar.YEAR, 1)//TODO handle with outdated certificates!
             KeystoreCompatImpl.keystoreCompat.generateKeyPair(aliasText, start.time, end.time, this.certSubject, this.context)
