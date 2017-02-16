@@ -1,5 +1,7 @@
 # Release notes for Security Showcase app
 
+## SHOWCASE-1.2.0
+* Update with usage of KeystoreCompat KC-1.0.3-BETA (AES since Android-M, it brings new behaviour during encryption)
 
 ## SHOWCASE-1.1.0
 * Update with usage of KeystoreCompat KC-0.6.0-BETA (handling with rooted devices).
