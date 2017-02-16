@@ -12,7 +12,7 @@ SecurityShowcase application contains example of using standard Android Security
 All Android Keystore related stuff is bundled in KeystoreCompat library (available in this source code).
 
 KeystoreCompat library should help to prevent pain when starting work with keystore from the official documentation
-or StackOverflow discussion. The main point of this library is to provide the same solution for all backward (...Compat) supported API versions (19+).
+or StackOverflow discussion. **The main point of this library is to provide the same solution for all backward** (...Compat) **supported API versions (19+).**
 The backward support is something, what all available libraries and blog posts lacks!
 
 Read more about [KeystoreCompat](android-keystore-compat/readme.md)<br/>
