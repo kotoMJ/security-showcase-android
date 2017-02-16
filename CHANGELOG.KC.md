@@ -4,6 +4,8 @@
 ## Not released yet
  * Think about advanced root detection with SafetyNet
 
+## KC-1.0.3-BETA
+ * Fix invalidKey exception handling in case of Android-M and AES
 ## KC-1.0.2-BETA
  * Fix annoying error log of UserNotAuthenticatedException (since M it is part of the flow, log is therefore decreased to info without stacktrace)
 ## KC-1.0.1-BETA
