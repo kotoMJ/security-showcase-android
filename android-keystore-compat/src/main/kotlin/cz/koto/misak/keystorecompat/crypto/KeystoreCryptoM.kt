@@ -45,7 +45,7 @@ internal object KeystoreCryptoM {
              */
             throw nve
         } catch (nae: UserNotAuthenticatedException) {
-            Log.e(LOG_TAG, "encryptAES error: user probably exceeded setUserAuthenticationValidityDurationSeconds", nae)
+            Log.i(LOG_TAG, "User probably exceeded setUserAuthenticationValidityDurationSeconds", nae)
             /**
              *  TODO solve UserNotAuthenticatedException when user want to encrypt data and user exceeded setUserAuthenticationValidityDurationSeconds
              * android.security.keystore.UserNotAuthenticatedException: User not authenticated

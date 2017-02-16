@@ -4,6 +4,10 @@
 ## Not released yet
  * Think about advanced root detection with SafetyNet
 
+## KC-1.0.2-BETA
+ * Fix annoying error log of UserNotAuthenticatedException (since M it is part of the flow, log is therefore decreased to info without stacktrace)
+## KC-1.0.1-BETA
+ * Fix handling with private key entry in case of storeSecret with byteArray as the input
 ## KC-1.0.0-BETA
  * API 23+(Android M and above) is now using AES instead of RSA.
  * New configurable parameter in KeystoreCompatConfig: UserAuthenticationValidityDurationSeconds
