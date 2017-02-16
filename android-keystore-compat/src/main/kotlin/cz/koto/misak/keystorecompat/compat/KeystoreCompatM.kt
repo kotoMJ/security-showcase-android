@@ -11,6 +11,7 @@ import android.security.keystore.UserNotAuthenticatedException
 import android.util.Log
 import cz.koto.misak.keystorecompat.KeystoreCompat
 import cz.koto.misak.keystorecompat.crypto.KeystoreCryptoM
+import cz.koto.misak.keystorecompat.exception.KeystoreInvalidKeyException
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.security.spec.RSAKeyGenParameterSpec
@@ -60,6 +61,11 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
         } catch (e: KeyPermanentlyInvalidatedException) {
             Log.w(LOG_TAG, "KeyPermanentlyInvalidatedException: cleanUp credentials for storage!")
             clearCredentials.invoke()
+            onFailure.invoke(e)
+        } catch (e: KeystoreInvalidKeyException) {
+            Log.w(LOG_TAG, "KeystoreInvalidKeyException: user might dismiss lockScreen.")
+            onFailure.invoke(e)
+        } catch (e: Exception){
             onFailure.invoke(e)
         }
     }

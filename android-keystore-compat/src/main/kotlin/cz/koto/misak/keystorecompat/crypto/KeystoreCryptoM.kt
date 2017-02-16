@@ -8,6 +8,7 @@ import android.util.Base64
 import android.util.Log
 import cz.koto.misak.keystorecompat.compat.KeystoreCompatImpl
 import cz.koto.misak.keystorecompat.exception.ForceLockScreenMarshmallowException
+import cz.koto.misak.keystorecompat.exception.KeystoreInvalidKeyException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.security.*
@@ -99,7 +100,7 @@ internal object KeystoreCryptoM {
         } catch (e: Exception) {
             when (e) {
                 is InvalidKeyException -> {
-                    throw RuntimeException("key is invalid.")
+                    throw KeystoreInvalidKeyException()
                 }
                 is UnrecoverableKeyException -> {
                 }
