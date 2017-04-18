@@ -85,12 +85,13 @@ dependencies {
 //	}
 
 	//compile(name: "android-keystore-compat-0.6.0-BETA", ext: "aar")
-	compile('cz.koto.misak:android-keystore-compat:1.0.2-BETA') {
+	compile('cz.koto.misak:android-keystore-compat:1.0.3-BETA') {
 		exclude group: 'com.android.support'
 	}
 
 
-	final SUPPORT_LIBRARY_VERSION = "25.1.0"
+	final SUPPORT_LIBRARY_VERSION = "25.3.1"
+	//noinspection GradleCompatible
 	compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
 	compile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
 	compile "com.android.support:design:$SUPPORT_LIBRARY_VERSION"
