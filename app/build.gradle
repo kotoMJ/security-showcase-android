@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.apollographql.android'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -62,6 +63,16 @@ android {
 
 kapt {
 	generateStubs = true
+}
+
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.apollographql.apollo:gradle-plugin:0.3.0'
+	}
 }
 
 dependencies {
