@@ -14,7 +14,7 @@
 	<string name="menu_github">Github</string>
 	<string name="menu_logout">Logout</string>
 
-	<string name="login_username_hint">Username</string>
+	<string name="login_useremail_hint">Email</string>
 	<string name="login_password_hint">Password</string>
 	<string name="login_sign_in">Sign-in</string>
 	<string name="login_multi_confirm">Submit</string>

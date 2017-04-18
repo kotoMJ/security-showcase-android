@@ -32,14 +32,14 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
     val devAvailable = ObservableBoolean(SecurityConfig.isEndpointDev() && !SecurityConfig.isPackageRelease())
     val state = ObservableField(StatefulLayout.State.CONTENT)
 
-    val username: ObservableField<String> = ObservableField()
+    val email: ObservableField<String> = ObservableField()
     val password: ObservableField<String> = ObservableField()
 
     val showSignIn = ObservableBoolean(false)
 
     val userNameChanged = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(p0: Observable?, p1: Int) {
-            showSignIn.set(username.get().isNotEmpty())
+            showSignIn.set(email.get().isNotEmpty())
         }
     }
 
@@ -50,7 +50,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
     override fun onViewModelCreated() {
         super.onViewModelCreated()
         CredentialStorage.forceLockScreenFlag()
-        username.addOnPropertyChangedCallback(userNameChanged)
+        email.addOnPropertyChangedCallback(userNameChanged)
     }
 
     override fun onViewAttached(firstAttachment: Boolean) {
@@ -59,7 +59,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
             if (KeystoreCompat.hasSecretLoadable()) {
                 KeystoreCompat.loadSecretAsString({ decryptResult ->
                     decryptResult.split(';').let {
-                        username.set(it[0])
+                        email.set(it[0])
                         password.set(it[1])
                         signIn()
                     }
@@ -83,23 +83,25 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
 
     override fun onViewModelDestroyed() {
         super.onViewModelDestroyed()
-        username.removeOnPropertyChangedCallback(userNameChanged)
+        email.removeOnPropertyChangedCallback(userNameChanged)
     }
 
     fun signIn() {
         state.progress()
         SecurityShowcaseApiProvider.authProvider.loginSimple(AuthRequestSimple(
-                username.get() ?: "",
+                email.get() ?: "",
                 password.get() ?: ""))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ onSuccessfulLogin(it) }, { state.content(); it.printStackTrace() })
     }
 
-    private fun onSuccessfulLogin(it: ServerResponseObject<AuthResponseSimple>) =
-            if (it.data?.successful ?: false) {
+    private fun onSuccessfulLogin(it: AuthResponseSimple) =
+            if (it?.idToken == null) {
+
+
                 CredentialStorage
-                        .storeUser(it.data, username.get() ?: "", password.get() ?: "")
+                        .storeUser(it, email.get() ?: "", password.get() ?: "")
                 loginAt = System.nanoTime()
                 showMain()
             } else {
@@ -108,7 +110,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
 
 
     fun fillTest() {
-        username.set(SecurityConfig.getTestUsername())
+        email.set(SecurityConfig.getTestEmail())
         password.set(SecurityConfig.getTestPass())
     }
 

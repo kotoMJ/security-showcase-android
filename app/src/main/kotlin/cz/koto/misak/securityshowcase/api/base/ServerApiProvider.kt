@@ -73,8 +73,8 @@ object SecurityShocaseRetrofitProvider {
                                                     .loginSimple(AuthRequestSimple(username, password))
                                                     .subscribeOn(Schedulers.io())
                                                     .subscribe({ response ->
-                                                        if (response?.data?.token?.isNotEmpty() ?: false) {
-                                                            CredentialStorage.storeUser(response.data, username, password)
+                                                        if (response?.idToken?.isNotEmpty() ?: false) {
+                                                            CredentialStorage.storeUser(response, username, password)
                                                             chain.proceed(this.request().apply {
                                                                 requestBuilder
                                                                         .removeHeader("Authorization")

@@ -30,12 +30,12 @@ abstract class SecurityBaseConfig {
         return true
     }
 
-    fun getTestUsername(): String {
-        return "SecurityShowcaseUser"
+    fun getTestEmail(): String {
+        return "security@showcase.cz"
     }
 
     fun getTestPass(): String {
-        return "passW0rd1234"
+        return "showcase1234"
     }
 
 }
