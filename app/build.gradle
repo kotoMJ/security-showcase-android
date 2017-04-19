@@ -127,6 +127,8 @@ dependencies {
 	compile 'org.parceler:parceler-api:1.1.6'
 	kapt 'org.parceler:parceler:1.1.6'
 
+	compile 'com.auth0.android:jwtdecode:1.1.0'
+
 //	compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.8.2@aar'
 //	compile 'com.patloew.rxlocation:rxlocation:1.0.1'
 //	compile 'com.mtramin:rxfingerprint:2.0.1'

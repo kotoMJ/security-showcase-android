@@ -5,6 +5,7 @@ import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.net.Uri
+import com.auth0.android.jwt.JWT
 import cz.kinst.jakub.view.StatefulLayout
 import cz.koto.misak.keystorecompat.KeystoreCompat
 import cz.koto.misak.keystorecompat.exception.ForceLockScreenKitKatException
@@ -97,13 +98,13 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
     }
 
     private fun onSuccessfulLogin(it: AuthResponseSimple) =
-            if (it?.idToken == null) {
-                state.content()
-            } else {
+            if (isValidJWT(it?.idToken)) {
                 CredentialStorage
-                        .storeUser(it, email.get() ?: "", password.get() ?: "")
+                        .storeUser(it.idToken!!, email.get() ?: "", password.get() ?: "")
                 loginAt = System.nanoTime()
                 showMain()
+            } else {
+                state.content()
             }
 
 

@@ -13,6 +13,7 @@ import cz.koto.misak.securityshowcase.model.adapter.GsonUtcDateAdapter
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
 import cz.koto.misak.securityshowcase.utility.ApplicationEvent
 import cz.koto.misak.securityshowcase.utility.applicationEvents
+import cz.koto.misak.securityshowcase.utility.isValidJWT
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -67,14 +68,14 @@ object SecurityShocaseRetrofitProvider {
                         chain.proceed(requestBuilder.build()).apply {
                             when (code()) {
                                 401 -> {
-                                    CredentialStorage.getUserName()?.let { username ->
+                                    CredentialStorage.getUserName()?.let { email ->
                                         CredentialStorage.getPassword()?.let { password ->
                                             SecurityShowcaseApiProvider.authProvider
-                                                    .loginJWT(AuthRequestSimple(username, password))
+                                                    .loginJWT(AuthRequestSimple(email, password))
                                                     .subscribeOn(Schedulers.io())
                                                     .subscribe({ response ->
-                                                        if (response?.idToken?.isNotEmpty() ?: false) {
-                                                            CredentialStorage.storeUser(response, username, password)
+                                                        if (isValidJWT(response?.idToken)) {
+                                                            CredentialStorage.storeUser(response.idToken!!, email, password)
                                                             chain.proceed(this.request().apply {
                                                                 requestBuilder
                                                                         .removeHeader("Authorization")
