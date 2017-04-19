@@ -88,7 +88,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
 
     fun signIn() {
         state.progress()
-        SecurityShowcaseApiProvider.authProvider.loginSimple(AuthRequestSimple(
+        SecurityShowcaseApiProvider.authProvider.loginJWT(AuthRequestSimple(
                 email.get() ?: "",
                 password.get() ?: ""))
                 .subscribeOn(Schedulers.io())

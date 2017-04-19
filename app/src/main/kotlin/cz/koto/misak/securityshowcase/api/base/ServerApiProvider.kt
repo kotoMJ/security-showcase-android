@@ -70,7 +70,7 @@ object SecurityShocaseRetrofitProvider {
                                     CredentialStorage.getUserName()?.let { username ->
                                         CredentialStorage.getPassword()?.let { password ->
                                             SecurityShowcaseApiProvider.authProvider
-                                                    .loginSimple(AuthRequestSimple(username, password))
+                                                    .loginJWT(AuthRequestSimple(username, password))
                                                     .subscribeOn(Schedulers.io())
                                                     .subscribe({ response ->
                                                         if (response?.idToken?.isNotEmpty() ?: false) {

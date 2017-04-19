@@ -11,6 +11,6 @@ import retrofit2.http.POST
 interface SecurityShowcaseInterface {
 
     @POST("/api/securityshowcase/jwtLogin")
-    fun loginSimple(@Body authRequest: AuthRequestSimple): Maybe<AuthResponseSimple>
+    fun loginJWT(@Body authRequest: AuthRequestSimple): Maybe<AuthResponseSimple>
 
 }
