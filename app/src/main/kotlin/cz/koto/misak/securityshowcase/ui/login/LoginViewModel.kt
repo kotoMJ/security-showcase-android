@@ -98,14 +98,12 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
 
     private fun onSuccessfulLogin(it: AuthResponseSimple) =
             if (it?.idToken == null) {
-
-
+                state.content()
+            } else {
                 CredentialStorage
                         .storeUser(it, email.get() ?: "", password.get() ?: "")
                 loginAt = System.nanoTime()
                 showMain()
-            } else {
-                state.content()
             }
 
 
