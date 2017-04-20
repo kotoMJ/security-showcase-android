@@ -82,7 +82,6 @@ dependencies {
 	})
 	testCompile 'junit:junit:4.12'
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-	compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
 
 	compile('com.scottyab:rootbeer-lib:0.0.6'){
 		exclude group: 'com.android.support'
