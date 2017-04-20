@@ -33,12 +33,12 @@ JWT is signed by the server, so server can verify JWT (returning from the client
 
 How does the process works?
 
-LOGIN PHASE
-* client/app requests authentization token (JWT) based on credentials (username/password)
+LOGIN PHASE / AUTHENTICATION
+* client/app sends credentials (username/password) and requests authentication token (JWT)
 * server creates JWT (based on correct credentials) and sign this token with the secret. JWT also contains additional information related to authentized user.
 * client/app obtain proper JWT containing all information about the user and will store this token for the future use. 
 
-SECURED REQUESTS 
+SECURED REQUESTS / AUTHORIZATION
 * client/app bundle JWT to header of any secured request
 * server verify obtained JWT against original secret (to be not malformed) and then use any information (token validity, users role, users id ...) in the token to 
 authorize user for current operation.
