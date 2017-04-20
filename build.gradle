@@ -3,6 +3,7 @@
 buildscript {
 	ext.kotlin_version = '1.1.1'
 	ext.android_tools_version = '2.3.1'
+	ext.apollo_graphql_version = '0.3.0'
 
 	repositories {
 		jcenter()

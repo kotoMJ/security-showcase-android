@@ -67,7 +67,7 @@ buildscript {
 		jcenter()
 	}
 	dependencies {
-		classpath 'com.apollographql.apollo:gradle-plugin:0.3.0'
+		classpath "com.apollographql.apollo:gradle-plugin:$apollo_graphql_version"
 	}
 }
 
@@ -124,6 +124,8 @@ dependencies {
 	kapt 'org.parceler:parceler:1.1.6'
 
 	compile 'com.auth0.android:jwtdecode:1.1.0'
+
+	compile "com.apollographql.apollo:apollo-rx2-support:$apollo_graphql_version"
 
 //	compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.8.2@aar'
 //	compile 'com.patloew.rxlocation:rxlocation:1.0.1'
