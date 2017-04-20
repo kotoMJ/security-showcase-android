@@ -24,6 +24,25 @@ Read more about [KeystoreCompat](android-keystore-compat/readme.md)<br/>
 * [STRV Keystore compat mini-talk pdf](./extras/strv-talk/Android-Keystore-handling.pdf)
 * [Encrypted Realm & Android Keystore](https://medium.com/@strv/encrypted-realm-android-keystore-d4f0915905e9)
 
+
+## Json Web Token ##
+
+SecurityShowcase backend/client is using [Json Web Token (JWT)](https://jwt.io/) to wrap all authentization payload. 
+JWT is base64 string (easy to transfer in header) containing lot of information and is readable by anyone.
+JWT is signed by the server, so server can verify JWT (returning from the client) to be not malformed.  
+
+How does the process works?
+
+LOGIN PHASE
+* client/app requests authentization token (JWT) based on credentials (username/password)
+* server creates JWT (based on correct credentials) and sign this token with the secret. JWT also contains additional information related to authentized user.
+* client/app obtain proper JWT containing all information about the user and will store this token for the future use. 
+
+SECURED REQUESTS 
+* client/app bundle JWT to header of any secured request
+* server verify obtained JWT against original secret (to be not malformed) and then use any information (token validity, users role, users id ...) in the token to 
+authorize user for current operation.
+
 ## SecurityShowcase gradle notes
 **Build sample app**
 
