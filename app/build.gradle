@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.apollographql.android'
+apply plugin: 'kotlin-kapt'//http://stackoverflow.com/questions/42568394/build-errors-with-new-kotlin-1-1-kapt-cant-parse-databinding-params
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -61,11 +62,6 @@ android {
 	}
 }
 
-kapt {
-	generateStubs = true
-}
-
-
 buildscript {
 	repositories {
 		jcenter()
@@ -78,6 +74,7 @@ buildscript {
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+	compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
 
 	compile(project(':android-keystore-compat')) {
 		exclude group: 'com.android.support'
@@ -133,10 +130,10 @@ dependencies {
 //	compile 'com.patloew.rxlocation:rxlocation:1.0.1'
 //	compile 'com.mtramin:rxfingerprint:2.0.1'
 
-	testCompile 'junit:junit:4.12'
-	testCompile 'com.nhaarman:mockito-kotlin:0.7.0'
-	testCompile 'org.jetbrains.spek:spek:1.0.25'
-	testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+//	testCompile 'junit:junit:4.12'
+//	testCompile 'com.nhaarman:mockito-kotlin:0.7.0'
+//	testCompile 'org.jetbrains.spek:spek:1.0.25'
+//	testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 repositories {
 	mavenCentral()
