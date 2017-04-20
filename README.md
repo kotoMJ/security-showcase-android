@@ -28,7 +28,7 @@ Read more about [KeystoreCompat](android-keystore-compat/readme.md)<br/>
 ## Json Web Token ##
 
 SecurityShowcase backend/client is using [Json Web Token (JWT)](https://jwt.io/) to wrap all authentization payload. 
-JWT is base64 string (easy to transfer in header) containing lot of information and is readable by anyone.
+JWT [RFC 7519](https://tools.ietf.org/html/rfc7519) is in fact base64 string (easy to transfer in header) containing lot of information and is readable by anyone.
 JWT is signed by the server, so server can verify JWT (returning from the client) to be not malformed.  
 
 How does the process works?
