@@ -48,7 +48,8 @@ authorize user for current operation.
 ### Apollo client ###
 
 #### Download proper schema ####
-Ensure you have already installed `apollo-codegen`. If not install it by using `npm install apollo-codegen`  
+`schema.json` definition file is not composed manually, but is always completely downloaded from the server.
+Before download just ensure you have already installed `apollo-codegen`. If not install it by using `npm install apollo-codegen`  
 Generate `schema.json` using this command `apollo-codegen download-schema http://kotopeky.cz/graphql --output schema.json`
 
 #### GraphiQL ####
