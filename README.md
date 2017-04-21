@@ -43,6 +43,16 @@ SECURED REQUESTS / AUTHORIZATION
 * server verify obtained JWT against original secret (to be not malformed) and then use any information (token validity, users role, users id ...) in the token to 
 authorize user for current operation.
 
+## GraphQL ##
+
+### Apollo client ###
+
+#### Download proper schema ####
+Ensure you have already installed `apollo-codegen`. If not install it by using `npm install apollo-codegen`  
+Generate `schema.json` using this command `apollo-codegen download-schema http://kotopeky.cz/graphql --output schema.json`
+#### Download proper schema ####
+
+
 ## SecurityShowcase gradle notes
 **Build sample app**
 
