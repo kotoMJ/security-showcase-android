@@ -52,6 +52,9 @@ Ensure you have already installed `apollo-codegen`. If not install it by using `
 Generate `schema.json` using this command `apollo-codegen download-schema http://kotopeky.cz/graphql --output schema.json`
 #### Download proper schema ####
 
+#### Login GraphiQL ####
+GraphiQL console allows to try call query manually, let's try it here:  
+[Login GraphiQL console](https://kotopeky.cz/graphiql/?query=query%20login(%24password%3A%20String!%2C%20%24email%3A%20String!)%20%7B%0A%20login(password%3A%24password%2C%20email%3A%24email)%20%7B%0A%20%20%20token%0A%20%20%20errorMessage%0A%20%7D%0A%7D%0A&variables=%7B%0A%20%20%22password%22%3A%20%22showcase1234%22%2C%0A%20%20%22email%22%3A%20%22security%40showcase.cz%22%0A%7D&operationName=login)
 
 ## SecurityShowcase gradle notes
 **Build sample app**
