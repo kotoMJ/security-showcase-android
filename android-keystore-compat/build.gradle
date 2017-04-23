@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-kapt'//http://stackoverflow.com/questions/42568394/build-errors-with-new-kotlin-1-1-kapt-cant-parse-databinding-params
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -62,9 +63,6 @@ android {
 	}
 }
 
-kapt {
-	generateStubs = true
-}
 
 buildscript {
 	repositories {
@@ -85,11 +83,9 @@ dependencies {
 	testCompile 'junit:junit:4.12'
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-	//com.scottyab:rootbeer-lib:0.0.4 add this dependency:
-	//com.android.support:appcompat-v7:22.2.0
-	//com.android.support:support-annotations:22.2.0
-	//com.android.support:support-v4:22.2.0
-	compile('com.scottyab:rootbeer-lib:0.0.4')
+	compile('com.scottyab:rootbeer-lib:0.0.6'){
+		exclude group: 'com.android.support'
+	}
 
 }
 repositories {

@@ -14,9 +14,10 @@
 	<string name="menu_github">Github</string>
 	<string name="menu_logout">Logout</string>
 
-	<string name="login_username_hint">Username</string>
+	<string name="login_useremail_hint">Email</string>
 	<string name="login_password_hint">Password</string>
-	<string name="login_sign_in">Sign-in</string>
+	<string name="login_sign_in_rest">Sign-in REST</string>
+	<string name="login_sign_in_gql">Sign-in QGL</string>
 	<string name="login_multi_confirm">Submit</string>
 	<string name="login_multi_input_hint">Your answer</string>
 	<string name="login_show_locations">Show bank locations</string>

@@ -1,18 +1,17 @@
-package cz.koto.misak.securityshowcase.api.base
-
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import cz.koto.misak.securityshowcase.ContextProvider
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.SecurityConfig
-import cz.koto.misak.securityshowcase.api.SecurityShowcaseInterface
+import cz.koto.misak.securityshowcase.api.SecurityShowcaseApiProvider
 import cz.koto.misak.securityshowcase.model.AuthRequestSimple
 import cz.koto.misak.securityshowcase.model.SecurityShowcaseAPIError
 import cz.koto.misak.securityshowcase.model.adapter.GsonUtcDateAdapter
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
 import cz.koto.misak.securityshowcase.utility.ApplicationEvent
 import cz.koto.misak.securityshowcase.utility.applicationEvents
+import cz.koto.misak.securityshowcase.utility.isValidJWT
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,19 +21,7 @@ import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
-object SecurityShowcaseApiProvider {
-
-    val authProvider by lazy {
-        getRetrofitInterface(SecurityShowcaseInterface::class.java)
-    }
-}
-
-internal fun <T> getRetrofitInterface(apiInterface: Class<T>): T {
-    return SecurityShocaseRetrofitProvider.provideRetrofit().create(apiInterface)
-}
-
-object SecurityShocaseRetrofitProvider {
+object SecurityShowcaseRetrofitProvider {
     val defaultTimeout = 30000L
 
     val gson by lazy {
@@ -67,14 +54,14 @@ object SecurityShocaseRetrofitProvider {
                         chain.proceed(requestBuilder.build()).apply {
                             when (code()) {
                                 401 -> {
-                                    CredentialStorage.getUserName()?.let { username ->
+                                    CredentialStorage.getUserName()?.let { email ->
                                         CredentialStorage.getPassword()?.let { password ->
-                                            SecurityShowcaseApiProvider.authProvider
-                                                    .loginSimple(AuthRequestSimple(username, password))
+                                            SecurityShowcaseApiProvider.authRestProvider
+                                                    .loginJWT(AuthRequestSimple(email, password))
                                                     .subscribeOn(Schedulers.io())
                                                     .subscribe({ response ->
-                                                        if (response?.data?.token?.isNotEmpty() ?: false) {
-                                                            CredentialStorage.storeUser(response.data, username, password)
+                                                        if (isValidJWT(response?.idToken)) {
+                                                            CredentialStorage.storeUser(response.idToken!!, email, password)
                                                             chain.proceed(this.request().apply {
                                                                 requestBuilder
                                                                         .removeHeader("Authorization")
@@ -110,5 +97,4 @@ object SecurityShocaseRetrofitProvider {
         }
     }
 }
-
 

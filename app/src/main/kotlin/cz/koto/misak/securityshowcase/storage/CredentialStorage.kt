@@ -23,14 +23,11 @@ object CredentialStorage {
     fun getUserName() = userName
     fun getPassword() = password
 
-    fun storeUser(authResponse: AuthResponseSimple?, username: String, pass: String) =
-            authResponse?.let {
-                if (it.successful) {
-                    accessToken = "Token " + authResponse.token
-                    userName = username
-                    password = pass
-                }
-            }
+    fun storeUser(token: String, username: String, pass: String) {
+        accessToken = token
+        userName = username
+        password = pass
+    }
 
     fun performLogout() {
         accessToken = null

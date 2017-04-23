@@ -5,15 +5,18 @@ import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.net.Uri
+import com.apollographql.android.rx2.Rx2Apollo
+import com.auth0.android.jwt.JWT
 import cz.kinst.jakub.view.StatefulLayout
 import cz.koto.misak.keystorecompat.KeystoreCompat
 import cz.koto.misak.keystorecompat.exception.ForceLockScreenKitKatException
 import cz.koto.misak.keystorecompat.utility.forceAndroidAuth
 import cz.koto.misak.keystorecompat.utility.runSinceKitKat
 import cz.koto.misak.securityshowcase.ContextProvider
+import cz.koto.misak.securityshowcase.Login
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.SecurityConfig
-import cz.koto.misak.securityshowcase.api.base.SecurityShowcaseApiProvider
+import cz.koto.misak.securityshowcase.api.SecurityShowcaseApiProvider
 import cz.koto.misak.securityshowcase.databinding.ActivityLoginBinding
 import cz.koto.misak.securityshowcase.model.AuthRequestSimple
 import cz.koto.misak.securityshowcase.model.AuthResponseSimple
@@ -32,14 +35,14 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
     val devAvailable = ObservableBoolean(SecurityConfig.isEndpointDev() && !SecurityConfig.isPackageRelease())
     val state = ObservableField(StatefulLayout.State.CONTENT)
 
-    val username: ObservableField<String> = ObservableField()
+    val email: ObservableField<String> = ObservableField()
     val password: ObservableField<String> = ObservableField()
 
     val showSignIn = ObservableBoolean(false)
 
     val userNameChanged = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(p0: Observable?, p1: Int) {
-            showSignIn.set(username.get().isNotEmpty())
+            showSignIn.set(email.get().isNotEmpty())
         }
     }
 
@@ -50,7 +53,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
     override fun onViewModelCreated() {
         super.onViewModelCreated()
         CredentialStorage.forceLockScreenFlag()
-        username.addOnPropertyChangedCallback(userNameChanged)
+        email.addOnPropertyChangedCallback(userNameChanged)
     }
 
     override fun onViewAttached(firstAttachment: Boolean) {
@@ -59,9 +62,9 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
             if (KeystoreCompat.hasSecretLoadable()) {
                 KeystoreCompat.loadSecretAsString({ decryptResult ->
                     decryptResult.split(';').let {
-                        username.set(it[0])
+                        email.set(it[0])
                         password.set(it[1])
-                        signIn()
+                        signInGql()
                     }
                 }, { exception ->
                     CredentialStorage.dismissForceLockScreenFlag()
@@ -83,23 +86,36 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
 
     override fun onViewModelDestroyed() {
         super.onViewModelDestroyed()
-        username.removeOnPropertyChangedCallback(userNameChanged)
+        email.removeOnPropertyChangedCallback(userNameChanged)
     }
 
-    fun signIn() {
+    fun signInRest() {
         state.progress()
-        SecurityShowcaseApiProvider.authProvider.loginSimple(AuthRequestSimple(
-                username.get() ?: "",
+        SecurityShowcaseApiProvider.authRestProvider.loginJWT(AuthRequestSimple(
+                email.get() ?: "",
                 password.get() ?: ""))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ onSuccessfulLogin(it) }, { state.content(); it.printStackTrace() })
+                .subscribe({ onSuccessfulLogin(it?.idToken) }, { state.content(); it.printStackTrace() })
     }
 
-    private fun onSuccessfulLogin(it: ServerResponseObject<AuthResponseSimple>) =
-            if (it.data?.successful ?: false) {
+    fun signInGql() {
+        state.progress()
+        val query = Login.builder().email(email.get() ?: "").password(password.get() ?: "").build()
+        Rx2Apollo.from(SecurityShowcaseApiProvider.authGqlProvider.newCall(query))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { onSuccessfulLogin(it.login()?.token()) },
+                        { state.content(); it.printStackTrace() }
+                )
+
+    }
+
+    private fun onSuccessfulLogin(token: String?) =
+            if (isValidJWT(token)) {
                 CredentialStorage
-                        .storeUser(it.data, username.get() ?: "", password.get() ?: "")
+                        .storeUser(token!!, email.get() ?: "", password.get() ?: "")
                 loginAt = System.nanoTime()
                 showMain()
             } else {
@@ -108,7 +124,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
 
 
     fun fillTest() {
-        username.set(SecurityConfig.getTestUsername())
+        email.set(SecurityConfig.getTestEmail())
         password.set(SecurityConfig.getTestPass())
     }
 
