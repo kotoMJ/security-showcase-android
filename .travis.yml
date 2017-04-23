@@ -44,9 +44,9 @@ before_install:
     echo -e "\nd975f751698a77b662f1254ddbeed3901e976f5a" > "${ANDROID_HOME}/licenses/intel-android-extra-license"
 
 install:
-    echo yes | sdkmanager \"extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2\",
-    echo yes | sdkmanager \"extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2\",
-
+   - echo yes | sdkmanager "extras;google;m2repository"
+   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
 
 
 #before_script:
