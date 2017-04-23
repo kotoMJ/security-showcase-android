@@ -1,5 +1,6 @@
 # KeystoreCompat #
 [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 <br/><br/>
 This simple wrapper library is designed to save secret
 to local shared preferences using Android default security and Android Keystore.
