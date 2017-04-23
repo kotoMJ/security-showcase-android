@@ -24,6 +24,10 @@ android:
   # Emulator for the tests
   - sys-img-armeabi-v7a-android-23
 
+  licenses:
+    - android-sdk-license-.+
+    - '.+'
+
 cache:
   directories:
     - $HOME/.gradle/caches/3.3
