@@ -15,7 +15,6 @@ import cz.kinst.jakub.viewmodelbinding.ViewModelActivity
 import cz.kinst.jakub.viewmodelbinding.ViewModelFragment
 import cz.koto.misak.securityshowcase.ContextProvider
 import cz.koto.misak.securityshowcase.R
-import cz.koto.misak.securityshowcase.api.base.SecurityShocaseRetrofitProvider
 import cz.koto.misak.securityshowcase.model.SecurityShowcaseAPIError
 import cz.koto.misak.securityshowcase.utility.inputMethodManager
 import io.reactivex.Observable
@@ -132,7 +131,7 @@ abstract class BaseActivity<T : ViewDataBinding, S : BaseViewModel<T>> : ViewMod
 
     fun showErrorDialog(throwable: Throwable, callback: () -> Unit) {
 
-        val apiError: SecurityShowcaseAPIError = SecurityShocaseRetrofitProvider.convertRetrofitThrowable(throwable)
+        val apiError: SecurityShowcaseAPIError = SecurityShowcaseRetrofitProvider.convertRetrofitThrowable(throwable)
 
         /**
          * Example errors from current API:

@@ -1,12 +1,10 @@
-package cz.koto.misak.securityshowcase.api.base
-
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import cz.koto.misak.securityshowcase.ContextProvider
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.SecurityConfig
-import cz.koto.misak.securityshowcase.api.SecurityShowcaseInterface
+import cz.koto.misak.securityshowcase.api.SecurityShowcaseApiProvider
 import cz.koto.misak.securityshowcase.model.AuthRequestSimple
 import cz.koto.misak.securityshowcase.model.SecurityShowcaseAPIError
 import cz.koto.misak.securityshowcase.model.adapter.GsonUtcDateAdapter
@@ -23,19 +21,7 @@ import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
-object SecurityShowcaseApiProvider {
-
-    val authProvider by lazy {
-        getRetrofitInterface(SecurityShowcaseInterface::class.java)
-    }
-}
-
-internal fun <T> getRetrofitInterface(apiInterface: Class<T>): T {
-    return SecurityShocaseRetrofitProvider.provideRetrofit().create(apiInterface)
-}
-
-object SecurityShocaseRetrofitProvider {
+object SecurityShowcaseRetrofitProvider {
     val defaultTimeout = 30000L
 
     val gson by lazy {
@@ -70,7 +56,7 @@ object SecurityShocaseRetrofitProvider {
                                 401 -> {
                                     CredentialStorage.getUserName()?.let { email ->
                                         CredentialStorage.getPassword()?.let { password ->
-                                            SecurityShowcaseApiProvider.authProvider
+                                            SecurityShowcaseApiProvider.authRestProvider
                                                     .loginJWT(AuthRequestSimple(email, password))
                                                     .subscribeOn(Schedulers.io())
                                                     .subscribe({ response ->
@@ -111,5 +97,4 @@ object SecurityShocaseRetrofitProvider {
         }
     }
 }
-
 

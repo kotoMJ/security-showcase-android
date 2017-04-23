@@ -14,7 +14,7 @@ import cz.koto.misak.keystorecompat.utility.runSinceKitKat
 import cz.koto.misak.securityshowcase.ContextProvider
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.SecurityConfig
-import cz.koto.misak.securityshowcase.api.base.SecurityShowcaseApiProvider
+import cz.koto.misak.securityshowcase.api.SecurityShowcaseApiProvider
 import cz.koto.misak.securityshowcase.databinding.ActivityLoginBinding
 import cz.koto.misak.securityshowcase.model.AuthRequestSimple
 import cz.koto.misak.securityshowcase.model.AuthResponseSimple
@@ -62,7 +62,7 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
                     decryptResult.split(';').let {
                         email.set(it[0])
                         password.set(it[1])
-                        signIn()
+                        signInGql()
                     }
                 }, { exception ->
                     CredentialStorage.dismissForceLockScreenFlag()
@@ -87,9 +87,19 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
         email.removeOnPropertyChangedCallback(userNameChanged)
     }
 
-    fun signIn() {
+    fun signInRest() {
         state.progress()
-        SecurityShowcaseApiProvider.authProvider.loginJWT(AuthRequestSimple(
+        SecurityShowcaseApiProvider.authRestProvider.loginJWT(AuthRequestSimple(
+                email.get() ?: "",
+                password.get() ?: ""))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ onSuccessfulLogin(it) }, { state.content(); it.printStackTrace() })
+    }
+
+    fun signInGql() {
+        state.progress()
+        SecurityShowcaseApiProvider.authRestProvider.loginJWT(AuthRequestSimple(
                 email.get() ?: "",
                 password.get() ?: ""))
                 .subscribeOn(Schedulers.io())
