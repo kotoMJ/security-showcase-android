@@ -5,6 +5,7 @@ import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.net.Uri
+import com.apollographql.android.rx2.Rx2Apollo
 import com.auth0.android.jwt.JWT
 import cz.kinst.jakub.view.StatefulLayout
 import cz.koto.misak.keystorecompat.KeystoreCompat
@@ -12,6 +13,7 @@ import cz.koto.misak.keystorecompat.exception.ForceLockScreenKitKatException
 import cz.koto.misak.keystorecompat.utility.forceAndroidAuth
 import cz.koto.misak.keystorecompat.utility.runSinceKitKat
 import cz.koto.misak.securityshowcase.ContextProvider
+import cz.koto.misak.securityshowcase.Login
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.SecurityConfig
 import cz.koto.misak.securityshowcase.api.SecurityShowcaseApiProvider
@@ -94,23 +96,26 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>() {
                 password.get() ?: ""))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ onSuccessfulLogin(it) }, { state.content(); it.printStackTrace() })
+                .subscribe({ onSuccessfulLogin(it?.idToken) }, { state.content(); it.printStackTrace() })
     }
 
     fun signInGql() {
         state.progress()
-        SecurityShowcaseApiProvider.authRestProvider.loginJWT(AuthRequestSimple(
-                email.get() ?: "",
-                password.get() ?: ""))
+        val query = Login.builder().email(email.get() ?: "").password(password.get() ?: "").build()
+        Rx2Apollo.from(SecurityShowcaseApiProvider.authGqlProvider.newCall(query))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ onSuccessfulLogin(it) }, { state.content(); it.printStackTrace() })
+                .subscribe(
+                        { onSuccessfulLogin(it.login()?.token()) },
+                        { state.content(); it.printStackTrace() }
+                )
+
     }
 
-    private fun onSuccessfulLogin(it: AuthResponseSimple) =
-            if (isValidJWT(it?.idToken)) {
+    private fun onSuccessfulLogin(token: String?) =
+            if (isValidJWT(token)) {
                 CredentialStorage
-                        .storeUser(it.idToken!!, email.get() ?: "", password.get() ?: "")
+                        .storeUser(token!!, email.get() ?: "", password.get() ?: "")
                 loginAt = System.nanoTime()
                 showMain()
             } else {
