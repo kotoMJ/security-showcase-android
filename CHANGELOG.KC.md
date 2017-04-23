@@ -3,6 +3,11 @@
 
 ## Not released yet
  * Think about advanced root detection with SafetyNet
+ 
+## KC-1.1.0
+ * Upgrade dependency on Kotlin 1.1.1
+ * Reduce number of required rights for API 4.4.4
+ * Update RootBear lib to 0.0.6 
 
 ## KC-1.0.3-BETA
  * Fix invalidKey exception handling in case of Android-M and AES
