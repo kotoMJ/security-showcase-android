@@ -1,5 +1,8 @@
 # Release notes for Security Showcase app
 
+## SHOWCASE-2.0.0
+* Add JsonWebToken principle & graph-ql basic communication
+
 ## SHOWCASE-1.2.0
 * Update with usage of KeystoreCompat KC-1.0.3-BETA (AES since Android-M, it brings new behaviour during encryption)
 
