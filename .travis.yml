@@ -25,7 +25,9 @@ android:
   - sys-img-armeabi-v7a-android-23
 
   licenses:
-    - android-sdk-license-.+
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
     - '.+'
 
 cache:
