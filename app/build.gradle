@@ -98,7 +98,7 @@ dependencies {
 	compile "io.reactivex.rxjava2:rxjava:$RX_JAVA_VERSION"
 	compile "io.reactivex.rxjava2:rxandroid:$RX_JAVA_VERSION"
 
-	final RETROFIT_VERSION = '2.1.0'
+	final RETROFIT_VERSION = '2.2.0'
 	compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
 	compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
 	compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
@@ -146,3 +146,8 @@ repositories {
 	}
 }
 
+apollo {
+	customTypeMapping {
+		DateTime = "java.util.Date"
+	}
+}
