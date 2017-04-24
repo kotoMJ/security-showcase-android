@@ -35,7 +35,7 @@ object SecurityShowcaseRetrofitProvider {
         level = SecurityConfig.getHttpLoggingLevel()
     }
 
-    fun provideRetrofit(url: String? = SecurityConfig.getApiEndpoint()): Retrofit = Retrofit.Builder()
+    fun provideRetrofit(url: String? = SecurityConfig.getRestEndpoint()): Retrofit = Retrofit.Builder()
             .client(provideClientBuilder().build())
             .baseUrl(url)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

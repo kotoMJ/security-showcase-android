@@ -21,7 +21,17 @@
 -dontwarn cz.koto.misak.securityshowcase.ui.settings.**
 -keep class cz.koto.misak.securityshowcase.ui.settings.** { *; }
 
+# graphql data generated classes
+-keep class cz.koto.misak.securityshowcase.Login$* { *; }
 
+#-keep class cz.koto.misak.securityshowcase.Login.Builder class * { *; }
+#-keep class cz.koto.misak.securityshowcase.Login.Data class * { *; }
+#-keep class cz.koto.misak.securityshowcase.Login.Data.** { *; }
+#-keep class cz.koto.misak.securityshowcase.Login.Variables class * { *; }
+
+
+# apollo library classes
+-keep class com.apollographql.** { *; }
 
 # support design
 -dontwarn android.support.design.**
