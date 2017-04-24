@@ -1,5 +1,8 @@
 # Release notes for Security Showcase app
 
+## SHOWCASE-2.0.1
+* Fix proguard related to graph-ql
+
 ## SHOWCASE-2.0.0
 * Add JsonWebToken principle & graph-ql basic communication
 

@@ -16,8 +16,8 @@ object SecurityConfig : SecurityBaseConfig() {
 
     val API_KOTINODE_PROTOCOL = "http"//HTTP is used for local development purpose only.
 
-    fun getApiEndpoint(): String = "$API_KOTINODE_PROTOCOL://$API_KOTINODE_IP:$API_KOTINODE_PORT"
-
+    fun getRestEndpoint(): String = "$API_KOTINODE_PROTOCOL://$API_KOTINODE_IP:$API_KOTINODE_PORT"
+    fun getGqlEndpoint(): String = "$API_KOTINODE_PROTOCOL://$API_KOTINODE_IP:$API_KOTINODE_PORT/graphql"
 
     /**
      * LocalFlavour related url replacement.

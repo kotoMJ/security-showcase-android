@@ -2,8 +2,10 @@ package cz.koto.misak.securityshowcase.api
 
 import SecurityShowcaseRetrofitProvider
 import com.apollographql.apollo.ApolloClient
+import cz.koto.misak.securityshowcase.SecurityConfig
 import cz.koto.misak.securityshowcase.api.rest.SecurityShowcaseRestInterface
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 
 
 object SecurityShowcaseApiProvider {
@@ -14,12 +16,16 @@ object SecurityShowcaseApiProvider {
 
     val authGqlProvider by lazy {
         ApolloClient.builder()
-                .serverUrl("https://kotopeky.cz/graphql")
-                .okHttpClient(OkHttpClient.Builder().build())
+                .serverUrl(SecurityConfig.getGqlEndpoint())
+                .okHttpClient(OkHttpClient.Builder().addInterceptor(provideLoggingInterceptor()).build())
                 .build()
     }
 }
 
+
+internal fun provideLoggingInterceptor() = HttpLoggingInterceptor().apply {
+    level = SecurityConfig.getHttpLoggingLevel()
+}
 
 internal fun <T> getRetrofitInterface(apiInterface: Class<T>): T {
     return SecurityShowcaseRetrofitProvider.provideRetrofit().create(apiInterface)
