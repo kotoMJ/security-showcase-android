@@ -4,7 +4,8 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg)](https://travis-ci.org/kotomisak/security-showcase-android)
 
-This is sample application pointing some security related practices on Android device.
+This is sample application pointing some security related practices on Android device.  
+Complete server-side endpoint implementation for this project is available on GitHub [KoTiNode](https://github.com/kotomisak/kotinode).
 
 ## Android keystore ##
 
@@ -44,6 +45,7 @@ SECURED REQUESTS / AUTHORIZATION
 authorize user for current operation.
 
 ## GraphQL ##
+Showcase contains sample implementation of communication with the graphql endpoint.
 
 ### Apollo client ###
 [Official Apollo Android doc](https://github.com/apollographql/apollo-android)
