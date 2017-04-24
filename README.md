@@ -46,6 +46,8 @@ authorize user for current operation.
 
 ## GraphQL ##
 Showcase contains sample implementation of communication with the graphql endpoint.
+Besides this new way of communication is this sample prepared how to secure it properly.
+Version SHOWCASE-2.1.X will also contain these securing mechanism.
 
 ### Apollo client ###
 [Official Apollo Android doc](https://github.com/apollographql/apollo-android)
@@ -61,8 +63,8 @@ GraphiQL console allows to try call query manually, let's try it here:
 
 
 #### About GraphQl on the web ####
- [02/2017 Using Apollo client for Android 0.1.0](http://engineering.dailymotion.com/using-the-apollo-graphql-client-for-android/)
- [04/2017 Using Apollo client for Android 0.3.0 ](https://stackoverflow.com/questions/43304986/using-the-apollo-graphql-client-for-android/43306056)	
+ [02/2017 Using Apollo client for Android 0.1.0](http://engineering.dailymotion.com/using-the-apollo-graphql-client-for-android/)  
+ [04/2017 Using Apollo client for Android 0.3.0 ](https://stackoverflow.com/questions/43304986/using-the-apollo-graphql-client-for-android/43306056)	  
 
 ## SecurityShowcase gradle notes
 **Build sample app**
