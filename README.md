@@ -45,9 +45,7 @@ SECURED REQUESTS / AUTHORIZATION
 authorize user for current operation.
 
 ## GraphQL ##
-Showcase contains sample implementation of communication with the graphql endpoint.
-Besides this new way of communication is this sample prepared to show how to secure it properly.
-Version SHOWCASE-2.1.X will also contain these securing mechanism.
+Showcase contains sample implementation of communication with the graphql endpoint (besides the REST).
 
 ### Apollo client ###
 [Official Apollo Android doc](https://github.com/apollographql/apollo-android)
