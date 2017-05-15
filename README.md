@@ -26,7 +26,7 @@ Read more about [KeystoreCompat](android-keystore-compat/readme.md)<br/>
 
 ## Encrypted Realm ##
 
-For sample implementation of the Realm persistence encryption look at [DB Showcase repository](https://github.com/kotomisak/db-showcase-android)
+For sample implementation of the Realm persistence encryption look at [DB Showcase repository](https://github.com/kotomisak/db-showcase-android).  
 Article describing this encryption is available on Medium [Encrypted Realm & Android Keystore](https://medium.com/@strv/encrypted-realm-android-keystore-d4f0915905e9)
 
 
