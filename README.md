@@ -29,6 +29,11 @@ Read more about [KeystoreCompat](android-keystore-compat/readme.md)<br/>
 For sample implementation of the Realm persistence encryption look at [DB Showcase repository](https://github.com/kotomisak/db-showcase-android).  
 Related article describing this encryption is available on Medium [Encrypted Realm & Android Keystore](https://medium.com/@strv/encrypted-realm-android-keystore-d4f0915905e9)
 
+## Rooted device detection ##
+
+Very lightweight but powerful solution is using [RootBear library](https://github.com/scottyab/rootbeer) which is also used by [KeystoreCompat](android-keystore-compat/readme.md) library.  
+Another solution is to use robust google solution [SafetyNet](https://developer.android.com/training/safetynet/index.html) (used for example by AndroidPay solution). 
+SafetyNet is complex online/offline security solution, but it require Google Play Services dependency.
 
 ## Json Web Token ##
 
