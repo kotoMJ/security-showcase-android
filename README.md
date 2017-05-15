@@ -23,7 +23,11 @@ Read more about [KeystoreCompat](android-keystore-compat/readme.md)<br/>
 
 * [STRV Keystore compat mini-talk google slides](https://docs.google.com/presentation/d/1KVMmK59jRQSequ_Ib157ZttFor9k14qZ3938IPxOAKg/edit?usp=sharing)
 * [STRV Keystore compat mini-talk pdf](./extras/strv-talk/Android-Keystore-handling.pdf)
-* [Encrypted Realm & Android Keystore](https://medium.com/@strv/encrypted-realm-android-keystore-d4f0915905e9)
+
+## Encrypted Realm ##
+
+For sample implementation of the Realm persistence encryption look at [DB Showcase repository](https://github.com/kotomisak/db-showcase-android)
+Article for Realm encryption is available on Medium [Encrypted Realm & Android Keystore](https://medium.com/@strv/encrypted-realm-android-keystore-d4f0915905e9)
 
 
 ## Json Web Token ##
