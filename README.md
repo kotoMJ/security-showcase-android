@@ -33,7 +33,7 @@ Related article describing this encryption is available on Medium [Encrypted Rea
 
 Very lightweight but powerful solution is using [RootBear library](https://github.com/scottyab/rootbeer) which is also used by [KeystoreCompat](android-keystore-compat/readme.md) library.  
 Another solution is to use robust google solution [SafetyNet](https://developer.android.com/training/safetynet/index.html) (used for example by AndroidPay solution). 
-SafetyNet is complex online/offline security solution, but it require Google Play Services dependency.
+SafetyNet is complex online/offline device checking solution, but it requires Google Play Services dependency.
 
 ## Json Web Token ##
 
