@@ -2,7 +2,11 @@
 
 ![DbShowcase](./app/src/main/res/mipmap-hdpi/ic_launcher.png "DbShowcase") <a href="https://play.google.com/store/apps/details?id=cz.koto.misak.securityshowcase"><img src="./extras/banner/google-play-badge.png" height="72"/></a>  
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg)](https://travis-ci.org/kotomisak/security-showcase-android)
+
+| Branch | Status |
+| --- | --- |
+| master | [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg?branch=master)](https://travis-ci.org/kotomisak/security-showcase-android) | 
+| develop| [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg?branch=develop)](https://travis-ci.org/kotomisak/security-showcase-android) | 
 
 This is sample application pointing some security related practices on Android device.  
 Complete server-side endpoint implementation for this project is available on GitHub [KoTiNode](https://github.com/kotomisak/kotinode).
