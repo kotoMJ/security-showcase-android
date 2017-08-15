@@ -26,6 +26,17 @@ open class KeystoreCompatConfig {
         return 10
     }
 
+    /**
+     * Sets whether this key is authorized to be used only if the user has been authenticated
+     * False value could allow to avoid lock-screen during saving secret key
+     * Even with false value you still can force lock-screen
+     * This settings is working since Android M
+     */
+    @TargetApi(Build.VERSION_CODES.M)
+    open fun getUserAuthenticationRequired(): Boolean {
+        return true
+    }
+
     open fun isRootDetectionEnabled(): Boolean {
         return true
     }
