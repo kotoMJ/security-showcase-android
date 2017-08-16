@@ -26,15 +26,14 @@ android {
 		variant ->
 			System.out.println(">>>>>> " + variant.buildType.name)
 			if(variant.buildType.name.equals("release")) {
-				variant.outputs.each {
+				variant.outputs.all {
 					output ->
-						def outputFile = output.outputFile
-						def date = new Date()
-						System.out.println(output.outputFile)
-						if(outputFile != null && outputFile.name.endsWith('.apk')) {
-							def fileName = outputFile.name + "-" + defaultConfig.versionName + "-" + defaultConfig.versionCode + "-" + date.format('yyyyMMdd') + ".apk"
-							output.outputFile = new File((String) outputFile.parent, (String) fileName)
-						}
+//						def outputFile = output.outputFile
+						def date = new Date().format('yyyyMMdd')
+//						if(outputFile != null && outputFile.name.endsWith('.apk')) {
+						outputFileName = "${project.name}-${variant.versionName}-${variant.versionCode}-${date}-${variant.name}.apk"
+						//output.outputFile = new File((String) outputFile.parent, (String) fileName)
+//						}
 				}
 			}
 	}

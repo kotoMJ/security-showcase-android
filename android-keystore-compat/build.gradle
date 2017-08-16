@@ -36,12 +36,12 @@ ext {
 	allLicenses = ["Apache-2.0"]
 }
 android {
-	compileSdkVersion 25
-	buildToolsVersion "25.0.2"
+	compileSdkVersion 26
+	buildToolsVersion "26.0.1"
 
 	defaultConfig {
 		minSdkVersion 19
-		targetSdkVersion 25
+		targetSdkVersion 26
 		versionCode libraryCode
 		versionName libraryVersion
 
@@ -56,6 +56,18 @@ android {
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
 	}
+	flavorDimensions "lib"
+
+	productFlavors {
+		local {
+			dimension = "lib"
+		}
+
+		rosti {
+			dimension = "lib"
+		}
+	}
+
 	resourcePrefix 'kc_'
 	sourceSets {
 		main.java.srcDirs += 'src/main/kotlin'
@@ -69,8 +81,8 @@ buildscript {
 		jcenter()
 	}
 	dependencies {
-		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
-		classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.1'
+		classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 	}
 }
 
