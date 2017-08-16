@@ -90,7 +90,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
                 .setDigests(KeyProperties.DIGEST_SHA512)
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)//follow used getCipherMode
                 .setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
-                .setUserAuthenticationRequired(true)
+                .setUserAuthenticationRequired(KeystoreCompat.config.getUserAuthenticationRequired())
                 .setUserAuthenticationValidityDurationSeconds(KeystoreCompat.config.getUserAuthenticationValidityDurationSeconds())
                 .build()
     }
