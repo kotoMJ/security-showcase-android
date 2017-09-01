@@ -2,6 +2,7 @@ package cz.koto.misak.securityshowcase.utility
 
 import android.databinding.ObservableField
 import android.os.Build
+import cz.kinst.jakub.view.SimpleStatefulLayout
 import cz.kinst.jakub.view.StatefulLayout
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,12 +32,12 @@ inline fun runOnMarshmallow(crossinline action: () -> Unit) {
 }
 
 
-fun ObservableField<StatefulLayout.State>.progress() = set(StatefulLayout.State.PROGRESS)
-fun ObservableField<StatefulLayout.State>.offline() = set(StatefulLayout.State.OFFLINE)
-fun ObservableField<StatefulLayout.State>.content() = set(StatefulLayout.State.CONTENT)
-fun ObservableField<StatefulLayout.State>.empty() = set(StatefulLayout.State.EMPTY)
+fun ObservableField<String>.progress() = set(SimpleStatefulLayout.State.PROGRESS)
+fun ObservableField<String>.offline() = set(SimpleStatefulLayout.State.OFFLINE)
+fun ObservableField<String>.content() = set(StatefulLayout.State.CONTENT)
+fun ObservableField<String>.empty() = set(SimpleStatefulLayout.State.EMPTY)
 
-fun ObservableField<StatefulLayout.State>.emptyWhen(action: () -> Boolean) =
-        if (action()) set(StatefulLayout.State.EMPTY) else set(StatefulLayout.State.CONTENT)
+fun ObservableField<String>.emptyWhen(action: () -> Boolean) =
+		if (action()) set(SimpleStatefulLayout.State.EMPTY) else set(StatefulLayout.State.CONTENT)
 
 operator fun <A, B> ((A) -> B).get(a: A): () -> B = { this(a) }

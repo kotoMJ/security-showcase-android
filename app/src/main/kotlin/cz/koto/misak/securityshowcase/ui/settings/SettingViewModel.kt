@@ -1,6 +1,9 @@
 package cz.koto.misak.securityshowcase.ui.settings
 
 import android.databinding.ObservableBoolean
+import android.view.LayoutInflater
+import cz.kinst.jakub.view.SimpleStatefulLayout
+import cz.kinst.jakub.view.StatefulLayout
 import cz.koto.misak.keystorecompat.KeystoreCompat
 import cz.koto.misak.keystorecompat.exception.ForceLockScreenMarshmallowException
 import cz.koto.misak.keystorecompat.utility.forceAndroidAuth
@@ -11,6 +14,7 @@ import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.FragmentSettingsBinding
 import cz.koto.misak.securityshowcase.storage.CredentialStorage
 import cz.koto.misak.securityshowcase.ui.BaseViewModel
+import cz.koto.misak.securityshowcase.ui.StateListener
 import cz.koto.misak.securityshowcase.ui.main.MainActivity.Companion.FORCE_ENCRYPTION_REQUEST_M
 import cz.koto.misak.securityshowcase.utility.Logcat
 import io.reactivex.Flowable
@@ -18,35 +22,40 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
+class SettingViewModel : BaseViewModel<FragmentSettingsBinding>(), StateListener {
 
     val androidSecurityAvailable = ObservableBoolean(false)
     val androidSecuritySelectable = ObservableBoolean(false)
+	val androidSecurityValue = ObservableBoolean()
+
 
     companion object {
         val EXTRA_ENCRYPTION_REQUEST_SCHEDULED = "EXTRA_ENCRYPTION_REQUEST_SCHEDULED"
     }
 
+	lateinit var stateController: StatefulLayout.StateController
+
     override fun onViewModelCreated() {
         super.onViewModelCreated()
+		stateController = StatefulLayout.StateController.create()
+				.withState(SimpleStatefulLayout.State.PROGRESS, LayoutInflater.from(activity).inflate(R.layout.include_progress, null))
+				.build()
         if (view.bundle.get(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED) == true) storeSecret()
     }
 
     override fun onViewAttached(firstAttachment: Boolean) {
         super.onViewAttached(firstAttachment)
         setVisibility()
-        runSinceKitKat {
-            binding.settingsAndroidSecuritySwitch.isChecked = KeystoreCompat.hasSecretLoadable()
-            binding.settingsAndroidSecuritySwitch.setOnCheckedChangeListener { switch, b ->
-                if (b) {
-                    binding.settingsAndroidSecuritySwitch.isEnabled = false
-                    storeSecret()
-                } else {
-                    KeystoreCompat.clearCredentials()
-                }
-            }
-        }
-    }
+	}
+
+	override fun setProgress() {
+		stateController.state = SimpleStatefulLayout.State.PROGRESS
+	}
+
+
+	override fun setContent() {
+		stateController.state = SimpleStatefulLayout.State.CONTENT
+	}
 
     private fun setVisibility() {
         runSinceKitKat {
@@ -83,13 +92,25 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>() {
                 .subscribe({}, {
                     Logcat.e("Store credentials failed!", it)
                     activity.showSnackBar(ContextProvider.getString(R.string.settings_security_store_failed))
-                    binding.settingsAndroidSecuritySwitch.isEnabled = true
-                    binding.settingsAndroidSecuritySwitch.isChecked = false
+					androidSecuritySelectable.set(true)
+					androidSecurityValue.set(false)
                 }, {
-                    binding.settingsAndroidSecuritySwitch.isEnabled = true
-                    binding.settingsAndroidSecuritySwitch.isChecked = true
+					androidSecuritySelectable.set(true)
+					androidSecurityValue.set(true)
                     /* DEV test to load stored credentials (don't forget to increase setUserAuthenticationValidityDurationSeconds() to fulfill this test!) */
                     //CredentialsKeystoreProvider.loadCredentials({ loaded -> Logcat.w("LOAD test %s", loaded) }, { Logcat.e("LOAD test FAILURE") }, false)
                 })
     }
+
+	fun onCheckedChanged(checked: Boolean) {
+		runSinceKitKat {
+			if (checked) {
+				androidSecuritySelectable.set(false)
+				storeSecret()
+			} else {
+				KeystoreCompat.clearCredentials()
+			}
+		}
+	}
+
 }

@@ -1,5 +1,6 @@
 package cz.koto.misak.securityshowcase.ui
 
+import SecurityShowcaseRetrofitProvider
 import android.databinding.ViewDataBinding
 import android.support.annotation.DrawableRes
 import android.support.design.widget.Snackbar
@@ -21,10 +22,9 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.toolbar.view.*
 import org.parceler.Parcels
 
-abstract class BaseViewModel<T : ViewDataBinding> : ViewModel<T>() {
+abstract class BaseViewModel<T : ViewDataBinding> : ViewModel() {
 
     val detached = PublishSubject.create<Unit>()
 
@@ -43,7 +43,7 @@ abstract class BaseViewModel<T : ViewDataBinding> : ViewModel<T>() {
         return super.getActivity() as BaseActivity<*, *>
     }
 
-    fun getToolbar() = binding.root.toolbar
+//    fun getToolbar() = binding.root.toolbar
 }
 
 inline fun <reified T> BaseViewModel<*>.unwrap(key: String): T =

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatDelegate
-import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig
 import cz.koto.misak.keystorecompat.KeystoreCompat
 import cz.koto.misak.keystorecompat.utility.runSinceKitKat
 import cz.koto.misak.securityshowcase.ContextProvider
@@ -26,9 +25,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         val FORCE_ENCRYPTION_REQUEST_M = 1112
     }
 
-    override fun getViewModelBindingConfig() = ViewModelBindingConfig<MainViewModel>(R.layout.activity_main, MainViewModel::class.java)
-
     override fun onCreate(savedInstanceState: Bundle?) {
+		setupViewModel(R.layout.activity_main, MainViewModel::class.java)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         super.onCreate(savedInstanceState)
         runSinceKitKat { KeystoreCompat.lockScreenSuccessful() }

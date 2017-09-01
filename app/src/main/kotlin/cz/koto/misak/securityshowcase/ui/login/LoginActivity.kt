@@ -3,7 +3,6 @@ package cz.koto.misak.securityshowcase.ui.login
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import cz.kinst.jakub.viewmodelbinding.ViewModelBindingConfig
 import cz.koto.misak.keystorecompat.KeystoreCompat
 import cz.koto.misak.securityshowcase.R
 import cz.koto.misak.securityshowcase.databinding.ActivityLoginBinding
@@ -15,12 +14,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         val FORCE_SIGNUP_REQUEST = 1111
     }
 
-    override fun getViewModelBindingConfig() =
-            ViewModelBindingConfig(R.layout.activity_login, LoginViewModel::class.java)
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+		setupViewModel(R.layout.activity_login, LoginViewModel::class.java)
+		super.onCreate(savedInstanceState)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -26,7 +26,7 @@ class InfoViewModel : BaseViewModel<FragmentInfoBinding>() {
 
     override fun onViewAttached(firstAttachment: Boolean) {
         super.onViewAttached(firstAttachment)
-        binding.executePendingBindings()
+		activity.getBinding().executePendingBindings()
         activity.getSupportActionBar()?.setIcon(R.drawable.ic_security_24dp)
         activity.getSupportActionBar()?.setTitle("")
     }
