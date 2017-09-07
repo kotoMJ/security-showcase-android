@@ -5,7 +5,7 @@
 	<data>
 		<variable
 			name="viewModel"
-			type="cz.koto.misak.securityshowcase.ui.info.InfoViewModel" />
+			type="cz.koto.securityshowcase.ui.info.InfoViewModel" />
 	</data>
 
 	<FrameLayout

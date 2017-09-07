@@ -14,9 +14,9 @@ ext {
 	artifact = 'android-keystore-compat'
 
 	bintrayUser = 'kotomisak'
-	bintrayRepo = 'cz.koto.misak'
+	bintrayRepo = 'cz.koto'
 
-	publishedGroupId = 'cz.koto.misak'
+	publishedGroupId = 'cz.koto'
 	libraryName = 'android-keystore-compat'
 
 	libraryDescription = 'Wrapper library designed to simplify secure handling string secret in shared preferences using Keystore as private key storage.'

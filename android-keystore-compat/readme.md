@@ -1,5 +1,5 @@
 # KeystoreCompat #
-[ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 <br/><br/>
 This simple wrapper library is designed to save secret
@@ -52,7 +52,7 @@ The caveat could be the custom access to Keystore.
 
 ## Installation ##
 
-Add following dependency to your build.gradle: [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)
+Add following dependency to your build.gradle: [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion)
 <br/>
 Minimum API is 19!
 Running on lower version will not crash, but will do nothing.
@@ -69,7 +69,7 @@ Used RootBeer library has dependency on old appCompat(appcompat-v7:22.2.0, suppo
 If you wanna to avoid eventual library clash, use exclude as this:
 
 ```
-compile ('cz.koto.misak:android-keystore-compat:x.y.z') {
+compile ('cz.koto:android-keystore-compat:x.y.z') {
 		exclude group: 'com.android.support'
 	}
 ```
@@ -79,7 +79,7 @@ All mentioned configurations are voluntary (KeystoreCompat is shipped with defau
 
 ### KeystoreCompatConfig ###
 KeystoreCompat offer possibility to override default configuration using:
-`cz.koto.misak.keystorecompat.KeystoreCompat.overrideConfig(T : KeystoreCompatConfig)`
+`cz.koto.keystorecompat.KeystoreCompat.overrideConfig(T : KeystoreCompatConfig)`
 
 - `fun getDialogDismissThreshold(): Int` Define how many times can be screenLock/KitKatAdmin dialog displayed when it was previously cancelled.
 - `open fun isRootDetectionEnabled(): Boolean` You can disable root detection by this method, but it is on your risk (**it's good e.g. for debug variant because of Emulator**)!

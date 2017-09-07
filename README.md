@@ -1,6 +1,6 @@
 # Security showcase #
 
-![DbShowcase](./app/src/main/res/mipmap-hdpi/ic_launcher.png "DbShowcase") <a href="https://play.google.com/store/apps/details?id=cz.koto.misak.securityshowcase"><img src="./extras/banner/google-play-badge.png" height="72"/></a>  
+![DbShowcase](./app/src/main/res/mipmap-hdpi/ic_launcher.png "DbShowcase") <a href="https://play.google.com/store/apps/details?id=cz.koto.securityshowcase"><img src="./extras/banner/google-play-badge.png" height="72"/></a>  
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 | Branch | Status |
@@ -21,7 +21,7 @@ or StackOverflow discussion. **The main point of this library is to provide the 
 The backward support is something, what all available libraries and blog posts lacks!
 
 Read more about [KeystoreCompat](android-keystore-compat/readme.md)<br/>
-[ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto.misak/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto.misak/android-keystore-compat/_latestVersion)<br/><br/>
+[ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion)<br/><br/>
 [ ![STRV](./extras/strv-talk/STRV-Black_small.png) ](https://www.strv.com/)
 
 

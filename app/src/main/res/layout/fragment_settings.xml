@@ -6,7 +6,7 @@
 	<data>
 		<variable
 			name="viewModel"
-			type="cz.koto.misak.securityshowcase.ui.settings.SettingViewModel" />
+			type="cz.koto.securityshowcase.ui.settings.SettingViewModel" />
 	</data>
 
 	<LinearLayout

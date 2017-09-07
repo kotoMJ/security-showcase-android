@@ -16,18 +16,18 @@
 #   public *;
 #}
 
--keep class cz.koto.misak.securityshowcase.model.** { *; }
+-keep class cz.koto.securityshowcase.model.** { *; }
 
--dontwarn cz.koto.misak.securityshowcase.ui.settings.**
--keep class cz.koto.misak.securityshowcase.ui.settings.** { *; }
+-dontwarn cz.koto.securityshowcase.ui.settings.**
+-keep class cz.koto.securityshowcase.ui.settings.** { *; }
 
 # graphql data generated classes
--keep class cz.koto.misak.securityshowcase.Login$* { *; }
+-keep class cz.koto.securityshowcase.Login$* { *; }
 
-#-keep class cz.koto.misak.securityshowcase.Login.Builder class * { *; }
-#-keep class cz.koto.misak.securityshowcase.Login.Data class * { *; }
-#-keep class cz.koto.misak.securityshowcase.Login.Data.** { *; }
-#-keep class cz.koto.misak.securityshowcase.Login.Variables class * { *; }
+#-keep class cz.koto.securityshowcase.Login.Builder class * { *; }
+#-keep class cz.koto.securityshowcase.Login.Data class * { *; }
+#-keep class cz.koto.securityshowcase.Login.Data.** { *; }
+#-keep class cz.koto.securityshowcase.Login.Variables class * { *; }
 
 
 # apollo library classes

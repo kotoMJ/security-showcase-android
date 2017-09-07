@@ -4,7 +4,7 @@
 	<data>
 		<variable
 			name="viewModel"
-			type="cz.koto.misak.securityshowcase.ui.main.MainViewModel" />
+			type="cz.koto.securityshowcase.ui.main.MainViewModel" />
 	</data>
 
 	<LinearLayout
