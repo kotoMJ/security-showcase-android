@@ -42,7 +42,7 @@
 					android:minHeight="@dimen/global_spacing_56"
 					android:paddingLeft="@dimen/global_spacing_16"
 					android:paddingRight="@dimen/global_spacing_16"
-					android:background="?attr/selectableItemBackground"
+					android:background="?android:attr/selectableItemBackground"
 					app:show="@{viewModel.androidSecurityAvailable}">
 					<LinearLayout
 						android:layout_width="match_parent"
