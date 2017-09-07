@@ -23,7 +23,7 @@ and therefore follow the minimum API/rooted device detection and also inform abo
 KeystoreCompat library is written in Kotlin language.
 
 So in case of usage this library from java project (without existing dependency on Kotlin) you need also
-to add dependency on `org.jetbrains.kotlin:kotlin-stdlib:1.1.1` (over **5k method on dex**)
+to add dependency on `org.jetbrains.kotlin:kotlin-stdlib:1.1.4-3` (over **5k method on dex**)
 
 If it is too much for your java project, **feel free to grab constructions from this library to achieve the same functionality without dependency on Kotlin**.
 
