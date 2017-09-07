@@ -61,6 +61,7 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>(), StateListener
 		runSinceKitKat {
 			androidSecurityAvailable.set(KeystoreCompat.isKeystoreCompatAvailable())
 			androidSecuritySelectable.set(KeystoreCompat.isSecurityEnabled())
+			androidSecurityValue.set(KeystoreCompat.hasSecretLoadable())
 		}
 	}
 
