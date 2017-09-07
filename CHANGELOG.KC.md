@@ -1,8 +1,5 @@
 
 # Release notes for Keystore Compat library
-
-## Not released yet
- * Think about advanced root detection with SafetyNet
  
 ## KC-1.2.0
  ```
