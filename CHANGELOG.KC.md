@@ -4,6 +4,11 @@
 ## Not released yet
  * Think about advanced root detection with SafetyNet
  
+## KC-1.2.0
+ ```
+   KeystoreCompat 1.1.2 has NEW PACKAGE! cz.koto:android-keystore-compat:1.2.0
+   ```
+ 
 ## KC-1.1.0
  * Upgrade dependency on Kotlin 1.1.1
  * Reduce number of required rights for API 4.4.4
