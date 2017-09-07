@@ -3,6 +3,16 @@
 ```
 KeystoreCompat 1.1.2 has NEW PACKAGE! cz.koto:android-keystore-compat:1.2.0
 ```
+
+```
+Unfortunatelly SecurityShowcase was removed from GooglePlay by google because it violates the deceptive device settings changes policy. 
+
+This is caused by usage BIND_DEVICE_ADMIN for pre-Lollipop Android version.
+
+I have been currently working on change of the KeystoreCompat & SecurityShowcase to fulfill device settings.
+KeystoreCompat will be also written in more component way (user will be able to include API version separatedly)
+```
+
 [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
