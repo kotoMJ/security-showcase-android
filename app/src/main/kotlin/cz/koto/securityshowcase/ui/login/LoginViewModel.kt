@@ -1,6 +1,7 @@
 package cz.koto.securityshowcase.ui.login
 
 import android.content.Intent
+import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.net.Uri

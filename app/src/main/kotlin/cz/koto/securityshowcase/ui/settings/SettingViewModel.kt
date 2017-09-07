@@ -26,7 +26,7 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>(), StateListener
 
 	val androidSecurityAvailable = ObservableBoolean(false)
 	val androidSecuritySelectable = ObservableBoolean(false)
-	val androidSecurityValue = ObservableBoolean()
+	val androidSecurityValue = ObservableBoolean(false)
 
 
 	companion object {
