@@ -1,9 +1,6 @@
 package cz.koto.securityshowcase.ui.settings
 
 import android.databinding.ObservableBoolean
-import android.view.LayoutInflater
-import cz.kinst.jakub.view.SimpleStatefulLayout
-import cz.kinst.jakub.view.StatefulLayout
 import cz.koto.keystorecompat.KeystoreCompat
 import cz.koto.keystorecompat.exception.ForceLockScreenMarshmallowException
 import cz.koto.keystorecompat.utility.forceAndroidAuth
@@ -33,13 +30,13 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>(), StateListener
 		val EXTRA_ENCRYPTION_REQUEST_SCHEDULED = "EXTRA_ENCRYPTION_REQUEST_SCHEDULED"
 	}
 
-	lateinit var stateController: StatefulLayout.StateController
+	//lateinit var stateController: StatefulLayout.StateController
 
 	override fun onViewModelCreated() {
 		super.onViewModelCreated()
-		stateController = StatefulLayout.StateController.create()
-				.withState(SimpleStatefulLayout.State.PROGRESS, LayoutInflater.from(activity).inflate(R.layout.include_progress, null))
-				.build()
+//		stateController = StatefulLayout.StateController.create()
+//				.withState(SimpleStatefulLayout.State.PROGRESS, LayoutInflater.from(activity).inflate(R.layout.include_progress, null))
+//				.build()
 		if (view.bundle.get(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED) == true) storeSecret()
 	}
 
@@ -49,12 +46,12 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>(), StateListener
 	}
 
 	override fun setProgress() {
-		stateController.state = SimpleStatefulLayout.State.PROGRESS
+		//stateController.state = SimpleStatefulLayout.State.PROGRESS
 	}
 
 
 	override fun setContent() {
-		stateController.state = SimpleStatefulLayout.State.CONTENT
+		//stateController.state = SimpleStatefulLayout.State.CONTENT
 	}
 
 	private fun setVisibility() {

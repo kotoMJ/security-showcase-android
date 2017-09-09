@@ -5,10 +5,7 @@ import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.net.Uri
-import android.view.LayoutInflater
 import com.apollographql.android.rx2.Rx2Apollo
-import cz.kinst.jakub.view.SimpleStatefulLayout
-import cz.kinst.jakub.view.StatefulLayout
 import cz.koto.keystorecompat.KeystoreCompat
 import cz.koto.keystorecompat.exception.ForceLockScreenKitKatException
 import cz.koto.keystorecompat.utility.forceAndroidAuth
@@ -31,6 +28,7 @@ import cz.koto.securityshowcase.utility.longPref
 import cz.koto.securityshowcase.utility.start
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import org.alfonz.view.StatefulLayout
 
 class LoginViewModel : BaseViewModel<ActivityLoginBinding>(), StateListener {
 
@@ -52,14 +50,11 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>(), StateListener {
 
 	var loginAt by longPref("last_login_at")
 
-	lateinit var stateController: StatefulLayout.StateController
+	val state = ObservableField(StatefulLayout.CONTENT)
 
 
 	override fun onViewModelCreated() {
 		super.onViewModelCreated()
-		stateController = StatefulLayout.StateController.create()
-				.withState(SimpleStatefulLayout.State.PROGRESS, LayoutInflater.from(activity).inflate(R.layout.include_progress, null))
-				.build()
 		CredentialStorage.forceLockScreenFlag()
 		email.addOnPropertyChangedCallback(userNameChanged)
 	}
@@ -98,12 +93,12 @@ class LoginViewModel : BaseViewModel<ActivityLoginBinding>(), StateListener {
 	}
 
 	override fun setProgress() {
-		stateController.state = SimpleStatefulLayout.State.PROGRESS
+		state.set(StatefulLayout.PROGRESS)
 	}
 
 
 	override fun setContent() {
-		stateController.state = SimpleStatefulLayout.State.CONTENT
+		state.set(StatefulLayout.CONTENT)
 	}
 
 

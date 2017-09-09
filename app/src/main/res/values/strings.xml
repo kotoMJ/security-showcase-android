@@ -31,6 +31,9 @@
 	<string name="settings_security_link_android_security">Go to Android Security Settings</string>
 	<string name="settings_security_store_failed">Store credentails failed unexpctedly!</string>
 
+	<string name="placeholder_empty">Empty content</string>
+	<string name="connectionError">Connection error</string>
+
 	<!-- Override KeystoreCompat default string -->
 	<string name="kc_lock_screen_title">SecurityShowcase LockScreen</string>
 	<string name="kc_lock_screen_description">Use Android security to open SecurityShowcase</string>

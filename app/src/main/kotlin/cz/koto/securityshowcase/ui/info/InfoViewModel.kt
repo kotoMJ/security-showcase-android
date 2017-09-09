@@ -1,14 +1,12 @@
 package cz.koto.securityshowcase.ui.info
 
-import android.databinding.ObservableField
-import cz.kinst.jakub.view.StatefulLayout
 import cz.koto.securityshowcase.R
 import cz.koto.securityshowcase.databinding.FragmentInfoBinding
 import cz.koto.securityshowcase.ui.BaseViewModel
 
 class InfoViewModel : BaseViewModel<FragmentInfoBinding>() {
 
-	val state = ObservableField(StatefulLayout.State.CONTENT)
+//	val state = ObservableField(StatefulLayout.State.CONTENT)
 
 
 	override fun onViewModelCreated() {
