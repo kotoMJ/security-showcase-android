@@ -17,12 +17,17 @@ KeystoreCompat will be also written in more component way (user will be able to 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
+```
+If your application supports API lower than 19, include this line to app's AndroidManifest file:
+  
+<uses-sdk tools:overrideLibrary="cz.koto.keystorecompat" />
+
+```
 
 <br/><br/>
 This simple wrapper library is designed to save secret
 to local shared preferences using Android default security and Android Keystore.
 KeystoreCompat ensures handling LockScreen and compatibility among diversity of Android versions.
-
 
 KeystoreCompat also keeps in mind existing Keystore-related vulnerabilities
 and therefore follow the minimum API/rooted device detection and also inform about existing caveats/enhancements in all supported API version.
