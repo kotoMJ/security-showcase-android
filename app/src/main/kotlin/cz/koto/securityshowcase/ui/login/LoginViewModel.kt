@@ -16,6 +16,8 @@ import cz.koto.securityshowcase.api.SecurityShowcaseApiProvider
 import cz.koto.securityshowcase.model.AuthRequestSimple
 import cz.koto.securityshowcase.storage.CredentialStorage
 import cz.koto.securityshowcase.ui.StateListener
+import cz.koto.securityshowcase.utility.ApplicationEvent
+import cz.koto.securityshowcase.utility.applicationEvents
 import cz.koto.securityshowcase.utility.isValidJWT
 import cz.koto.securityshowcase.utility.longPref
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -72,7 +74,14 @@ class LoginViewModel(val context: Application) : /*BaseViewModel<ActivityLoginBi
 				password.get() ?: ""))
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe({ onSuccessfulLogin(it?.idToken) }, { setContent(); it.printStackTrace() })
+				.subscribe(
+						{
+							onSuccessfulLogin(it?.idToken)
+						},
+						{
+							setContent()
+							it.printStackTrace()
+						})
 	}
 
 	fun signInGql() {
@@ -107,9 +116,8 @@ class LoginViewModel(val context: Application) : /*BaseViewModel<ActivityLoginBi
 
 	private fun showMain() {
 		stringChallenge = ""
-		//TODO
-//		activity.finish()
-//		activity.start<MainActivity>()
+		//TODO use SingleLiveEvent from arch components instead.
+		applicationEvents.onNext(ApplicationEvent.RequestMain)
 	}
 
 	fun followGithub() {
