@@ -47,7 +47,7 @@ class LoginActivity : BaseArchActivity() {
 				is ApplicationEvent.RequestMain -> {
 					//TODO use SingleLiveEvent from arch components instead.
 					finish()
-					ActivityCompat.startActivity(this, Intent(this, MainActivity::class.java), null)
+					ActivityCompat.startActivity(applicationContext, Intent(this, MainActivity::class.java), null)
 				}
 			}
 		}

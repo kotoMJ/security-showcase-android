@@ -6,7 +6,6 @@ import cz.koto.keystorecompat.exception.ForceLockScreenMarshmallowException
 import cz.koto.keystorecompat.utility.forceAndroidAuth
 import cz.koto.keystorecompat.utility.runSinceKitKat
 import cz.koto.keystorecompat.utility.showLockScreenSettings
-import cz.koto.securityshowcase.ContextProvider
 import cz.koto.securityshowcase.R
 import cz.koto.securityshowcase.databinding.FragmentSettingsBinding
 import cz.koto.securityshowcase.storage.CredentialStorage
@@ -89,7 +88,8 @@ class SettingViewModel : BaseViewModel<FragmentSettingsBinding>(), StateListener
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe({}, {
 					Logcat.e("Store credentials failed!", it)
-					activity.showSnackBar(ContextProvider.getString(R.string.settings_security_store_failed))
+					//TODO solve this using arch
+					//activity.showSnackBar(ContextProvider.getString(R.string.settings_security_store_failed))
 					androidSecuritySelectable.set(true)
 					androidSecurityValue.set(false)
 				}, {

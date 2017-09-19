@@ -40,10 +40,6 @@ abstract class BaseViewModel<T : ViewDataBinding> : ViewModel() {
 		super.onViewModelDestroyed()
 	}
 
-	override fun getActivity(): BaseActivity<*, *> {
-		return super.getActivity() as BaseActivity<*, *>
-	}
-
 //    fun getToolbar() = binding.root.toolbar
 }
 
