@@ -5,6 +5,10 @@
 
 	<data>
 		<variable
+			name="view"
+			type="cz.koto.securityshowcase.ui.settings.SettingsView" />
+
+		<variable
 			name="viewModel"
 			type="cz.koto.securityshowcase.ui.settings.SettingViewModel" />
 	</data>
@@ -67,7 +71,7 @@
 								android:layout_height="wrap_content"
 								android:layout_gravity="center_vertical|right"
 								android:checked="@={viewModel.androidSecurityValue}"
-								android:onCheckedChanged="@{(switch, checked) -> viewModel.onCheckedChanged(checked)}"
+								android:onCheckedChanged="@{(switch, checked) -> view.onCheckedChanged(checked)}"
 								android:enabled="@{viewModel.androidSecuritySelectable}" />
 						</LinearLayout>
 						<LinearLayout
