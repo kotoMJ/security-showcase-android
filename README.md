@@ -4,11 +4,17 @@
 
 ```
 Unfortunatelly SecurityShowcase was removed from GooglePlay by google because it violates the deceptive device settings changes policy. 
-
+  
 This is caused by usage BIND_DEVICE_ADMIN for pre-Lollipop Android version.
-
-I have been currently working on change of the KeystoreCompat & SecurityShowcase to fulfill device settings.
-KeystoreCompat will be also written in more component way (user will be able to include API version separatedly)
+  
+I have been currently working on change of the new version of SecurityShowcase to fulfill device settings:
+Developer must explain to users why you are requesting the ‘android.permission.BIND_DEVICE_ADMIN’ in his app. 
+Apps must provide accurate disclosure of their functionality and should perform as reasonably expected by the user. 
+Any changes to device settings must be made with the user's knowledge and consent and be easily reversible by the user.
+  
+  
+KeystoreCompat will be also written in more component way (user will be able to include API version separatedly).
+It means when app support API L+ or API M+ then there is no need to include library with code for API K+
 ```
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
