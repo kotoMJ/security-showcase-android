@@ -32,7 +32,9 @@ class SettingsFragment : BaseArchFragment(), SettingsView {
 		super.onCreate(savedInstanceState)
 
 		savedInstanceState?.let {
-			if (it.get(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED) == true) storeSecret()
+			if (it.get(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED) == true) {
+				storeSecret()
+			}
 		}
 	}
 
