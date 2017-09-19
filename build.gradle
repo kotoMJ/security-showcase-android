@@ -9,6 +9,7 @@ buildscript {
 	ext.archLifecycleVersion = "1.0.0-alpha9-1"
 	ext.rxjavaversion = "2.0.1"
 	ext.retrofitVersion = "2.2.0"
+	ext.supportLibraryVersion = "26.1.0"
 
 
 	repositories {
