@@ -6,11 +6,17 @@ KeystoreCompat 1.1.2 has NEW PACKAGE! cz.koto:android-keystore-compat:1.2.0
 
 ```
 Unfortunatelly SecurityShowcase was removed from GooglePlay by google because it violates the deceptive device settings changes policy. 
-
+  
 This is caused by usage BIND_DEVICE_ADMIN for pre-Lollipop Android version.
-
-I have been currently working on change of the KeystoreCompat & SecurityShowcase to fulfill device settings.
-KeystoreCompat will be also written in more component way (user will be able to include API version separatedly)
+  
+I have been currently working on change of the new version of SecurityShowcase to fulfill device settings:
+Developer must explain to users why you are requesting the ‘android.permission.BIND_DEVICE_ADMIN’ in his app. 
+Apps must provide accurate disclosure of their functionality and should perform as reasonably expected by the user. 
+Any changes to device settings must be made with the user's knowledge and consent and be easily reversible by the user.
+  
+  
+KeystoreCompat will be also written in more component way (user will be able to include API version separatedly).
+It means when app support API L+ or API M+ then there is no need to include library with code for API K+
 ```
 
 [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion)
@@ -50,27 +56,14 @@ Does your app use classic credentials (e.g. username & password / JWT / hash) to
 **Want to let user access your application using just Android default security**
 (PIN/password/gesture/fingerprint) and do not force let user type username/password again and again?
 
+**Or want to let application use keystore without using lockScreen?**
+  
 **If so, this library is designed for you!**
 
 Sample application available on Github (also distributed via Google Play)
 <br/> * [Realm Security - java project](https://github.com/kotomisak/db-showcase-android)
 <br/> * [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android)
 
-## Android keystore in existing libraries ##
-https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
-but designed rather for saving encrypted data generally.<br/>
-_In comparison:_ **KeystoreCompat: is designed rather to simplify work with the secret AND offer valuable functionality for work with the LockScreen (covering all API versions since 19)**(check e.g. [login credentials](https://github.com/kotomisak/security-showcase-android)).
-For securing complex data to be stored rather permanently use KeystoreCompat with combination of secured persistence(chek e.g. [encrypting Realm](https://github.com/kotomisak/db-showcase-android))
-
-## Omit the keystore approach ##
-https://github.com/scottyab/secure-preferences - you can use encryption based on some phrase and encrypt data directly.
-But be careful, this approach force developers handle with another secret (besides the own device secret) and list of
-potential vulnerabilities will be always rather uknown than using the Android defaults.
-
-https://github.com/Mauin/RxFingerprint - you can use custom fingerprint handling with RXFingerprint.
-It uses also Android Keystore for baking keys.
-This completely omit android default security/screen and you can implement your own.
-The caveat could be the custom access to Keystore.
 
 ## Installation ##
 
@@ -104,9 +97,12 @@ KeystoreCompat offer possibility to override default configuration using:
 `cz.koto.keystorecompat.KeystoreCompat.overrideConfig(T : KeystoreCompatConfig)`
 
 - `fun getDialogDismissThreshold(): Int` Define how many times can be screenLock/KitKatAdmin dialog displayed when it was previously cancelled.
-- `open fun isRootDetectionEnabled(): Boolean` You can disable root detection by this method, but it is on your risk (**it's good e.g. for debug variant because of Emulator**)!
+- `open fun isRootDetectionEnabled(): Boolean` Disable root detection by this method, but it is on your risk (**it's good e.g. for debug variant because of Emulator**)!
+- `open fun getUserAuthenticationRequired(): Boolean` **Disable keypair AndroidSecurity** to force user to authenticate itself when touching keypair.
 
-In case of overriding KeystoreCompatConfig, call overrideConfig method before the first KeystoreCompat usage.
+In case of overriding KeystoreCompatConfig, call overrideConfig method before the first KeystoreCompat usage!
+
+If you want to **disable lockScreen**, besides getUserAuthenticationRequired don't forget also parametrize loadSecret() with `forceFlag==false`
 
 ### String resources ###
 Define customized strings in your application string.xml
@@ -176,8 +172,6 @@ Android keystore is evolving mechanism from one Android version to other.
 This library ensure handling Android Keystore since Android API19 (KitKat).
 
 
-
-
 ### Android keystore usability - unstable storage ###
 Keep in mind, that [Android keystore can delete all keys](https://code.google.com/p/android/issues/detail?id=61989)
 if you change screen lock type (or update fingerprint/PIN/Password/Gesture).
@@ -215,7 +209,7 @@ The way of key-pair generation is completely new. Marshmallow also starts suppor
 
 **KeystoreCompat library suggests to use Keystore since `Marshmallow`, but supports usage since `KitKat`.**
 
-### List of known vulnerabilites ###
+### List of known Keystore vulnerabilites ###
 
 #### 2016 July - Attacker can modify stored keys  ####
 
@@ -254,4 +248,21 @@ https://doridori.github.io/android-security-the-forgetful-keystore/#sthash.gFJfh
 https://crackstation.net/hashing-security.htm
 https://www.owasp.org/index.php/Hashing_Java
 
+# Similar Keystore libraries
+
+## Android keystore in existing libraries ##
+https://github.com/Q42/Qlassified-Android - wrapper using the same under the hood approach as KeystoreCompat library,
+but designed rather for saving encrypted data generally.<br/>
+_In comparison:_ **KeystoreCompat: is designed rather to simplify work with the secret AND offer valuable functionality for work with the LockScreen (covering all API versions since 19)**(check e.g. [login credentials](https://github.com/kotomisak/security-showcase-android)).
+For securing complex data to be stored rather permanently use KeystoreCompat with combination of secured persistence(chek e.g. [encrypting Realm](https://github.com/kotomisak/db-showcase-android))
+
+## Omit the keystore approach ##
+https://github.com/scottyab/secure-preferences - you can use encryption based on some phrase and encrypt data directly.
+But be careful, this approach force developers handle with another secret (besides the own device secret) and list of
+potential vulnerabilities will be always rather uknown than using the Android defaults.
+
+https://github.com/Mauin/RxFingerprint - you can use custom fingerprint handling with RXFingerprint.
+It uses also Android Keystore for baking keys.
+This completely omit android default security/screen and you can implement your own.
+The caveat could be the custom access to Keystore.
 
