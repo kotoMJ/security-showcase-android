@@ -32,6 +32,8 @@ Complete server-side endpoint implementation for this project is available on Gi
 SecurityShowcase application contains example of using standard Android Security with the Keystore.
 All Android Keystore related stuff is bundled in KeystoreCompat library (available in this source code).
 
+SecurityShowcase architecture is **MVVM based on Google's architecture component**.
+
 KeystoreCompat library should help to prevent pain when starting work with keystore from the official documentation
 or StackOverflow discussion. **The main point of this library is to provide the same services for all backward** (...Compat) **supported API versions (19+).**
 The backward support is something, what all available libraries and blog posts lacks!
