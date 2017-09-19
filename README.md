@@ -25,14 +25,13 @@ It means when app support API L+ or API M+ then there is no need to include libr
 | develop| [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg?branch=develop)](https://travis-ci.org/kotomisak/security-showcase-android) | 
 
 This is sample application pointing some security related practices on Android device.  
+SecurityShowcase architecture is **MVVM based on Google's architecture component**.  
 Complete server-side endpoint implementation for this project is available on GitHub [KoTiNode](https://github.com/kotomisak/kotinode).
 
 ## Android keystore ##
 
 SecurityShowcase application contains example of using standard Android Security with the Keystore.
 All Android Keystore related stuff is bundled in KeystoreCompat library (available in this source code).
-
-SecurityShowcase architecture is **MVVM based on Google's architecture component**.
 
 KeystoreCompat library should help to prevent pain when starting work with keystore from the official documentation
 or StackOverflow discussion. **The main point of this library is to provide the same services for all backward** (...Compat) **supported API versions (19+).**
