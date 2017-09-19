@@ -113,21 +113,6 @@ dependencies {
 	compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 	compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
-//	compile('cz.kinst.jakub:stateful-layout:1.1.5') {
-//		exclude group: 'com.android.support'
-//	}
-//	compile('cz.kinst.jakub:viewmodelbinding:0.9.4') {
-//		exclude group: 'com.android.support'
-//	}
-
-//	compile ("cz.kinst.jakub:android-stateful-layout-simple:2.0.5"){
-//		exclude group: 'com.android.support'
-//	}
-
-	compile ("cz.kinst.jakub:viewmodelbinding:2.0.0"){
-		exclude group: 'com.android.support'
-	}
-
 	implementation("org.alfonz:alfonz-view:$alfonz_version") {
 		exclude group: 'com.android.support'
 	}
