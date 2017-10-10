@@ -16,7 +16,7 @@ apply from: 'common.gradle'
 
 android {
 	compileSdkVersion 26
-	buildToolsVersion '26.0.1'
+	buildToolsVersion build_tools_version
 
 	defaultConfig {
 		applicationId APPLICATION_ID
