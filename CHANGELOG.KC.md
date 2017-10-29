@@ -1,6 +1,10 @@
 
 # Release notes for Keystore Compat library
  
+## KC-1.2.1
+ * Add feature `KeystoreCompat.deactivate()` - this is currently implemented especially for API 4.4.4 where deactivation will disable device admin automatically. 
+ Programmer therefore fulfill Google's fulfill device settings requirement. 
+  
 ## KC-1.2.0
  ```
    KeystoreCompat 1.1.2 has NEW PACKAGE! cz.koto:android-keystore-compat:1.2.0
