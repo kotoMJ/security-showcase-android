@@ -17,6 +17,7 @@ import java.security.spec.AlgorithmParameterSpec
 import java.util.*
 import javax.security.auth.x500.X500Principal
 
+
 /**
  * KitKat specific Keystore implementation.
  */
@@ -81,4 +82,7 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
 		generator.generateKeyPair()
 	}
 
+	override fun deactivateRights(context: Context) {
+		SecurityDeviceAdmin.INSTANCE.deactivateDeviceAdmin(context)
+	}
 }

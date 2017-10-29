@@ -37,4 +37,5 @@ internal interface KeystoreCompatFacade {
 
 	fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context)
 
+	fun deactivateRights(context: Context)
 }

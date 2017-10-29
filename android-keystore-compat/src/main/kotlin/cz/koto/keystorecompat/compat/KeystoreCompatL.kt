@@ -82,4 +82,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
 		generator.generateKeyPair()
 	}
 
+	override fun deactivateRights(context: Context) {
+		//Not necessary to implement for L variant
+	}
 }

@@ -119,7 +119,7 @@ class SettingsFragment : BaseArchFragment(), SettingsView {
 				viewModel.androidSecuritySelectable.set(false)
 				storeSecret()
 			} else {
-				KeystoreCompat.clearCredentials()
+				KeystoreCompat.deactivate()
 			}
 		}
 	}

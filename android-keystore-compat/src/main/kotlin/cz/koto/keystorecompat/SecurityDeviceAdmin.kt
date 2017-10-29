@@ -5,6 +5,8 @@ import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.util.Log
+
 
 /**
  * Prepared to support LOCK screen on pre-lollipop versions.
@@ -38,6 +40,16 @@ class SecurityDeviceAdmin : DeviceAdminReceiver {
 		onSuccess.invoke()
 	}
 
+	fun deactivateDeviceAdmin(context: Context) {
+		var mDPM: DevicePolicyManager = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+		if (mDPM.isAdminActive(mAdminName)) {
+			mDPM.removeActiveAdmin(mAdminName);
+		} else {
+			Log.e("SecurityDeviceAdmin", "DeactivateDeviceAdmin called for not active device admin. No action took place.")
+		}
+
+
+	}
 
 	override fun onEnabled(context: Context?, intent: Intent?) {
 		super.onEnabled(context, intent)

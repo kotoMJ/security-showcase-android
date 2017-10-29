@@ -109,5 +109,9 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
 		generator.init(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
 		generator.generateKey()
 	}
+
+	override fun deactivateRights(context: Context) {
+		//Not necessary to implement for M+ variant
+	}
 }
 
