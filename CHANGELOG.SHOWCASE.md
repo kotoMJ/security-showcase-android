@@ -1,6 +1,6 @@
 # Release notes for Security Showcase app
 
-## SHOWCASE-3.0.0
+## SHOWCASE-3.0.1
 * Google's requirement fix to fulfill automatically DEVICE ADMIN disabling (when security in the app is disabled)
 
 
