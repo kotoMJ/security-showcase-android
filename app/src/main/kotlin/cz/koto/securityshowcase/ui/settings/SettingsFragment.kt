@@ -1,25 +1,59 @@
 package cz.koto.securityshowcase.ui.info
 
-import android.content.Intent
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import cz.koto.keystorecompat.KeystoreCompat
+import cz.koto.keystorecompat.exception.ForceLockScreenMarshmallowException
+import cz.koto.keystorecompat.utility.forceAndroidAuth
+import cz.koto.keystorecompat.utility.runSinceKitKat
 import cz.koto.securityshowcase.R
 import cz.koto.securityshowcase.databinding.FragmentSettingsBinding
-import cz.koto.securityshowcase.ui.BaseFragment
+import cz.koto.securityshowcase.storage.CredentialStorage
+import cz.koto.securityshowcase.ui.BaseArchFragment
+import cz.koto.securityshowcase.ui.main.MainActivity
 import cz.koto.securityshowcase.ui.settings.SettingViewModel
+import cz.koto.securityshowcase.ui.settings.SettingsView
+import cz.koto.securityshowcase.utility.Logcat
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 
-class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingViewModel>() {
+class SettingsFragment : BaseArchFragment(), SettingsView {
+
+	private lateinit var viewDataBinding: FragmentSettingsBinding
+	private lateinit var viewModel: SettingViewModel
 
 
 	override fun onCreate(savedInstanceState: Bundle?) {
-		setupViewModel(R.layout.fragment_settings, SettingViewModel::class.java)
 		super.onCreate(savedInstanceState)
+
+		savedInstanceState?.let {
+			if (it.get(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED) == true) {
+				storeSecret()
+			}
+		}
 	}
 
-	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-		super.onActivityResult(requestCode, resultCode, data)
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+							  savedInstanceState: Bundle?): View? {
+		viewModel = ViewModelProviders.of(this).get(SettingViewModel::class.java)
+		viewDataBinding = FragmentSettingsBinding.inflate(inflater, container, false)
+		viewDataBinding.viewModel = viewModel
+		viewDataBinding.view = this
+
+		setHasOptionsMenu(true)
+		return viewDataBinding.root
 	}
 
+
+	override fun onResume() {
+		super.onResume()
+		setVisibility()
+	}
 
 	companion object {
 		fun newInstance() = SettingsFragment().apply {
@@ -38,6 +72,55 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingViewModel>
 //			arguments = Bundle().apply { TODO
 //                putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED, encryptionRequested)
 //            }
+		}
+	}
+
+	private fun setVisibility() {
+		runSinceKitKat {
+			viewModel.androidSecurityAvailable.set(KeystoreCompat.isKeystoreCompatAvailable())
+			viewModel.androidSecuritySelectable.set(KeystoreCompat.isSecurityEnabled())
+			viewModel.androidSecurityValue.set(KeystoreCompat.hasSecretLoadable())
+		}
+	}
+
+	private fun storeSecret() {
+		KeystoreCompat.clearCredentials()
+		Flowable.fromCallable {
+			KeystoreCompat.storeSecret(
+					"${CredentialStorage.getUserName()};${CredentialStorage.getPassword()}",
+					{
+						Logcat.e("Store credentials failed!", it)
+						if (it is ForceLockScreenMarshmallowException) {
+							forceAndroidAuth(getString(R.string.kc_lock_screen_title), getString(R.string.kc_lock_screen_description),
+									{ intent -> activity.startActivityForResult(intent, MainActivity.FORCE_ENCRYPTION_REQUEST_M) }, KeystoreCompat.context)
+						}
+					},
+					{ Logcat.d("Credentials stored.") })
+		}
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe({}, {
+					Logcat.e("Store credentials failed!", it)
+					//TODO solve this using arch
+					//activity.showSnackBar(ContextProvider.getString(R.string.settings_security_store_failed))
+					viewModel.androidSecuritySelectable.set(true)
+					viewModel.androidSecurityValue.set(false)
+				}, {
+					viewModel.androidSecuritySelectable.set(true)
+					viewModel.androidSecurityValue.set(true)
+					/* DEV test to load stored credentials (don't forget to increase setUserAuthenticationValidityDurationSeconds() to fulfill this test!) */
+					//CredentialsKeystoreProvider.loadCredentials({ loaded -> Logcat.w("LOAD test %s", loaded) }, { Logcat.e("LOAD test FAILURE") }, false)
+				})
+	}
+
+	override fun onCheckedChanged(checked: Boolean) {
+		runSinceKitKat {
+			if (checked) {
+				viewModel.androidSecuritySelectable.set(false)
+				storeSecret()
+			} else {
+				KeystoreCompat.deactivate()
+			}
 		}
 	}
 }

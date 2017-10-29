@@ -9,13 +9,15 @@
 			type="cz.koto.securityshowcase.ui.login.LoginViewModel" />
 	</data>
 
-	<cz.kinst.jakub.view.StatefulLayout
+	<org.alfonz.view.StatefulLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:background="@color/theme_primary"
 		android:animateLayoutChanges="true"
-		app:progressLayout="@layout/include_progress"
-		app:state="@{viewModel.stateController.state}">
+		app:emptyLayout="@layout/placeholder_empty"
+		app:offlineLayout="@layout/placeholder_offline"
+		app:progressLayout="@layout/placeholder_progress"
+		app:state="@{viewModel.state}">
 
 		<android.support.constraint.ConstraintLayout
 			android:layout_width="match_parent"
@@ -166,5 +168,5 @@
 
 		</android.support.constraint.ConstraintLayout>
 
-	</cz.kinst.jakub.view.StatefulLayout>
+	</org.alfonz.view.StatefulLayout>
 </layout>

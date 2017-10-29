@@ -1,4 +1,4 @@
-package cz.koto.securityshowcase.ui.binding
+package cz.koto.securityshowcase.ui
 
 import android.databinding.BindingAdapter
 import android.view.View

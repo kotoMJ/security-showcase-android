@@ -198,6 +198,16 @@ object KeystoreCompat {
 	}
 
 	/**
+	 * Deactivate KeystoreCompat usage & make cleanup:
+	 * - cleanup credentials string from shared preferences.
+	 * - deactivate eventual requested DEVICE_ADMIN righst
+	 */
+	fun deactivate() {
+		clearCredentials()
+		KeystoreCompatImpl.keystoreCompat.deactivateRights(context)
+	}
+
+	/**
 	 * CleanUp credentials string from shared preferences.
 	 */
 	fun clearCredentials() {

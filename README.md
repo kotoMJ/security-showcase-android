@@ -25,6 +25,7 @@ It means when app support API L+ or API M+ then there is no need to include libr
 | develop| [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg?branch=develop)](https://travis-ci.org/kotomisak/security-showcase-android) | 
 
 This is sample application pointing some security related practices on Android device.  
+SecurityShowcase architecture is **MVVM based on Google's architecture component**.  
 Complete server-side endpoint implementation for this project is available on GitHub [KoTiNode](https://github.com/kotomisak/kotinode).
 
 ## Android keystore ##
