@@ -1,5 +1,7 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
 	package="cz.koto.keystorecompat">
+
+	<uses-sdk tools:overrideLibrary="cz.koto.keystorecompat_base, cz.koto.misak.keystorecompat_19" />
 
 	<application android:allowBackup="true"
 		android:supportsRtl="true">

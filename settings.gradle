@@ -1,1 +1,1 @@
-include ':app', ':android-keystore-compat', ':android-keystore-compat-19', ':android-keystore-compat-21', ':android-keystore-compat-23', ':android-keystore-compat-elplus', ':android-keystore-compat-emplus'
+include ':app', ':android-keystore-compat', ':android-keystore-compat-19', ':android-keystore-compat-21', ':android-keystore-compat-23', ':android-keystore-compat-elplus', ':android-keystore-compat-emplus', ':android-keystore-compat-base'
