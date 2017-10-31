@@ -1,0 +1,98 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-kapt'//http://stackoverflow.com/questions/42568394/build-errors-with-new-kotlin-1-1-kapt-cant-parse-databinding-params
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+final KC_GIT_TAG_REGEX = "KC19*"
+// Last Git tag name on current branch
+final KC_GIT_TAG_NAME = "git describe --tags --abbrev=0 --match ${KC_GIT_TAG_REGEX}".execute([], project.rootDir).text.trim()
+// Total number of tags in the app
+final KC_GIT_TAG_COUNT = "git tag --list ${KC_GIT_TAG_REGEX}".execute([], project.rootDir).text.split("\n").size()
+
+ext {
+	bintrayName = 'android-keystore-compat-19'
+	artifact = 'android-keystore-compat-19'
+
+	bintrayUser = 'kotomisak'
+	bintrayRepo = 'cz.koto'
+
+	publishedGroupId = 'cz.koto'
+	libraryName = 'android-keystore-compat-19'
+
+	libraryDescription = 'Wrapper library designed to simplify secure handling string secret in shared preferences using Keystore as private key storage.'
+
+	siteUrl = 'https://github.com/kotomisak/security-showcase-android/tree/develop/keystorecompat'
+	gitUrl = 'https://github.com/kotomisak/security-showcase-android'
+
+	libraryVersion = KC_GIT_TAG_NAME.replaceAll("KC19-", "")
+	libraryCode = KC_GIT_TAG_COUNT
+
+	developerId = 'kotomisak'
+	developerName = 'Michal Jenicek'
+	developerEmail = 'jenicek.michal@gmail.com'
+
+	licenseName = 'The Apache Software License, Version 2.0'
+	licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+	allLicenses = ["Apache-2.0"]
+}
+android {
+	compileSdkVersion 26
+	buildToolsVersion build_tools_version
+
+	defaultConfig {
+		minSdkVersion 19
+		targetSdkVersion 26
+		versionCode libraryCode
+		versionName libraryVersion
+
+		manifestPlaceholders = [kitkatDeviceAdminLabel: "KestoreCompat default label"]
+
+		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+	flavorDimensions "lib"
+
+	resourcePrefix 'kc19_'
+	sourceSets {
+		main.java.srcDirs += 'src/main/kotlin'
+		main.java.srcDirs += 'src/debug/kotlin'
+	}
+}
+
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+		classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+	}
+}
+
+dependencies {
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+
+	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+		exclude group: 'com.android.support', module: 'support-annotations'
+	})
+	testCompile 'junit:junit:4.12'
+	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+	compile('com.scottyab:rootbeer-lib:0.0.6'){
+		exclude group: 'com.android.support'
+	}
+
+}
+repositories {
+	mavenCentral()
+}
+
+
+apply from: './publish.gradle'
