@@ -1,6 +1,7 @@
-package cz.koto.keystorecompat.compat
+package cz.koto.keystorecompat_base.compat
 
 import android.content.Context
+import java.lang.Exception
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.util.*
@@ -15,7 +16,7 @@ import javax.security.auth.x500.X500Principal
  * RSA:java.security.KeyStore$PrivateKeyEntry
  * AES:java.security.KeyStore$SecretKeyEntry
  */
-internal interface KeystoreCompatFacade {
+interface KeystoreCompatFacade {
 
 	fun getAlgorithm(): String
 

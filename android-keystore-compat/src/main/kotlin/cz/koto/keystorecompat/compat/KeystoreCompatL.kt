@@ -8,6 +8,7 @@ import android.security.KeyPairGeneratorSpec
 import android.util.Log
 import cz.koto.keystorecompat.KeystoreCompat
 import cz.koto.keystorecompat.crypto.KeystoreCryptoK
+import cz.koto.keystorecompat_base.compat.KeystoreCompatFacade
 import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore

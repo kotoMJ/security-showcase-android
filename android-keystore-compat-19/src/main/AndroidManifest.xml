@@ -1,2 +1,5 @@
-<manifest
-	package="cz.koto.keystorecompat_19" />
+<manifest xmlns:tools="http://schemas.android.com/tools"
+	package="cz.koto.keystorecompat_19">
+
+	<uses-sdk tools:overrideLibrary="cz.koto.keystorecompat_base" />
+</manifest>
