@@ -3,7 +3,7 @@ apply plugin: 'kotlin-kapt'//http://stackoverflow.com/questions/42568394/build-e
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-final KC_GIT_TAG_REGEX = "KC21*"
+final KC_GIT_TAG_REGEX = "21KC*"
 // Last Git tag name on current branch
 final KC_GIT_TAG_NAME = "git describe --tags --abbrev=0 --match ${KC_GIT_TAG_REGEX}".execute([], project.rootDir).text.trim()
 // Total number of tags in the app
@@ -24,7 +24,7 @@ ext {
 	siteUrl = 'https://github.com/kotomisak/security-showcase-android/tree/develop/keystorecompat'
 	gitUrl = 'https://github.com/kotomisak/security-showcase-android'
 
-	libraryVersion = KC_GIT_TAG_NAME.replaceAll("KC21-", "")
+	libraryVersion = KC_GIT_TAG_NAME.replaceAll("21KC-", "")
 	libraryCode = KC_GIT_TAG_COUNT
 
 	developerId = 'kotomisak'
