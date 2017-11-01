@@ -6,9 +6,9 @@ import android.security.keystore.KeyNotYetValidException
 import android.security.keystore.UserNotAuthenticatedException
 import android.util.Base64
 import android.util.Log
-import cz.koto.keystorecompat.compat.KeystoreCompatImpl
 import cz.koto.keystorecompat.exception.ForceLockScreenMarshmallowException
 import cz.koto.keystorecompat.exception.KeystoreInvalidKeyException
+import cz.koto.keystorecompat_base.compat.KeystoreCompatFacade
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.security.*
@@ -22,7 +22,7 @@ import javax.crypto.spec.GCMParameterSpec
  * Don't use these methods on lower API than 23!
  * Don't even place them as non-executable code to code running on lower API (especially KitKat) it would fail at Runtime!
  */
-internal object KeystoreCryptoM {
+class KeystoreCryptoM(val keystoreCompat: KeystoreCompatFacade) {
 
 	private val LOG_TAG = javaClass.name
 	val ORDER_FOR_ENCRYPTED_DATA = ByteOrder.BIG_ENDIAN
@@ -33,7 +33,7 @@ internal object KeystoreCryptoM {
 		var encryptedKeyForRealm: ByteArray
 		try {
 			val key = secretKeyEntry.secretKey
-			val inCipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode())
+			val inCipher = Cipher.getInstance(keystoreCompat.getCipherMode())
 			inCipher.init(Cipher.ENCRYPT_MODE, key)
 			encryptedKeyForRealm = inCipher.doFinal(secret)
 			iv = inCipher.iv
@@ -91,7 +91,7 @@ internal object KeystoreCryptoM {
 		buffer.get(encryptedKey)
 
 		try {
-			val cipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode())
+			val cipher = Cipher.getInstance(keystoreCompat.getCipherMode())
 			val ivSpec = GCMParameterSpec(128, iv)
 			cipher.init(Cipher.DECRYPT_MODE, secretKeyEntry.secretKey, ivSpec)
 

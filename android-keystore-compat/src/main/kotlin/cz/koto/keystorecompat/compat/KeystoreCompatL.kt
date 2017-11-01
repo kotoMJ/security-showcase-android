@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.util.Log
-import cz.koto.keystorecompat.KeystoreCompat
 import cz.koto.keystorecompat.crypto.KeystoreCryptoK
 import cz.koto.keystorecompat_base.compat.KeystoreCompatFacade
 import java.math.BigInteger
@@ -23,6 +22,8 @@ import javax.security.auth.x500.X500Principal
 internal object KeystoreCompatL : KeystoreCompatFacade {
 	private val LOG_TAG = javaClass.name
 
+	private val keystoreCryptoK by lazy { KeystoreCryptoK(this) }
+
 	override fun getAlgorithm(): String {
 		return "RSA"
 	}
@@ -32,7 +33,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
 	}
 
 	override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String {
-		return KeystoreCryptoK.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
+		return keystoreCryptoK.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
 	}
 
 	override fun loadSecret(onSuccess: (ByteArray) -> Unit,
@@ -48,7 +49,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
 				//This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
 				onFailure(RuntimeException("Force flag enabled!"))
 			} else {
-				onSuccess.invoke(KeystoreCryptoK.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded))
+				onSuccess.invoke(keystoreCryptoK.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded))
 			}
 
 		} catch (e: Exception) {
@@ -78,7 +79,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
 	}
 
 	override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
-		val generator = KeyPairGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
+		val generator = KeyPairGenerator.getInstance(getAlgorithm(), KeystoreCompatImpl.KEYSTORE_KEYWORD)
 		generator.initialize(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
 		generator.generateKeyPair()
 	}

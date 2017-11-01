@@ -4,7 +4,7 @@ import android.annotation.TargetApi
 import android.os.Build
 import android.util.Base64
 import android.util.Log
-import cz.koto.keystorecompat.compat.KeystoreCompatImpl
+import cz.koto.keystorecompat_base.compat.KeystoreCompatFacade
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.security.KeyStore
@@ -18,7 +18,7 @@ import javax.crypto.CipherOutputStream
 /**
  * Cryptographic methods for pre-M Android version (but the minimum SDK is Android KitKat)
  */
-internal object KeystoreCryptoK {
+class KeystoreCryptoK(val keystoreCompat: KeystoreCompatFacade) {
 
 	private val LOG_TAG = javaClass.name
 
@@ -41,7 +41,7 @@ internal object KeystoreCryptoK {
 			 * it would fail with "Need RSA private or public key" at cipher init for decryption.
 			 * Simply use Cipher.getInstance("RSA/ECB/PKCS1Padding")
 			 */
-			val inCipher = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode()/*, "AndroidOpenSSL"*/)
+			val inCipher = Cipher.getInstance(keystoreCompat.getCipherMode()/*, "AndroidOpenSSL"*/)
 			inCipher.init(Cipher.ENCRYPT_MODE, publicKey)
 			val outputStream = ByteArrayOutputStream()
 			val cipherOutputStream = CipherOutputStream(outputStream, inCipher)
@@ -76,7 +76,7 @@ internal object KeystoreCryptoK {
 			 * it would fail with "Need RSA private or public key" at cipher init for decryption.
 			 * Simply use Cipher.getInstance("RSA/ECB/PKCS1Padding")
 			 */
-			val output = Cipher.getInstance(KeystoreCompatImpl.keystoreCompat.getCipherMode()/*, "AndroidOpenSSL"*/)
+			val output = Cipher.getInstance(keystoreCompat.getCipherMode()/*, "AndroidOpenSSL"*/)
 			output.init(Cipher.DECRYPT_MODE, privateKeyEntry.privateKey)
 
 			val cipherInputStream = CipherInputStream(ByteArrayInputStream(inputByteArray), output)

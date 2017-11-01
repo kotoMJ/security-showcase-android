@@ -11,18 +11,21 @@ import android.util.Log
 /**
  * Prepared to support LOCK screen on pre-lollipop versions.
  */
-class SecurityDeviceAdmin : DeviceAdminReceiver {
+class SecurityDeviceAdmin() : DeviceAdminReceiver() {
 
-	var mDPM: DevicePolicyManager = KeystoreCompat.context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
-	var mAdminName: ComponentName = ComponentName(KeystoreCompat.context, SecurityDeviceAdmin::class.java)
+	lateinit var context: Context
 
-	constructor() {
+	val mDPM: DevicePolicyManager by lazy {
+		context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+	}
+	val mAdminName: ComponentName by lazy {
+		ComponentName(context, SecurityDeviceAdmin::class.java)
 	}
 
-	companion object {
-		val INSTANCE by lazy { SecurityDeviceAdmin() }
+	override fun onReceive(context: Context, intent: Intent?) {
+		this.context = context
+		super.onReceive(context, intent)
 	}
-
 
 	/**
 	 *
@@ -32,7 +35,7 @@ class SecurityDeviceAdmin : DeviceAdminReceiver {
 		//try become active
 		val intent: Intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
 		intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mAdminName)
-		intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, KeystoreCompat.context.getString(R.string.kc_kitkat_admin_explanatory));
+		intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, context.getString(R.string.kc_kitkat_admin_explanatory));
 		onLockActivityShouldBeInvoked.invoke(intent)
 	} else {
 		//already a device administrator, can do security opertations now
@@ -40,7 +43,7 @@ class SecurityDeviceAdmin : DeviceAdminReceiver {
 		onSuccess.invoke()
 	}
 
-	fun deactivateDeviceAdmin(context: Context) {
+	fun deactivateDeviceAdmin() {
 		var mDPM: DevicePolicyManager = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
 		if (mDPM.isAdminActive(mAdminName)) {
 			mDPM.removeActiveAdmin(mAdminName);

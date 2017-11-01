@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.util.Log
-import cz.koto.keystorecompat.KeystoreCompat
 import cz.koto.keystorecompat.SecurityDeviceAdmin
 import cz.koto.keystorecompat.crypto.KeystoreCryptoK
 import cz.koto.keystorecompat.exception.ForceLockScreenKitKatException
@@ -23,8 +22,9 @@ import javax.security.auth.x500.X500Principal
  * KitKat specific Keystore implementation.
  */
 @TargetApi(Build.VERSION_CODES.KITKAT)
-internal object KeystoreCompatK : KeystoreCompatFacade {
+class KeystoreCompatK(val securityDeviceAdmin: SecurityDeviceAdmin) : KeystoreCompatFacade {
 
+	private val keystoreCryptoK by lazy { KeystoreCryptoK(this) }
 	private val LOG_TAG = javaClass.name
 
 	override fun getAlgorithm(): String {
@@ -36,7 +36,7 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
 	}
 
 	override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String {
-		return KeystoreCryptoK.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
+		return keystoreCryptoK.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
 	}
 
 
@@ -48,9 +48,9 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
 							keyEntry: KeyStore.Entry,
 							isBase64Encoded: Boolean) {
 		try {
-			SecurityDeviceAdmin.INSTANCE.forceLockPreLollipop(
+			securityDeviceAdmin.forceLockPreLollipop(
 					{ lockIntent -> onFailure.invoke(ForceLockScreenKitKatException(lockIntent)) },
-					{ onSuccess.invoke(KeystoreCryptoK.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded)) })
+					{ onSuccess.invoke(keystoreCryptoK.decryptRSA(keyEntry as KeyStore.PrivateKeyEntry, encryptedUserData, isBase64Encoded)) })
 		} catch (e: Exception) {
 			onFailure.invoke(e)
 		}
@@ -78,12 +78,12 @@ internal object KeystoreCompatK : KeystoreCompatFacade {
 	}
 
 	override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
-		val generator = KeyPairGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
+		val generator = KeyPairGenerator.getInstance(getAlgorithm(), KeystoreCompatImpl.KEYSTORE_KEYWORD)
 		generator.initialize(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
 		generator.generateKeyPair()
 	}
 
 	override fun deactivateRights(context: Context) {
-		SecurityDeviceAdmin.INSTANCE.deactivateDeviceAdmin(context)
+		securityDeviceAdmin.deactivateDeviceAdmin()
 	}
 }

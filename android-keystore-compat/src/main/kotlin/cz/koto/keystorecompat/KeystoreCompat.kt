@@ -15,6 +15,7 @@ import cz.koto.keystorecompat.utility.PrefDelegate
 import cz.koto.keystorecompat.utility.intPref
 import cz.koto.keystorecompat.utility.runSinceKitKat
 import cz.koto.keystorecompat.utility.stringPref
+import cz.koto.keystorecompat_base.SingletonHolder
 import java.security.KeyStore
 import java.security.KeyStoreException
 import java.util.*
@@ -32,12 +33,12 @@ import javax.security.auth.x500.X500Principal
  * Call by KitKat is mysteriously failing on M-specific code (even when it is not called).
  */
 @TargetApi(Build.VERSION_CODES.KITKAT)
-object KeystoreCompat {
+class KeystoreCompat private constructor(val context: Context, val config: KeystoreCompatConfig = KeystoreCompatConfig()) {
 
-	lateinit var context: Context
-	lateinit var config: KeystoreCompatConfig
+	companion object : SingletonHolder<KeystoreCompat, Context, KeystoreCompatConfig>(::KeystoreCompat)
 
-	val KEYSTORE_KEYWORD = "AndroidKeyStore"
+	lateinit var keystoreCompatImpl: KeystoreCompatImpl
+
 	private lateinit var keyStore: KeyStore
 	private lateinit var certSubject: X500Principal
 	private lateinit var uniqueId: String
@@ -48,8 +49,24 @@ object KeystoreCompat {
 	private var encryptedSecret by stringPref("secure_string")
 	private var lockScreenCancelCount by intPref("sign_up_cancel_count")
 
-	fun <T : KeystoreCompatConfig> overrideConfig(config: T) {
-		this.config = config
+	init {
+		/**
+		 * Developer note:
+		 * - don't access config object in init!
+		 * - it means dont't call isDeviceRooted() or isKeystoreCompatAvailable() in init()
+		 * Why? auto-init in KeystoreCompatInitProvider might be initialized before user overrides the config.
+		 */
+
+		runSinceKitKat {
+			this.uniqueId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID)
+			Log.d(LOG_TAG, "uniqueId:${uniqueId}")
+			PrefDelegate.initialize(this.context)
+			certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
+
+			keyStore = KeyStore.getInstance(KeystoreCompatImpl.KEYSTORE_KEYWORD)
+			keyStore.load(null)
+			keystoreCompatImpl = KeystoreCompatImpl(config).apply { init(Build.VERSION.SDK_INT) }
+		}
 	}
 
 	/**
@@ -72,7 +89,7 @@ object KeystoreCompat {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
 			return false
 		} else {
-			return KeystoreCompatImpl.keystoreCompat.isSecurityEnabled(KeystoreCompat.context)
+			return keystoreCompatImpl.keystoreCompat.isSecurityEnabled(this.context)
 		}
 	}
 
@@ -92,14 +109,14 @@ object KeystoreCompat {
 			if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
 				initKeyPairIfNecessary(uniqueId)
 				try {
-					KeystoreCompat.encryptedSecret = KeystoreCompatImpl.keystoreCompat.storeSecret(secret,
-							KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
+					encryptedSecret = keystoreCompatImpl.keystoreCompat.storeSecret(secret,
+							keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
 					onSuccess.invoke()
 				} catch (fle: ForceLockScreenMarshmallowException) {
-					KeystoreCompat.clearCredentials()
+					clearCredentials()
 					onError.invoke(fle)
 				} catch (e: Exception) {
-					KeystoreCompat.clearCredentials()
+					clearCredentials()
 					throw e
 				}
 			} else {
@@ -125,18 +142,18 @@ object KeystoreCompat {
 			if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
 				initKeyPairIfNecessary(uniqueId)
 				try {
-					KeystoreCompat.encryptedSecret = KeystoreCompatImpl.keystoreCompat.storeSecret(secret.toByteArray(Charsets.UTF_8),
-							KeystoreCompat.keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
+					encryptedSecret = keystoreCompatImpl.keystoreCompat.storeSecret(secret.toByteArray(Charsets.UTF_8),
+							keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
 					onSuccess.invoke()
 				} catch (fle: ForceLockScreenMarshmallowException) {
-					KeystoreCompat.clearCredentials()
+					clearCredentials()
 					onError.invoke(fle)
 				} catch (e: Exception) {
-					KeystoreCompat.clearCredentials()
+					clearCredentials()
 					throw e
 				}
 			} else {
-				KeystoreCompat.clearCredentials()
+				clearCredentials()
 				onError.invoke(EncryptionNotAllowedException(isKeystoreCompatAvailable(), isSecurityEnabled()))
 			}
 		}
@@ -163,11 +180,11 @@ object KeystoreCompat {
 	@JvmOverloads
 	fun loadSecret(onSuccess: (cre: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
 		runSinceKitKat {
-			val privateEntry: KeyStore.Entry? = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null)
+			val privateEntry: KeyStore.Entry? = keyStore.getEntry(uniqueId, null)
 			if (privateEntry == null) {
 				onFailure.invoke(RuntimeException("No entry in keystore available."))
 			} else {
-				KeystoreCompatImpl.keystoreCompat.loadSecret(onSuccess,
+				keystoreCompatImpl.keystoreCompat.loadSecret(onSuccess,
 						onFailure,
 						{ clearCredentials() },
 						forceFlag,
@@ -184,8 +201,8 @@ object KeystoreCompat {
 	@JvmOverloads
 	fun loadSecretAsString(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
 		runSinceKitKat {
-			val keyEntry: KeyStore.Entry = KeystoreCompat.keyStore.getEntry(KeystoreCompat.uniqueId, null)
-			KeystoreCompatImpl.keystoreCompat.loadSecret(
+			val keyEntry: KeyStore.Entry = keyStore.getEntry(uniqueId, null)
+			keystoreCompatImpl.keystoreCompat.loadSecret(
 					{ byteArray ->
 						onSuccess.invoke(String(byteArray, 0, byteArray.size, Charsets.UTF_8))
 					},
@@ -204,7 +221,7 @@ object KeystoreCompat {
 	 */
 	fun deactivate() {
 		clearCredentials()
-		KeystoreCompatImpl.keystoreCompat.deactivateRights(context)
+		keystoreCompatImpl.keystoreCompat.deactivateRights(context)
 	}
 
 	/**
@@ -244,32 +261,6 @@ object KeystoreCompat {
 		return lockScreenCancelCount >= config.getDialogDismissThreshold()
 	}
 
-	internal fun init(context: Context) {
-
-
-		/**
-		 * Developer note:
-		 * - don't access config object in init!
-		 * - it means dont't call isDeviceRooted() or isKeystoreCompatAvailable() in init()
-		 * Why? auto-init in KeystoreCompatInitProvider might be initialized before user overrides the config.
-		 */
-
-		runSinceKitKat {
-			this.context = context
-			this.config = KeystoreCompatConfig() // default config can be overriden externally later!
-
-			this.uniqueId = Settings.Secure.getString(KeystoreCompat.context.getContentResolver(), Settings.Secure.ANDROID_ID)
-			Log.d(LOG_TAG, "uniqueId:${uniqueId}")
-			PrefDelegate.initialize(this.context)
-			certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
-
-
-			keyStore = KeyStore.getInstance(KEYSTORE_KEYWORD)
-			keyStore.load(null)
-			KeystoreCompatImpl.init(Build.VERSION.SDK_INT)
-		}
-	}
-
 	internal fun initKeyPairIfNecessary(alias: String) {
 		if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
 			if (keyStore.containsAlias(alias) && isCertificateValid()) return
@@ -294,7 +285,7 @@ object KeystoreCompat {
 			start.add(Calendar.MINUTE, -1)//Prevent KeyNotYetValidException for encryption
 			val end = Calendar.getInstance()
 			end.add(Calendar.YEAR, 1)//TODO handle with outdated certificates!
-			KeystoreCompatImpl.keystoreCompat.generateKeyPair(aliasText, start.time, end.time, this.certSubject, this.context)
+			keystoreCompatImpl.keystoreCompat.generateKeyPair(aliasText, start.time, end.time, this.certSubject, this.context)
 			if (!keyStore.containsAlias(aliasText))
 				throw RuntimeException("KeyPair was NOT stored!")
 		} catch (e: Exception) {

@@ -7,12 +7,6 @@
 	<application android:allowBackup="true"
 		android:supportsRtl="true">
 
-		<provider
-			android:name=".KeystoreCompatInitProvider"
-			android:authorities="${applicationId}.keystorecompatinitprovider"
-			android:exported="false"
-			android:enabled="true" />
-
 		<receiver
 			android:name=".SecurityDeviceAdmin"
 			android:label="${kitkatDeviceAdminLabel}"

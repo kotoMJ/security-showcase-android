@@ -8,6 +8,8 @@ import cz.koto.securityshowcase.utility.PrefDelegate
 
 open class SecurityApplication : Application() {
 
+	lateinit var keystoreCompat: KeystoreCompat
+
 	override fun onCreate() {
 		super.onCreate()
 		Logcat.initialize("SecurityShowcase", SecurityConfig.isPackageDebug())
@@ -15,11 +17,7 @@ open class SecurityApplication : Application() {
 		LeakCanary.install(this)
 		PrefDelegate.initialize(this)
 
-		/**
-		 * Not necessarily to be set at all (defaults are available inside the library).
-		 * Nor necessarily to be set in Application class (enough to set it before first usage of KeystoreCompat)
-		 */
-		KeystoreCompat.overrideConfig(ShowcaseKeystoreCompatConfig())
+		keystoreCompat = KeystoreCompat.getInstance(this, ShowcaseKeystoreCompatConfig())
 	}
 }
 

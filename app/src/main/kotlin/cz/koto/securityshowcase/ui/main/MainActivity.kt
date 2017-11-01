@@ -8,10 +8,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatDelegate
-import cz.koto.keystorecompat.KeystoreCompat
 import cz.koto.keystorecompat.utility.runSinceKitKat
 import cz.koto.securityshowcase.ContextProvider
 import cz.koto.securityshowcase.R
+import cz.koto.securityshowcase.SecurityApplication
 import cz.koto.securityshowcase.databinding.ActivityMainBinding
 import cz.koto.securityshowcase.storage.CredentialStorage
 import cz.koto.securityshowcase.ui.BaseArchActivity
@@ -30,6 +30,8 @@ class MainActivity : BaseArchActivity() {
 		val FORCE_ENCRYPTION_REQUEST_M = 1112
 	}
 
+	private val keystoreCompat by lazy { (application as SecurityApplication).keystoreCompat }
+
 	private lateinit var viewModel: MainViewModel
 	private lateinit var viewDataBinding: ActivityMainBinding
 
@@ -42,7 +44,7 @@ class MainActivity : BaseArchActivity() {
 
 		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 		super.onCreate(savedInstanceState)
-		runSinceKitKat { KeystoreCompat.lockScreenSuccessful() }
+		runSinceKitKat { keystoreCompat.lockScreenSuccessful() }
 
 		if (savedInstanceState == null)
 			switchToFragment(InfoFragment.newInstance(), false)

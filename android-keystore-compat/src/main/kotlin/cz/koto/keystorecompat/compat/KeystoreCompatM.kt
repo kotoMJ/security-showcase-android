@@ -9,7 +9,7 @@ import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
 import android.security.keystore.UserNotAuthenticatedException
 import android.util.Log
-import cz.koto.keystorecompat.KeystoreCompat
+import cz.koto.keystorecompat.KeystoreCompatConfig
 import cz.koto.keystorecompat.crypto.KeystoreCryptoM
 import cz.koto.keystorecompat.exception.KeystoreInvalidKeyException
 import cz.koto.keystorecompat_base.compat.KeystoreCompatFacade
@@ -25,7 +25,9 @@ import javax.security.auth.x500.X500Principal
  * Marshmallow specific Keystore implementation.
  */
 @TargetApi(Build.VERSION_CODES.M)
-internal object KeystoreCompatM : KeystoreCompatFacade {
+class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfig) : KeystoreCompatFacade {
+
+	private val keystoreCryptoM by lazy { KeystoreCryptoM(this) }
 
 	private val LOG_TAG = javaClass.name
 
@@ -38,7 +40,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
 	}
 
 	override fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String {
-		return KeystoreCryptoM.encryptAES(secret, privateKeyEntry as KeyStore.SecretKeyEntry, useBase64Encoding)
+		return keystoreCryptoM.encryptAES(secret, privateKeyEntry as KeyStore.SecretKeyEntry, useBase64Encoding)
 	}
 
 	override fun loadSecret(onSuccess: (cre: ByteArray) -> Unit,
@@ -55,7 +57,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
 				//This flag is the same as setUserAuthenticationValidityDurationSeconds(10) [on M version], but using Flag is more stable
 				onFailure.invoke(RuntimeException("Force flag enabled!"))
 			} else {
-				onSuccess.invoke(KeystoreCryptoM.decryptAES(keyEntry as KeyStore.SecretKeyEntry, encryptedUserData, isBase64Encoded))
+				onSuccess.invoke(keystoreCryptoM.decryptAES(keyEntry as KeyStore.SecretKeyEntry, encryptedUserData, isBase64Encoded))
 			}
 		} catch (e: UserNotAuthenticatedException) {
 			onFailure.invoke(e)
@@ -91,8 +93,8 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
 				.setDigests(KeyProperties.DIGEST_SHA512)
 				.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)//follow used getCipherMode
 				.setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
-				.setUserAuthenticationRequired(KeystoreCompat.config.getUserAuthenticationRequired())
-				.setUserAuthenticationValidityDurationSeconds(KeystoreCompat.config.getUserAuthenticationValidityDurationSeconds())
+				.setUserAuthenticationRequired(keystoreCompatConfig.getUserAuthenticationRequired())
+				.setUserAuthenticationValidityDurationSeconds(keystoreCompatConfig.getUserAuthenticationValidityDurationSeconds())
 				.build()
 	}
 
@@ -106,7 +108,7 @@ internal object KeystoreCompatM : KeystoreCompatFacade {
 	}
 
 	override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
-		val generator = KeyGenerator.getInstance(KeystoreCompatImpl.keystoreCompat.getAlgorithm(), KeystoreCompat.KEYSTORE_KEYWORD)
+		val generator = KeyGenerator.getInstance(getAlgorithm(), KeystoreCompatImpl.KEYSTORE_KEYWORD)
 		generator.init(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
 		generator.generateKey()
 	}
