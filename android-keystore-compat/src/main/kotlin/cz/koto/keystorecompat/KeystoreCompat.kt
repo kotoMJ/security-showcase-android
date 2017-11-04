@@ -8,14 +8,14 @@ import android.util.Log
 import com.scottyab.rootbeer.RootBeer
 import com.scottyab.rootbeer.util.Utils
 import cz.koto.keystorecompat.compat.KeystoreCompatImpl
-import cz.koto.keystorecompat.exception.EncryptionNotAllowedException
-import cz.koto.keystorecompat.exception.ForceLockScreenMarshmallowException
-import cz.koto.keystorecompat.exception.KeystoreCompatException
 import cz.koto.keystorecompat.utility.PrefDelegate
 import cz.koto.keystorecompat.utility.intPref
 import cz.koto.keystorecompat.utility.runSinceKitKat
 import cz.koto.keystorecompat.utility.stringPref
 import cz.koto.keystorecompat_base.SingletonHolder
+import cz.koto.keystorecompat_base.exception.EncryptionNotAllowedException
+import cz.koto.keystorecompat_base.exception.ForceLockScreenMarshmallowException
+import cz.koto.keystorecompat_base.exception.KeystoreCompatException
 import java.security.KeyStore
 import java.security.KeyStoreException
 import java.util.*

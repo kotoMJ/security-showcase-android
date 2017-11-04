@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat.exception
+package cz.koto.keystorecompat_base.exception
 
 import android.content.Intent
 

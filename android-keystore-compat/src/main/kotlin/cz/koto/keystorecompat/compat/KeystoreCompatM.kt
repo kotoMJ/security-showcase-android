@@ -11,8 +11,8 @@ import android.security.keystore.UserNotAuthenticatedException
 import android.util.Log
 import cz.koto.keystorecompat.KeystoreCompatConfig
 import cz.koto.keystorecompat.crypto.KeystoreCryptoM
-import cz.koto.keystorecompat.exception.KeystoreInvalidKeyException
 import cz.koto.keystorecompat_base.compat.KeystoreCompatFacade
+import cz.koto.keystorecompat_base.exception.KeystoreInvalidKeyException
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.security.spec.RSAKeyGenParameterSpec

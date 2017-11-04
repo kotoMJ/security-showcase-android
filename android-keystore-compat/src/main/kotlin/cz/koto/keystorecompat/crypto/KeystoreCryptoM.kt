@@ -6,9 +6,9 @@ import android.security.keystore.KeyNotYetValidException
 import android.security.keystore.UserNotAuthenticatedException
 import android.util.Base64
 import android.util.Log
-import cz.koto.keystorecompat.exception.ForceLockScreenMarshmallowException
-import cz.koto.keystorecompat.exception.KeystoreInvalidKeyException
 import cz.koto.keystorecompat_base.compat.KeystoreCompatFacade
+import cz.koto.keystorecompat_base.exception.ForceLockScreenMarshmallowException
+import cz.koto.keystorecompat_base.exception.KeystoreInvalidKeyException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.security.*

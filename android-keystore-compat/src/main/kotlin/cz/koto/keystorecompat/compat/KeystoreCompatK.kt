@@ -8,8 +8,8 @@ import android.security.KeyPairGeneratorSpec
 import android.util.Log
 import cz.koto.keystorecompat.SecurityDeviceAdmin
 import cz.koto.keystorecompat.crypto.KeystoreCryptoK
-import cz.koto.keystorecompat.exception.ForceLockScreenKitKatException
 import cz.koto.keystorecompat_base.compat.KeystoreCompatFacade
+import cz.koto.keystorecompat_base.exception.ForceLockScreenKitKatException
 import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore

@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat.exception
+package cz.koto.keystorecompat_base.exception
 
 /**
  *  Mark exception class to define/check that it is KeystoreCompat-specific exception.
