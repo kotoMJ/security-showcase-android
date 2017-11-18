@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat.compat
+package cz.koto.keystorecompat21.compat
 
 import android.annotation.TargetApi
 import android.app.KeyguardManager
@@ -19,7 +19,7 @@ import javax.security.auth.x500.X500Principal
  * Lollipop specific Keystore implementation.
  */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-internal object KeystoreCompatL : KeystoreCompatFacade {
+open class KeystoreCompatL : KeystoreCompatFacade {
 	private val LOG_TAG = javaClass.name
 
 	private val keystoreCryptoK by lazy { KeystoreCryptoK(this) }
