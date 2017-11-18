@@ -4,7 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.databinding.ObservableBoolean
 import android.os.Build
-import cz.koto.keystorecompat.utility.showLockScreenSettings
+import cz.koto.keystorecompat.base.utility.showLockScreenSettings
 
 
 class SettingViewModel(val context: Application) : AndroidViewModel(context) {

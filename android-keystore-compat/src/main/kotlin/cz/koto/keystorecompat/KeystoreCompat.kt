@@ -12,11 +12,11 @@ import cz.koto.keystorecompat.base.compat.KeystoreCompatFacade
 import cz.koto.keystorecompat.base.exception.EncryptionNotAllowedException
 import cz.koto.keystorecompat.base.exception.ForceLockScreenMarshmallowException
 import cz.koto.keystorecompat.base.exception.KeystoreCompatException
+import cz.koto.keystorecompat.base.utility.PrefDelegate
+import cz.koto.keystorecompat.base.utility.intPref
+import cz.koto.keystorecompat.base.utility.runSinceKitKat
+import cz.koto.keystorecompat.base.utility.stringPref
 import cz.koto.keystorecompat.compat.KeystoreCompatImpl
-import cz.koto.keystorecompat.utility.PrefDelegate
-import cz.koto.keystorecompat.utility.intPref
-import cz.koto.keystorecompat.utility.runSinceKitKat
-import cz.koto.keystorecompat.utility.stringPref
 import java.security.KeyStore
 import java.security.KeyStoreException
 import java.util.*
@@ -51,12 +51,6 @@ class KeystoreCompat private constructor(val context: Context, val config: Keyst
 	private var lockScreenCancelCount by intPref("sign_up_cancel_count")
 
 	init {
-		/**
-		 * Developer note:
-		 * - don't access config object in init!
-		 * - it means dont't call isDeviceRooted() or isKeystoreCompatAvailable() in init()
-		 * Why? auto-init in KeystoreCompatInitProvider might be initialized before user overrides the config.
-		 */
 
 		runSinceKitKat {
 			this.uniqueId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID)

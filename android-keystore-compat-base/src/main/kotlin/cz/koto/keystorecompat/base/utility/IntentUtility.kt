@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat.utility
+package cz.koto.keystorecompat.base.utility
 
 import android.app.KeyguardManager
 import android.app.admin.DevicePolicyManager

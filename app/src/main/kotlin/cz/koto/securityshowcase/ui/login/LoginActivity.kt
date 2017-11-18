@@ -7,8 +7,8 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import cz.koto.keystorecompat.base.exception.ForceLockScreenKitKatException
-import cz.koto.keystorecompat.utility.forceAndroidAuth
-import cz.koto.keystorecompat.utility.runSinceKitKat
+import cz.koto.keystorecompat.base.utility.forceAndroidAuth
+import cz.koto.keystorecompat.base.utility.runSinceKitKat
 import cz.koto.securityshowcase.R
 import cz.koto.securityshowcase.SecurityApplication
 import cz.koto.securityshowcase.databinding.ActivityLoginBinding
