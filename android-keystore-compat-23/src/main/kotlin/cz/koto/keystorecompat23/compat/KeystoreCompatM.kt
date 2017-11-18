@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat.compat
+package cz.koto.keystorecompat23.compat
 
 import android.annotation.TargetApi
 import android.app.KeyguardManager
@@ -9,7 +9,7 @@ import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
 import android.security.keystore.UserNotAuthenticatedException
 import android.util.Log
-import cz.koto.keystorecompat.KeystoreCompatConfig
+import cz.koto.keystorecompat.base.compat.KeystoreCompatConfig
 import cz.koto.keystorecompat.base.compat.KeystoreCompatFacade
 import cz.koto.keystorecompat.base.exception.KeystoreInvalidKeyException
 import cz.koto.keystorecompat23.crypto.KeystoreCryptoM

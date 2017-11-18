@@ -8,6 +8,7 @@ import android.util.Log
 import com.scottyab.rootbeer.RootBeer
 import com.scottyab.rootbeer.util.Utils
 import cz.koto.keystorecompat.base.SingletonHolder
+import cz.koto.keystorecompat.base.compat.KeystoreCompatConfig
 import cz.koto.keystorecompat.base.compat.KeystoreCompatFacade
 import cz.koto.keystorecompat.base.exception.EncryptionNotAllowedException
 import cz.koto.keystorecompat.base.exception.ForceLockScreenMarshmallowException
