@@ -23,7 +23,7 @@ KeystoreCompat library should help to prevent pain when starting work with keyst
 or StackOverflow discussion. **The main point of this library is to provide the same services for all backward** (...Compat) **supported API versions (19+).**
 The backward support is something, what all available libraries and blog posts lacks!
 
-<br/><br/>
+<br/>
 
 | KeystoreCompat variant        | Readme  															| JCenter 											 |
 | ----------------------------- | ----------------------------------------------------------------- | -------------------------------------------------- |
@@ -32,9 +32,11 @@ The backward support is something, what all available libraries and blog posts l
 | KeystoreCompat M+				| [KeystoreCompat-emPlus](android-keystore-compat-emplus/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
 
 
-
+<br/>
+![KeystoreCompat princip](./extras/diagram/KeystoreCompat.png "KeystoreCompat princip")
 <br/><br/>
-[ ![STRV](./extras/strv-talk/STRV-Black_small.png) ](https://www.strv.com/)
+
+[ ![STRV](./android-keystore-compat/extras/strv-talk/STRV-Black_small.png) ](https://www.strv.com/)
 
 
 * [STRV Keystore compat mini-talk google slides](https://docs.google.com/presentation/d/1KVMmK59jRQSequ_Ib157ZttFor9k14qZ3938IPxOAKg/edit?usp=sharing)
