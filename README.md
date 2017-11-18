@@ -23,14 +23,13 @@ KeystoreCompat library should help to prevent pain when starting work with keyst
 or StackOverflow discussion. **The main point of this library is to provide the same services for all backward** (...Compat) **supported API versions (19+).**
 The backward support is something, what all available libraries and blog posts lacks!
 
+<br/><br/>
+
 | KeystoreCompat variant        | Readme  		| JCenter |
 | ----------------------------- |:-------------:| -----:|
-| KeystoreCompat default (K+)   | right-aligned | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
-| KeystoreCompat L+      		| centered      | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
-| KeystoreCompat M+				| are neat      | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
-
-
-Read more about [KeystoreCompat](android-keystore-compat/readme.md)<br/>
+| KeystoreCompat default (K+)   | [KeystoreCompat](android-keystore-compat/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
+| KeystoreCompat L+      		| [KeystoreCompat](android-keystore-compat/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
+| KeystoreCompat M+				| [KeystoreCompat](android-keystore-compat/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
 
 
 
