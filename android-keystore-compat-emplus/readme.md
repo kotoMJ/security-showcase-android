@@ -1,15 +1,12 @@
-# KeystoreCompat
+# KeystoreCompat M+
 
-```
-KeystoreCompat 1.1.2 has NEW PACKAGE! cz.koto:android-keystore-compat:1.2.x
-```
 
-[ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat-emplus/_latestVersion)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
 ```
-If your application supports API lower than 19, include this line to app's AndroidManifest file:
+If your application supports API lower than 23, include this line to app's AndroidManifest file:
   
 <uses-sdk tools:overrideLibrary="cz.koto.keystorecompat" />
 
