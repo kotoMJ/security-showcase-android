@@ -33,7 +33,7 @@ The backward support is something, what all available libraries and blog posts l
 
 
 <br/>
-![KeystoreCompat princip](./android-keystore-compat/extras/diagram/KeystoreCompat.png "KeystoreCompat princip")
+![KeystoreCompat princip](../android-keystore-compat/extras/diagram/KeystoreCompat.png "KeystoreCompat princip")
 <br/><br/>
 
 [ ![STRV](./extras/strv-talk/STRV-Black_small.png) ](https://www.strv.com/)
