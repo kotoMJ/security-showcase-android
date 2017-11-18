@@ -12,7 +12,7 @@ import android.util.Log
 import cz.koto.keystorecompat.KeystoreCompatConfig
 import cz.koto.keystorecompat.base.compat.KeystoreCompatFacade
 import cz.koto.keystorecompat.base.exception.KeystoreInvalidKeyException
-import cz.koto.keystorecompat.crypto.KeystoreCryptoM
+import cz.koto.keystorecompat23.crypto.KeystoreCryptoM
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.security.spec.RSAKeyGenParameterSpec

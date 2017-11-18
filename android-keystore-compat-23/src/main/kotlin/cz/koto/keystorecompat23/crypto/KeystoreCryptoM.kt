@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat.crypto
+package cz.koto.keystorecompat23.crypto
 
 import android.annotation.TargetApi
 import android.os.Build
