@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat_base;
+package cz.koto.base;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

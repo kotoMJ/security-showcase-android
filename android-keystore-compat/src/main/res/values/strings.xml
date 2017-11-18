@@ -1,12 +1,6 @@
 <resources>
 	<string name="kc_app_name">Keystore Compat</string>
-	<string name="kc_auth_title">AuthTitle</string>
-	<string name="kc_auth_desc">AuthDesc</string>
 
 	<string name="kc_lock_screen_title">KeystoreCompat LockScreen</string>
 	<string name="kc_lock_screen_description">Use Android security to access the keystore</string>
-	<!--How would you explain to the user, that your application needs  DeviceAdmin rights. Related only for API 19, AndroidKitKat. -->
-	<string name="kc_kitkat_admin_explanatory">"Allow application to enforce Android LOCK screen for secure credentials
-		handling"
-	</string>
 </resources>

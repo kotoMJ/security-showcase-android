@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-kapt'//http://stackoverflow.com/questions/42568394/build-errors-with-new-kotlin-1-1-kapt-cant-parse-databinding-params
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 
 android {
 	compileSdkVersion 26
@@ -23,7 +26,7 @@ android {
 		}
 	}
 
-	resourcePrefix 'kc_base_'
+	resourcePrefix 'kc_'
 	sourceSets {
 		main.java.srcDirs += 'src/main/kotlin'
 		main.java.srcDirs += 'src/debug/kotlin'

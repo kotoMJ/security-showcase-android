@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat_base.exception
+package cz.koto.keystorecompat.base.exception
 
 /**
  * In common code (I mean code for all API's 19,21,23,25,...) we cannot use construction available since 23 only.

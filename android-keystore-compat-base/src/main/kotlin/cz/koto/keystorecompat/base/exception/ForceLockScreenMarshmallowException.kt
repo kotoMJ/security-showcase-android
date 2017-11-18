@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat_base.exception
+package cz.koto.keystorecompat.base.exception
 
 /**
  * Synonym for UserNotAuthenticatedException
@@ -8,6 +8,6 @@ package cz.koto.keystorecompat_base.exception
  * We will therefore use this as placeholder for UserNotAuthenticatedException to be signalised also in lower API.
  *
  */
-class KeystoreInvalidKeyException : KeystoreCompatException() {
+class ForceLockScreenMarshmallowException : KeystoreCompatException() {
 
 }

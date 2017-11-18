@@ -45,8 +45,6 @@ android {
 		versionCode libraryCode
 		versionName libraryVersion
 
-		manifestPlaceholders = [kitkatDeviceAdminLabel: "KestoreCompat default label"]
-
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
 	}
@@ -58,7 +56,7 @@ android {
 	}
 	flavorDimensions "lib"
 
-	resourcePrefix 'kc23_'
+	resourcePrefix 'kc_'
 	sourceSets {
 		main.java.srcDirs += 'src/main/kotlin'
 		main.java.srcDirs += 'src/debug/kotlin'

@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat_base;
+package cz.koto.base;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat_base.hash
+package cz.koto.keystorecompat.base.hash
 
 import android.util.Log
 import java.nio.charset.Charset

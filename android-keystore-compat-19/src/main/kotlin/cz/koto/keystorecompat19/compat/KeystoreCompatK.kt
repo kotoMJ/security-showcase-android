@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat.compat
+package cz.koto.keystorecompat19.compat
 
 import android.annotation.TargetApi
 import android.app.KeyguardManager
@@ -6,10 +6,10 @@ import android.content.Context
 import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.util.Log
-import cz.koto.keystorecompat.SecurityDeviceAdmin
-import cz.koto.keystorecompat.crypto.KeystoreCryptoK
-import cz.koto.keystorecompat_base.compat.KeystoreCompatFacade
-import cz.koto.keystorecompat_base.exception.ForceLockScreenKitKatException
+import cz.koto.keystorecompat.base.compat.KeystoreCompatFacade
+import cz.koto.keystorecompat.base.crypto.KeystoreCryptoK
+import cz.koto.keystorecompat.base.exception.ForceLockScreenKitKatException
+import cz.koto.keystorecompat19.SecurityDeviceAdmin
 import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore
@@ -22,8 +22,9 @@ import javax.security.auth.x500.X500Principal
  * KitKat specific Keystore implementation.
  */
 @TargetApi(Build.VERSION_CODES.KITKAT)
-class KeystoreCompatK(val securityDeviceAdmin: SecurityDeviceAdmin) : KeystoreCompatFacade {
+open class KeystoreCompatK : KeystoreCompatFacade {
 
+	val securityDeviceAdmin by lazy { SecurityDeviceAdmin() }
 	private val keystoreCryptoK by lazy { KeystoreCryptoK(this) }
 	private val LOG_TAG = javaClass.name
 
@@ -78,7 +79,7 @@ class KeystoreCompatK(val securityDeviceAdmin: SecurityDeviceAdmin) : KeystoreCo
 	}
 
 	override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
-		val generator = KeyPairGenerator.getInstance(getAlgorithm(), KeystoreCompatImpl.KEYSTORE_KEYWORD)
+		val generator = KeyPairGenerator.getInstance(getAlgorithm(), KeystoreCompatFacade.KEYSTORE_KEYWORD)
 		generator.initialize(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
 		generator.generateKeyPair()
 	}

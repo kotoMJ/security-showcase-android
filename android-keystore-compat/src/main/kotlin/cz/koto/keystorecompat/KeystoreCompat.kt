@@ -7,15 +7,16 @@ import android.provider.Settings
 import android.util.Log
 import com.scottyab.rootbeer.RootBeer
 import com.scottyab.rootbeer.util.Utils
+import cz.koto.keystorecompat.base.SingletonHolder
+import cz.koto.keystorecompat.base.compat.KeystoreCompatFacade
+import cz.koto.keystorecompat.base.exception.EncryptionNotAllowedException
+import cz.koto.keystorecompat.base.exception.ForceLockScreenMarshmallowException
+import cz.koto.keystorecompat.base.exception.KeystoreCompatException
 import cz.koto.keystorecompat.compat.KeystoreCompatImpl
 import cz.koto.keystorecompat.utility.PrefDelegate
 import cz.koto.keystorecompat.utility.intPref
 import cz.koto.keystorecompat.utility.runSinceKitKat
 import cz.koto.keystorecompat.utility.stringPref
-import cz.koto.keystorecompat_base.SingletonHolder
-import cz.koto.keystorecompat_base.exception.EncryptionNotAllowedException
-import cz.koto.keystorecompat_base.exception.ForceLockScreenMarshmallowException
-import cz.koto.keystorecompat_base.exception.KeystoreCompatException
 import java.security.KeyStore
 import java.security.KeyStoreException
 import java.util.*
@@ -63,7 +64,7 @@ class KeystoreCompat private constructor(val context: Context, val config: Keyst
 			PrefDelegate.initialize(this.context)
 			certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
 
-			keyStore = KeyStore.getInstance(KeystoreCompatImpl.KEYSTORE_KEYWORD)
+			keyStore = KeyStore.getInstance(KeystoreCompatFacade.KEYSTORE_KEYWORD)
 			keyStore.load(null)
 			keystoreCompatImpl = KeystoreCompatImpl(config).apply { init(Build.VERSION.SDK_INT) }
 		}

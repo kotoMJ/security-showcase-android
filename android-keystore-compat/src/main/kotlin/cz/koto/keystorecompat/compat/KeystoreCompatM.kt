@@ -10,9 +10,9 @@ import android.security.keystore.KeyProperties
 import android.security.keystore.UserNotAuthenticatedException
 import android.util.Log
 import cz.koto.keystorecompat.KeystoreCompatConfig
+import cz.koto.keystorecompat.base.compat.KeystoreCompatFacade
+import cz.koto.keystorecompat.base.exception.KeystoreInvalidKeyException
 import cz.koto.keystorecompat.crypto.KeystoreCryptoM
-import cz.koto.keystorecompat_base.compat.KeystoreCompatFacade
-import cz.koto.keystorecompat_base.exception.KeystoreInvalidKeyException
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.security.spec.RSAKeyGenParameterSpec
@@ -108,7 +108,7 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfig) : Keystore
 	}
 
 	override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
-		val generator = KeyGenerator.getInstance(getAlgorithm(), KeystoreCompatImpl.KEYSTORE_KEYWORD)
+		val generator = KeyGenerator.getInstance(getAlgorithm(), KeystoreCompatFacade.KEYSTORE_KEYWORD)
 		generator.init(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
 		generator.generateKey()
 	}

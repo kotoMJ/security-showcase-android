@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cz.koto.keystorecompat.base.exception.ForceLockScreenMarshmallowException
 import cz.koto.keystorecompat.utility.forceAndroidAuth
 import cz.koto.keystorecompat.utility.runSinceKitKat
-import cz.koto.keystorecompat_base.exception.ForceLockScreenMarshmallowException
 import cz.koto.securityshowcase.R
 import cz.koto.securityshowcase.SecurityApplication
 import cz.koto.securityshowcase.databinding.FragmentSettingsBinding

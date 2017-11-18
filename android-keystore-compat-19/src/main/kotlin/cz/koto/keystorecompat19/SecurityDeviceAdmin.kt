@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat
+package cz.koto.keystorecompat19
 
 import android.app.admin.DeviceAdminReceiver
 import android.app.admin.DevicePolicyManager

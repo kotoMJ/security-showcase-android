@@ -6,8 +6,8 @@ import android.content.Context
 import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.util.Log
-import cz.koto.keystorecompat.crypto.KeystoreCryptoK
-import cz.koto.keystorecompat_base.compat.KeystoreCompatFacade
+import cz.koto.keystorecompat.base.compat.KeystoreCompatFacade
+import cz.koto.keystorecompat.base.crypto.KeystoreCryptoK
 import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore
@@ -79,7 +79,7 @@ internal object KeystoreCompatL : KeystoreCompatFacade {
 	}
 
 	override fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context) {
-		val generator = KeyPairGenerator.getInstance(getAlgorithm(), KeystoreCompatImpl.KEYSTORE_KEYWORD)
+		val generator = KeyPairGenerator.getInstance(getAlgorithm(), KeystoreCompatFacade.KEYSTORE_KEYWORD)
 		generator.initialize(getAlgorithmParameterSpec(certSubject, alias, start, end, context))
 		generator.generateKeyPair()
 	}
