@@ -84,7 +84,6 @@ dependencies {
 		exclude group: 'com.android.support'
 		exclude group: 'org.jetbrains.kotlin'
 	}
-	implementation(project(':android-keystore-compat-base'))
 
 	//compile(name: "android-keystore-compat-0.6.0-BETA", ext: "aar")
 

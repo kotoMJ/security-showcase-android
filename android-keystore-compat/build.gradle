@@ -77,10 +77,10 @@ buildscript {
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-	implementation(project(':android-keystore-compat-base'))
-	implementation(project(':android-keystore-compat-19'))
-	implementation(project(':android-keystore-compat-21'))
-	implementation(project(':android-keystore-compat-23'))
+	api(project(':android-keystore-compat-base'))
+	api(project(':android-keystore-compat-19'))
+	api(project(':android-keystore-compat-21'))
+	api(project(':android-keystore-compat-23'))
 
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
