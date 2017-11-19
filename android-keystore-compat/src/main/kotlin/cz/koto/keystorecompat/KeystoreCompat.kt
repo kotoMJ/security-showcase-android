@@ -60,11 +60,8 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 		}
 	}
 
-	/**
-	 * KeystoreCompat is available only for non-rooted devices!
-	 * KeystoreCompat is available since API 19 (KitKat)
-	 */
-	fun isKeystoreCompatAvailable(): Boolean {
+
+	override fun isKeystoreCompatAvailable(): Boolean {
 		val ret = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) && !isDeviceRooted(context);
 		if (!ret) {
 			logUnsupportedVersionForKeystore()
@@ -76,7 +73,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 	/**
 	 * Keystore is available only for secured devices!
 	 */
-	fun isSecurityEnabled(): Boolean {
+	override fun isSecurityEnabled(): Boolean {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
 			return false
 		} else {
@@ -94,7 +91,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 	 * @exception ForceLockScreenMarshmallowException
 	 */
 	@JvmOverloads
-	fun storeSecret(secret: ByteArray, onError: (e: KeystoreCompatException) -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true) {
+	fun storeSecret(secret: ByteArray, onError: (e: KeystoreCompatException) -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean) {
 		runSinceKitKat {
 			Log.d(LOG_TAG, "Before load KeyPair...")
 			if (isKeystoreCompatAvailable() && isSecurityEnabled()) {

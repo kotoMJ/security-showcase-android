@@ -44,4 +44,9 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase) {
 	protected fun logUnsupportedVersionForKeystore() {
 		Log.w(LOG_TAG, "Device Android version[${Build.VERSION.SDK_INT}] doesn't offer trusted keystore functionality!")
 	}
+
+	abstract fun isKeystoreCompatAvailable(): Boolean
+
+	abstract fun isSecurityEnabled(): Boolean
+
 }

@@ -57,11 +57,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 		}
 	}
 
-	/**
-	 * KeystoreCompat is available only for non-rooted devices!
-	 * KeystoreCompat is available since API 19 (KitKat)
-	 */
-	fun isKeystoreCompatAvailable(): Boolean {
+	override fun isKeystoreCompatAvailable(): Boolean {
 		val ret = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) && !isDeviceRooted(context);
 		if (!ret) {
 			logUnsupportedVersionForKeystore()
@@ -73,7 +69,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 	/**
 	 * Keystore is available only for secured devices!
 	 */
-	fun isSecurityEnabled(): Boolean {
+	override fun isSecurityEnabled(): Boolean {
 		return keystoreCompatImpl.keystoreCompat.isSecurityEnabled(this.context)
 	}
 
