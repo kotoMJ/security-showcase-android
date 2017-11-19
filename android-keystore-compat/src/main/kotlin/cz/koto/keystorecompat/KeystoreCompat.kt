@@ -269,10 +269,8 @@ class KeystoreCompat private constructor(val context: Context, val config: Keyst
 	}
 
 
-	private fun isCertificateValid(): Boolean {
-		//TODO solve real certificate validity
-		return true
-	}
+	private fun isCertificateValid(): Boolean = true //TODO solve real certificate validity
+
 
 
 	private fun createNewKeyPair(aliasText: String) {
