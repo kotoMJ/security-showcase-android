@@ -84,9 +84,6 @@ dependencies {
 
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-	implementation('com.scottyab:rootbeer-lib:0.0.6'){
-		exclude group: 'com.android.support'
-	}
 
 	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
 		exclude group: 'com.android.support', module: 'support-annotations'

@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat
+package cz.koto.keystorecompat.elplus
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -11,12 +11,9 @@ import cz.koto.keystorecompat.base.compat.KeystoreCompatFacade
 import cz.koto.keystorecompat.base.exception.EncryptionNotAllowedException
 import cz.koto.keystorecompat.base.exception.ForceLockScreenMarshmallowException
 import cz.koto.keystorecompat.base.exception.KeystoreCompatException
-import cz.koto.keystorecompat.base.utility.PrefDelegate
-import cz.koto.keystorecompat.base.utility.intPref
-import cz.koto.keystorecompat.base.utility.runSinceKitKat
-import cz.koto.keystorecompat.base.utility.stringPref
-import cz.koto.keystorecompat.compat.KeystoreCompatConfig
-import cz.koto.keystorecompat.compat.KeystoreCompatImpl
+import cz.koto.keystorecompat.base.utility.*
+import cz.koto.keystorecompat.elplus.compat.KeystoreCompatConfig
+import cz.koto.keystorecompat.elplus.compat.KeystoreCompatImpl
 import java.security.KeyStore
 import java.security.KeyStoreException
 import java.util.*
@@ -31,7 +28,7 @@ import javax.security.auth.x500.X500Principal
  * With KeyStoreProvider each app can only access to their KeyStore instances or aliases!
  *
  */
-@TargetApi(Build.VERSION_CODES.KITKAT)
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class KeystoreCompat private constructor(val context: Context, override val config: KeystoreCompatConfig = KeystoreCompatConfig()) : KeystoreCompatBase(config) {
 
 	companion object : SingletonHolder<KeystoreCompat, Context, KeystoreCompatConfig>(::KeystoreCompat)
@@ -48,7 +45,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 
 	init {
 
-		runSinceKitKat {
+		runSinceLollipop {
 			this.uniqueId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID)
 			Log.d(LOG_TAG, "uniqueId:${uniqueId}")
 			PrefDelegate.initialize(this.context)
@@ -65,7 +62,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 	 * KeystoreCompat is available since API 19 (KitKat)
 	 */
 	fun isKeystoreCompatAvailable(): Boolean {
-		val ret = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) && !isDeviceRooted(context);
+		val ret = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) && !isDeviceRooted(context);
 		if (!ret) {
 			logUnsupportedVersionForKeystore()
 		}
@@ -77,11 +74,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 	 * Keystore is available only for secured devices!
 	 */
 	fun isSecurityEnabled(): Boolean {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-			return false
-		} else {
-			return keystoreCompatImpl.keystoreCompat.isSecurityEnabled(this.context)
-		}
+		return keystoreCompatImpl.keystoreCompat.isSecurityEnabled(this.context)
 	}
 
 
@@ -154,7 +147,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 	 * Check if shared preferences contains secret credentials to be loadable.
 	 */
 	fun hasSecretLoadable(): Boolean {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			if (isKeystoreCompatAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
 				if (lockScreenCancelled()) return false
 				return ((encryptedSecret?.isNotBlank() ?: false) //Is there content to decrypt
@@ -170,7 +163,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 	 */
 	@JvmOverloads
 	fun loadSecret(onSuccess: (cre: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
-		runSinceKitKat {
+		runSinceLollipop {
 			val privateEntry: KeyStore.Entry? = keyStore.getEntry(uniqueId, null)
 			if (privateEntry == null) {
 				onFailure.invoke(RuntimeException("No entry in keystore available."))
@@ -191,7 +184,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 	 */
 	@JvmOverloads
 	fun loadSecretAsString(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
-		runSinceKitKat {
+		runSinceLollipop {
 			val keyEntry: KeyStore.Entry = keyStore.getEntry(uniqueId, null)
 			keystoreCompatImpl.keystoreCompat.loadSecret(
 					{ byteArray ->
@@ -219,7 +212,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 	 * CleanUp credentials string from shared preferences.
 	 */
 	override fun clearCredentials() {
-		runSinceKitKat {
+		runSinceLollipop {
 			encryptedSecret = ""
 			try {
 				keyStore.deleteEntry(uniqueId)
@@ -234,7 +227,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 	 * KeystoreCompat LockScreen feature after certain amount of users cancellation.
 	 */
 	fun increaseLockScreenCancel() {
-		runSinceKitKat {
+		runSinceLollipop {
 			lockScreenCancelCount++
 		}
 	}
@@ -243,7 +236,7 @@ class KeystoreCompat private constructor(val context: Context, override val conf
 	 * Call this for every successful signIn to activate eventually dismissed KeystoreCompat LockScreen feature.
 	 */
 	fun lockScreenSuccessful() {
-		runSinceKitKat {
+		runSinceLollipop {
 			lockScreenCancelCount = 0
 		}
 	}

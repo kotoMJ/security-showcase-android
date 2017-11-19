@@ -77,6 +77,9 @@ buildscript {
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
+	api(project(':android-keystore-compat-base'))
+	api(project(':android-keystore-compat-23'))
+
 	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})

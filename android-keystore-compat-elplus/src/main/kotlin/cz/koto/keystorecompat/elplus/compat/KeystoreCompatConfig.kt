@@ -1,4 +1,4 @@
-package cz.koto.keystorecompat.compat
+package cz.koto.keystorecompat.elplus.compat
 
 import android.annotation.TargetApi
 import android.os.Build
