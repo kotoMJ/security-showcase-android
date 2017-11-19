@@ -16,6 +16,8 @@ Complete server-side endpoint implementation for this project is available on Gi
 
 ## Android keystore ##
 
+[Android keystore basics](keystore.about.md) 
+
 SecurityShowcase application contains example of using standard Android Security with the Keystore.
 All Android Keystore related stuff is bundled in KeystoreCompat library (available in this source code).
 
