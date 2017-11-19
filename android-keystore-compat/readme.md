@@ -1,8 +1,5 @@
 # KeystoreCompat
 
-```
-KeystoreCompat 1.1.2 has NEW PACKAGE! cz.koto:android-keystore-compat:1.2.x
-```
 
 [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -14,6 +11,14 @@ If your application supports API lower than 19, include this line to app's Andro
 <uses-sdk tools:overrideLibrary="cz.koto.keystorecompat" />
 
 ```
+
+If you wan't to optimize bundled legacy code, use variant of this library:
+
+| KeystoreCompat variant        | Readme  															| JCenter 											 |
+| ----------------------------- | ----------------------------------------------------------------- | -------------------------------------------------- |
+| KeystoreCompat L+      		| [KeystoreCompat-elPlus](android-keystore-compat-elplus/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
+| KeystoreCompat M+				| [KeystoreCompat-emPlus](android-keystore-compat-emplus/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
+
 
 <br/><br/>
 This wrapper library is designed to save secret
