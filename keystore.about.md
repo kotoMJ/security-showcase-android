@@ -1,7 +1,6 @@
 ## About Android keystore ##
 
-Android keystore is evolving mechanism from one Android version to other.
-This library ensure handling Android Keystore since Android API19 (KitKat).
+Android keystore is evolving/improving mechanism from one Android version to other.
 
 
 ### Android keystore usability - unstable storage ###

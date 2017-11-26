@@ -19,9 +19,9 @@ ext {
 	publishedGroupId = 'cz.koto'
 	libraryName = 'android-keystore-compat-elplus'
 
-	libraryDescription = 'Wrapper library designed to simplify secure handling string secret in shared preferences using Keystore as private key storage.'
+	libraryDescription = 'Lightweight variant of KeystoreCompat with support for API 21 and above.'
 
-	siteUrl = 'https://github.com/kotomisak/security-showcase-android/tree/develop/keystorecompat'
+	siteUrl = 'https://github.com/kotomisak/security-showcase-android/tree/develop/android-keystore-compat-elplus'
 	gitUrl = 'https://github.com/kotomisak/security-showcase-android'
 
 	libraryVersion = KC_GIT_TAG_NAME.replaceAll("21KC-", "")
