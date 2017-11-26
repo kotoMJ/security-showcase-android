@@ -1,6 +1,13 @@
 
 # Release notes for Keystore Compat library
  
+## KC-2.0.0
+ * Refactor structure to separate code specific for different API versions. KeystoreCompat can thus be composed 
+ according to app requirements and doesn't force to depend on legacy code.
+ * Original full version of KeystoreCompat is enhanced with KeystoreCompat L+ and KeystoreCompat M+.
+ * KeystoreCompat is not distributed as static variable anymore. It's distributed as the object which should be 
+ instantiated per application scope.
+ 
 ## KC-1.2.1
  * Add feature `KeystoreCompat.deactivate()` - this is currently implemented especially for API 4.4.4 where deactivation will disable device admin automatically. 
  Programmer therefore fulfill Google's fulfill device settings requirement. 
