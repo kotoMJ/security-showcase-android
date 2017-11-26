@@ -6,11 +6,11 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import cz.koto.keystorecompat.KeystoreCompat
-import cz.koto.keystorecompat.exception.ForceLockScreenKitKatException
-import cz.koto.keystorecompat.utility.forceAndroidAuth
-import cz.koto.keystorecompat.utility.runSinceKitKat
+import cz.koto.keystorecompat.base.exception.ForceLockScreenKitKatException
+import cz.koto.keystorecompat.base.utility.forceAndroidAuth
+import cz.koto.keystorecompat.base.utility.runSinceKitKat
 import cz.koto.securityshowcase.R
+import cz.koto.securityshowcase.SecurityApplication
 import cz.koto.securityshowcase.databinding.ActivityLoginBinding
 import cz.koto.securityshowcase.storage.CredentialStorage
 import cz.koto.securityshowcase.ui.BaseArchActivity
@@ -26,16 +26,14 @@ class LoginActivity : BaseArchActivity() {
 		val FORCE_SIGNUP_REQUEST = 1111
 	}
 
+	private val keystoreCompat by lazy { (application as SecurityApplication).keystoreCompat }
+
 	private lateinit var viewModel: LoginViewModel
 	private lateinit var viewDataBinding: ActivityLoginBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
-//		viewDataBinding = DataBindingUtil.inflate<ActivityLoginBinding>(layoutInflater, R.layout.activity_login, null, false).apply{
-//			//Use this in fragment or case where you don't request viewModel directly.
-//			//viewmodel = (activity as TasksActivity).obtainViewModel()
-//		}
 		viewDataBinding = ActivityLoginBinding.inflate(layoutInflater)
 		viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 		viewDataBinding.viewModel = viewModel
@@ -63,7 +61,7 @@ class LoginActivity : BaseArchActivity() {
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 		if (requestCode == FORCE_SIGNUP_REQUEST) {
 			if (resultCode == Activity.RESULT_CANCELED) {
-				KeystoreCompat.increaseLockScreenCancel()
+				(application as SecurityApplication).keystoreCompat.increaseLockScreenCancel()
 				this.finish()
 			} else {
 				onLoginDisplayed(false)
@@ -74,15 +72,12 @@ class LoginActivity : BaseArchActivity() {
 
 	fun onLoginDisplayed(firstAttachment: Boolean) {
 		runSinceKitKat {
-			if (KeystoreCompat.hasSecretLoadable()) {
-				KeystoreCompat.loadSecretAsString({ decryptResult ->
+			if (keystoreCompat.hasSecretLoadable()) {
+				keystoreCompat.loadSecretAsString({ decryptResult ->
 					decryptResult.split(';').let {
 						viewModel?.email?.set(it[0])
 						viewModel?.password?.set(it[1])
 						viewModel?.signInGql()
-//						viewDataBinding.viewModel?.email?.set(it[0])
-//						viewDataBinding.viewModel?.password?.set(it[1])
-//						viewDataBinding.viewModel?.signInGql()
 					}
 				}, { exception ->
 					CredentialStorage.dismissForceLockScreenFlag()
@@ -93,7 +88,7 @@ class LoginActivity : BaseArchActivity() {
 						CredentialStorage.performLogout()
 						forceAndroidAuth(getString(R.string.kc_lock_screen_title), getString(R.string.kc_lock_screen_description),
 								{ intent -> this.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) },
-								KeystoreCompat.context)
+								keystoreCompat.context)
 					}
 				}, CredentialStorage.forceLockScreenFlag)
 			} else {

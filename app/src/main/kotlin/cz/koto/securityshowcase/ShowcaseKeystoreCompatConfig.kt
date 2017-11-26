@@ -1,7 +1,7 @@
 package cz.koto.securityshowcase
 
 import android.os.Build
-import cz.koto.keystorecompat.KeystoreCompatConfig
+import cz.koto.keystorecompat.compat.KeystoreCompatConfig
 
 /**
  * Define you own confi to be able override default KeystoreCompat configuration

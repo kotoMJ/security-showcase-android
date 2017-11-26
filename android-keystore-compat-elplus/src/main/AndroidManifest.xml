@@ -1,0 +1,14 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	package="cz.koto.keystorecompat.elplus">
+
+	<uses-sdk tools:overrideLibrary="cz.koto.keystorecompat21, cz.koto.keystorecompat23" />
+
+	<application
+		android:allowBackup="true"
+		android:supportsRtl="true">
+
+
+	</application>
+
+</manifest>

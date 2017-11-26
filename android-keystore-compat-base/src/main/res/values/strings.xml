@@ -1,0 +1,4 @@
+<resources>
+	<string name="kc_auth_title">AuthTitle</string>
+	<string name="kc_auth_desc">AuthDesc</string>
+</resources>

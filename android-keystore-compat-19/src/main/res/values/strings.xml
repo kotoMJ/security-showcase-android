@@ -1,0 +1,10 @@
+<resources>
+	<string name="kc_app_name">android-keystore-compat-19</string>
+
+	<!--How would you explain to the user, that your application needs  DeviceAdmin rights. Related only for API 19, AndroidKitKat. -->
+	<string name="kc_kitkat_admin_explanatory">"Allow application to enforce Android LOCK screen for secure credentials
+		handling"
+	</string>
+
+
+</resources>

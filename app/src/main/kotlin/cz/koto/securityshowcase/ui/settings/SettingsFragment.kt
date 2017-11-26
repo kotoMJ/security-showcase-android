@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cz.koto.keystorecompat.KeystoreCompat
-import cz.koto.keystorecompat.exception.ForceLockScreenMarshmallowException
-import cz.koto.keystorecompat.utility.forceAndroidAuth
-import cz.koto.keystorecompat.utility.runSinceKitKat
+import cz.koto.keystorecompat.base.exception.ForceLockScreenMarshmallowException
+import cz.koto.keystorecompat.base.utility.forceAndroidAuth
+import cz.koto.keystorecompat.base.utility.runSinceKitKat
 import cz.koto.securityshowcase.R
+import cz.koto.securityshowcase.SecurityApplication
 import cz.koto.securityshowcase.databinding.FragmentSettingsBinding
 import cz.koto.securityshowcase.storage.CredentialStorage
 import cz.koto.securityshowcase.ui.BaseArchFragment
@@ -26,7 +26,7 @@ class SettingsFragment : BaseArchFragment(), SettingsView {
 
 	private lateinit var viewDataBinding: FragmentSettingsBinding
 	private lateinit var viewModel: SettingViewModel
-
+	private val keystoreCompat by lazy { (activity.application as SecurityApplication).keystoreCompat }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -77,22 +77,22 @@ class SettingsFragment : BaseArchFragment(), SettingsView {
 
 	private fun setVisibility() {
 		runSinceKitKat {
-			viewModel.androidSecurityAvailable.set(KeystoreCompat.isKeystoreCompatAvailable())
-			viewModel.androidSecuritySelectable.set(KeystoreCompat.isSecurityEnabled())
-			viewModel.androidSecurityValue.set(KeystoreCompat.hasSecretLoadable())
+			viewModel.androidSecurityAvailable.set(keystoreCompat.isKeystoreCompatAvailable())
+			viewModel.androidSecuritySelectable.set(keystoreCompat.isSecurityEnabled())
+			viewModel.androidSecurityValue.set(keystoreCompat.hasSecretLoadable())
 		}
 	}
 
 	private fun storeSecret() {
-		KeystoreCompat.clearCredentials()
+		keystoreCompat.clearCredentials()
 		Flowable.fromCallable {
-			KeystoreCompat.storeSecret(
+			keystoreCompat.storeSecret(
 					"${CredentialStorage.getUserName()};${CredentialStorage.getPassword()}",
 					{
 						Logcat.e("Store credentials failed!", it)
 						if (it is ForceLockScreenMarshmallowException) {
 							forceAndroidAuth(getString(R.string.kc_lock_screen_title), getString(R.string.kc_lock_screen_description),
-									{ intent -> activity.startActivityForResult(intent, MainActivity.FORCE_ENCRYPTION_REQUEST_M) }, KeystoreCompat.context)
+									{ intent -> activity.startActivityForResult(intent, MainActivity.FORCE_ENCRYPTION_REQUEST_M) }, keystoreCompat.context)
 						}
 					},
 					{ Logcat.d("Credentials stored.") })
@@ -119,7 +119,7 @@ class SettingsFragment : BaseArchFragment(), SettingsView {
 				viewModel.androidSecuritySelectable.set(false)
 				storeSecret()
 			} else {
-				KeystoreCompat.deactivate()
+				keystoreCompat.deactivate()
 			}
 		}
 	}

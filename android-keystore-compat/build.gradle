@@ -45,8 +45,6 @@ android {
 		versionCode libraryCode
 		versionName libraryVersion
 
-		manifestPlaceholders = [kitkatDeviceAdminLabel: "KestoreCompat default label"]
-
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
 	}
@@ -77,17 +75,20 @@ buildscript {
 }
 
 dependencies {
-	compile fileTree(dir: 'libs', include: ['*.jar'])
+	implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+	api(project(':android-keystore-compat-base'))
+	api(project(':android-keystore-compat-19'))
+	api(project(':android-keystore-compat-21'))
+	api(project(':android-keystore-compat-23'))
+
+	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
 
 	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})
 	testCompile 'junit:junit:4.12'
-	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-	compile('com.scottyab:rootbeer-lib:0.0.6'){
-		exclude group: 'com.android.support'
-	}
 
 }
 repositories {

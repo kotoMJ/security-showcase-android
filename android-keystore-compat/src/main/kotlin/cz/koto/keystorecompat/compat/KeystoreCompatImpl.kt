@@ -1,16 +1,20 @@
 package cz.koto.keystorecompat.compat
 
 import android.os.Build
+import cz.koto.keystorecompat.base.compat.KeystoreCompatFacade
+import cz.koto.keystorecompat19.compat.KeystoreCompatK
+import cz.koto.keystorecompat21.compat.KeystoreCompatL
+import cz.koto.keystorecompat23.compat.KeystoreCompatM
 
-internal object KeystoreCompatImpl {
+class KeystoreCompatImpl(val keystoreCompatConfig: KeystoreCompatConfig) {
 	lateinit var keystoreCompat: KeystoreCompatFacade
 
 	fun init(version: Int) = if (version >= Build.VERSION_CODES.M) {
-		keystoreCompat = KeystoreCompatM
+		keystoreCompat = KeystoreCompatM(keystoreCompatConfig)
 	} else if (version >= Build.VERSION_CODES.LOLLIPOP) {
-		keystoreCompat = KeystoreCompatL
+		keystoreCompat = KeystoreCompatL()
 	} else if (version >= Build.VERSION_CODES.KITKAT) {
-		keystoreCompat = KeystoreCompatK
+		keystoreCompat = KeystoreCompatK()
 	} else {
 		throw RuntimeException("Unsupported API Version [$version] for KeystoreCompat ")
 	}
