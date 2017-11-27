@@ -1,6 +1,5 @@
 package cz.koto.securityshowcase.ui
 
-import SecurityShowcaseRetrofitProvider
 import android.support.annotation.DrawableRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -10,6 +9,7 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import cz.koto.securityshowcase.ContextProvider
 import cz.koto.securityshowcase.R
+import cz.koto.securityshowcase.api.rest.RetrofitAuthProvider
 import cz.koto.securityshowcase.model.SecurityShowcaseAPIError
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -95,7 +95,7 @@ open class BaseArchActivity : AppCompatActivity() {
 
 	fun showErrorDialog(throwable: Throwable, callback: () -> Unit) {
 
-		val apiError: SecurityShowcaseAPIError = SecurityShowcaseRetrofitProvider.convertRetrofitThrowable(throwable)
+		val apiError: SecurityShowcaseAPIError = RetrofitAuthProvider().convertRetrofitThrowable(throwable)
 
 		/**
 		 * Example errors from current API:

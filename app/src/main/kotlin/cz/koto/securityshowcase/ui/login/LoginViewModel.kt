@@ -16,13 +16,11 @@ import cz.koto.securityshowcase.api.SecurityShowcaseApiProvider
 import cz.koto.securityshowcase.model.AuthRequestSimple
 import cz.koto.securityshowcase.storage.CredentialStorage
 import cz.koto.securityshowcase.ui.StateListener
-import cz.koto.securityshowcase.utility.ApplicationEvent
-import cz.koto.securityshowcase.utility.applicationEvents
-import cz.koto.securityshowcase.utility.isValidJWT
-import cz.koto.securityshowcase.utility.longPref
+import cz.koto.securityshowcase.utility.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.alfonz.view.StatefulLayout
+import retrofit2.HttpException
 
 class LoginViewModel(val context: Application) : /*BaseViewModel<ActivityLoginBinding>()*/AndroidViewModel(context), StateListener {
 
@@ -69,7 +67,7 @@ class LoginViewModel(val context: Application) : /*BaseViewModel<ActivityLoginBi
 
 	fun signInRest() {
 		setProgress()
-		SecurityShowcaseApiProvider.authRestProvider.loginJWT(AuthRequestSimple(
+		SecurityShowcaseApiProvider.restOauthRouter.loginJWT(AuthRequestSimple(
 				email.get() ?: "",
 				password.get() ?: ""))
 				.subscribeOn(Schedulers.io())
@@ -78,16 +76,37 @@ class LoginViewModel(val context: Application) : /*BaseViewModel<ActivityLoginBi
 						{
 							onSuccessfulLogin(it?.idToken)
 						},
-						{
+						{ error ->
+							when (error) {
+								is HttpException -> {
+									when (error.code()) {
+										401 -> {
+											Logcat.e("Unauthorized, invalid credentials!")
+											//TODO inform user
+										}
+										403 -> {
+											Logcat.e("Forbidden, user is not allowed to access app!")
+											//TODO inform user
+										}
+										else -> {
+											Logcat.e("Unexpected HttpException during login!", error)
+											//TODO inform user
+										}
+									}
+								}
+								else -> {
+									Logcat.e("Unexpected login issue!", error)
+									//TODO inform user
+								}
+							}
 							setContent()
-							it.printStackTrace()
 						})
 	}
 
 	fun signInGql() {
 		setProgress()
 		val query = Login.builder().email(email.get() ?: "").password(password.get() ?: "").build()
-		Rx2Apollo.from(SecurityShowcaseApiProvider.authGqlProvider.newCall(query))
+		Rx2Apollo.from(SecurityShowcaseApiProvider.gqlRouter.newCall(query))
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(

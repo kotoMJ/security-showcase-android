@@ -1,20 +1,25 @@
 package cz.koto.securityshowcase.api
 
-import SecurityShowcaseRetrofitProvider
+import RetrofitProvider
 import com.apollographql.apollo.ApolloClient
 import cz.koto.securityshowcase.SecurityConfig
-import cz.koto.securityshowcase.api.rest.SecurityShowcaseRestInterface
+import cz.koto.securityshowcase.api.rest.router.SecurityShowcaseAuthRouter
+import cz.koto.securityshowcase.api.rest.router.SecurityShowcaseRouter
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
 
 object SecurityShowcaseApiProvider {
 
-	val authRestProvider by lazy {
-		getRetrofitInterface(SecurityShowcaseRestInterface::class.java)
+	val restRouter by lazy {
+		getRetrofitInterface(SecurityShowcaseRouter::class.java)
 	}
 
-	val authGqlProvider by lazy {
+	val restOauthRouter by lazy {
+		getRetrofitInterface(SecurityShowcaseAuthRouter::class.java)
+	}
+
+	val gqlRouter by lazy {
 		ApolloClient.builder()
 				.serverUrl(SecurityConfig.getGqlEndpoint())
 				.okHttpClient(OkHttpClient.Builder().addInterceptor(provideLoggingInterceptor()).build())
@@ -28,6 +33,6 @@ internal fun provideLoggingInterceptor() = HttpLoggingInterceptor().apply {
 }
 
 internal fun <T> getRetrofitInterface(apiInterface: Class<T>): T {
-	return SecurityShowcaseRetrofitProvider.provideRetrofit().create(apiInterface)
+	return RetrofitProvider.retrofit.create(apiInterface)
 }
 

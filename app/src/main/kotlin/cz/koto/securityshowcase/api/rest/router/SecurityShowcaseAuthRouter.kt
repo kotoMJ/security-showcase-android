@@ -1,15 +1,15 @@
-package cz.koto.securityshowcase.api.rest
+package cz.koto.securityshowcase.api.rest.router
 
 import cz.koto.securityshowcase.model.AuthRequestSimple
 import cz.koto.securityshowcase.model.AuthResponseSimple
-import io.reactivex.Maybe
+import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 
-interface SecurityShowcaseRestInterface {
+interface SecurityShowcaseAuthRouter {
 
 	@POST("/api/securityshowcase/jwtLogin")
-	fun loginJWT(@Body authRequest: AuthRequestSimple): Maybe<AuthResponseSimple>
+	fun loginJWT(@Body authRequest: AuthRequestSimple): Single<AuthResponseSimple>
 
 }
