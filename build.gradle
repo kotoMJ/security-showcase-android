@@ -1,17 +1,33 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-	ext.kotlin_version = '1.1.60'
-	ext.build_tools_version = '27.0.0'
-	ext.android_gradle_version = '3.0.1'
-	ext.android_binding_version = '1.3.3'
-	ext.apollo_graphql_version = '0.3.0'
-	ext.alfonz_version = '0.7.0'
-	ext.archLifecycleVersion = "1.0.0"
-	ext.rxjavaversion = "2.0.1"
-	ext.retrofitVersion = "2.2.0"
-	ext.supportLibraryVersion = "26.1.0"
+	ext {
+		//BASE
+		kotlin_version = '1.1.60'
+		build_tools_version = '27.0.0'
+		android_gradle_version = '3.0.1'
+		android_binding_version = '1.3.3'
+		arch_lifecycle_version = "1.0.0"
+		support_library_version = "26.1.0"
+		constraint_layout_version = "1.0.2"
 
+		rxandroid_version = '2.0.1'
+		rxjava_version = '2.1.2'
+
+		//TOOLS
+		gson_version = '2.8.1'
+		retrofit_version = "2.2.0"
+		okhttp_version = "3.8.1"
+		apollo_graphql_version = '0.3.0'
+		tatarka_version = "2.1.0"
+		leak_canary_version = "1.5.1"
+		parceler_version = "1.1.6"
+		jwtdecode = "1.1.0"
+		glide_version = "3.8.0"
+
+		//DEPRECATED
+		alfonz_version = '0.7.0'
+	}
 
 	repositories {
 		maven {url 'https://maven.google.com'}
