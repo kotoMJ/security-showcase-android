@@ -15,7 +15,7 @@ object SecurityShowcaseApiProvider {
 		getRetrofitInterface(SecurityShowcaseRouter::class.java)
 	}
 
-	val restOauthRouter by lazy {
+	val restAuthRouter by lazy {
 		getRetrofitInterface(SecurityShowcaseAuthRouter::class.java)
 	}
 

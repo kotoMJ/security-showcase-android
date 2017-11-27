@@ -67,7 +67,7 @@ class LoginViewModel(val context: Application) : /*BaseViewModel<ActivityLoginBi
 
 	fun signInRest() {
 		setProgress()
-		SecurityShowcaseApiProvider.restOauthRouter.loginJWT(AuthRequestSimple(
+		SecurityShowcaseApiProvider.restAuthRouter.loginJWT(AuthRequestSimple(
 				email.get() ?: "",
 				password.get() ?: ""))
 				.subscribeOn(Schedulers.io())
