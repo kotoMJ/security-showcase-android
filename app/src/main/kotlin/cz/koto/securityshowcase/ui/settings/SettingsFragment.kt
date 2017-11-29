@@ -26,7 +26,7 @@ class SettingsFragment : BaseArchFragment(), SettingsView {
 
 	private lateinit var viewDataBinding: FragmentSettingsBinding
 	private lateinit var viewModel: SettingViewModel
-	private val keystoreCompat by lazy { (activity.application as SecurityApplication).keystoreCompat }
+	private val keystoreCompat by lazy { (activity?.application as SecurityApplication).keystoreCompat }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -58,7 +58,7 @@ class SettingsFragment : BaseArchFragment(), SettingsView {
 	companion object {
 		fun newInstance() = SettingsFragment().apply {
 			arguments = Bundle()
-			arguments.putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED, false)
+			arguments?.putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED, false)
 
 //            arguments = Bundle().apply { TODO
 //                putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED, false)
@@ -67,7 +67,7 @@ class SettingsFragment : BaseArchFragment(), SettingsView {
 
 		fun newInstance(encryptionRequested: Boolean) = SettingsFragment().apply {
 			arguments = Bundle()
-			arguments.putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED, encryptionRequested)
+			arguments?.putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED, encryptionRequested)
 
 //			arguments = Bundle().apply { TODO
 //                putBoolean(SettingViewModel.EXTRA_ENCRYPTION_REQUEST_SCHEDULED, encryptionRequested)
@@ -92,7 +92,7 @@ class SettingsFragment : BaseArchFragment(), SettingsView {
 						Logcat.e("Store credentials failed!", it)
 						if (it is ForceLockScreenMarshmallowException) {
 							forceAndroidAuth(getString(R.string.kc_lock_screen_title), getString(R.string.kc_lock_screen_description),
-									{ intent -> activity.startActivityForResult(intent, MainActivity.FORCE_ENCRYPTION_REQUEST_M) }, keystoreCompat.context)
+									{ intent -> activity?.startActivityForResult(intent, MainActivity.FORCE_ENCRYPTION_REQUEST_M) }, keystoreCompat.context)
 						}
 					},
 					{ Logcat.d("Credentials stored.") })
