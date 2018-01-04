@@ -1,8 +1,9 @@
 package cz.koto.securityshowcase.ui.login
 
-//import cz.koto.securityshowcase.ContextProvider
+import android.annotation.SuppressLint
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.content.Context
 import android.content.Intent
 import android.databinding.Observable
 import android.databinding.ObservableBoolean
@@ -22,7 +23,10 @@ import io.reactivex.schedulers.Schedulers
 import org.alfonz.view.StatefulLayout
 import retrofit2.HttpException
 
-class LoginViewModel(val context: Application) : /*BaseViewModel<ActivityLoginBinding>()*/AndroidViewModel(context), StateListener {
+class LoginViewModel(context: Application) : /*BaseViewModel<ActivityLoginBinding>()*/AndroidViewModel(context), StateListener {
+
+	@SuppressLint("StaticFieldLeak")
+	private val context: Context = context.applicationContext //Application Context to avoid leaks.
 
 	val devAvailable = ObservableBoolean(SecurityConfig.isEndpointDev() && !SecurityConfig.isPackageRelease())
 
