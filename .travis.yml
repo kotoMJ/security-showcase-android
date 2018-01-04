@@ -4,7 +4,7 @@ jdk: oraclejdk8
 
 env:
   matrix:
-    - ANDROID_TARGET=android-25 ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-27 ANDROID_ABI=armeabi-v7a
   global:
     # wait up to 10 minutes for adb to connect to emulator
     - ADB_INSTALL_TIMEOUT=10
@@ -17,6 +17,7 @@ android:
   - android-27
 
   # Additional components
+  - extra-google-android-support
   - extra-google-m2repository
   - extra-android-m2repository
   - extra-android-support
@@ -25,7 +26,7 @@ android:
   - sys-img-armeabi-v7a-android-23
 
   licenses:
-    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
     - '.+'
