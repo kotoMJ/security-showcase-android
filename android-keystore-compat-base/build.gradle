@@ -5,13 +5,13 @@ apply plugin: 'kotlin-android-extensions'
 
 
 android {
-	compileSdkVersion 26
+	compileSdkVersion compile_sdk_version
 	buildToolsVersion build_tools_version
 
 
 	defaultConfig {
-		minSdkVersion 16
-		targetSdkVersion 26
+		minSdkVersion min_sdk_version
+		targetSdkVersion compile_sdk_version
 		versionCode 1
 		versionName "1.0"
 
@@ -40,7 +40,7 @@ dependencies {
 		exclude group: 'com.android.support'
 	}
 
-	implementation 'com.android.support:appcompat-v7:26.1.0'
+	implementation "com.android.support:appcompat-v7:${support_library_version}"
 	testImplementation 'junit:junit:4.12'
 	androidTestImplementation 'com.android.support.test:runner:1.0.1'
 	androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
