@@ -85,12 +85,24 @@ dependencies {
 //		exclude group: 'org.jetbrains.kotlin'
 //	}
 
-	//compile(name: "android-keystore-compat-0.6.0-BETA", ext: "aar")
-
-	compile('cz.koto:android-keystore-compat:2.0.1') {
+	compile(name: "android-keystore-compat-release", ext: "aar")
+	implementation(name: "android-keystore-compat-base-release", ext: "aar")
+	implementation(name: "android-keystore-compat-19-release", ext: "aar")
+	implementation(name: "android-keystore-compat-21-release", ext: "aar")
+	implementation(name: "android-keystore-compat-23-release", ext: "aar")
+	implementation('com.scottyab:rootbeer-lib:0.0.6'){
 		exclude group: 'com.android.support'
-		exclude group: 'org.jetbrains.kotlin'
 	}
+
+//	compile(project(':android-keystore-compat-base'))
+//	compile(project(':android-keystore-compat-19'))
+//	compile(project(':android-keystore-compat-21'))
+//	compile(project(':android-keystore-compat-23'))
+
+//	compile('cz.koto:android-keystore-compat:2.0.1') {
+//		exclude group: 'com.android.support'
+//		exclude group: 'org.jetbrains.kotlin'
+//	}
 
 	kapt "com.android.databinding:compiler:$android_gradle_version"
 	implementation "com.android.databinding:library:$android_binding_version"

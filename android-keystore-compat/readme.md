@@ -52,6 +52,8 @@ Sample application available on Github (also distributed via Google Play)
 
 **TODO here will be GIST for basic usage** 
 
+<script src="https://gist.github.com/kotomisak/1dfb7e0df26db00045b3ddb7cd1471c9.js"></script>
+
 {% gist 1dfb7e0df26db00045b3ddb7cd1471c9 %}
 
 

@@ -77,10 +77,25 @@ buildscript {
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-	api(project(':android-keystore-compat-base'))
-	api(project(':android-keystore-compat-19'))
-	api(project(':android-keystore-compat-21'))
-	api(project(':android-keystore-compat-23'))
+	implementation(name: "android-keystore-compat-base-release", ext: "aar")
+	implementation(name: "android-keystore-compat-19-release", ext: "aar")
+	implementation(name: "android-keystore-compat-21-release", ext: "aar")
+	implementation(name: "android-keystore-compat-23-release", ext: "aar")
+
+//	compile(name: "android-keystore-compat-base-release", ext: "aar")
+//	compile(name: "android-keystore-compat-19-release", ext: "aar")
+//	compile(name: "android-keystore-compat-21-release", ext: "aar")
+//	compile(name: "android-keystore-compat-23-release", ext: "aar")
+
+//	api(name: "android-keystore-compat-base-release", ext: "aar")
+//	api(name: "android-keystore-compat-19-release", ext: "aar")
+//	api(name: "android-keystore-compat-21-release", ext: "aar")
+//	api(name: "android-keystore-compat-23-release", ext: "aar")
+
+//	api(project(':android-keystore-compat-base'))
+//	api(project(':android-keystore-compat-19'))
+//	api(project(':android-keystore-compat-21'))
+//	api(project(':android-keystore-compat-23'))
 
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -95,5 +110,10 @@ repositories {
 	mavenCentral()
 }
 
+repositories {
+	flatDir {
+		dirs 'libs'
+	}
+}
 
 apply from: './publish.gradle'
