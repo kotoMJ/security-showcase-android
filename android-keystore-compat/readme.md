@@ -49,50 +49,8 @@ Sample application available on Github (also distributed via Google Play)
 
 ## Usage ##
 
-Add following dependency to your build.gradle: [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion)
-<br/>
-Minimum API is 19!
-Running on lower version will not crash, but will do nothing.
-<br/>
-Rooted device is NOT supported as trusted for KeystoreCompat (in default configuration).
-Running on rooted device will not crash, but will do nothing and will return isKeystoreCompatAvailable()==false
 
 **TODO here will be GIST for basic usage** 
-
-## Dependency cleanup ##
-KeystoreCompat is using [RootBeer](https://github.com/scottyab/rootbeer) library to detect some signs of rooted device.
-Used RootBeer library has dependency on old appCompat(appcompat-v7:22.2.0, support-annotations:22.2.0, support-v4:22.2.0).
-If you wanna to avoid eventual library clash, use exclude as this:
-
-```
-compile ('cz.koto:android-keystore-compat:x.y.z') {
-		exclude group: 'com.android.support'
-	}
-```
-
-## Configuration ##
-All mentioned configurations are voluntary (KeystoreCompat is shipped with default configuration).
-
-### KeystoreCompatConfig ###
-KeystoreCompat offer possibility to override default configuration using:
-`cz.koto.keystorecompat.KeystoreCompat.overrideConfig(T : KeystoreCompatConfig)`
-
-- `fun getDialogDismissThreshold(): Int` Define how many times can be screenLock/KitKatAdmin dialog displayed when it was previously cancelled.
-- `open fun isRootDetectionEnabled(): Boolean` Disable root detection by this method, but it is on your risk (**it's good e.g. for debug variant because of Emulator**)!
-- `open fun getUserAuthenticationRequired(): Boolean` **Disable keypair AndroidSecurity** to force user to authenticate itself when touching keypair.
-
-In case of overriding KeystoreCompatConfig, call overrideConfig method before the first KeystoreCompat usage!
-
-If you want to **disable lockScreen**, besides getUserAuthenticationRequired don't forget also parametrize loadSecret() with `forceFlag==false`
-
-### String resources ###
-Define customized strings in your application string.xml
-<br/><br/>
-`<string name="kc_lock_screen_title">Custom lock screen title</string>`
-<br/><br/>
-`<string name="kc_lock_screen_description">Custom lock screen description</string>`
-<br/><br/>
-`<string name="kc_kitkat_admin_explanatory">"Custom explanatory, explain to the user, that your application needs DeviceAdmin rights. For API 19 (KitKat) only."</string>`
 
 
 
