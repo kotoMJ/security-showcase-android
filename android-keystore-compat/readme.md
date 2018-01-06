@@ -30,14 +30,6 @@ and therefore follow the minimum API/rooted device detection and also inform abo
 
 ![KeystoreCompat princip](./extras/diagram/KeystoreCompat.png "KeystoreCompat princip")
 
-## Kotlin language ##
-KeystoreCompat library is written in Kotlin language.
-
-So in case of usage this library from java project (without existing dependency on Kotlin) you need also
-to add dependency on `org.jetbrains.kotlin:kotlin-stdlib:1.1.60` (over **5k method on dex**)
-
-If it is too much for your java project, **feel free to grab constructions from this library to achieve the same functionality without dependency on Kotlin**.
-
 ## UseCase ##
 
 Does your app use classic credentials (e.g. username & password / JWT / hash) to connect to secured part of the API OR encrypted database?
@@ -55,7 +47,7 @@ Sample application available on Github (also distributed via Google Play)
 <br/> * [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android)
 
 
-## Installation ##
+## Usage ##
 
 Add following dependency to your build.gradle: [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion)
 <br/>
@@ -65,8 +57,7 @@ Running on lower version will not crash, but will do nothing.
 Rooted device is NOT supported as trusted for KeystoreCompat (in default configuration).
 Running on rooted device will not crash, but will do nothing and will return isKeystoreCompatAvailable()==false
 
-KeystoreCompat initialize itself automatically with hosted application context.
-The only pre-condition is, that hosted application has applicationId defined.
+**TODO here will be GIST for basic usage** 
 
 ## Dependency cleanup ##
 KeystoreCompat is using [RootBeer](https://github.com/scottyab/rootbeer) library to detect some signs of rooted device.
@@ -103,42 +94,8 @@ Define customized strings in your application string.xml
 <br/><br/>
 `<string name="kc_kitkat_admin_explanatory">"Custom explanatory, explain to the user, that your application needs DeviceAdmin rights. For API 19 (KitKat) only."</string>`
 
-## KeystoreCompat API
 
-For detail usage check for sample implementations :<br/>
- [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android) <br/>
- [Realm Security - java project](https://github.com/kotomisak/db-showcase-android) <br/>
 
-### KeystoreCompat verify methods ###
-- `fun isKeystoreCompatAvailable(): Boolean`
-- `fun isSecurityEnabled(): Boolean`
-- `fun hasSecretLoadable(): Boolean`
-
-### KeystoreCompat data manipulation methods ###
-- `fun storeSecret(secret: ByteArray, onError: () -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true)`
-- `fun storeSecret(secret: String, onError: () -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true)`
-- `fun loadSecret(onSuccess: (cre: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true)`
-- `fun loadSecretAsString(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true)`
-- `fun clearCredentials()`
-
-### KeystoreCompat lockScreen dismiss helpers ###
-- `fun increaseLockScreenCancel()`
-- `fun signInSuccessful() `
-
-### IntentUtility ###
-- `inline fun showLockScreenSettings(context: Context)`
-- @TargetApi(Build.VERSION_CODES.LOLLIPOP) <br/>
-`inline fun forceAndroidAuth(title: String, desc: String, onIntentReady: (intent: Intent) -> Unit, context: Context)`
-
-### AndroidVersionUtility ###
-- `inline fun runSinceKitKat(crossinline action: () -> Unit)`
-- `inline fun runSinceLollipop(crossinline action: () -> Unit)`
-- `inline fun runSinceMarshmallow(crossinline action: () -> Unit)`
-
-### HashUtility ###
-- `fun createRandomHashKey(): ByteArray`
-- `fun createHashKey(basePassword: String, salt: ByteArray, iterationCount: Int, sha512: Boolean, keyLengthInBit: Int = LENGTH32BYTES): ByteArray`
-- `fun createHashKey(basePassword: String, sha512: Boolean, keyLengthInBit: Int = LENGTH32BYTES): ByteArray`
 
 ## Caveats ##
 
