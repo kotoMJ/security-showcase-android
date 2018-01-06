@@ -80,17 +80,17 @@ dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-	implementation(project(':android-keystore-compat')) {
-		exclude group: 'com.android.support'
-		exclude group: 'org.jetbrains.kotlin'
-	}
-
-	//compile(name: "android-keystore-compat-0.6.0-BETA", ext: "aar")
-
-//	compile('cz.koto:android-keystore-compat:1.2.1') {
+//	implementation(project(':android-keystore-compat')) {
 //		exclude group: 'com.android.support'
 //		exclude group: 'org.jetbrains.kotlin'
 //	}
+
+	//compile(name: "android-keystore-compat-0.6.0-BETA", ext: "aar")
+
+	compile('cz.koto:android-keystore-compat:2.0.1') {
+		exclude group: 'com.android.support'
+		exclude group: 'org.jetbrains.kotlin'
+	}
 
 	kapt "com.android.databinding:compiler:$android_gradle_version"
 	implementation "com.android.databinding:library:$android_binding_version"
