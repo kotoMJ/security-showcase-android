@@ -24,7 +24,7 @@ Current version of the library require to also install all necessary impl module
 
 ```groovy
 dependencies {
-	api("cz.koto:android-keystore-compat-emplus:2.0.1") {
+	api("cz.koto:android-keystore-compat-emplus:2.0.0") {
 		exclude group: 'com.android.support'
 	}
 	api("cz.koto:android-keystore-compat-base:2.0.1")
