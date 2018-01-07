@@ -54,8 +54,18 @@ Sample application available on Github (also distributed via Google Play)
 
 <script src="https://gist.github.com/kotomisak/1dfb7e0df26db00045b3ddb7cd1471c9.js"></script>
 
+<script src="https://gist.github.com/kotomisak/1dfb7e0df26db00045b3ddb7cd1471c9.js"></script>
+
 {% gist 1dfb7e0df26db00045b3ddb7cd1471c9 %}
 
+```groovy
+dependencies {
+	compile('cz.koto:android-keystore-compat:2.0.1') {
+		exclude group: 'com.android.support'
+		exclude group: 'org.jetbrains.kotlin'
+	}
+}
+```
 
 ## Caveats ##
 
