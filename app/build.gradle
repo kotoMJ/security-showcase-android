@@ -101,7 +101,7 @@ dependencies {
 		exclude group: 'com.android.support'
 	}
 	api('cz.koto:android-keystore-compat-base:2.0.1')
-	api('cz.koto:android-keystore-compat-19:1.0.0')
+	api('cz.koto:android-keystore-compat-19:2.0.1')
 	api('cz.koto:android-keystore-compat-21:1.0.0')
 	api('cz.koto:android-keystore-compat-23:1.0.0')
 
