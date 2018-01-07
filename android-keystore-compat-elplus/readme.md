@@ -18,6 +18,27 @@ This is lite version of [KeystoreCompat](../android-keystore-compat/readme.md).
 Use this variant in case you don't want to have bundled legacy code under API 21. 
 
 
+## Install ##
+
+Keystore compat is modular system and it requires to add `cz.koto:android-keystore-compat`.
+
+Current version of the library require to also install all necessary impl modules.
+
+
+
+```groovy
+dependencies {
+	api("cz.koto:android-keystore-compat:2.0.1") {
+		exclude group: 'com.android.support'
+	}
+	api("cz.koto:android-keystore-compat-base:2.0.1")
+	api("cz.koto:android-keystore-compat-21:2.0.1")
+	api("cz.koto:android-keystore-compat-23:2.0.1")
+	implementation('com.scottyab:rootbeer-lib:0.0.6') {
+		exclude group: 'com.android.support'
+	}
+}
+```
 
 ## Licence ##
 The Apache Software License, Version 2.0
