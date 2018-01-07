@@ -97,15 +97,16 @@ dependencies {
 //	api(project(':android-keystore-compat-23'))
 
 
-	api('cz.koto:android-keystore-compat:2.0.1') {
+	api("cz.koto:android-keystore-compat:$keystore_compat_version") {
 		exclude group: 'com.android.support'
 	}
-	api('cz.koto:android-keystore-compat-base:2.0.1')
-	api('cz.koto:android-keystore-compat-19:2.0.1')
-	api('cz.koto:android-keystore-compat-21:2.0.1')
-	api('cz.koto:android-keystore-compat-23:1.0.0')
+	api("cz.koto:android-keystore-compat-base:$keystore_compat_version")
+	api("cz.koto:android-keystore-compat-19:$keystore_compat_version")
+	api("cz.koto:android-keystore-compat-21:$keystore_compat_version")
+	api("cz.koto:android-keystore-compat-23:$keystore_compat_version")
 
-	implementation('com.scottyab:rootbeer-lib:0.0.6'){
+
+	implementation('com.scottyab:rootbeer-lib:0.0.6') {
 		exclude group: 'com.android.support'
 	}
 
@@ -127,7 +128,6 @@ dependencies {
 		exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
 	}
 	implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
-
 
 	// retrofit + okhttp + gson
 	implementation "com.google.code.gson:gson:$gson_version"
