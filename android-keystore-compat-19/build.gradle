@@ -83,13 +83,16 @@ buildscript {
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-	api(project(':android-keystore-compat-base'))
+//	api(project(':android-keystore-compat-base'))
 
-	//implementation 'com.android.support:appcompat-v7:26.1.0'
+	api('cz.koto:android-keystore-compat-base:1.0.0') {
+		exclude group: 'org.jetbrains.kotlin'
+	}
 
 	testImplementation 'junit:junit:4.12'
 	androidTestImplementation 'com.android.support.test:runner:1.0.1'
 	androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 repositories {

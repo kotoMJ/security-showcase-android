@@ -77,25 +77,23 @@ buildscript {
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-	implementation(name: "android-keystore-compat-base-release", ext: "aar")
-	implementation(name: "android-keystore-compat-19-release", ext: "aar")
-	implementation(name: "android-keystore-compat-21-release", ext: "aar")
-	implementation(name: "android-keystore-compat-23-release", ext: "aar")
-
-//	compile(name: "android-keystore-compat-base-release", ext: "aar")
-//	compile(name: "android-keystore-compat-19-release", ext: "aar")
-//	compile(name: "android-keystore-compat-21-release", ext: "aar")
-//	compile(name: "android-keystore-compat-23-release", ext: "aar")
-
-//	api(name: "android-keystore-compat-base-release", ext: "aar")
-//	api(name: "android-keystore-compat-19-release", ext: "aar")
-//	api(name: "android-keystore-compat-21-release", ext: "aar")
-//	api(name: "android-keystore-compat-23-release", ext: "aar")
-
 //	api(project(':android-keystore-compat-base'))
 //	api(project(':android-keystore-compat-19'))
 //	api(project(':android-keystore-compat-21'))
 //	api(project(':android-keystore-compat-23'))
+
+	api('cz.koto:android-keystore-compat-base:1.0.0') {
+		exclude group: 'org.jetbrains.kotlin'
+	}
+	api('cz.koto:android-keystore-compat-19:1.0.0') {
+		exclude group: 'org.jetbrains.kotlin'
+	}
+	api('cz.koto:android-keystore-compat-21:1.0.0') {
+		exclude group: 'org.jetbrains.kotlin'
+	}
+	api('cz.koto:android-keystore-compat-23:1.0.0') {
+		exclude group: 'org.jetbrains.kotlin'
+	}
 
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 

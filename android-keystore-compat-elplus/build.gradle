@@ -77,9 +77,19 @@ buildscript {
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
-	api(project(':android-keystore-compat-base'))
-	api(project(':android-keystore-compat-21'))
-	api(project(':android-keystore-compat-23'))
+	//	api(project(':android-keystore-compat-base'))
+	//	api(project(':android-keystore-compat-21'))
+	//	api(project(':android-keystore-compat-23'))
+
+	api('cz.koto:android-keystore-compat-base:1.0.0') {
+		exclude group: 'org.jetbrains.kotlin'
+	}
+	api('cz.koto:android-keystore-compat-21:1.0.0') {
+		exclude group: 'org.jetbrains.kotlin'
+	}
+	api('cz.koto:android-keystore-compat-23:1.0.0') {
+		exclude group: 'org.jetbrains.kotlin'
+	}
 
 	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
 		exclude group: 'com.android.support', module: 'support-annotations'

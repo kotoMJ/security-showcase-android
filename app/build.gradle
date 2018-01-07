@@ -77,32 +77,37 @@ buildscript {
 }
 
 dependencies {
+	//compile 'com.android.support:multidex:1.0.2'
+
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-//	implementation(project(':android-keystore-compat')) {
+//	api(name: "android-keystore-compat-release", ext: "aar") {
+//		exclude group: 'org.jetbrains.kotlin'
+//		exclude group: 'com.android.support'
+//	}
+
+//	api(project(':android-keystore-compat')) {
 //		exclude group: 'com.android.support'
 //		exclude group: 'org.jetbrains.kotlin'
 //	}
+//	api(project(':android-keystore-compat-base'))
+//	api(project(':android-keystore-compat-19'))
+//	api(project(':android-keystore-compat-21'))
+//	api(project(':android-keystore-compat-23'))
 
-	compile(name: "android-keystore-compat-release", ext: "aar")
-	implementation(name: "android-keystore-compat-base-release", ext: "aar")
-	implementation(name: "android-keystore-compat-19-release", ext: "aar")
-	implementation(name: "android-keystore-compat-21-release", ext: "aar")
-	implementation(name: "android-keystore-compat-23-release", ext: "aar")
+
+	api('cz.koto:android-keystore-compat:2.0.1') {
+		exclude group: 'com.android.support'
+	}
+	api('cz.koto:android-keystore-compat-base:1.0.0')
+	api('cz.koto:android-keystore-compat-19:1.0.0')
+	api('cz.koto:android-keystore-compat-21:1.0.0')
+	api('cz.koto:android-keystore-compat-23:1.0.0')
+
 	implementation('com.scottyab:rootbeer-lib:0.0.6'){
 		exclude group: 'com.android.support'
 	}
-
-//	compile(project(':android-keystore-compat-base'))
-//	compile(project(':android-keystore-compat-19'))
-//	compile(project(':android-keystore-compat-21'))
-//	compile(project(':android-keystore-compat-23'))
-
-//	compile('cz.koto:android-keystore-compat:2.0.1') {
-//		exclude group: 'com.android.support'
-//		exclude group: 'org.jetbrains.kotlin'
-//	}
 
 	kapt "com.android.databinding:compiler:$android_gradle_version"
 	implementation "com.android.databinding:library:$android_binding_version"
