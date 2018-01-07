@@ -49,11 +49,9 @@ Sample application available on Github (also distributed via Google Play)
 
 ## Install ##
 
-Keystore compat is modular system and it requires to add `cz.koto:android-keystore-compat`.
+Keystore compat requires to add `cz.koto:android-keystore-compat`.
 
 Current version of the library require to also install all necessary impl modules.
-
-
 
 ```groovy
 dependencies {
