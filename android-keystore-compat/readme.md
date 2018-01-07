@@ -47,20 +47,30 @@ Sample application available on Github (also distributed via Google Play)
 <br/> * [App login security - kotlin project](https://github.com/kotomisak/security-showcase-android)
 
 
-## Usage ##
+## Install ##
 
+Keystore compat is modular system and it requires to add `cz.koto:android-keystore-compat` and all
+necessary dependent modules.
+
+```groovy
+dependencies {
+	api("cz.koto:android-keystore-compat:2.0.1") {
+		exclude group: 'com.android.support'
+	}
+	api("cz.koto:android-keystore-compat-base:2.0.1")
+	api("cz.koto:android-keystore-compat-19:2.0.1")
+	api("cz.koto:android-keystore-compat-21:2.0.1")
+	api("cz.koto:android-keystore-compat-23:2.0.1")
+	implementation('com.scottyab:rootbeer-lib:0.0.6') {
+		exclude group: 'com.android.support'
+	}
+}
+```
+## Usage ##
 
 **TODO here will be GIST for basic usage** 
 
 
-```groovy
-dependencies {
-	compile('cz.koto:android-keystore-compat:2.0.1') {
-		exclude group: 'com.android.support'
-		exclude group: 'org.jetbrains.kotlin'
-	}
-}
-```
 
 ## Caveats ##
 
