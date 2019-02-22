@@ -1,0 +1,23 @@
+apply plugin: 'com.android.library'
+apply from: '../common.gradle'
+
+
+android {
+	defaultConfig {
+		versionCode 1
+		versionName "1.0"
+	}
+
+	productFlavors {
+		mock {
+			dimension = "env"
+		}
+		dev {
+			dimension = "env"
+		}
+		production {
+			dimension = "env"
+		}
+	}
+
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="menu_icon_normal">#E2E7ED</color>
+	<color name="menu_icon_selected">#3274FF</color>
+
+	<color name="global_primary">#3F51B5</color>
+	<color name="global_primary_dark">#303F9F</color>
+	<color name="global_accent">#FF4081</color>
+	<color name="global_accent_green">#00e370</color>
+	<color name="global_control_normal">#3274ff</color>
+	<color name="global_control_focused">#999999</color>
+	<color name="global_control_pressed">#666666</color>
+	<color name="global_control_activated">#62676d</color>
+	<color name="global_control_activated_opaque">#9962676d</color>
+	<color name="global_control_disabled">#e2e7ed</color>
+	<color name="global_control_highlight">#2452b5</color>
+	<color name="global_control_inverse_highlight">#c2c2c2</color>
+	<color name="global_control_green_highlight">#00aa54</color>
+	<color name="global_error">#EE4F4F</color>
+	<color name="global_switch_thumb_normal">#f1f1f1</color>
+
+	<color name="global_text_header">#313131</color>
+	<color name="global_text_primary">#060606</color>
+	<color name="global_text_primary_inverse">#ffffff</color>
+	<color name="global_text_primary_disable_only">#000000</color>
+	<color name="global_text_secondary">#0a172b</color>
+	<color name="global_text_secondary_inverse">#b3ffffff</color>
+	<color name="global_text_tertiary">#a5a5af</color>
+	<color name="global_text_tertiary_inverse">#aaffffff</color>
+	<color name="global_text_disable">#87878c</color>
+	<color name="global_text_disable_alternate">#c8c8d2</color>
+	<color name="global_text_hint">#80000000</color>
+	<color name="global_text_hint_inverse">#0a172b</color>
+	<color name="global_text_hint_light">#C5C5C5</color>
+	<color name="global_text_highlight">#00e370</color>
+	<color name="global_text_link">#00e370</color>
+	<color name="global_text_caption">#62676d</color>
+	<color name="global_text_danger">#FF4632</color>
+</resources>

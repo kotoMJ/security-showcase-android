@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="divider_height">1dp</dimen>
+
+	<dimen name="global_spacing_0">0dp</dimen>
+	<dimen name="global_spacing_2">2dp</dimen>
+	<dimen name="global_spacing_4">4dp</dimen>
+	<dimen name="global_spacing_8">8dp</dimen>
+	<dimen name="global_spacing_12">12dp</dimen>
+	<dimen name="global_spacing_16">16dp</dimen>
+	<dimen name="global_spacing_24">24dp</dimen>
+	<dimen name="global_spacing_32">32dp</dimen>
+	<dimen name="global_spacing_40">40dp</dimen>
+	<dimen name="global_spacing_48">48dp</dimen>
+	<dimen name="global_spacing_56">56dp</dimen>
+	<dimen name="global_spacing_72">72dp</dimen>
+	<dimen name="global_spacing_80">80dp</dimen>
+	<dimen name="global_spacing_88">88dp</dimen>
+	<dimen name="global_spacing_96">96dp</dimen>
+	<dimen name="global_spacing_112">112dp</dimen>
+	<dimen name="global_spacing_128">128dp</dimen>
+
+	<dimen name="global_elevation_0">0dp</dimen>
+	<dimen name="global_elevation_2">2dp</dimen>
+	<dimen name="global_elevation_4">4dp</dimen>
+	<dimen name="global_elevation_6">6dp</dimen>
+	<dimen name="global_elevation_8">8dp</dimen>
+	<dimen name="global_elevation_12">12dp</dimen>
+	<dimen name="global_elevation_16">16dp</dimen>
+	<dimen name="global_elevation_24">24dp</dimen>
+
+	<item name="global_letter_spacing_05" format="float" type="dimen">0.05</item>
+	<item name="global_letter_spacing_1" format="float" type="dimen">0.1</item>
+	<item name="global_letter_spacing_15" format="float" type="dimen">0.15</item>
+	<item name="global_letter_spacing_2" format="float" type="dimen">0.2</item>
+
+	<dimen name="global_text_size_display_4">112sp</dimen>
+	<dimen name="global_text_size_display_3">56sp</dimen>
+	<dimen name="global_text_size_display_2">45sp</dimen>
+	<dimen name="global_text_size_display_1">34sp</dimen>
+	<dimen name="global_text_size_headline">24sp</dimen>
+	<dimen name="global_text_size_title">20sp</dimen>
+	<dimen name="global_text_size_subtitle">18sp</dimen>
+	<dimen name="global_text_size_subhead">16sp</dimen>
+	<dimen name="global_text_size_body_2">14sp</dimen>
+	<dimen name="global_text_size_body_1">14sp</dimen>
+	<dimen name="global_text_size_caption">12sp</dimen>
+	<dimen name="global_text_size_button">14sp</dimen>
+	<dimen name="global_text_size_menu">16sp</dimen>
+
+	<dimen name="global_status_bar_height">24dp</dimen>
+	<dimen name="global_bottom_bar_height">56dp</dimen>
+
+	<dimen name="global_button_radius">2dp</dimen>
+	<dimen name="global_button_shape_padding">16dp</dimen>
+	<dimen name="global_button_shape_padding_zero">0dp</dimen>
+	<dimen name="global_button_padding">6dp</dimen>
+	<dimen name="global_button_minWidth">88dp</dimen>
+	<dimen name="global_button_minHeight">40dp</dimen>
+
+	<dimen name="global_button_border_width">1dp</dimen>
+
+	<dimen name="placeholder_image_size">60dp</dimen>
+
+	<dimen name="card_corner_radius">4dp</dimen>
+
+	<dimen name="lottie_loading_spinner_size">100dp</dimen>
+
+	<dimen name="back_arrow_size">32dp</dimen>
+
+</resources>

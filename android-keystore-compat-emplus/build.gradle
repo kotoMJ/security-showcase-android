@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-kapt'//http://stackoverflow.com/questions/42568394/build-errors-with-new-kotlin-1-1-kapt-cant-parse-databinding-params
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 final KC_GIT_TAG_REGEX = "23KC*"
 // Last Git tag name on current branch
@@ -36,12 +36,12 @@ ext {
 	allLicenses = ["Apache-2.0"]
 }
 android {
-	compileSdkVersion compile_sdk_version
+	compileSdkVersion sdk_version
 	buildToolsVersion build_tools_version
 
 	defaultConfig {
 		minSdkVersion 23
-		targetSdkVersion compile_sdk_version
+		targetSdkVersion sdk_version
 		versionCode libraryCode
 		versionName libraryVersion
 

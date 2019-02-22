@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-kapt'//http://stackoverflow.com/questions/42568394/build-errors-with-new-kotlin-1-1-kapt-cant-parse-databinding-params
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 final KC_GIT_TAG_REGEX = "IMPLBASEKC*"
 // Last Git tag name on current branch
@@ -37,13 +37,13 @@ ext {
 }
 
 android {
-	compileSdkVersion compile_sdk_version
+	compileSdkVersion sdk_version
 	buildToolsVersion build_tools_version
 
 
 	defaultConfig {
-		minSdkVersion min_sdk_version
-		targetSdkVersion compile_sdk_version
+		minSdkVersion 16
+		targetSdkVersion sdk_version
 		versionCode 1
 		versionName "1.0"
 
@@ -82,11 +82,11 @@ dependencies {
 		exclude group: 'com.android.support'
 	}
 
-	implementation "com.android.support:appcompat-v7:${support_library_version}"
+	//implementation "com.android.support:appcompat-v7:${support_library_version}"
 	testImplementation 'junit:junit:4.12'
-	androidTestImplementation 'com.android.support.test:runner:1.0.1'
-	androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-	compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+	androidTestImplementation 'com.android.support.test:runner:1.0.2'
+	androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+	implementation "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
 }
 
 repositories {
