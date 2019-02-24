@@ -1,7 +1,6 @@
 package cz.kotox.securityshowcase.testutils
 
 import android.os.Bundle
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.RestrictTo
 import androidx.appcompat.app.AppCompatActivity
@@ -16,8 +15,10 @@ class SingleFragmentActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		val content = FrameLayout(this)
-		content.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-			ViewGroup.LayoutParams.MATCH_PARENT)
+
+		//TODO MJ - uncomment and solve this for properly working ui test!!!
+//		content.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+//			ViewGroup.LayoutParams.MATCH_PARENT)
 		content.id = R.id.content_frame
 		setContentView(content)
 	}

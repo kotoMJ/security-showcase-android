@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<!-- Abstract themes are not supposed to be used directly (in Manifest for instance). -->
+	<!-- We usually need to override them in themes.xml for different Android version. -->
+
+	<style name="BaseTheme.SecurityShowcase.Light" parent="@style/Theme.AppCompat.Light">
+
+		<!-- Abstract theme - should not be used directly. -->
+		<item name="windowActionBar">false</item>
+		<item name="windowActionModeOverlay">true</item>
+		<item name="windowNoTitle">true</item>
+
+		<item name="android:windowBackground">@color/global_bg_back</item>
+		<item name="actionModeBackground">@color/global_bg_back</item>
+		<item name="android:windowTranslucentStatus">false</item>
+
+		<item name="colorPrimary">@color/global_primary</item>
+		<item name="colorPrimaryDark">@color/global_primary_dark</item>
+		<item name="colorAccent">@color/global_accent</item>
+		<item name="colorControlNormal">@color/global_control_normal</item>
+		<item name="colorControlActivated">@color/global_accent</item>
+		<item name="colorControlHighlight">@color/global_control_highlight</item>
+		<item name="colorSwitchThumbNormal">@color/global_switch_thumb_normal</item>
+
+		<item name="android:textColorPrimary">@color/global_text_primary</item>
+		<item name="android:textColorPrimaryInverse">@color/global_text_primary_inverse</item>
+		<item name="android:textColorPrimaryDisableOnly">@color/global_text_primary_disable_only</item>
+		<item name="android:textColorSecondary">@color/global_text_secondary</item>
+		<item name="android:textColorSecondaryInverse">@color/global_text_secondary_inverse</item>
+		<item name="android:textColorTertiary">@color/global_text_tertiary</item>
+		<item name="android:textColorTertiaryInverse">@color/global_text_tertiary_inverse</item>
+		<item name="android:textColorHint">@color/global_text_hint</item>
+		<item name="android:textColorHintInverse">@color/global_text_hint_inverse</item>
+		<item name="android:textColorHighlight">@color/global_text_highlight</item>m>
+		<item name="android:textColorLink">@color/global_text_link</item>
+
+		<item name="alertDialogTheme">@style/Theme.SecurityShowcase.Light.Dialog.Alert</item>
+
+		<item name="colorError">@color/global_error</item>
+	</style>
+
+	<style name="Theme.SecurityShowcase.Light" parent="BaseTheme.SecurityShowcase.Light" />
+
+	<style name="Theme.SecurityShowcase.Light.Dialog.Alert" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+		<item name="colorAccent">@color/global_accent</item>
+		<item name="dialogCornerRadius">@dimen/global_spacing_16</item>
+	</style>
+
+	<style name="Theme.SecurityShowcase.Toolbar" parent="@style/ThemeOverlay.AppCompat.Light">
+		<item name="android:textColorPrimary">@color/global_text_primary</item>
+		<item name="colorControlNormal">@color/global_text_primary</item>
+	</style>
+
+	<style name="Theme.SecurityShowcase.BottomSheetRoundedCorners" parent="@style/Widget.Design.BottomSheet.Modal">
+		<item name="android:background">@drawable/bg_bottom_sheet_rounded_corners</item>
+	</style>
+
+	<style name="BaseTheme.SecurityShowcase.BottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+		<!-- Abstract theme - should not be used directly. -->
+		<item name="android:windowIsFloating">false</item>
+		<item name="bottomSheetStyle">@style/Theme.SecurityShowcase.BottomSheetRoundedCorners</item>
+	</style>
+
+	<style name="Theme.SecurityShowcase.BottomSheetDialog" parent="BaseTheme.SecurityShowcase.BottomSheetDialog" />
+
+</resources>

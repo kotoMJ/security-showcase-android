@@ -68,4 +68,7 @@
 
 	<dimen name="back_arrow_size">32dp</dimen>
 
+	<dimen name="bottom_sheet_corners_radius">16dp</dimen>
+	<dimen name="bottom_sheet_top_corners_padding">18dp</dimen>
+
 </resources>

@@ -3,9 +3,9 @@
 	<color name="menu_icon_normal">#E2E7ED</color>
 	<color name="menu_icon_selected">#3274FF</color>
 
-	<color name="global_primary">#3F51B5</color>
-	<color name="global_primary_dark">#303F9F</color>
-	<color name="global_accent">#FF4081</color>
+	<color name="global_primary">#FFFFFF</color>
+	<color name="global_primary_dark">#FFFFFF</color>
+	<color name="global_accent">#3274ff</color>
 	<color name="global_accent_green">#00e370</color>
 	<color name="global_control_normal">#3274ff</color>
 	<color name="global_control_focused">#999999</color>
@@ -36,4 +36,23 @@
 	<color name="global_text_link">#00e370</color>
 	<color name="global_text_caption">#62676d</color>
 	<color name="global_text_danger">#FF4632</color>
+
+	<color name="global_bg_back">#ffffff</color>
+	<color name="global_bg_front">#ffffff</color>
+	<color name="global_bg_dark_blue">#143380</color>
+	<color name="global_bg_back_inverse_disabled">#dddddd</color>
+	<color name="global_bg_selected_indicator">#00E0CB</color>
+	<color name="global_bg_unselected_indicator">#e9e9e9</color>
+	<color name="global_bg_light_red">#FF9090</color>
+	<color name="global_bg_light_label">#F4F4F7</color>
+
+	<color name="theme_action_mode_bg">#303030</color>
+	<color name="theme_status_bar">#ffffff</color>
+	<color name="theme_navigation_bar">#000000</color>
+	<color name="theme_button_normal">#d6d7d7</color>
+	<color name="theme_edge_effect">#999999</color>
+	<color name="theme_border">#e9e9e9</color>
+
+	<color name="system_navigation_bar">#FFFFFF</color>
+	<color name="system_navigation_bar_divider">#36999999</color>
 </resources>

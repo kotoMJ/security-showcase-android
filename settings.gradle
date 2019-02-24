@@ -7,4 +7,4 @@ include ':android-keystore-compat',
 		':android-keystore-compat-base',
 		':module-test-utils',
 		":module-core",
-		':mobile-android-x-login-rest'
+		':mobile-android-login-rest'

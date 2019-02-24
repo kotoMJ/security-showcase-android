@@ -4,7 +4,6 @@ android {
 
 	defaultConfig {
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
 	}
 
 	flavorDimensions "env"

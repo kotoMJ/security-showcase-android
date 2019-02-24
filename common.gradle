@@ -35,6 +35,7 @@ allprojects {
 		flavorDimensions "env"
 
 		defaultConfig {
+			minSdkVersion min_sdk_version
 			targetSdkVersion sdk_version
 			testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 			vectorDrawables.useSupportLibrary = true
