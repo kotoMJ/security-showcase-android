@@ -1,73 +1,41 @@
 language: android
-sudo: required
 jdk: oraclejdk8
-
 env:
-  matrix:
-    - ANDROID_TARGET=android-27 ANDROID_ABI=armeabi-v7a
   global:
-    # wait up to 10 minutes for adb to connect to emulator
-    - ADB_INSTALL_TIMEOUT=10
-
+    - ANDROID_TARGET=android-28
+    - ANDROID_ABI=armeabi-v7a
 android:
   components:
-  - platform-tools
-  - tools
-  - build-tools-27.0.0
-  - android-27
+    # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+    - tools
+    - platform-tools
+    # The BuildTools version used by your project
+    - build-tools-28.0.3
+    # The SDK version used to compile your project
+    - android-28
 
-  # Additional components
-  - extra-google-android-support
-  - extra-google-m2repository
-  - extra-android-m2repository
-  - extra-android-support
 
-  # Emulator for the tests
-  - sys-img-armeabi-v7a-android-23
+    - extra-android-m2repository
+    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
 
   licenses:
-    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
-    - '.+'
 
-cache:
-  directories:
-    - $HOME/.gradle/caches/3.3
-    - $HOME/.gradle/caches/jars-1
-    - $HOME/.gradle/daemon
-    - $HOME/.gradle/native
-    - $HOME/.gradle/wrapper
+#script:
+#  - ./gradlew clean
+#  - ./gradlew module-core:jacocoUnitTestReport -PjacocoBuildType=debug -PjacocoEnv=dev
+#  - ./gradlew module-face-detection:jacocoUnitTestReport -PjacocoBuildType=debug -PjacocoEnv=dev
+#  - ./gradlew module-text-recognition:jacocoUnitTestReport -PjacocoBuildType=debug -PjacocoEnv=dev
+#  - ./gradlew mobile:jacocoUnitTestReport -PjacocoBuildType=debug -PjacocoEnv=dev
 
-before_install:
-  - yes | sdkmanager "platforms;android-26"
-  - yes | sdkmanager "platforms;android-27"
-  - mkdir "$ANDROID_HOME/licenses" || true
-  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
-  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+#- echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+#- emulator -avd test -no-skin -no-audio -no-window &
+#- android-wait-for-emulator
+#- adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+#- ./gradlew connectedCheck
 
-install:
-#   - sdkmanager --list || true
-#   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
-#   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-
-
-#before_script:
-#  - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
-#  - emulator -avd test -no-skin -no-audio -no-window &
-
-script:
-
-# Instrumentation tests
-#  - ./gradlew check -PdisablePreDex --continue --stacktrace
-#  - android-wait-for-emulator
-#  - adb devices
-#  - adb shell input keyevent 82 &
-#  - ./gradlew connectedAndroidTest -PdisablePreDex --continue --stacktrace
-#  - rm /home/travis/.gradle/caches/2.8/plugin-resolution/cache.properties.lock
-# Unit tests
-#  - ./gradlew testDevReleaseUnitTest -q
-# If successful and Git TAG ends with "BETA" - release to Crashlytics BETA
-#  - '[[ $TRAVIS_TAG != *BETA ]]  || ./gradlew assembleLiveRelease crashlyticsUploadDistributionLiveRelease -q'
-#
-  - './gradlew assembleRostiDebug'
+#after_success:
+#  - bash <(curl -s https://codecov.io/bash)
