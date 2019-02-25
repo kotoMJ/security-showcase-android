@@ -36,8 +36,8 @@ before_script:
     $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > extras/keystore/releaseKeystore.properties
 
 script:
-  - "./gradlew androidDependencies"
-  - "./gradlew lint test"
+  #  - "./gradlew androidDependencies"
+  #  - "./gradlew lint test"
   - "./gradlew assembleDevDebug --no-daemon --stacktrace"
 
 
