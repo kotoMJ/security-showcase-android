@@ -45,16 +45,16 @@ allprojects {
 			release {
 				// passwords and alias are obtained via askForPasswords task
 				storeFile file("../${project.property('release.keystore.file')}")
-				storePassword ""
-				keyAlias ""
-				keyPassword ""
+				storePassword "releaseUnitinitializedStorePassword"
+				keyAlias "releaseUnitializedKeyAlias"
+				keyPassword "releaseUninitializedKeyPassword"
 			}
 			debug {
 				// passwords and alias are obtained via askForPasswords task
 				storeFile file("../${project.property('debug.keystore.file')}")
-				storePassword ""
-				keyAlias ""
-				keyPassword ""
+				storePassword "debugUnitinitializedStorePassword"
+				keyAlias "debugUnitializedKeyAlias"
+				keyPassword "debugUninitializedKeyPassword"
 			}
 		}
 
@@ -92,10 +92,14 @@ allprojects {
 
 		buildTypes {
 			debug {
+				signingConfig android.signingConfigs.debug
+
 				buildConfigField "boolean", "LOGS", "true"
 			}
 
 			release {
+				signingConfig android.signingConfigs.release
+
 				buildConfigField "boolean", "LOGS", "false"
 
 				zipAlignEnabled true
