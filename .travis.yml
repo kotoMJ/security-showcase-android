@@ -30,10 +30,10 @@ before_script:
   - mkdir extras/keystore
   - echo $DEBUG_KEYSTORE_BASE64 | base64 --decode > extras/keystore/debugKeystore.jks
   - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password'
-    $debugStorePassword $debugKeyAlias $debugKeyPassword > extras/keystore/debug.securityshowcase.properties
+    $debugStorePassword $debugKeyAlias $debugKeyPassword > extras/keystore/debugKeystore.properties
   - echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > extras/keystore/releaseKeystore.jks
   - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password'
-    $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > extras/keystore/release.securityshowcase.properties
+    $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > extras/keystore/releaseKeystore.properties
 
 script:
   - "./gradlew androidDependencies"
