@@ -44,14 +44,14 @@ allprojects {
 		signingConfigs {
 			release {
 				// passwords and alias are obtained via askForPasswords task
-				storeFile file("../${project.property('keystore.file')}")
+				storeFile file("../${project.property('release.keystore.file')}")
 				storePassword ""
 				keyAlias ""
 				keyPassword ""
 			}
 			debug {
 				// passwords and alias are obtained via askForPasswords task
-				storeFile file("../${project.property('keystore.file')}")
+				storeFile file("../${project.property('debug.keystore.file')}")
 				storePassword ""
 				keyAlias ""
 				keyPassword ""
@@ -196,30 +196,45 @@ task askForPasswords {
 	def keyAlias
 	def keyPass
 
-	def keystorePropertiesFile = new File((String) project.property("keystore.properties"))
+	def isDebugTask = getGradle().getStartParameter().getTaskNames().any {name -> name.toLowerCase().contains("debug")}
 
-	if (project.hasProperty("keystore.properties") && keystorePropertiesFile.exists()) {
+	def keystorePropertiesFile
+
+	if (isDebugTask && project.hasProperty("debug.keystore.properties")) {
+		if (!project.hasProperty("debug.keystore.properties")) {
+			throw IllegalStateException("Missing definition for debug.keystore.properties in gradle.properites!")
+		}
+		keystorePropertiesFile = new File((String) project.property("debug.keystore.properties"))
+	} else {
+		if (!project.hasProperty("release.keystore.properties")) {
+			throw IllegalStateException("Missing definition for release.keystore.properties in gradle.properites!")
+		}
+		keystorePropertiesFile = new File((String) project.property("release.keystore.properties"))
+	}
+
+	if (keystorePropertiesFile.exists()) {
 		println "Loading keystore passwords from property file..."
 		Properties properties = new Properties()
 		properties.load(new FileInputStream(keystorePropertiesFile))
 		storePass = properties['keystore.store.password']
-		println("storePass[$storePass]")
+//		println("storePass[$storePass]")
 		keyAlias = properties['keystore.key.alias']
-		println("keyAlias[$keyAlias]")
+//		println("keyAlias[$keyAlias]")
 		keyPass = properties['keystore.key.password']
-		println("keyPass[$keyPass]")
+//		println("keyPass[$keyPass]")
 	} else {
-		throw IllegalStateException("Missing keystore.properties file!")
+		throw IllegalStateException("Missing *.keystore.properties file for isDebugTask=${isDebugTask}")
 	}
 
-	android.signingConfigs.release.storePassword = storePass
-	android.signingConfigs.release.keyAlias = keyAlias
-	android.signingConfigs.release.keyPassword = keyPass
-
-	android.signingConfigs.debug.storePassword = storePass
-	android.signingConfigs.debug.keyAlias = keyAlias
-	android.signingConfigs.debug.keyPassword = keyPass
-
+	if (isDebugTask) {
+		android.signingConfigs.debug.storePassword = storePass
+		android.signingConfigs.debug.keyAlias = keyAlias
+		android.signingConfigs.debug.keyPassword = keyPass
+	} else {
+		android.signingConfigs.release.storePassword = storePass
+		android.signingConfigs.release.keyAlias = keyAlias
+		android.signingConfigs.release.keyPassword = keyPass
+	}
 }
 
 ext.renameArtifact = {variant, apkName ->

@@ -24,6 +24,22 @@ android:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 
+
+before_script:
+  - "echo \"Build process is started \U0001F46F\""
+  - echo $DEBUG_KEYSTORE_BASE64 | base64 -d > $debugKeyStore
+  - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password'
+    $debugStorePassword $debugKeyAlias $debugKeyPassword > extra/keystore/debug.securityshowcase.properties
+  - echo $RELEASE_KEYSTORE_BASE64 | base64 -d > $releaseKeyStore
+  - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password'
+    $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > extra/keystore/release.securityshowcase.properties
+
+script:
+  - "./gradlew androidDependencies"
+  - "./gradlew lint test"
+  - "./gradlew clean assembleDevDebug --no-daemon --stacktrace"
+
+
 #script:
 #  - ./gradlew clean
 #  - ./gradlew module-core:jacocoUnitTestReport -PjacocoBuildType=debug -PjacocoEnv=dev

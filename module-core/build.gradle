@@ -31,6 +31,8 @@ dependencies {
 	api "androidx.lifecycle:lifecycle-extensions:$app_androidx_lifecycle_version"
 	kapt "androidx.lifecycle:lifecycle-compiler:$app_androidx_lifecycle_version"
 
+	implementation "androidx.core:core-ktx:${app_androidx_ktx_core_version}"
+
 	implementation "com.google.android.material:material:$app_android_material_version"
 	implementation "androidx.cardview:cardview:$app_androidx_cardview_version"
 	implementation "androidx.recyclerview:recyclerview:$app_androidx_recyclerview_version"
