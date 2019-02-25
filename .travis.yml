@@ -38,7 +38,7 @@ before_script:
 script:
   - "./gradlew androidDependencies"
   - "./gradlew lint test"
-  - "./gradlew clean assembleDevDebug --no-daemon --stacktrace"
+  - "./gradlew assembleDevDebug --no-daemon --stacktrace"
 
 
 #script:

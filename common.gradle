@@ -203,11 +203,15 @@ task askForPasswords {
 	if (isDebugTask && project.hasProperty("debug.keystore.properties")) {
 		if (!project.hasProperty("debug.keystore.properties")) {
 			throw IllegalStateException("Missing definition for debug.keystore.properties in gradle.properites!")
+		}else{
+			println "debug.keystore.properties value = ${project.property("debug.keystore.properties")}"
 		}
 		keystorePropertiesFile = new File((String) project.property("debug.keystore.properties"))
 	} else {
 		if (!project.hasProperty("release.keystore.properties")) {
 			throw IllegalStateException("Missing definition for release.keystore.properties in gradle.properites!")
+		}else{
+			println "release.keystore.properties value = ${project.property("release.keystore.properties")}"
 		}
 		keystorePropertiesFile = new File((String) project.property("release.keystore.properties"))
 	}
@@ -217,11 +221,11 @@ task askForPasswords {
 		Properties properties = new Properties()
 		properties.load(new FileInputStream(keystorePropertiesFile))
 		storePass = properties['keystore.store.password']
-//		println("storePass[$storePass]")
+		println("storePass[$storePass]")
 		keyAlias = properties['keystore.key.alias']
-//		println("keyAlias[$keyAlias]")
+		println("keyAlias[$keyAlias]")
 		keyPass = properties['keystore.key.password']
-//		println("keyPass[$keyPass]")
+		println("keyPass[$keyPass]")
 	} else {
 		throw IllegalStateException("Missing *.keystore.properties file for isDebugTask=${isDebugTask}")
 	}
