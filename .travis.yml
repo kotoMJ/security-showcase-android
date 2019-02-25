@@ -27,6 +27,9 @@ android:
 
 before_script:
   - "echo \"Build process is started \U0001F46F\""
+  - echo pwd
+  - echo ls -l extras
+  - echo mkdir extras/keystore
   - echo $DEBUG_KEYSTORE_BASE64 | base64 -d > extras/keystore/debugKeystore.jks
   - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password'
     $debugStorePassword $debugKeyAlias $debugKeyPassword > extras/keystore/debug.securityshowcase.properties
