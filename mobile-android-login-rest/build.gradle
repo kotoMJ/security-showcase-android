@@ -20,7 +20,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 //apply from: '../jacoco.gradle' //since app module doesn't apply module-core/library.gradle, thus apply jacoco.gradle extra
 
-final APK_NAME = "ScreenNavigationTemplate"
+final APK_NAME = "SecurityShowcaseLoginRest"
 
 android {
     compileSdkVersion sdk_version
@@ -177,7 +177,8 @@ ext.renameArtifact = {variant, apkName ->
     variant.outputs.all {
         output ->
             def date = new Date().format('yyyyMMdd')
-            outputFileName = "${apkName}-${project.name}-${variant.versionName}-${variant.versionCode}-${date}-${variant.name}.apk"
+            outputFileName = "${apkName}-${variant.versionName}-${variant.versionCode}-${date}-${variant.name}.apk"
+            //outputFileName = "${apkName}-${project.name}-${variant.versionName}-${variant.versionCode}-${date}-${variant.name}.apk"
     }
 }
 
