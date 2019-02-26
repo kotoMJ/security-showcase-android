@@ -229,7 +229,7 @@ task askForPasswords {
 		keyAlias = properties['keystore.key.alias']
 		println("keyAlias[$keyAlias]")
 		keyPass = properties['keystore.key.password']
-		println("keyPass[$keyPass]")
+		println("keyPass[$keyPass] isEmpty=${keyPass.isEmpty()}")
 	} else {
 		throw IllegalStateException("Missing *.keystore.properties file for isDebugTask=${isDebugTask}")
 	}
