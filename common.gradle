@@ -41,23 +41,6 @@ allprojects {
 			vectorDrawables.useSupportLibrary = true
 		}
 
-		signingConfigs {
-			release {
-				// passwords and alias are obtained via askForPasswords task
-				storeFile file("../${project.property('release.keystore.file')}")
-				storePassword "releaseUnitinitializedStorePassword"
-				keyAlias "releaseUnitializedKeyAlias"
-				keyPassword "releaseUninitializedKeyPassword"
-			}
-			debug {
-				// passwords and alias are obtained via askForPasswords task
-				storeFile file("../${project.property('debug.keystore.file')}")
-				storePassword "debugUnitinitializedStorePassword"
-				keyAlias "debugUnitializedKeyAlias"
-				keyPassword "debugUninitializedKeyPassword"
-			}
-		}
-
 		flavorDimensions "env"
 
 		productFlavors {
@@ -92,14 +75,10 @@ allprojects {
 
 		buildTypes {
 			debug {
-				signingConfig android.signingConfigs.debug
-
 				buildConfigField "boolean", "LOGS", "true"
 			}
 
 			release {
-				signingConfig android.signingConfigs.release
-
 				buildConfigField "boolean", "LOGS", "false"
 
 				zipAlignEnabled true
@@ -192,68 +171,4 @@ allprojects {
 		testImplementation project(':module-test-utils')
 
 	}
-}
-
-task askForPasswords {
-
-	def storePass
-	def keyAlias
-	def keyPass
-
-	def isDebugTask = getGradle().getStartParameter().getTaskNames().any {name -> name.toLowerCase().contains("debug")}
-
-	def keystorePropertiesFile
-
-	if (isDebugTask && project.hasProperty("debug.keystore.properties")) {
-		if (!project.hasProperty("debug.keystore.properties")) {
-			throw IllegalStateException("Missing definition for debug.keystore.properties in gradle.properites!")
-		}else{
-			println "debug.keystore.properties value = ${project.property("debug.keystore.properties")}"
-		}
-		keystorePropertiesFile = new File((String) project.property("debug.keystore.properties"))
-	} else {
-		if (!project.hasProperty("release.keystore.properties")) {
-			throw IllegalStateException("Missing definition for release.keystore.properties in gradle.properites!")
-		}else{
-			println "release.keystore.properties value = ${project.property("release.keystore.properties")}"
-		}
-		keystorePropertiesFile = new File((String) project.property("release.keystore.properties"))
-	}
-
-	if (keystorePropertiesFile.exists()) {
-		println "Loading keystore passwords from property file..."
-		Properties properties = new Properties()
-		properties.load(new FileInputStream(keystorePropertiesFile))
-		storePass = properties['keystore.store.password']
-		println("storePass[$storePass]")
-		keyAlias = properties['keystore.key.alias']
-		println("keyAlias[$keyAlias]")
-		keyPass = properties['keystore.key.password']
-		println("keyPass[$keyPass] isEmpty=${keyPass.isEmpty()}")
-	} else {
-		throw IllegalStateException("Missing *.keystore.properties file for isDebugTask=${isDebugTask}")
-	}
-
-	if (isDebugTask) {
-		android.signingConfigs.debug.storePassword = storePass
-		android.signingConfigs.debug.keyAlias = keyAlias
-		android.signingConfigs.debug.keyPassword = keyPass
-	} else {
-		android.signingConfigs.release.storePassword = storePass
-		android.signingConfigs.release.keyAlias = keyAlias
-		android.signingConfigs.release.keyPassword = keyPass
-	}
-}
-
-ext.renameArtifact = {variant, apkName ->
-	variant.outputs.all {
-		output ->
-			def date = new Date().format('yyyyMMdd')
-			outputFileName = "${apkName}-${project.name}-${variant.versionName}-${variant.versionCode}-${date}-${variant.name}.apk"
-	}
-}
-
-tasks.whenTaskAdded {
-	theTask ->
-		theTask.dependsOn "askForPasswords"
 }

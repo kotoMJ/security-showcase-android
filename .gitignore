@@ -68,12 +68,12 @@ proguard/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-#SSL
+
+/**/*-config.xml
+
+#SIGNING
 /extras/**/*.properties
 /extras/**/*.jks
-/**/*-config.xml
-app/src/androidTest/
-app/src/test/
-extras/keystore/
-extras/sreens/
-keystorecompat/local.properties
+/mobile-android-login-rest/extras/keystore/releaseKeystore.jks
+/mobile-android-login-rest/extras/keystore/releaseKeystore.properties
+/mobile-android-login-rest/extras/keystore/RELEASE_KEYSTORE_BASE64.txt

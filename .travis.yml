@@ -28,12 +28,12 @@ android:
 before_script:
   - "echo \"Build process is started \U0001F46F\""
   - mkdir extras/keystore
-  - echo $DEBUG_KEYSTORE_BASE64 | base64 --decode > extras/keystore/debugKeystore.jks
+  - echo $DEBUG_KEYSTORE_BASE64 | base64 --decode > mobile-android-login-rest/extras/keystore/debugKeystore.jks
   - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
-    $debugStorePassword $debugKeyAlias $debugKeyPassword > extras/keystore/debugKeystore.properties
-  - echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > extras/keystore/releaseKeystore.jks
+    $debugStorePassword $debugKeyAlias $debugKeyPassword > mobile-android-login-rest/extras/keystore/debugKeystore.properties
+  - echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > mobile-android-login-rest/extras/keystore/releaseKeystore.jks
   - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
-    $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > extras/keystore/releaseKeystore.properties
+    $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > mobile-android-login-rest/extras/keystore/releaseKeystore.properties
 
 script:
   #  - "./gradlew androidDependencies"
