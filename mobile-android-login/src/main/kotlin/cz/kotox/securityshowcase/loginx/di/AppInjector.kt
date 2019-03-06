@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import cz.kotox.securityshowcase.core.di.Injectable
-import cz.kotox.securityshowcase.loginx.SecurityShowcaseLoginRest
+import cz.kotox.securityshowcase.loginx.SecurityShowcaseLoginApplication
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
@@ -16,7 +16,7 @@ import dagger.android.support.HasSupportFragmentInjector
  * Helper class to automatically inject fragments if they implement [Injectable].
  */
 object AppInjector {
-	fun init(appOnScreenNavApplication: SecurityShowcaseLoginRest) {
+	fun init(appOnScreenNavApplication: SecurityShowcaseLoginApplication) {
 
 		DaggerAppComponent
 			.builder()

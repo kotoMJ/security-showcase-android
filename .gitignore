@@ -74,6 +74,6 @@ hs_err_pid*
 #SIGNING
 /extras/**/*.properties
 /extras/**/*.jks
-/mobile-android-login-rest/extras/keystore/releaseKeystore.jks
-/mobile-android-login-rest/extras/keystore/releaseKeystore.properties
-/mobile-android-login-rest/extras/keystore/RELEASE_KEYSTORE_BASE64.txt
+/mobile-android-login/extras/keystore/releaseKeystore.jks
+/mobile-android-login/extras/keystore/releaseKeystore.properties
+/mobile-android-login/extras/keystore/RELEASE_KEYSTORE_BASE64.txt
