@@ -1,18 +1,30 @@
 /**
  * Contains directories for mocking responses (should be in all tests + mock version of app)
  */
-def mock_files = ['src/mock/resources', '../mock_data/configs', '../mock_data/responses']
+//def mock_files = ['src/mock/resources', '../mock_data/configs', '../mock_data/responses']
 
 allprojects {
 	apply plugin: 'kotlin-android'
 	apply plugin: 'kotlin-android-extensions'
-	//apply plugin: 'kotlin-allopen'
 	apply plugin: 'kotlin-kapt'
-//	apply plugin: 'androidx.navigation.safeargs'
+	apply plugin: 'androidx.navigation.safeargs.kotlin'
 
-//	allOpen {
-//		annotation('cz.kotox.routines.core.OpenForMocking')
-//	}
+
+	def isTestTask = getGradle().getStartParameter().getTaskNames().any { name -> name.toLowerCase().contains("test") }
+
+	if (isTestTask) {
+		println "Applying allopen"
+
+		apply plugin: 'kotlin-allopen'
+		allOpen {
+			annotation('cz.kotox.routines.core.OpenForMocking')
+		}
+
+//		TODO enable code coverage here
+//		println "Applying jacoco"
+//		apply from: "$project_directory/jacoco.gradle"
+	}
+
 
 	kapt {
 		useBuildCache = true
@@ -144,9 +156,6 @@ allprojects {
 
 		// Common Support
 		implementation "com.android.support:appcompat-v7:$app_android_support_version"
-
-		// Common Kotlin
-		implementation "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
 
 		// Common Dagger (minimal dagger dependency to generate classes across all modules)
 		kapt "com.google.dagger:dagger-compiler:$app_dagger_version"

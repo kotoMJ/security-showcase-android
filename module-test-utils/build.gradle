@@ -80,7 +80,10 @@ android {
 
 dependencies {
 
-	implementation project(':module-core')
+	api project(':module-core')
+
+//	api "androidx.core:core-ktx:${app_androidx_ktx_core_version}"
+//	api "androidx.lifecycle:lifecycle-viewmodel-ktx:${app_androidx_lifecycle_viewmodel_ktx}"
 
 	/**
 	 *  UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST
@@ -90,9 +93,6 @@ dependencies {
 //	https://proandroiddev.com/mockito-2-x-over-powermock-migration-tips-and-tricks-top-ten-118c52abd1d8
 	api "org.powermock:powermock-api-mockito2:$app_powermock_version"
 	api "androidx.arch.core:core-testing:$app_androidx_core_testing_version"
-
-	implementation "androidx.core:core-ktx:${app_androidx_ktx_core_version}"
-	api "androidx.lifecycle:lifecycle-viewmodel-ktx:${app_androidx_lifecycle_viewmodel_ktx}"
 
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 

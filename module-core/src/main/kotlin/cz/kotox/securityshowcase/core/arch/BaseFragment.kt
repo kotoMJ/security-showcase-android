@@ -1,50 +1,118 @@
 package cz.kotox.securityshowcase.core.arch
 
-import android.view.Gravity
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.StringRes
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
-import cz.kotox.securityshowcase.core.R
+import cz.kotox.securityshowcase.core.AppInterface
 import cz.kotox.securityshowcase.core.di.Injectable
+import dagger.android.support.AndroidSupportInjection
+import timber.log.Timber
 import javax.inject.Inject
 
-abstract class BaseFragment : Fragment(), Injectable {
+abstract class BaseFragment : Fragment(), BaseUIScreen, Injectable {
 
 	companion object {
 		const val SNACK_BAR_MAX_LINES_DEFAULT = 4
 	}
 
 	@Inject
-	lateinit var viewModelFactory: ViewModelProvider.Factory
+	lateinit var appInterface: AppInterface
 
-	var lastSnackbar: Snackbar? = null
+	override val baseActivity: BaseActivity
+		get() = activity as? BaseActivity ?: throw IllegalStateException("No activity in this fragment, can't finish")
 
-	inline fun <reified VM : ViewModel> findViewModel(viewModel: Class<VM>, ofLifecycleOwner: Fragment = this, factory: ViewModelProvider.Factory = viewModelFactory) = ViewModelProviders.of(ofLifecycleOwner, factory).get(viewModel)
+	override fun getContext(): Context = super.getContext()!!
 
-	fun showToast(message: String, withOffset: Boolean = true) {
-		Toast.makeText(activity, message, Toast.LENGTH_SHORT).apply {
-			if (withOffset) {
-				setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 2 * getResources().getDimensionPixelOffset(R.dimen.global_bottom_bar_height))
-			}
-		}.show()
+	override var lastSnackbar: Snackbar? = null
+
+	override fun onAttach(context: Context) {
+		//CrashlyticsUtility.setCurrentFragmentKey(javaClass.simpleName)
+		Timber.v(javaClass.simpleName)
+		super.onAttach(context)
 	}
 
-	fun showSnackbar(view: View, @StringRes stringRes: Int, length: Int = Snackbar.LENGTH_LONG, maxLines: Int = SNACK_BAR_MAX_LINES_DEFAULT, config: (Snackbar.() -> Unit)? = null) {
-		showSnackbar(view, view.context.getString(stringRes), length, maxLines, config)
+	override fun onCreate(savedInstanceState: Bundle?) {
+		Timber.v(javaClass.simpleName)
+		AndroidSupportInjection.inject(this)
+		super.onCreate(savedInstanceState)
+		setHasOptionsMenu(true)
 	}
 
-	fun showSnackbar(view: View, message: String, length: Int = Snackbar.LENGTH_LONG, maxLines: Int = SNACK_BAR_MAX_LINES_DEFAULT, config: (Snackbar.() -> Unit)? = null) {
-		val newSnackbar = Snackbar.make(view, message, length).apply { config?.invoke(this) }
-		newSnackbar.view.findViewById<TextView>(R.id.snackbar_text)?.maxLines = maxLines
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+		Timber.v(javaClass.simpleName)
+		return super.onCreateView(inflater, container, savedInstanceState)
+	}
+
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		Timber.v(javaClass.simpleName)
+		super.onViewCreated(view, savedInstanceState)
+	}
+
+	override fun onActivityCreated(savedInstanceState: Bundle?) {
+		Timber.v(javaClass.simpleName)
+		super.onActivityCreated(savedInstanceState)
+	}
+
+	override fun onStart() {
+		Timber.v(javaClass.simpleName)
+		super.onStart()
+	}
+
+	override fun onResume() {
+		//CrashlyticsUtility.setCurrentFragmentKey(javaClass.simpleName)
+		Timber.v(javaClass.simpleName)
+		super.onResume()
+	}
+
+	override fun onPause() {
+		Timber.v(javaClass.simpleName)
+		super.onPause()
+	}
+
+	override fun onStop() {
+		Timber.v(javaClass.simpleName)
+		super.onStop()
+	}
+
+	override fun onDestroyView() {
+		Timber.v(javaClass.simpleName)
 		lastSnackbar?.dismiss()
-		lastSnackbar = newSnackbar
-		newSnackbar.show()
+		lastSnackbar = null
+		super.onDestroyView()
 	}
 
+	override fun onDestroy() {
+		Timber.v(javaClass.simpleName)
+		super.onDestroy()
+	}
+
+	override fun onDetach() {
+		Timber.v(javaClass.simpleName)
+		super.onDetach()
+	}
+
+	override fun getExtras(): Bundle? = activity?.intent?.extras
+
+	/**
+	 * Serves only as shortcut to activity.finish()
+	 * WARNING: has to be final, otherwise children fragments could override and think that the code will be called on finish
+	 */
+	final override fun finish() = super.finish()
+
+	/**
+	 * Custom method which provides onBackPressed functionality for fragments.
+	 * It's actually handled in activity, which tries to find last fragment on stack of fragments.
+	 * @return whether fragment consumed the back click
+	 */
+	open fun onBackPressed(): Boolean {
+		val lastFragment = childFragmentManager.fragments.lastOrNull { it.isResumed }
+		if (lastFragment != null && lastFragment is BaseFragment && lastFragment.onBackPressed()) {
+			return true
+		}
+		return false
+	}
 }

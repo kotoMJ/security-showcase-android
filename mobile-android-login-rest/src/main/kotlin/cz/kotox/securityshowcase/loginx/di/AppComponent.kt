@@ -1,6 +1,7 @@
 package cz.kotox.securityshowcase.loginx.di
 
 import android.app.Application
+import cz.kotox.securityshowcase.core.di.BaseDaggerModule
 import cz.kotox.securityshowcase.core.di.FeatureCoreModule
 import cz.kotox.securityshowcase.loginx.SecurityShowcaseLoginRest
 import dagger.BindsInstance
@@ -15,6 +16,7 @@ import javax.inject.Singleton
 	AndroidSupportInjectionModule::class,
 	FeatureCoreModule::class,
 	ViewModelModule::class,
+	BaseDaggerModule::class,
 	AppOnScreenNavDaggerModule::class
 ])
 interface AppComponent {

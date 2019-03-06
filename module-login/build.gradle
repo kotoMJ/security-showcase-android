@@ -1,0 +1,17 @@
+apply from: "../module-core/library.gradle"
+
+android {
+
+	defaultConfig {
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+	}
+
+}
+
+dependencies {
+	implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+	implementation project(':module-core')
+	implementation project(':module-test-utils')
+}
