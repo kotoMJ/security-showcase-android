@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import cz.kotox.securityshowcase.core.AppInterface
-import cz.kotox.securityshowcase.core.di.Injectable
 import dagger.android.support.AndroidSupportInjection
 import timber.log.Timber
 import javax.inject.Inject
 
-abstract class BaseFragment : Fragment(), BaseUIScreen, Injectable {
+abstract class BaseFragment : Fragment(), BaseUIScreen {
 
 	companion object {
 		const val SNACK_BAR_MAX_LINES_DEFAULT = 4

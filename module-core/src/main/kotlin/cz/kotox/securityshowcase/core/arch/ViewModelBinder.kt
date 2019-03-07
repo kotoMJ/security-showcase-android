@@ -6,9 +6,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import cz.kotox.securityshowcase.core.arch.event.Event
 import cz.kotox.securityshowcase.core.arch.event.EventObserver
-import cz.kotox.securityshowcase.core.di.Injectable
 
-interface ViewModelBinder<V : BaseViewModel, B : ViewDataBinding> : LifecycleOwner, BaseUIScreen, Injectable {
+interface ViewModelBinder<V : BaseViewModel, B : ViewDataBinding> : LifecycleOwner, BaseUIScreen {
 	var binding: B
 	var viewModel: V
 	val currentFragmentManager: FragmentManager
