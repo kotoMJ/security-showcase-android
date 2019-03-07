@@ -1,37 +1,36 @@
 package cz.kotox.securityshowcase.loginx
 
-import android.app.Activity
-import android.app.Application
-import androidx.multidex.MultiDexApplication
+import android.os.Bundle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.navigation.NavDeepLinkBuilder
 import cz.kotox.routines.BuildConfig
 import cz.kotox.routines.R
-import cz.kotox.securityshowcase.core.ApplicationInterface
-import cz.kotox.securityshowcase.core.FeatureCore
-import cz.kotox.securityshowcase.core.logging.timber.CrashReportingTree
-import cz.kotox.securityshowcase.loginx.di.AppInjector
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import timber.log.Timber
-import javax.inject.Inject
+import cz.kotox.securityshowcase.core.BaseApplication
+import cz.kotox.securityshowcase.core.entity.AppVersion
+import cz.kotox.securityshowcase.core.ktools.lazyUnsafe
+import cz.kotox.securityshowcase.loginx.di.AppComponent
+import cz.kotox.securityshowcase.loginx.di.DaggerAppComponent
 
-class SecurityShowcaseLoginApplication : MultiDexApplication(), ApplicationInterface, HasActivityInjector {
+class SecurityShowcaseLoginApplication : BaseApplication(), LifecycleObserver {
 
-	@Inject
-	lateinit var dispatchingActivityAndroidInjector: DispatchingAndroidInjector<Activity>
+	internal val appComponent: AppComponent by lazyUnsafe {
+		DaggerAppComponent
+			.builder()
+			.application(this)
+			.applicationInterface(this)
+			.appVersion(AppVersion(BuildConfig.VERSION_CODE, BuildConfig.VERSION_NAME))
+			.build()
+	}
 
 	override fun onCreate() {
 		super.onCreate()
+		appComponent.inject(this)
 
-		if (BuildConfig.DEBUG) {
-			Timber.plant(Timber.DebugTree())
-		} else {
-			Timber.plant(CrashReportingTree())
-		}
+		// run all init actions from all modules
+		appComponent.initActions.forEach { it.invoke() }
 
-		FeatureCore.init(this)
-		AppInjector.init(this)
+		ProcessLifecycleOwner.get().lifecycle.addObserver(this)
 	}
 
 	override fun navigateHome() {
@@ -42,11 +41,15 @@ class SecurityShowcaseLoginApplication : MultiDexApplication(), ApplicationInter
 		homePendingIntent.send()
 	}
 
-	override fun provideApplication(): Application = this
+	override fun redirectToLogin(args: Bundle?) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
 
-	override fun getVersionCode() = BuildConfig.VERSION_CODE
+	override fun crashlyticsLogException(e: Throwable) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
 
-	override fun getVersionName() = BuildConfig.VERSION_NAME
-
-	override fun activityInjector(): AndroidInjector<Activity> = dispatchingActivityAndroidInjector
+	override fun crashlyticsLogMessage(message: String) {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
 }

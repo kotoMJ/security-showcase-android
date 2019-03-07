@@ -2,9 +2,9 @@ package cz.kotox.routines
 
 import android.content.Context
 import android.content.SharedPreferences
-import cz.kotox.securityshowcase.core.PreferencesCore
-import cz.kotox.securityshowcase.core.PreferencesCore.Companion.PREFS_DEFAULT_VALUE
-import cz.kotox.securityshowcase.core.PreferencesCore.Companion.PREFS_SAMPLE_TOKEN
+import cz.kotox.securityshowcase.core.database.preferences.PreferencesCore
+import cz.kotox.securityshowcase.core.database.preferences.PreferencesCore.Companion.PREFS_DEFAULT_VALUE
+import cz.kotox.securityshowcase.core.database.preferences.PreferencesCore.Companion.PREFS_SAMPLE_TOKEN
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

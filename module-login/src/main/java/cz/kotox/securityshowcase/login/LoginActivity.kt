@@ -4,14 +4,12 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import cz.kotox.securityshowcase.core.PreferencesCore
 import cz.kotox.securityshowcase.core.arch.BaseActivity
-import dagger.android.DispatchingAndroidInjector
+import cz.kotox.securityshowcase.core.database.preferences.PreferencesCore
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -19,10 +17,6 @@ class LoginActivity : BaseActivity() {
 
 	@Inject
 	lateinit var preferencesCore: PreferencesCore
-
-	override fun supportFragmentInjector(): DispatchingAndroidInjector<Fragment> {
-		return dispatchingAndroidInjector
-	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

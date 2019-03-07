@@ -3,8 +3,8 @@ package cz.kotox.securityshowcase.loginx.ui
 import androidx.databinding.Bindable
 import androidx.lifecycle.MutableLiveData
 import cz.kotox.securityshowcase.core.FeatureCore
-import cz.kotox.securityshowcase.core.PreferencesCore
 import cz.kotox.securityshowcase.core.arch.BaseViewModel
+import cz.kotox.securityshowcase.core.database.preferences.PreferencesCore
 import cz.kotox.securityshowcase.core.entity.AppVersion
 import javax.inject.Inject
 

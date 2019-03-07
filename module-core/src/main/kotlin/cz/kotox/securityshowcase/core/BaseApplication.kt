@@ -19,6 +19,7 @@ import javax.inject.Singleton
 
 interface ApplicationInterfaceContract {
 	fun redirectToLogin(args: Bundle? = null)
+	fun navigateHome()
 	fun crashlyticsLogException(e: Throwable)
 	fun crashlyticsLogMessage(message: String)
 }

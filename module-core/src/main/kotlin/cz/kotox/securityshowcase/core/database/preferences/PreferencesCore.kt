@@ -1,9 +1,13 @@
-package cz.kotox.securityshowcase.core
+package cz.kotox.securityshowcase.core.database.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import cz.kotox.securityshowcase.core.OpenForMocking
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
+@OpenForMocking
 open class PreferencesCore @Inject constructor(
 	val context: Context,
 	private val sharedPreferences: SharedPreferences

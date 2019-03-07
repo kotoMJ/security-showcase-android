@@ -22,6 +22,6 @@ abstract class AppOnScreenNavDaggerModule {
 	@Binds
 	@IntoMap
 	@ViewModelKey(MainViewModel::class)
-	abstract fun bindSettingsViewModel(settingsViewModel: MainViewModel): ViewModel
+	abstract fun bindMainViewModel(mainViewModel: MainViewModel): ViewModel
 
 }
