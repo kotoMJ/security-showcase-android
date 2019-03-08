@@ -9,14 +9,14 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import cz.kotox.securityshowcase.core.arch.BaseActivity
-import cz.kotox.securityshowcase.core.database.preferences.PreferencesCore
+import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
 import timber.log.Timber
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
 
 	@Inject
-	lateinit var preferencesCore: PreferencesCore
+	lateinit var preferencesCore: PreferencesCommon
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

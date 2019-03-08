@@ -4,7 +4,7 @@ import androidx.databinding.Bindable
 import androidx.lifecycle.MutableLiveData
 import cz.kotox.securityshowcase.core.FeatureCore
 import cz.kotox.securityshowcase.core.arch.BaseViewModel
-import cz.kotox.securityshowcase.core.database.preferences.PreferencesCore
+import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
 import cz.kotox.securityshowcase.core.entity.AppVersion
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ class MainViewModel @Inject constructor(appVersion: AppVersion) : BaseViewModel(
 //	lateinit var appVersion: AppVersion
 
 	@Inject
-	lateinit var preferencesCore: PreferencesCore
+	lateinit var preferencesCore: PreferencesCommon
 
 	val token: MutableLiveData<String> = MutableLiveData()
 

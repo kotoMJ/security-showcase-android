@@ -2,9 +2,9 @@ package cz.kotox.routines
 
 import android.content.Context
 import android.content.SharedPreferences
-import cz.kotox.securityshowcase.core.database.preferences.PreferencesCore
-import cz.kotox.securityshowcase.core.database.preferences.PreferencesCore.Companion.PREFS_DEFAULT_VALUE
-import cz.kotox.securityshowcase.core.database.preferences.PreferencesCore.Companion.PREFS_SAMPLE_TOKEN
+import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
+import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon.Companion.PREFS_DEFAULT_VALUE
+import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon.Companion.PREFS_SAMPLE_TOKEN
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -28,12 +28,12 @@ class PreferencesCoreUnitTest {
 	@Mock
 	lateinit var editor: SharedPreferences.Editor
 
-	lateinit var preferencesCore: PreferencesCore
+	lateinit var preferencesCore: PreferencesCommon
 
 	@Before
 	fun setup() {
 		MockitoAnnotations.initMocks(this)
-		preferencesCore = Mockito.spy(PreferencesCore(context, sharedPreferences))
+		preferencesCore = Mockito.spy(PreferencesCommon(context, sharedPreferences))
 	}
 
 	@Test

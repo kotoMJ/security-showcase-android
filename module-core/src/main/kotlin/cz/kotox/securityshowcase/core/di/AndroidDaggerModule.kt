@@ -9,17 +9,14 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-open class FeatureCoreModule {
+object AndroidDaggerModule {
 	@Provides
 	@Singleton
-	open fun provideAppContext(application: Application): Context {
-		return application.applicationContext
-	}
+	@JvmStatic
+	fun provideAppContext(application: Application): Context = application.applicationContext
 
 	@Provides
 	@Singleton
-	fun provideSharedPreferences(context: Context): SharedPreferences {
-		return PreferenceManager.getDefaultSharedPreferences(context)
-	}
-
+	@JvmStatic
+	fun provideSharedPreferences(context: Context): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 }

@@ -3,9 +3,9 @@ package cz.kotox.securityshowcase.loginx.di
 import android.app.Application
 import cz.kotox.securityshowcase.core.ApplicationInterfaceContract
 import cz.kotox.securityshowcase.core.di.AppInitAction
-import cz.kotox.securityshowcase.core.di.BaseDaggerModule
-import cz.kotox.securityshowcase.core.di.FeatureCoreModule
+import cz.kotox.securityshowcase.core.di.CoreDaggerModule
 import cz.kotox.securityshowcase.core.entity.AppVersion
+import cz.kotox.securityshowcase.login.di.LoginDaggerModule
 import cz.kotox.securityshowcase.loginx.SecurityShowcaseLoginApplication
 import dagger.BindsInstance
 import dagger.Component
@@ -17,10 +17,10 @@ import javax.inject.Singleton
 @Component(modules = [
 	AndroidInjectionModule::class,
 	AndroidSupportInjectionModule::class,
-	FeatureCoreModule::class,
 	ViewModelModule::class,
-	BaseDaggerModule::class,
-	AppOnScreenNavDaggerModule::class
+	CoreDaggerModule::class,
+	LoginDaggerModule::class,
+	AppLoginDaggerModule::class
 ])
 interface AppComponent {
 	@Component.Builder
@@ -37,10 +37,9 @@ interface AppComponent {
 		fun build(): AppComponent
 	}
 
-	fun inject(appOnScreenNavApplication: SecurityShowcaseLoginApplication)
+	fun inject(loginApplication: SecurityShowcaseLoginApplication)
 
 	@get:AppInitAction
 	val initActions: Set<() -> Unit>
-
 
 }

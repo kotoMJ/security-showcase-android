@@ -8,10 +8,10 @@ import javax.inject.Singleton
 
 @Singleton
 @OpenForMocking
-open class PreferencesCore @Inject constructor(
+open class PreferencesCommon @Inject constructor(
 	val context: Context,
 	private val sharedPreferences: SharedPreferences
-) {
+) : LocalPreferences {
 
 	companion object {
 		const val PREFS_SAMPLE_TOKEN = "prefs_sample_token"
@@ -26,6 +26,10 @@ open class PreferencesCore @Inject constructor(
 
 	open fun clearSampleToken() {
 		sharedPreferences.edit().putString(PREFS_SAMPLE_TOKEN, null).apply()
+	}
+
+	override fun clearForSignOut() {
+		clearSampleToken()
 	}
 
 }

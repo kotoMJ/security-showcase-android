@@ -76,7 +76,7 @@ android {
             dimension = "env"
             versionNameSuffix "-mock"
             applicationIdSuffix ".mock"
-            resValue "string", "app_name", "ShowcaseLogin-M"
+            resValue "string", "app_name", "Login-M"
             ext.enableCrashlytics = false
         }
 
@@ -84,7 +84,7 @@ android {
             dimension = "env"
             versionNameSuffix "-dev"
             applicationIdSuffix ".dev"
-            resValue "string", "app_name", "ShowcaseLogin-D"
+            resValue "string", "app_name", "Login-D"
             ext.enableCrashlytics = true
         }
 
@@ -117,6 +117,7 @@ android {
 dependencies {
 
     implementation project(':module-core')
+    implementation project(':module-login')
     implementation project(':module-test-utils')
     implementation "com.android.support:multidex:$app_multidex_version"
 

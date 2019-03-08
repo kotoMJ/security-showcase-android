@@ -11,7 +11,7 @@ import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 @Module
-abstract class AppOnScreenNavDaggerModule {
+abstract class AppLoginDaggerModule {
 
 	@ContributesAndroidInjector()
 	abstract fun contributeMainActivity(): MainActivity
