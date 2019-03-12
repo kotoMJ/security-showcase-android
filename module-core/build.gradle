@@ -29,7 +29,7 @@ dependencies {
 
 	// Arch
 	api "androidx.lifecycle:lifecycle-extensions:$app_androidx_lifecycle_version"
-	kapt "androidx.lifecycle:lifecycle-compiler:$app_androidx_lifecycle_version"
+	annotationProcessor "androidx.lifecycle:lifecycle-compiler:$app_androidx_lifecycle_version"
 
 	api "androidx.core:core-ktx:${app_androidx_ktx_core_version}"
 
@@ -42,6 +42,10 @@ dependencies {
 	api "androidx.databinding:databinding-runtime:$app_androidx_databinding_version"
 	api "androidx.databinding:databinding-adapters:$app_androidx_databinding_version"
 
+	api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$app_koroutines_version"
+	api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$app_koroutines_version"
+
+
 	// Dagger (extended dependency on top of minimal dependency from common.gradle)
 	api "com.google.dagger:dagger:$app_dagger_version"
 	api "com.google.dagger:dagger-android:$app_dagger_version"
@@ -50,5 +54,6 @@ dependencies {
 
 	//Moshi (generic movement from gson to moshi)
 	api "com.squareup.moshi:moshi:$app_moshi_version"
-	api "com.squareup.retrofit2:converter-moshi:$app_moshi_converter_version"
+	api "com.squareup.retrofit2:retrofit:$app_retrofit_version"
+	api "com.squareup.retrofit2:converter-moshi:$app_retrofit_version"
 }

@@ -42,7 +42,7 @@ class LoginActivity : BaseActivity() {
 			Timber.d("Navigated to %s", dest)
 		}
 
-		Timber.d(">>>${preferencesCore.sampleToken}")
+		Timber.d(">>>${preferencesCore.jwtToken}")
 	}
 
 	private fun setupActionBar(navController: NavController) {

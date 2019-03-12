@@ -1,2 +1,20 @@
-<manifest
-	package="cz.kotox.securityshowcase.login" />
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	package="cz.kotox.securityshowcase.login">
+
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+	<application
+		android:allowBackup="false"
+		android:supportsRtl="true"
+		tools:replace="android:allowBackup">
+
+		<activity
+			android:name="cz.kotox.securityshowcase.login.LoginActivity"
+			android:windowSoftInputMode="stateAlwaysHidden"
+			android:theme="@style/Theme.LegalZoom.Light.SystemNavBarNoDivider" />
+
+	</application>
+</manifest>

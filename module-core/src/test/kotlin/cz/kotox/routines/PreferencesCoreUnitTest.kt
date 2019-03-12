@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
 import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon.Companion.PREFS_DEFAULT_VALUE
-import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon.Companion.PREFS_SAMPLE_TOKEN
+import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon.Companion.PREFS_JWT_TOKEN
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -38,7 +38,7 @@ class PreferencesCoreUnitTest {
 
 	@Test
 	fun `expect token value when request sampleToken`() {
-		Mockito.doReturn(TOKEN_VALUE).`when`(sharedPreferences).getString(PREFS_SAMPLE_TOKEN, PREFS_DEFAULT_VALUE)
+		Mockito.doReturn(TOKEN_VALUE).`when`(sharedPreferences).getString(PREFS_JWT_TOKEN, PREFS_DEFAULT_VALUE)
 		Assert.assertEquals(TOKEN_VALUE, preferencesCore.sampleToken)
 	}
 
@@ -47,7 +47,7 @@ class PreferencesCoreUnitTest {
 	@Test(expected = SampleTokenNullException::class)
 	fun `expect clearSampletoken put null to sampleToken value`() {
 		doReturn(editor).`when`(sharedPreferences).edit()
-		Mockito.`when`(sharedPreferences.edit().putString(PREFS_SAMPLE_TOKEN, null)).thenThrow(SampleTokenNullException())
-		preferencesCore.clearSampleToken()
+		Mockito.`when`(sharedPreferences.edit().putString(PREFS_JWT_TOKEN, null)).thenThrow(SampleTokenNullException())
+		preferencesCore.clearJwtToken()
 	}
 }

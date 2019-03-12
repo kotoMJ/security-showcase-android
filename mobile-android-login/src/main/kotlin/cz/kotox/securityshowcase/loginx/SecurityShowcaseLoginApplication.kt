@@ -42,7 +42,11 @@ class SecurityShowcaseLoginApplication : BaseApplication(), LifecycleObserver {
 	}
 
 	override fun redirectToLogin(args: Bundle?) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		val homePendingIntent = NavDeepLinkBuilder(this)
+			.setGraph(R.navigation.login_navigation)
+			.setDestination(R.id.login_screen)
+			.createPendingIntent()
+		homePendingIntent.send()
 	}
 
 	override fun crashlyticsLogException(e: Throwable) {

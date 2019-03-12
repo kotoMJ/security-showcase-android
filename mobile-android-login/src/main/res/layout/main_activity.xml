@@ -16,5 +16,6 @@
 		app:navGraph="@navigation/mobile_navigation"
 		app:defaultNavHost="true"
 		/>
+
 </LinearLayout>
 
