@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.loginx.di
+package cz.kotox.securityshowcase.login.di
 
 import androidx.lifecycle.ViewModelProvider
 import dagger.Binds

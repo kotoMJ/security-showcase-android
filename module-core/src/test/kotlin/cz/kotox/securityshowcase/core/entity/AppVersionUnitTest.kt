@@ -1,6 +1,5 @@
-package cz.kotox.routines.entity
+package cz.kotox.securityshowcase.core.entity
 
-import cz.kotox.securityshowcase.core.entity.AppVersion
 import org.junit.Assert
 import org.junit.Test
 

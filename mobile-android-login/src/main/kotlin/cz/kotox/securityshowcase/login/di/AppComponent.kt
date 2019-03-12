@@ -1,12 +1,11 @@
-package cz.kotox.securityshowcase.loginx.di
+package cz.kotox.securityshowcase.login.di
 
 import android.app.Application
 import cz.kotox.securityshowcase.core.ApplicationInterfaceContract
 import cz.kotox.securityshowcase.core.di.AppInitAction
 import cz.kotox.securityshowcase.core.di.CoreDaggerModule
 import cz.kotox.securityshowcase.core.entity.AppVersion
-import cz.kotox.securityshowcase.login.di.LoginDaggerModule
-import cz.kotox.securityshowcase.loginx.SecurityShowcaseLoginApplication
+import cz.kotox.securityshowcase.login.SecurityShowcaseLoginApplication
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

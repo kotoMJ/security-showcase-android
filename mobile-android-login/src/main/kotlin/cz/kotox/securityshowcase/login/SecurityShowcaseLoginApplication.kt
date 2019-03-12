@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.loginx
+package cz.kotox.securityshowcase.login
 
 import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
@@ -9,8 +9,8 @@ import cz.kotox.routines.R
 import cz.kotox.securityshowcase.core.BaseApplication
 import cz.kotox.securityshowcase.core.entity.AppVersion
 import cz.kotox.securityshowcase.core.ktools.lazyUnsafe
-import cz.kotox.securityshowcase.loginx.di.AppComponent
-import cz.kotox.securityshowcase.loginx.di.DaggerAppComponent
+import cz.kotox.securityshowcase.login.di.AppComponent
+import cz.kotox.securityshowcase.login.di.DaggerAppComponent
 
 class SecurityShowcaseLoginApplication : BaseApplication(), LifecycleObserver {
 

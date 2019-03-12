@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.loginx.ui
+package cz.kotox.securityshowcase.login.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

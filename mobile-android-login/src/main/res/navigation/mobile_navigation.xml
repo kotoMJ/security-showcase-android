@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/mobile_navigation"
 	app:startDestination="@id/launcher_home">
 
@@ -9,7 +10,7 @@
 
 	<fragment
 		android:id="@+id/launcher_home"
-		android:name="cz.kotox.securityshowcase.loginx.ui.MainFragment"
+		android:name="cz.kotox.securityshowcase.login.ui.MainFragment"
 		android:label="@string/home"
 		tools:layout="@layout/main_fragment">
 	</fragment>

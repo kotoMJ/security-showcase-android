@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.loginx.di
+package cz.kotox.securityshowcase.login.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

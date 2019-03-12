@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Singleton
 @OpenForMocking
-open class PreferencesCommon @Inject constructor(
+class PreferencesCommon @Inject constructor(
 	val context: Context,
 	private val sharedPreferences: SharedPreferences
 ) : LocalPreferences {
@@ -30,13 +30,13 @@ open class PreferencesCommon @Inject constructor(
 		sharedPreferences.edit().putLong(PREFS_USER_ID_TOKEN, ID_TOKEN_DEFAULT_VALUE).apply()
 	}
 
-	open var jwtToken: String
+	var jwtToken: String
 		get() = sharedPreferences.getString(PREFS_JWT_TOKEN, PREFS_DEFAULT_VALUE) ?: PREFS_DEFAULT_VALUE
 		set(userId) {
 			sharedPreferences.edit().putString(PREFS_JWT_TOKEN, userId).apply()
 		}
 
-	open fun clearJwtToken() {
+	fun clearJwtToken() {
 		sharedPreferences.edit().putString(PREFS_JWT_TOKEN, null).apply()
 	}
 

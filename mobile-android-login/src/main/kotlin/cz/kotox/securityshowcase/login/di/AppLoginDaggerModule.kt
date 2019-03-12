@@ -1,11 +1,11 @@
-package cz.kotox.securityshowcase.loginx.di
+package cz.kotox.securityshowcase.login.di
 
 import androidx.lifecycle.ViewModel
 import cz.kotox.securityshowcase.core.di.ViewModelKey
-import cz.kotox.securityshowcase.loginx.ui.MainActivity
-import cz.kotox.securityshowcase.loginx.ui.MainFragment
-import cz.kotox.securityshowcase.loginx.ui.MainViewModel
-import cz.kotox.securityshowcase.loginx.ui.SplashActivity
+import cz.kotox.securityshowcase.login.ui.MainActivity
+import cz.kotox.securityshowcase.login.ui.MainFragment
+import cz.kotox.securityshowcase.login.ui.MainViewModel
+import cz.kotox.securityshowcase.login.ui.SplashActivity
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

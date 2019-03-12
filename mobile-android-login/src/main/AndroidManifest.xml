@@ -21,16 +21,16 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 
 	<application
-		android:name="cz.kotox.securityshowcase.loginx.SecurityShowcaseLoginApplication"
+		android:name="cz.kotox.securityshowcase.login.SecurityShowcaseLoginApplication"
 		android:allowBackup="false"
 		android:icon="@mipmap/ic_launcher"
 		android:label="@string/app_name"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.SecurityShowcase.Light"
 		tools:ignore="GoogleAppIndexingWarning">
-		<activity android:name="cz.kotox.securityshowcase.loginx.ui.MainActivity" />
+		<activity android:name="cz.kotox.securityshowcase.login.ui.MainActivity" />
 
-		<activity android:name="cz.kotox.securityshowcase.loginx.ui.SplashActivity">
+		<activity android:name="cz.kotox.securityshowcase.login.ui.SplashActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.DEFAULT" />
