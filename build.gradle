@@ -5,16 +5,11 @@ buildscript {
 	ext {
 		keystore_compat_version = '2.0.1'
 
-		//COMMON (APP+LIBRARY)
 		sdk_version = 28
 		min_sdk_version = 19
 		build_tools_version = '28.0.3'
 		kotlin_version = '1.3.21'
 
-		//android_binding_version = '1.3.3'
-		//android_gradle_version = '3.5.0-alpha07'
-
-		//APP ONLY
 		app_androidx_ktx_core_version = '1.0.1'
 		app_androidx_lifecycle_viewmodel_ktx = '2.1.0-alpha02'
 
@@ -63,29 +58,6 @@ buildscript {
 
 		app_androidx_core_testing_version = "2.0.0"
 		app_hamcrest_library_version = "1.3"
-
-//		build_tools_version = '27.0.0'
-//		android_gradle_version = '3.5.0-alpha04'
-//		android_binding_version = '1.3.3'
-//		arch_lifecycle_version = "1.0.0"
-//		support_library_version = "27.0.2"
-//		constraint_layout_version = "1.0.2"
-//		rxandroid_version = '2.0.1'
-//		rxjava_version = '2.1.2'
-//
-//		//TOOLS
-//		gson_version = '2.8.1'
-//		retrofit_version = "2.2.0"
-//		okhttp_version = "3.8.1"
-//		apollo_graphql_version = '0.3.0'
-//		tatarka_version = "2.2.0"
-//		leak_canary_version = "1.5.1"
-//		parceler_version = "1.1.6"
-//		jwtdecode = "1.1.0"
-//		glide_version = "3.8.0"
-//
-//		//DEPRECATED
-//		alfonz_version = '0.7.0'
 	}
 
 	repositories {
