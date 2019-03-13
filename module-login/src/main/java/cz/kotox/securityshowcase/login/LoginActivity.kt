@@ -1,5 +1,7 @@
 package cz.kotox.securityshowcase.login
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.MenuItem
@@ -13,6 +15,14 @@ import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
 import timber.log.Timber
 import javax.inject.Inject
 
+fun Context.LoginActivityIntent(/*user: User*/): Intent {
+	return Intent(this, LoginActivity::class.java).apply {
+		//putExtra(INTENT_USER_ID, user.id)
+	}
+}
+
+//private const val INTENT_USER_ID = "user_id"
+
 class LoginActivity : BaseActivity() {
 
 	@Inject
@@ -20,6 +30,11 @@ class LoginActivity : BaseActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+
+		//val userId = intent.getStringExtra(INTENT_USER_ID)
+		//requireNotNull(userId){"no user_id provided in Intent extras"}
+
+
 		setContentView(R.layout.activity_login)
 
 		val toolbar = findViewById<Toolbar>(R.id.toolbar)

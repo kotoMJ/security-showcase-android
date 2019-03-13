@@ -2,6 +2,7 @@ package cz.kotox.securityshowcase.login.ui
 
 import android.os.Bundle
 import cz.kotox.securityshowcase.core.arch.BaseActivity
+import cz.kotox.securityshowcase.login.LoginActivityIntent
 
 class SplashActivity : BaseActivity() {
 
@@ -14,6 +15,8 @@ class SplashActivity : BaseActivity() {
 //			2B) FAILURE -> smeruj na Login screenu
 //		3) NE -> smeruj na Login screenu
 //		4) finish() vzdy
+
+		startActivity(LoginActivityIntent())
 
 	}
 

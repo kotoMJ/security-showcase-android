@@ -9,7 +9,7 @@
 	<fragment
 		android:id="@+id/login_screen"
 		android:name="cz.kotox.securityshowcase.login.LoginFragment"
-		android:label="Source definition"
+		android:label="Login screen"
 		tools:layout="@layout/fragment_login">
 		<argument
 			android:name="setargs"
