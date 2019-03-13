@@ -80,7 +80,7 @@ android {
 
 dependencies {
 
-	api project(':module-core')
+	implementation project(':module-core')
 
 //	api "androidx.core:core-ktx:${app_androidx_ktx_core_version}"
 //	api "androidx.lifecycle:lifecycle-viewmodel-ktx:${app_androidx_lifecycle_viewmodel_ktx}"

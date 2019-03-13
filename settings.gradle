@@ -1,4 +1,4 @@
-include ':android-keystore-compat', ':module-login',
+include ':android-keystore-compat',
 		':android-keystore-compat-19',
 		':android-keystore-compat-21',
 		':android-keystore-compat-23',
@@ -7,4 +7,5 @@ include ':android-keystore-compat', ':module-login',
 		':android-keystore-compat-base',
 		':module-test-utils',
 		":module-core",
+		':module-login',
 		':mobile-android-login'

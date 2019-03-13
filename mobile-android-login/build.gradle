@@ -23,167 +23,166 @@ apply plugin: 'kotlin-kapt'
 final APK_NAME = "SecurityShowcaseLoginRest"
 
 android {
-    compileSdkVersion sdk_version
-    defaultConfig {
-        applicationId 'cz.kotox.securityshowcase.loginx'
-        minSdkVersion 19
-        targetSdkVersion sdk_version
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resValue "string", "app_name", "AppScrNav"
-        multiDexEnabled true
-    }
+	compileSdkVersion sdk_version
+	defaultConfig {
+		applicationId 'cz.kotox.securityshowcase.login'
+		minSdkVersion 19
+		targetSdkVersion sdk_version
+		versionCode 1
+		versionName "1.0"
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+		multiDexEnabled true
+	}
 
-    signingConfigs {
-        release {
-            // passwords and alias are obtained via askForPasswords task
-            storeFile file("../${project.property('release.keystore.file')}")
-            storePassword "releaseUnitinitializedStorePassword"
-            keyAlias "releaseUnitializedKeyAlias"
-            keyPassword "releaseUninitializedKeyPassword"
-        }
-        debug {
-            // passwords and alias are obtained via askForPasswords task
-            storeFile file("../${project.property('debug.keystore.file')}")
-            storePassword "debugUnitinitializedStorePassword"
-            keyAlias "debugUnitializedKeyAlias"
-            keyPassword "debugUninitializedKeyPassword"
-        }
-    }
+	signingConfigs {
+		release {
+			// passwords and alias are obtained via askForPasswords task
+			storeFile file("../${project.property('release.keystore.file')}")
+			storePassword "releaseUnitinitializedStorePassword"
+			keyAlias "releaseUnitializedKeyAlias"
+			keyPassword "releaseUninitializedKeyPassword"
+		}
+		debug {
+			// passwords and alias are obtained via askForPasswords task
+			storeFile file("../${project.property('debug.keystore.file')}")
+			storePassword "debugUnitinitializedStorePassword"
+			keyAlias "debugUnitializedKeyAlias"
+			keyPassword "debugUninitializedKeyPassword"
+		}
+	}
 
-    buildTypes {
-        release {
-            signingConfig android.signingConfigs.release
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            ext.enableCrashlytics = true
-        }
-        debug {
-            signingConfig android.signingConfigs.debug
-            minifyEnabled false
-            ext.enableCrashlytics = false
-        }
-    }
+	buildTypes {
+		release {
+			signingConfig android.signingConfigs.release
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			ext.enableCrashlytics = true
+		}
+		debug {
+			signingConfig android.signingConfigs.debug
+			minifyEnabled false
+			ext.enableCrashlytics = false
+		}
+	}
 
-    dataBinding {
-        enabled = true
-    }
-    flavorDimensions "env"
+	dataBinding {
+		enabled = true
+	}
+	flavorDimensions "env"
 
-    productFlavors {
-        mock {
-            dimension = "env"
-            versionNameSuffix "-mock"
-            applicationIdSuffix ".mock"
-            resValue "string", "app_name", "Login-M"
-            ext.enableCrashlytics = false
-        }
+	productFlavors {
+		mock {
+			dimension = "env"
+			versionNameSuffix "-mock"
+			applicationIdSuffix ".mock"
+			resValue "string", "app_name", "Login-M"
+			ext.enableCrashlytics = false
+		}
 
-        dev {
-            dimension = "env"
-            versionNameSuffix "-dev"
-            applicationIdSuffix ".dev"
-            resValue "string", "app_name", "Login-D"
-            ext.enableCrashlytics = true
-        }
+		dev {
+			dimension = "env"
+			versionNameSuffix "-dev"
+			applicationIdSuffix ".dev"
+			resValue "string", "app_name", "Login-D"
+			ext.enableCrashlytics = true
+		}
 
-        production {
-            dimension = "env"
-            applicationIdSuffix ".prod"
-            resValue "string", "app_name", "ShowcaseLogin"
-            ext.enableCrashlytics = true
-        }
-    }
+		production {
+			dimension = "env"
+			applicationIdSuffix ".prod"
+			resValue "string", "app_name", "ShowcaseLogin"
+			ext.enableCrashlytics = true
+		}
+	}
 
-    lintOptions {
-        abortOnError false
-    }
+	lintOptions {
+		abortOnError false
+	}
 
-    applicationVariants.all {variant ->
+	applicationVariants.all {variant ->
 
-        //exclude test utils from any generated apk variant
-        variant.getCompileConfiguration().exclude module: 'module-test-utils'
-        variant.getRuntimeConfiguration().exclude module: 'modole-test-utils'
-        renameArtifact(variant, APK_NAME)
+		//exclude test utils from any generated apk variant
+		variant.getCompileConfiguration().exclude module: 'module-test-utils'
+		variant.getRuntimeConfiguration().exclude module: 'modole-test-utils'
+		renameArtifact(variant, APK_NAME)
 
 //        def filesAuthorityValue = applicationId + ".fileprovider"
 //        variant.buildConfigField "String", "FILES_AUTHORITY", "\"${filesAuthorityValue}\""
 //        variant.getMergedFlavor().manifestPlaceholders = [filesAuthority: filesAuthorityValue]
-    }
+	}
 
 }
 
 dependencies {
 
-    implementation project(':module-core')
-    implementation project(':module-login')
-    implementation project(':module-test-utils')
-    implementation "com.android.support:multidex:$app_multidex_version"
+	implementation project(':module-core')
+	implementation project(':module-login')
+	implementation project(':module-test-utils')
+	implementation "androidx.multidex:multidex:$app_multidex_version"
 
 }
 
 task askForPasswords {
 
-    def storePass
-    def keyAlias
-    def keyPass
+	def storePass
+	def keyAlias
+	def keyPass
 
-    def isDebugTask = getGradle().getStartParameter().getTaskNames().any {name -> name.toLowerCase().contains("debug")}
+	def isDebugTask = getGradle().getStartParameter().getTaskNames().any {name -> name.toLowerCase().contains("debug")}
 
-    def keystorePropertiesFile
+	def keystorePropertiesFile
 
-    if (isDebugTask && project.hasProperty("debug.keystore.properties")) {
-        if (!project.hasProperty("debug.keystore.properties")) {
-            throw IllegalStateException("Missing definition for debug.keystore.properties in gradle.properites!")
-        }else{
-            println "debug.keystore.properties value = ${project.property("debug.keystore.properties")}"
-        }
-        keystorePropertiesFile = new File((String) project.property("debug.keystore.properties"))
-    } else {
-        if (!project.hasProperty("release.keystore.properties")) {
-            throw IllegalStateException("Missing definition for release.keystore.properties in gradle.properites!")
-        }else{
-            println "release.keystore.properties value = ${project.property("release.keystore.properties")}"
-        }
-        keystorePropertiesFile = new File((String) project.property("release.keystore.properties"))
-    }
+	if (isDebugTask && project.hasProperty("debug.keystore.properties")) {
+		if (!project.hasProperty("debug.keystore.properties")) {
+			throw IllegalStateException("Missing definition for debug.keystore.properties in gradle.properites!")
+		} else {
+			println "debug.keystore.properties value = ${project.property("debug.keystore.properties")}"
+		}
+		keystorePropertiesFile = new File((String) project.property("debug.keystore.properties"))
+	} else {
+		if (!project.hasProperty("release.keystore.properties")) {
+			throw IllegalStateException("Missing definition for release.keystore.properties in gradle.properites!")
+		} else {
+			println "release.keystore.properties value = ${project.property("release.keystore.properties")}"
+		}
+		keystorePropertiesFile = new File((String) project.property("release.keystore.properties"))
+	}
 
-    if (keystorePropertiesFile.exists()) {
-        println "Loading keystore passwords from property file..."
-        Properties properties = new Properties()
-        properties.load(new FileInputStream(keystorePropertiesFile))
-        storePass = properties['keystore.store.password']
-        println("storePass[$storePass]")
-        keyAlias = properties['keystore.key.alias']
-        println("keyAlias[$keyAlias]")
-        keyPass = properties['keystore.key.password']
-        println("keyPass[$keyPass] isEmpty=${keyPass.isEmpty()}")
-    } else {
-        throw IllegalStateException("Missing *.keystore.properties ${keystorePropertiesFile} file for isDebugTask=${isDebugTask}")
-    }
+	if (keystorePropertiesFile.exists()) {
+		println "Loading keystore passwords from property file..."
+		Properties properties = new Properties()
+		properties.load(new FileInputStream(keystorePropertiesFile))
+		storePass = properties['keystore.store.password']
+		println("storePass[$storePass]")
+		keyAlias = properties['keystore.key.alias']
+		println("keyAlias[$keyAlias]")
+		keyPass = properties['keystore.key.password']
+		println("keyPass[$keyPass] isEmpty=${keyPass.isEmpty()}")
+	} else {
+		throw IllegalStateException("Missing *.keystore.properties ${keystorePropertiesFile} file for isDebugTask=${isDebugTask}")
+	}
 
-    if (isDebugTask) {
-        android.signingConfigs.debug.storePassword = storePass
-        android.signingConfigs.debug.keyAlias = keyAlias
-        android.signingConfigs.debug.keyPassword = keyPass
-    } else {
-        android.signingConfigs.release.storePassword = storePass
-        android.signingConfigs.release.keyAlias = keyAlias
-        android.signingConfigs.release.keyPassword = keyPass
-    }
+	if (isDebugTask) {
+		android.signingConfigs.debug.storePassword = storePass
+		android.signingConfigs.debug.keyAlias = keyAlias
+		android.signingConfigs.debug.keyPassword = keyPass
+	} else {
+		android.signingConfigs.release.storePassword = storePass
+		android.signingConfigs.release.keyAlias = keyAlias
+		android.signingConfigs.release.keyPassword = keyPass
+	}
 }
 
 ext.renameArtifact = {variant, apkName ->
-    variant.outputs.all {
-        output ->
-            def date = new Date().format('yyyyMMdd')
-            outputFileName = "${apkName}-${variant.versionName}-${variant.versionCode}-${date}-${variant.name}.apk"
-            //outputFileName = "${apkName}-${project.name}-${variant.versionName}-${variant.versionCode}-${date}-${variant.name}.apk"
-    }
+	variant.outputs.all {
+		output ->
+			def date = new Date().format('yyyyMMdd')
+			outputFileName = "${apkName}-${variant.versionName}-${variant.versionCode}-${date}-${variant.name}.apk"
+			//outputFileName = "${apkName}-${project.name}-${variant.versionName}-${variant.versionCode}-${date}-${variant.name}.apk"
+	}
 }
 
 tasks.whenTaskAdded {
-    theTask ->
-        theTask.dependsOn "askForPasswords"
+	theTask ->
+		theTask.dependsOn "askForPasswords"
 }

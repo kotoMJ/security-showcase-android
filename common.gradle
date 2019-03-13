@@ -155,7 +155,7 @@ allprojects {
 		implementation "android.arch.navigation:navigation-ui:$app_android_navigation_version"
 
 		// Common Support
-		implementation "com.android.support:appcompat-v7:$app_android_support_version"
+		implementation "androidx.appcompat:appcompat:$app_android_support_version"
 
 		// Common Dagger (minimal dagger dependency to generate classes across all modules)
 		kapt "com.google.dagger:dagger-compiler:$app_dagger_version"

@@ -102,6 +102,5 @@ GraphiQL console allows to try call query manually, let's try it here:
 
 **Dependency diagnostic**
 
-  * `./gradlew dependencyReport --configuration compile`<br/>
-  * `./gradlew dependencyInsighty --configuration compile --dependency com.android.support:appcompat-v7`<br/>
-  * `./gradlew dependencyInsighty --configuration compile --dependency org.jetbrains.kotlin:kotlin-stdlib`<br/>
+  * `./gradlew mobile-android-login:dependencies --scan`<br/>
+  
