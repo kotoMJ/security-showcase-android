@@ -16,4 +16,9 @@
 		<item name="boxBackgroundColor">@color/text_field_background</item>
 	</style>
 
+	<style name="Widget.SecurityShowcase.TextInputLayout.OutlinedBox"
+		parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+		<item name="boxBackgroundColor">@color/text_field_background</item>
+	</style>
+
 </resources>

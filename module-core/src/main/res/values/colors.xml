@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+	tools:ignore="MissingDefaultResource">
 	<color name="menu_icon_normal">#E2E7ED</color>
 	<color name="menu_icon_selected">#3274FF</color>
 

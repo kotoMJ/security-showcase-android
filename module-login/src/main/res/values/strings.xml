@@ -1,4 +1,5 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+	tools:ignore="ExtraTranslation">
 	<string name="app_name">Login</string>
 	<string name="hint_email">Enter email</string>
 	<string name="hint_password">Enter password</string>
