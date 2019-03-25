@@ -18,10 +18,15 @@ class LoginFragment : BaseFragmentViewModel<LoginViewModel, FragmentLoginBinding
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		val view = super.onCreateView(inflater, container, savedInstanceState)
 
-		binding.floatingActionButton.setOnClickListener {
-			//showSnackbar(binding.root, "hop")
+//		binding.floatingActionButton.setOnClickListener {
+//			//showSnackbar(binding.root, "hop")
+//
+//		}
 
+		binding.loginButton.setOnClickListener {
+			showSnackbar(binding.root, "Login action ...")
 		}
+
 		return view
 	}
 }
