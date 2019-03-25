@@ -3,6 +3,11 @@
 	<color name="menu_icon_normal">#E2E7ED</color>
 	<color name="menu_icon_selected">#3274FF</color>
 
+	<!--<color name="background">#FAFAFA</color> -->
+	<color name="background">#FFFFFF</color>
+	<color name="text_field_background">@color/background</color>
+
+
 	<color name="global_primary">#FFFFFF</color>
 	<color name="global_primary_dark">#FFFFFF</color>
 	<color name="global_accent">#3274ff</color>
