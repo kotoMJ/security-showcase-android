@@ -5,8 +5,8 @@
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">?attr/actionBarSize</item>
 		<item name="android:background">?attr/colorPrimary</item>
-		<item name="android:theme">@style/Theme.SecurityShowcase.Toolbar</item>
-		<item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+		<!--<item name="android:theme">@style/Theme.SecurityShowcase.Toolbar</item>-->
+		<!--<item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>-->
 	</style>
 
 

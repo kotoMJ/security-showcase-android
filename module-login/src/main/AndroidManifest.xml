@@ -9,12 +9,13 @@
 	<application
 		android:allowBackup="false"
 		android:supportsRtl="true"
+		android:theme="@style/Theme.SecurityShowcase"
 		tools:replace="android:allowBackup">
 
 		<activity
 			android:name="cz.kotox.securityshowcase.login.LoginActivity"
 			android:windowSoftInputMode="stateAlwaysHidden"
-			android:theme="@style/Theme.LegalZoom.Light.SystemNavBarNoDivider" />
+			android:theme="@style/Theme.SecurityShowcase.SystemNavBarNoDivider" />
 
 	</application>
 </manifest>
