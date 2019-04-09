@@ -266,7 +266,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	private fun createNewKeyPair(aliasText: String) {
 		try {
 			val start = Calendar.getInstance()
-			start.add(Calendar.MINUTE, -1)//Prevent KeyNotYetValidException for encryption
+			start.add(Calendar.DAY_OF_YEAR, -1)//Prevent KeyNotYetValidException for encryption
 			val end = Calendar.getInstance()
 			end.add(Calendar.YEAR, 1)//TODO handle with outdated certificates!
 			keystoreCompatImpl.generateKeyPair(aliasText, start.time, end.time, this.certSubject, this.context)
