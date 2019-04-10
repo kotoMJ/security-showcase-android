@@ -1,10 +1,11 @@
 # Release notes for Security Showcase app
 
+
+## SHOWCASE-3.0.2
+* Update with usage of KeystoreCompat 2.0.3 (Prevent KeyNotValidException for some Huawei devices)
+
 ## SHOWCASE-3.0.1
 * Google's requirement fix to fulfill automatically DEVICE ADMIN disabling (when security in the app is disabled)
-
-
-
 
 ## SHOWCASE-2.0.1
 * Fix proguard related to graph-ql
