@@ -2,7 +2,8 @@
 
 buildscript {
 	ext {
-		keystore_compat_version = '2.0.1'
+		keystore_compat_version_latest = '2.0.3'
+		keystore_compat_version_impl = '2.0.1'
 
 		//BASE
 		min_sdk_version = 16
