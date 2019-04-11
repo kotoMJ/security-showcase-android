@@ -367,14 +367,16 @@ class YourEnrollmentFragment() {
 
 }
 ```
-#### 6.1 API 19 APP/GOOGLE PLAY DISCLAIMER!
+#### 6.1 API 19 APP ENROLLMENT DISCLAIMER!
+
 Don't forget to warn user, that enrollment in your app for API 19 requires DEVICE ADMIN RIGHT for lock screen!  
 Using `KestoreCompat.deactivate` command then automatically ensures to deactivate this admin right too.
 
 ![DEVICE_ADMIN_RIGHTS](../extras/screens/scr_DEVICE_ADMIN_RIGHTS.png)
 
-Don't forget to mention this also in Full description of the app in the Google Play.
-Your app would be removed from store otherwise.
+#### 6.2 API 19 GOOGLE PLAY DISCLAIMER!
+Don't forget to mention this also in **Full description** of the app in the Google Play.  
+_Your app would be removed from store otherwise._
 
 ```
 This app uses the Device Administrator permission for the Android version KitKat (API 4.4.4).  
