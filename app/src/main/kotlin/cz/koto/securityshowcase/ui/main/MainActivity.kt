@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatDelegate
-import cz.koto.keystorecompat.base.utility.runSinceKitKat
 import cz.koto.securityshowcase.ContextProvider
 import cz.koto.securityshowcase.R
 import cz.koto.securityshowcase.SecurityApplication
@@ -44,7 +43,7 @@ class MainActivity : BaseArchActivity() {
 
 		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 		super.onCreate(savedInstanceState)
-		runSinceKitKat { keystoreCompat.lockScreenSuccessful() }
+		keystoreCompat.lockScreenSuccessful()
 
 		if (savedInstanceState == null)
 			switchToFragment(InfoFragment.newInstance(), false)

@@ -26,6 +26,8 @@ or StackOverflow discussion. **The main point of this library is to provide the 
 The backward support is something, what all available libraries and blog posts lacks!
 
 <br/>
+[KeystoreCompat documentation](./android-keystore-compat/readme.md)   
+<br/>  
 
 | KeystoreCompat variant        | Readme  															| JCenter 											 |
 | ----------------------------- | ----------------------------------------------------------------- | -------------------------------------------------- |

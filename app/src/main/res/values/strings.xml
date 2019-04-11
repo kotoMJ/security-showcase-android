@@ -25,6 +25,7 @@
 	<string name="login_fill_in_test_account">Fill in test account</string>
 
 	<string name="logged_in_info_header">This is secured area.</string>
+	<string name="logged_in_info_enrollment">To enroll credentials use Enrollment Section</string>
 
 	<string name="settings_security_label">Security</string>
 	<string name="settings_security_empty">No security options available for your device.</string>

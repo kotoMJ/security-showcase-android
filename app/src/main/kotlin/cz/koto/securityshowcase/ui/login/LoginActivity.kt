@@ -21,7 +21,6 @@ import cz.koto.securityshowcase.utility.applicationEvents
 
 class LoginActivity : BaseArchActivity() {
 
-
 	companion object {
 		val FORCE_SIGNUP_REQUEST = 1111
 	}
@@ -57,7 +56,6 @@ class LoginActivity : BaseArchActivity() {
 
 	}
 
-
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 		if (requestCode == FORCE_SIGNUP_REQUEST) {
 			if (resultCode == Activity.RESULT_CANCELED) {
@@ -73,24 +71,31 @@ class LoginActivity : BaseArchActivity() {
 	fun onLoginDisplayed(firstAttachment: Boolean) {
 		runSinceKitKat {
 			if (keystoreCompat.hasSecretLoadable()) {
-				keystoreCompat.loadSecretAsString({ decryptResult ->
-					decryptResult.split(';').let {
-						viewModel?.email?.set(it[0])
-						viewModel?.password?.set(it[1])
-						viewModel?.signInGql()
-					}
-				}, { exception ->
-					CredentialStorage.dismissForceLockScreenFlag()
-					if (exception is ForceLockScreenKitKatException) {
-						this.startActivityForResult(exception.lockIntent, FORCE_SIGNUP_REQUEST)
-					} else {
-						Logcat.e(exception, "")
-						CredentialStorage.performLogout()
-						forceAndroidAuth(getString(R.string.kc_lock_screen_title), getString(R.string.kc_lock_screen_description),
+				keystoreCompat.loadSecretAsString(
+					{ decryptResult ->
+						decryptResult.split(';').let {
+							viewModel?.email?.set(it[0])
+							viewModel?.password?.set(it[1])
+							viewModel?.signInGql()
+						}
+					},
+					{ exception ->
+						CredentialStorage.dismissForceLockScreenFlag()
+						if (exception is ForceLockScreenKitKatException) {
+							this.startActivityForResult(exception.lockIntent, FORCE_SIGNUP_REQUEST)
+						} else {
+							Logcat.e(exception, "")
+							CredentialStorage.performLogout()
+
+							forceAndroidAuth(getString(R.string.kc_lock_screen_title),
+								getString(R.string.kc_lock_screen_description),
 								{ intent -> this.startActivityForResult(intent, FORCE_SIGNUP_REQUEST) },
-								keystoreCompat.context)
-					}
-				}, CredentialStorage.forceLockScreenFlag)
+								keystoreCompat.context
+							)
+						}
+					},
+					CredentialStorage.forceLockScreenFlag
+				)
 			} else {
 				Logcat.d("Use standard login.")
 			}
