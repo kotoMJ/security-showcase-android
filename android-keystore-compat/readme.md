@@ -127,7 +127,7 @@ class YourKeystoreCompatConfig : KeystoreCompatConfig() {
 </resources>
 ```
 
-### 2. KeystoreCopmpat instance
+### 3. KeystoreCopmpat instance
 
 KeystoreCompat since 2.0 is not static anymore, so first step is to get instance to work with.
 ```kotlin
@@ -146,7 +146,7 @@ KeystoreCompat since 2.0 is not static anymore, so first step is to get instance
 }
 ```
 
-### 3. In memory object for credentials handling
+### 4. Example of in memory object for credentials handling
 
 Example of in memory credential storage object
 ```kotlin
@@ -200,7 +200,7 @@ object CredentialStorage {
 ```
 
 
-### 4. On login page
+### 5. On login page
 ```kotlin
 import cz.koto.keystorecompat.base.exception.ForceLockScreenKitKatException
 import cz.koto.keystorecompat.base.utility.forceAndroidAuth
