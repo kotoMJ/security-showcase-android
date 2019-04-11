@@ -37,6 +37,10 @@ If your application supports API lower than 19, include this line to app's Andro
 ```
 
 ### Install KeystoreCompat min. API 19
+| KeystoreCompat variant        | JCenter 											 |
+| ----------------------------- | -------------------------------------------------- |
+| KeystoreCompat      		    | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
+
 ```groovy
 dependencies {
 	api("cz.koto:android-keystore-compat:2.0.3") {
@@ -55,7 +59,7 @@ dependencies {
 ### Install KeystoreCompat min. API 21
 | KeystoreCompat variant        | Readme  															| JCenter 											 |
 | ----------------------------- | ----------------------------------------------------------------- | -------------------------------------------------- |
-| KeystoreCompat L+      		| [KeystoreCompat-elPlus](../android-keystore-compat-elplus/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
+| KeystoreCompat L+      		| [KeystoreCompat-elPlus](../android-keystore-compat-elplus/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat-elplus/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat-elplus/_latestVersion) |
 
 ```groovy
 dependencies {
@@ -74,7 +78,7 @@ dependencies {
 ### Install KeystoreCompat min. API 23
 | KeystoreCompat variant        | Readme  															| JCenter 											 |
 | ----------------------------- | ----------------------------------------------------------------- | -------------------------------------------------- |
-| KeystoreCompat M+				| [KeystoreCompat-emPlus](../android-keystore-compat-emplus/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
+| KeystoreCompat M+				| [KeystoreCompat-emPlus](../android-keystore-compat-emplus/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat-emplus/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat-emplus/_latestVersion) |
 
 ```groovy
 dependencies {
