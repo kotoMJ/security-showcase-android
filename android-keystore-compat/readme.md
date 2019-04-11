@@ -129,7 +129,7 @@ class YourKeystoreCompatConfig : KeystoreCompatConfig() {
 
 ### 3. KeystoreCopmpat instance
 
-KeystoreCompat since 2.0 is not static anymore, so first step is to get instance to work with.
+KeystoreCompat since 2.0 is not static anymore, so firstly get instance to work with.
 ```kotlin
     import cz.koto.keystorecompat.KeystoreCompat
     
@@ -148,7 +148,8 @@ KeystoreCompat since 2.0 is not static anymore, so first step is to get instance
 
 ### 4. Example of in memory object for credentials handling
 
-Example of in memory credential storage object
+Example of in memory credential storage object. This object is managed further in this example.
+
 ```kotlin
 object CredentialStorage {
 
@@ -201,6 +202,9 @@ object CredentialStorage {
 
 
 ### 5. On login page
+
+Here is how could be KeystoreCompat handled on login page.
+
 ```kotlin
 import cz.koto.keystorecompat.base.exception.ForceLockScreenKitKatException
 import cz.koto.keystorecompat.base.utility.forceAndroidAuth
@@ -296,7 +300,7 @@ class LoginViewModel(context: Application) : AndroidViewModel(context) {
 ### 5. Logged successfully
 
 
-Call this to activate eventually dismissed KeystoreCompat LockScreen feature.
+Here is how could be KeystoreCompat handled when you enter secured area.
 
 ```kotlin
 class YourSecretAreaActivity : AppCompatActivity() {
@@ -322,6 +326,8 @@ class YourSecretAreaActivity : AppCompatActivity() {
 ```
 
 ### 6. Example of credentials enrollment (save/delete credentials securely for future usage)
+
+Here is how could be KeystoreCompat handled on some settings/enrollment page.
 
 ```kotlin
 import cz.koto.keystorecompat.base.exception.ForceLockScreenMarshmallowException
