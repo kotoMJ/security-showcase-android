@@ -368,7 +368,7 @@ class YourEnrollmentFragment() {
 }
 ```
 #### 6.1 API 19 APP/GOOGLE PLAY DISCLAIMER!
-Don't forget to warn user, that enrollment in your app for API 19 requires DEVICE ADMIN RIGHT for lock screen!
+Don't forget to warn user, that enrollment in your app for API 19 requires DEVICE ADMIN RIGHT for lock screen!  
 Using `KestoreCompat.deactivate` command then automatically ensures to deactivate this admin right too.
 
 ![DEVICE_ADMIN_RIGHTS](../extras/screens/scr_DEVICE_ADMIN_RIGHTS.png)
