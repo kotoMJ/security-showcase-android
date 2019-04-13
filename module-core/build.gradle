@@ -42,8 +42,8 @@ dependencies {
 	api "androidx.databinding:databinding-runtime:$app_androidx_databinding_version"
 	api "androidx.databinding:databinding-adapters:$app_androidx_databinding_version"
 
-	api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$app_koroutines_version"
-	api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$app_koroutines_version"
+	api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+	api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
 
 	// Dagger (extended dependency on top of minimal dependency from common.gradle)
