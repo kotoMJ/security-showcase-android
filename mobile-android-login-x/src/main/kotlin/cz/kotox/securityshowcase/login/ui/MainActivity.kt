@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import cz.kotox.routines.R
+import cz.kotox.securityshowcase.R
 import cz.kotox.securityshowcase.core.arch.BaseActivity
 import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
 import timber.log.Timber

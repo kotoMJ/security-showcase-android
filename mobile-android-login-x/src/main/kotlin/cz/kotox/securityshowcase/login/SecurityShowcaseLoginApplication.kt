@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.navigation.NavDeepLinkBuilder
-import cz.kotox.routines.BuildConfig
-import cz.kotox.routines.R
+import cz.kotox.securityshowcase.BuildConfig
+import cz.kotox.securityshowcase.R
 import cz.kotox.securityshowcase.core.BaseApplication
 import cz.kotox.securityshowcase.core.entity.AppVersion
 import cz.kotox.securityshowcase.core.ktools.lazyUnsafe

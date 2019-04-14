@@ -6,7 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import cz.kotox.routines.R
+import cz.kotox.securityshowcase.R
 import cz.kotox.securityshowcase.core.arch.BaseFragment
 
 /**

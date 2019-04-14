@@ -8,4 +8,4 @@ include ':android-keystore-compat',
 		':module-test-utils',
 		":module-core",
 		':module-login',
-		':mobile-android-login'
+		':mobile-android-login-x'

@@ -102,5 +102,5 @@ GraphiQL console allows to try call query manually, let's try it here:
 
 **Dependency diagnostic**
 
-  * `./gradlew mobile-android-login:dependencies --scan`<br/>
+  * `./gradlew mobile-android-login-x:dependencies --scan`<br/>
   
