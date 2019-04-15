@@ -27,6 +27,8 @@ android:
 
 before_script:
   - "echo \"Build process is started \U0001F46F\""
+
+  - "echo \"Setup mobile-android-login-x keystore\""
   - mkdir extras/keystore
   - echo $DEBUG_KEYSTORE_BASE64 | base64 --decode > mobile-android-login-x/extras/keystore/debugKeystore.jks
   - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
@@ -34,6 +36,15 @@ before_script:
   - echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > mobile-android-login-x/extras/keystore/releaseKeystore.jks
   - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
     $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > mobile-android-login-x/extras/keystore/releaseKeystore.properties
+
+  - "echo \"Setup mobile-android-login-legacy keystore\""
+  - echo $DEBUG_KEYSTORE_BASE64 | base64 --decode > mobile-android-login-legacy/extras/keystore/debugKeystore.jks
+  - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
+    $debugStorePassword $debugKeyAlias $debugKeyPassword > mobile-android-login-legacy/extras/keystore/debugKeystore.properties
+  - echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > mobile-android-login-legacy/extras/keystore/releaseKeystore.jks
+  - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
+    $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > mobile-android-login-legacy/extras/keystore/releaseKeystore.properties
+
 
 script:
   - "./gradlew androidDependencies"
