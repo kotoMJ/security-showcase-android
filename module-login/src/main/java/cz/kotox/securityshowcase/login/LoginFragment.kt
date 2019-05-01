@@ -27,6 +27,11 @@ class LoginFragment : BaseFragmentViewModel<LoginViewModel, FragmentLoginBinding
 			showSnackbar(binding.root, "Login action ...")
 		}
 
+		binding.fillTestCredentialsButton.setOnClickListener {
+			binding.inputEmailEditText.setText(viewModel.testCredentials.email)
+			binding.inputPasswordEditText.setText(viewModel.testCredentials.password)
+		}
+
 		return view
 	}
 }

@@ -13,7 +13,9 @@ import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import dagger.multibindings.IntoSet
 
-@Module
+@Module(includes = [
+	CredentialsDaggerModule::class
+])
 abstract class LoginDaggerModule {
 	@Binds
 	@IntoSet

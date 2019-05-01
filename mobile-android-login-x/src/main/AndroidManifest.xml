@@ -24,7 +24,7 @@
 		android:name="cz.kotox.securityshowcase.login.SecurityShowcaseLoginApplication"
 		android:allowBackup="false"
 		android:icon="@mipmap/ic_launcher"
-		android:label="@string/app_name"
+		android:label="@string/appName"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.SecurityShowcase"
 		tools:ignore="GoogleAppIndexingWarning">
