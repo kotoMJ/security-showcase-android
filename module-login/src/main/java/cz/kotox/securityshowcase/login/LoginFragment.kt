@@ -24,7 +24,11 @@ class LoginFragment : BaseFragmentViewModel<LoginViewModel, FragmentLoginBinding
 //		}
 
 		binding.loginButton.setOnClickListener {
-			showSnackbar(binding.root, "Login action ...")
+
+			//TODO MJ - check for autorization and stay or go to the app
+
+			activity?.finish()
+			appInterface.startApp()
 		}
 
 		binding.fillTestCredentialsButton.setOnClickListener {

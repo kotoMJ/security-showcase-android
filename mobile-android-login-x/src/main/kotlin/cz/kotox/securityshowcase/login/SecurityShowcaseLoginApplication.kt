@@ -1,5 +1,6 @@
 package cz.kotox.securityshowcase.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -11,6 +12,7 @@ import cz.kotox.securityshowcase.core.entity.AppVersion
 import cz.kotox.securityshowcase.core.ktools.lazyUnsafe
 import cz.kotox.securityshowcase.login.di.AppComponent
 import cz.kotox.securityshowcase.login.di.DaggerAppComponent
+import cz.kotox.securityshowcase.login.ui.MainActivity
 
 class SecurityShowcaseLoginApplication : BaseApplication(), LifecycleObserver {
 
@@ -33,7 +35,7 @@ class SecurityShowcaseLoginApplication : BaseApplication(), LifecycleObserver {
 		ProcessLifecycleOwner.get().lifecycle.addObserver(this)
 	}
 
-	override fun navigateHome() {
+	override fun navigateHomeScreen() {
 		val homePendingIntent = NavDeepLinkBuilder(this)
 			.setGraph(R.navigation.mobile_navigation)
 			.setDestination(R.id.launcher_home)
@@ -41,12 +43,21 @@ class SecurityShowcaseLoginApplication : BaseApplication(), LifecycleObserver {
 		homePendingIntent.send()
 	}
 
+	override fun startApp() {
+		val goHomeIntent = Intent(this, MainActivity::class.java)
+		goHomeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+		startActivity(Intent(goHomeIntent))
+	}
+
 	override fun redirectToLogin(args: Bundle?) {
-		val homePendingIntent = NavDeepLinkBuilder(this)
-			.setGraph(R.navigation.login_navigation)
-			.setDestination(R.id.login_screen)
-			.createPendingIntent()
-		homePendingIntent.send()
+//		val homePendingIntent = NavDeepLinkBuilder(this)
+////			.setGraph(R.navigation.login_navigation)
+////			.setDestination(R.id.login_screen)
+////			.createPendingIntent()
+////		homePendingIntent.send()
+		val goToLoginIntent = Intent(this, LoginActivity::class.java)
+		goToLoginIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+		startActivity(Intent(goToLoginIntent))
 	}
 
 	override fun crashlyticsLogException(e: Throwable) {

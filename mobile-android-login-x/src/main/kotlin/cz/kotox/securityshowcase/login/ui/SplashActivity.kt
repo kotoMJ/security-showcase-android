@@ -9,6 +9,7 @@ class SplashActivity : BaseActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
+		//TODO MJ -
 //		1) zjisti z preferenci, jeslti je userId
 //		2) ANO -> zkus dotaz na server (stahni user identity) - mozna zacni fejkem!!!!
 //			2A) SUCCESS -> smeruj na main screenu
@@ -16,8 +17,8 @@ class SplashActivity : BaseActivity() {
 //		3) NE -> smeruj na Login screenu
 //		4) finish() vzdy
 
+		finish()
 		startActivity(LoginActivityIntent())
-
 	}
 
 }

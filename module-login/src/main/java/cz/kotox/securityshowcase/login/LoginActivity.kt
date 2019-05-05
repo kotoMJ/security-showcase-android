@@ -16,9 +16,11 @@ import timber.log.Timber
 import javax.inject.Inject
 
 fun Context.LoginActivityIntent(/*user: User*/): Intent {
-	return Intent(this, LoginActivity::class.java).apply {
+	val loginIntent = Intent(this, LoginActivity::class.java).apply {
 		//putExtra(INTENT_USER_ID, user.id)
 	}
+	loginIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+	return loginIntent
 }
 
 //private const val INTENT_USER_ID = "user_id"
@@ -33,7 +35,6 @@ class LoginActivity : BaseActivity() {
 
 		//val userId = intent.getStringExtra(INTENT_USER_ID)
 		//requireNotNull(userId){"no user_id provided in Intent extras"}
-
 
 		setContentView(R.layout.activity_login)
 

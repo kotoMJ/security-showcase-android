@@ -18,8 +18,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 interface ApplicationInterfaceContract {
+	fun startApp()
 	fun redirectToLogin(args: Bundle? = null)
-	fun navigateHome()
+	fun navigateHomeScreen()
 	fun crashlyticsLogException(e: Throwable)
 	fun crashlyticsLogMessage(message: String)
 }
@@ -49,6 +50,7 @@ class AppInterface @Inject constructor(
 		isAppInForeground = false
 		Timber.d("APP is in background")
 	}
+
 }
 
 @OpenForMocking
