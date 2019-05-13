@@ -29,7 +29,7 @@ before_script:
   - "echo \"Build process is started \U0001F46F\""
 
   - "echo \"Setup mobile-android-login-x-biometric keystore\""
-  - mkdir mobile-android-login-x-biometric/extras/keystore
+  #  - mkdir mobile-android-login-x-biometric/extras/keystore
   - echo $DEBUG_KEYSTORE_BASE64 | base64 --decode > mobile-android-login-x-biometric/extras/keystore/debugKeystore.jks
   - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
     $debugStorePassword $debugKeyAlias $debugKeyPassword > mobile-android-login-x-biometric/extras/keystore/debugKeystore.properties
@@ -38,7 +38,7 @@ before_script:
     $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > mobile-android-login-x-biometric/extras/keystore/releaseKeystore.properties
 
   - "echo \"Setup mobile-android-login-x-keystore-compat keystore\""
-  - mkdir mobile-android-login-x-keystore-compat/extras/keystore
+  #  - mkdir mobile-android-login-x-keystore-compat/extras/keystore
   - echo $DEBUG_KEYSTORE_BASE64 | base64 --decode > mobile-android-login-x-keystore-compat/extras/keystore/debugKeystore.jks
   - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
     $debugStorePassword $debugKeyAlias $debugKeyPassword > mobile-android-login-x-keystore-compat/extras/keystore/debugKeystore.properties
@@ -47,7 +47,7 @@ before_script:
     $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > mobile-android-login-x-keystore-compat/extras/keystore/releaseKeystore.properties
 
   - "echo \"Setup mobile-android-login-legacy keystore\""
-  - mkdir mobile-android-login-legacy/extras/keystore
+  #  - mkdir mobile-android-login-legacy/extras/keystore
   - echo $DEBUG_KEYSTORE_BASE64 | base64 --decode > mobile-android-login-legacy/extras/keystore/debugKeystore.jks
   - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
     $debugStorePassword $debugKeyAlias $debugKeyPassword > mobile-android-login-legacy/extras/keystore/debugKeystore.properties
