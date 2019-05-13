@@ -8,7 +8,8 @@ include ':android-keystore-compat',
 		':module-test-utils',
 		":module-core",
 		':module-login',
-		':mobile-android-login-x',
+		':mobile-android-login-x-keystore-compat',
+		':mobile-android-login-x-biometric',
 		':mobile-android-login-legacy'
 
 //include ':mobile-android-login-legacy'

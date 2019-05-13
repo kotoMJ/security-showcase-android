@@ -74,9 +74,12 @@ hs_err_pid*
 #SIGNING
 /extras/**/*.properties
 /extras/**/*.jks
-/mobile-android-login-x/extras/keystore/releaseKeystore.jks
-/mobile-android-login-x/extras/keystore/releaseKeystore.properties
-/mobile-android-login-x/extras/keystore/RELEASE_KEYSTORE_BASE64.txt
 /mobile-android-login-legacy/extras/keystore/RELEASE_KEYSTORE_BASE64.txt
 /mobile-android-login-legacy/extras/keystore/releaseKeystore.jks
 /mobile-android-login-legacy/extras/keystore/releaseKeystore.properties
+/mobile-android-login-x-biometric/extras/keystore/releaseKeystore.properties
+/mobile-android-login-x-biometric/extras/keystore/RELEASE_KEYSTORE_BASE64.txt
+/mobile-android-login-x-biometric/extras/keystore/releaseKeystore.jks
+/mobile-android-login-x-keystore-compat/extras/keystore/releaseKeystore.properties
+/mobile-android-login-x-keystore-compat/extras/keystore/RELEASE_KEYSTORE_BASE64.txt
+/mobile-android-login-x-keystore-compat/extras/keystore/releaseKeystore.jks

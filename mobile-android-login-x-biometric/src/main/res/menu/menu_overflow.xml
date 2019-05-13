@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu>
+	<!--<item-->
+	<!--android:id="@+id/settings_fragment_custom"-->
+	<!--android:icon="@drawable/ic_settings"-->
+	<!--android:title="@string/settings_custom"-->
+	<!--android:menuCategory="secondary" />-->
+</menu>
