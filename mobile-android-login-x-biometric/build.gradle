@@ -119,6 +119,7 @@ dependencies {
 	implementation project(':module-login')
 	implementation project(':module-test-utils')
 	implementation "androidx.multidex:multidex:$app_multidex_version"
+	implementation 'androidx.biometric:biometric:1.0.0-alpha04' //TODO use api from login to not repeat this
 
 }
 

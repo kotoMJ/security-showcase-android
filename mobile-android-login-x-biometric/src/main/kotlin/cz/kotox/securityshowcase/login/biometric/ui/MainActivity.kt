@@ -1,23 +1,46 @@
 package cz.kotox.securityshowcase.login.biometric.ui
 
 import android.os.Bundle
+import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyProperties
+import android.security.keystore.UserNotAuthenticatedException
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.biometric.BiometricConstants.ERROR_HW_NOT_PRESENT
+import androidx.biometric.BiometricConstants.ERROR_NEGATIVE_BUTTON
+import androidx.biometric.BiometricPrompt
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import cz.kotox.securityshowcase.R
+import cz.kotox.securityshowcase.core.AppInterface
 import cz.kotox.securityshowcase.core.arch.BaseActivity
 import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
 import timber.log.Timber
+import java.security.KeyPair
+import java.security.KeyPairGenerator
+import java.security.KeyStore
+import java.security.PrivateKey
+import java.security.Signature
+import java.security.spec.ECGenParameterSpec
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
 	@Inject
 	lateinit var preferencesCore: PreferencesCommon
+
+	@Inject
+	lateinit var appInterface: AppInterface
+
+	lateinit var biometricPrompt: BiometricPrompt
+
+	var signature: Signature? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -43,7 +66,22 @@ class MainActivity : BaseActivity() {
 			Timber.d("Navigated to %s", dest)
 		}
 
-		//TODO Timber.d(">>>${preferencesCore.sampleToken}")
+		biometricPrompt = createBiometricPrompt()
+
+		try {
+			//TODO temporarily always enroll
+			val keyPair = generateKeyPair("userId", true)
+		} catch (unae: UserNotAuthenticatedException) {
+			biometricPrompt.authenticate(promptInfo)
+		} catch (th: Throwable) {
+			biometricPrompt.authenticate(promptInfo)
+		}
+//		if (si == null) {
+//			biometricPrompt.authenticate(promptInfo)
+//		} else {
+//			biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(si))
+//		}
+
 	}
 
 	private fun setupActionBar(navController: NavController) {
@@ -63,6 +101,137 @@ class MainActivity : BaseActivity() {
 		return NavigationUI.onNavDestinationSelected(item,
 			Navigation.findNavController(this, R.id.my_nav_host_fragment))
 			|| super.onOptionsItemSelected(item)
+	}
+
+	override fun onPostResume() {
+		super.onPostResume()
+
+		try {
+
+//			val keyPair = getKeyPair("userId")
+//			val s = keyPair!!.private!!.algorithm
+			val si = initSignature("userId")
+			Timber.d("s")
+		} catch (unae: UserNotAuthenticatedException) {
+			biometricPrompt.authenticate(promptInfo)
+		} catch (th: Throwable) {
+			biometricPrompt.authenticate(promptInfo)
+		}
+//		if (si == null) {
+//			biometricPrompt.authenticate(promptInfo)
+//		} else {
+//			biometricPrompt.authenticate(promptInfo, BiometricPrompt.CryptoObject(si))
+//		}
+
+	}
+
+	private fun createBiometricPrompt(): BiometricPrompt {
+		val executor = Executors.newSingleThreadExecutor()
+		val activity: FragmentActivity = this // reference to activity
+		val biometricPrompt = BiometricPrompt(activity, executor, object : BiometricPrompt.AuthenticationCallback() {
+
+			override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+				super.onAuthenticationError(errorCode, errString)
+
+				when (errorCode) {
+					ERROR_NEGATIVE_BUTTON -> { /*user clicked negative button, do nothing*/
+						appInterface.redirectToLogin()
+						appInterface.redirectToLogin()
+					}
+					ERROR_HW_NOT_PRESENT -> {
+						Toast.makeText(
+							applicationContext,
+							"$errString ,TODO fallback authentication",
+							Toast.LENGTH_SHORT
+						).show()
+					}
+					else -> {
+						activity.finish()
+						appInterface.redirectToLogin()
+//						runOnUiThread {
+//							Toast.makeText(applicationContext, errString, Toast.LENGTH_SHORT).show()
+//						}
+					}
+
+				}
+			}
+
+			override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+				super.onAuthenticationSucceeded(result)
+				//Dialog disappear in this case, which means fingerprint was recognized. Handle just additional behaviour.
+			}
+
+			override fun onAuthenticationFailed() {
+				super.onAuthenticationFailed()
+				//Simple message to user is handled in dialog, handle just additional behaviour.
+				activity.finish()
+				appInterface.redirectToLogin()
+			}
+		})
+
+		return biometricPrompt
+	}
+
+	val promptInfo = BiometricPrompt.PromptInfo.Builder()
+		.setTitle("Set the title to display.")
+		.setSubtitle("Set the subtitle to display.")
+		.setDescription("Set the description to display")
+		.setNegativeButtonText("Negative Button")
+		.build()
+
+	/**
+	 * Generate NIST P-256 EC Key pair for signing and verification
+	 * @param keyName
+	 * @param invalidatedByBiometricEnrollment
+	 * @return
+	 * @throws Exception
+	 */
+	@Throws(Exception::class)
+	private fun generateKeyPair(keyName: String, invalidatedByBiometricEnrollment: Boolean): KeyPair {
+		val keyPairGenerator = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore")
+
+		val builder = KeyGenParameterSpec.Builder(keyName,
+			KeyProperties.PURPOSE_SIGN)
+			.setAlgorithmParameterSpec(ECGenParameterSpec("secp256r1"))
+			.setDigests(KeyProperties.DIGEST_SHA256,
+				KeyProperties.DIGEST_SHA384,
+				KeyProperties.DIGEST_SHA512)
+			// Require the user to authenticate with a biometric to authorize every use of the key
+			.setUserAuthenticationRequired(true)
+			.setUserAuthenticationValidityDurationSeconds(5)
+			// Generated keys will be invalidated if the biometric templates are added more to user device
+			.setInvalidatedByBiometricEnrollment(invalidatedByBiometricEnrollment)
+
+		keyPairGenerator.initialize(builder.build())
+
+		return keyPairGenerator.generateKeyPair()
+	}
+
+	@Throws(Exception::class)
+	private fun getKeyPair(keyName: String): KeyPair? {
+		val keyStore = KeyStore.getInstance("AndroidKeyStore")
+		keyStore.load(null)
+		if (keyStore.containsAlias(keyName)) {
+			// Get public key
+			val publicKey = keyStore.getCertificate(keyName).publicKey
+			// Get private key
+			val privateKey = keyStore.getKey(keyName, null) as PrivateKey
+			// Return a key pair
+			return KeyPair(publicKey, privateKey)
+		}
+		return null
+	}
+
+	@Throws(Exception::class)
+	private fun initSignature(keyName: String): Signature? {
+		val keyPair = getKeyPair(keyName)
+
+		if (keyPair != null) {
+			val signature = Signature.getInstance("SHA256withECDSA")
+			signature.initSign(keyPair!!.getPrivate())
+			return signature
+		}
+		return null
 	}
 
 }
