@@ -87,7 +87,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 				super.onAuthenticationError(errorCode, errString)
 
 				when (errorCode) {
-					BiometricConstants.ERROR_NEGATIVE_BUTTON -> { /*user clicked negative button, do nothing*/
+					BiometricConstants.ERROR_NEGATIVE_BUTTON -> { /*user clicked negative button*/
 						activity.finish()
 						appInterface.redirectToLogin()
 					}
@@ -101,9 +101,6 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 					else -> {
 						activity.finish()
 						appInterface.redirectToLogin()
-//						runOnUiThread {
-//							Toast.makeText(applicationContext, errString, Toast.LENGTH_SHORT).show()
-//						}
 					}
 
 				}
