@@ -43,6 +43,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 
 	lateinit var biometricPrompt: BiometricPrompt
 
+	//TODO not ideal to have abstract method, ... might be improved.
 	abstract fun isCoveredByBiometric(): Boolean
 
 	@RequiresApi(Build.VERSION_CODES.M)
