@@ -5,7 +5,6 @@ import android.security.keystore.UserNotAuthenticatedException
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
-import androidx.biometric.BiometricPrompt
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
@@ -20,11 +19,6 @@ class MainActivity : BaseActivity() {
 
 	@Inject
 	lateinit var preferencesCore: PreferencesCommon
-
-	lateinit var biometricPrompt: BiometricPrompt
-
-//	@Inject
-//	lateinit var appInterface: AppInterface
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -50,11 +44,9 @@ class MainActivity : BaseActivity() {
 			Timber.d("Navigated to %s", dest)
 		}
 
-		biometricPrompt = createBiometricPrompt()
-
+		//TODO temporarily always enroll in MainActivity. This can be once per app installation.
 		try {
-			//TODO temporarily always enroll
-			val keyPair = generateKeyPair("userId", true)
+			val keyPair = generateKeyPair(BIOMETRIC_KEY, true)
 		} catch (unae: UserNotAuthenticatedException) {
 			biometricPrompt.authenticate(promptInfo)
 		} catch (th: Throwable) {
@@ -81,7 +73,4 @@ class MainActivity : BaseActivity() {
 			|| super.onOptionsItemSelected(item)
 	}
 
-	override fun authenticate() {
-		biometricPrompt.authenticate(promptInfo)
-	}
 }

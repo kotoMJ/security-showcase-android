@@ -31,17 +31,23 @@ import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, BaseUIScreen {
 
+	companion object {
+		val BIOMETRIC_KEY = "biometric_key"
+	}
+
 	@Inject
 	lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
 	@Inject
 	lateinit var appInterface: AppInterface
 
+	lateinit var biometricPrompt: BiometricPrompt
+
 	@RequiresApi(Build.VERSION_CODES.M)
 	val observer = Observer<Boolean>() {
 		if (it) {
 			try {
-				initSignature("userId")
+				initSignature(BIOMETRIC_KEY)
 			} catch (unae: UserNotAuthenticatedException) {
 				authenticate()
 			} catch (th: Throwable) {
@@ -50,7 +56,9 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 		}
 	}
 
-	open fun authenticate() {}
+	private fun authenticate() {
+		biometricPrompt.authenticate(promptInfo)
+	}
 
 	override fun supportFragmentInjector(): DispatchingAndroidInjector<Fragment> {
 		return dispatchingAndroidInjector
@@ -65,6 +73,8 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 		AndroidInjection.inject(this)
 		super.onCreate(savedInstanceState)
 		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true) //VectorDrawables visible on KitKat
+
+		biometricPrompt = createBiometricPrompt()
 
 		appInterface.isAppInForeground.observe(this, observer)
 	}
