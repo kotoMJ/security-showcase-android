@@ -43,7 +43,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 
 	lateinit var biometricPrompt: BiometricPrompt
 
-	protected open val isCoveredByBiometric = false
+	abstract fun isCoveredByBiometric(): Boolean
 
 	@RequiresApi(Build.VERSION_CODES.M)
 	val observer = Observer<Boolean>() {
@@ -76,14 +76,14 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 		super.onCreate(savedInstanceState)
 		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true) //VectorDrawables visible on KitKat
 
-		if (isCoveredByBiometric) {
+		if (isCoveredByBiometric()) {
 			biometricPrompt = createBiometricPrompt()
 			appInterface.isAppInForeground.observe(this, observer)
 		}
 	}
 
 	override fun onDestroy() {
-		if (isCoveredByBiometric) {
+		if (isCoveredByBiometric()) {
 			appInterface.isAppInForeground.removeObserver(observer)
 		}
 		super.onDestroy()
@@ -164,7 +164,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 				KeyProperties.DIGEST_SHA512)
 			// Require the user to authenticate with a biometric to authorize every use of the key
 			.setUserAuthenticationRequired(true)
-			.setUserAuthenticationValidityDurationSeconds(60)
+			.setUserAuthenticationValidityDurationSeconds(10)
 			// Generated keys will be invalidated if the biometric templates are added more to user device
 			.setInvalidatedByBiometricEnrollment(invalidatedByBiometricEnrollment)
 

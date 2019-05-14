@@ -17,10 +17,9 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
+
 	@Inject
 	lateinit var preferencesCore: PreferencesCommon
-
-	override val isCoveredByBiometric = true
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -75,4 +74,5 @@ class MainActivity : BaseActivity() {
 			|| super.onOptionsItemSelected(item)
 	}
 
+	override fun isCoveredByBiometric() = true
 }
