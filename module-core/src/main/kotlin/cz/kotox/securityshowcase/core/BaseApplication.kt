@@ -6,6 +6,7 @@ import android.app.Service
 import android.os.Bundle
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import cz.kotox.securityshowcase.core.logging.timber.CrashReportingTree
@@ -35,19 +36,20 @@ class AppInterface @Inject constructor(
 		ProcessLifecycleOwner.get().lifecycle.addObserver(this)
 	}
 
-	@Suppress("RedundantModalityModifier")
-	final var isAppInForeground: Boolean = false // has to be final because of OpenForMocking
-		private set
+	//val isAppInForeground = BehaviorRelay.createDefault(false)
+	val isAppInForeground = MutableLiveData<Boolean>()
 
 	@OnLifecycleEvent(Lifecycle.Event.ON_START)
 	internal fun onAppStart() {
-		isAppInForeground = true
+		isAppInForeground.postValue(true)
+		//isAppInForeground.accept(true)
 		Timber.d("APP is in foreground")
 	}
 
 	@OnLifecycleEvent(Lifecycle.Event.ON_STOP)
 	internal fun onAppStop() {
-		isAppInForeground = false
+		isAppInForeground.postValue(false)
+		//isAppInForeground.accept(false)
 		Timber.d("APP is in background")
 	}
 

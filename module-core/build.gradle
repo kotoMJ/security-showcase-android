@@ -56,4 +56,6 @@ dependencies {
 	api "com.squareup.moshi:moshi:$app_moshi_version"
 	api "com.squareup.retrofit2:retrofit:$app_retrofit_version"
 	api "com.squareup.retrofit2:converter-moshi:$app_retrofit_version"
+
+	api 'androidx.biometric:biometric:1.0.0-alpha04'
 }

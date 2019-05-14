@@ -16,6 +16,9 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 	@Inject
 	lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
+//	@Inject
+//	lateinit var appInterface: AppInterface
+
 	override fun supportFragmentInjector(): DispatchingAndroidInjector<Fragment> {
 		return dispatchingAndroidInjector
 	}
@@ -23,12 +26,26 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 	override val baseActivity: BaseActivity get() = this
 	override var lastSnackbar: Snackbar? = null
 
+//	init {
+//		appInterface.isAppInForeground.observeForever {
+//			if (it) {
+//				initSignature("userId")
+//			}
+//		}
+//	}
+
 	public override fun onCreate(savedInstanceState: Bundle?) {
 		//CrashlyticsUtility.setCurrentActivityKey(javaClass.simpleName)
 		Timber.v(javaClass.simpleName)
 		AndroidInjection.inject(this)
 		super.onCreate(savedInstanceState)
 		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true) //VectorDrawables visible on KitKat
+
+//		appInterface.isAppInForeground.observeForever {
+//			if (it) {
+//				initSignature("userId")
+//			}
+//		}
 	}
 
 	override fun finish() {
