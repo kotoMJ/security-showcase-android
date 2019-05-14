@@ -88,7 +88,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 
 				when (errorCode) {
 					BiometricConstants.ERROR_NEGATIVE_BUTTON -> { /*user clicked negative button, do nothing*/
-						appInterface.redirectToLogin()
+						activity.finish()
 						appInterface.redirectToLogin()
 					}
 					BiometricConstants.ERROR_HW_NOT_PRESENT -> {
