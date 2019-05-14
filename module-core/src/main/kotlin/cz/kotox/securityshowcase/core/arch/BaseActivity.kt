@@ -149,7 +149,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 				KeyProperties.DIGEST_SHA512)
 			// Require the user to authenticate with a biometric to authorize every use of the key
 			.setUserAuthenticationRequired(true)
-			.setUserAuthenticationValidityDurationSeconds(5)
+			.setUserAuthenticationValidityDurationSeconds(60)
 			// Generated keys will be invalidated if the biometric templates are added more to user device
 			.setInvalidatedByBiometricEnrollment(invalidatedByBiometricEnrollment)
 
