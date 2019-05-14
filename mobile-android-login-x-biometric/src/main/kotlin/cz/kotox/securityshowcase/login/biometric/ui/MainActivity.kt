@@ -20,6 +20,8 @@ class MainActivity : BaseActivity() {
 	@Inject
 	lateinit var preferencesCore: PreferencesCommon
 
+	override val isCoveredByBiometric = true
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.main_activity)

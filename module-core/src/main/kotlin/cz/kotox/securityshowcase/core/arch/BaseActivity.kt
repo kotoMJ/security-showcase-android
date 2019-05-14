@@ -43,6 +43,8 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 
 	lateinit var biometricPrompt: BiometricPrompt
 
+	protected open val isCoveredByBiometric = false
+
 	@RequiresApi(Build.VERSION_CODES.M)
 	val observer = Observer<Boolean>() {
 		if (it) {
@@ -74,13 +76,16 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 		super.onCreate(savedInstanceState)
 		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true) //VectorDrawables visible on KitKat
 
-		biometricPrompt = createBiometricPrompt()
-
-		appInterface.isAppInForeground.observe(this, observer)
+		if (isCoveredByBiometric) {
+			biometricPrompt = createBiometricPrompt()
+			appInterface.isAppInForeground.observe(this, observer)
+		}
 	}
 
 	override fun onDestroy() {
-		appInterface.isAppInForeground.removeObserver(observer)
+		if (isCoveredByBiometric) {
+			appInterface.isAppInForeground.removeObserver(observer)
+		}
 		super.onDestroy()
 	}
 
@@ -97,7 +102,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, B
 				super.onAuthenticationError(errorCode, errString)
 
 				when (errorCode) {
-					BiometricConstants.ERROR_NEGATIVE_BUTTON -> { /*user clicked negative button*/
+					BiometricConstants.ERROR_NEGATIVE_BUTTON -> {
 						activity.finish()
 						appInterface.redirectToLogin()
 					}
