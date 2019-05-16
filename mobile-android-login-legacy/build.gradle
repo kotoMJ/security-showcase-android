@@ -154,6 +154,7 @@ android {
 ext {
 	legacy_build_tools_version = '28.0.0'
 	legacy_android_arch = '1.1.1'
+	legacy_dagger_version = '2.20'
 }
 
 dependencies {
@@ -185,12 +186,12 @@ dependencies {
 
 	// Dagger (extended dependency on top of minimal dependency from common.gradle)
 	// Common Dagger (minimal dagger dependency to generate classes across all modules)
-	kapt "com.google.dagger:dagger-compiler:$app_dagger_version"
-	kapt "com.google.dagger:dagger-android-processor:$app_dagger_version"
+	kapt "com.google.dagger:dagger-compiler:$legacy_dagger_version"
+	kapt "com.google.dagger:dagger-android-processor:$legacy_dagger_version"
 
-	api "com.google.dagger:dagger:$app_dagger_version"
-	api "com.google.dagger:dagger-android:$app_dagger_version"
-	api "com.google.dagger:dagger-android-support:$app_dagger_version"
+	api "com.google.dagger:dagger:$legacy_dagger_version"
+	api "com.google.dagger:dagger-android:$legacy_dagger_version"
+	api "com.google.dagger:dagger-android-support:$legacy_dagger_version"
 	compileOnly "javax.annotation:jsr250-api:$app_jsr250api_version"
 
 	//Moshi (generic movement from gson to moshi)

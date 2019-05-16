@@ -14,10 +14,6 @@ import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, BaseUIScreen {
 
-	companion object {
-		val BIOMETRIC_KEY = "biometric_key"
-	}
-
 	@Inject
 	lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
