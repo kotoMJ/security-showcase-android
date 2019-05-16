@@ -10,12 +10,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import cz.kotox.securityshowcase.R
-import cz.kotox.securityshowcase.core.arch.BaseActivity
 import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
+import cz.kotox.securityshowcase.security.ui.BiometricBaseActivity
 import timber.log.Timber
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : BiometricBaseActivity() {
 
 
 	@Inject
@@ -73,6 +73,4 @@ class MainActivity : BaseActivity() {
 			Navigation.findNavController(this, R.id.my_nav_host_fragment))
 			|| super.onOptionsItemSelected(item)
 	}
-
-	override fun isCoveredByBiometric() = true
 }

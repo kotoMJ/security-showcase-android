@@ -20,7 +20,4 @@ class SplashActivity : BaseActivity() {
 		finish()
 		startActivity(LoginActivityIntent())
 	}
-
-	override fun isCoveredByBiometric() = false
-
 }

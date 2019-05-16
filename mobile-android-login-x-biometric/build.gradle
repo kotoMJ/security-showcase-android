@@ -116,6 +116,7 @@ android {
 dependencies {
 
 	implementation project(':module-core')
+	implementation project(':module-security')
 	implementation project(':module-login')
 	implementation project(':module-test-utils')
 	implementation "androidx.multidex:multidex:$app_multidex_version"

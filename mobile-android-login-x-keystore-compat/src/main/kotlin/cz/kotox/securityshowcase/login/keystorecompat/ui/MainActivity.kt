@@ -65,6 +65,4 @@ class MainActivity : BaseActivity() {
 			|| super.onOptionsItemSelected(item)
 	}
 
-	override fun isCoveredByBiometric() = false
-
 }

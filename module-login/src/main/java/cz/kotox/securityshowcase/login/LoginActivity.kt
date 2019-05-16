@@ -74,6 +74,4 @@ class LoginActivity : BaseActivity() {
 			|| super.onOptionsItemSelected(item)
 	}
 
-	override fun isCoveredByBiometric() = false
-
 }
