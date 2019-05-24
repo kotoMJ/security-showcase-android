@@ -12,7 +12,7 @@ import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
-import java.util.*
+import java.util.Date
 import javax.security.auth.x500.X500Principal
 
 /**
@@ -36,13 +36,14 @@ open class KeystoreCompatL : KeystoreCompatFacade {
 		return keystoreCryptoK.encryptRSA(secret, privateKeyEntry as KeyStore.PrivateKeyEntry, useBase64Encoding)
 	}
 
-	override fun loadSecret(onSuccess: (ByteArray) -> Unit,
-							onFailure: (Exception) -> Unit,
-							clearCredentials: () -> Unit,
-							forceFlag: Boolean?,
-							encryptedUserData: String,
-							keyEntry: KeyStore.Entry,
-							isBase64Encoded: Boolean) {
+	override fun loadSecret(context: Context,
+		onSuccess: (ByteArray) -> Unit,
+		onFailure: (Exception) -> Unit,
+		clearCredentials: () -> Unit,
+		forceFlag: Boolean?,
+		encryptedUserData: String,
+		keyEntry: KeyStore.Entry,
+		isBase64Encoded: Boolean) {
 		try {
 			if (forceFlag == null || forceFlag) {
 				//Force signUp by using in memory flag:forceTypeCredentials
@@ -62,13 +63,13 @@ open class KeystoreCompatL : KeystoreCompatFacade {
 			throw RuntimeException("${LOG_TAG} Unsupported usage of version ${Build.VERSION.SDK_INT}")
 		}
 		return KeyPairGeneratorSpec.Builder(context)
-				.setAlias(alias)
-				.setSubject(certSubject)
-				.setSerialNumber(BigInteger.ONE)//TODO verify this number
-				.setStartDate(startDate)
-				.setEndDate(endDate)
-				.setEncryptionRequired()//This can be source of pain sometimes - generateKeyPair can complain with strange exception
-				.build()
+			.setAlias(alias)
+			.setSubject(certSubject)
+			.setSerialNumber(BigInteger.ONE)//TODO verify this number
+			.setStartDate(startDate)
+			.setEndDate(endDate)
+			.setEncryptionRequired()//This can be source of pain sometimes - generateKeyPair can complain with strange exception
+			.build()
 	}
 
 	override fun isSecurityEnabled(context: Context): Boolean {

@@ -15,10 +15,9 @@ import cz.koto.keystorecompat23.crypto.KeystoreCryptoM
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.security.spec.RSAKeyGenParameterSpec
-import java.util.*
+import java.util.Date
 import javax.crypto.KeyGenerator
 import javax.security.auth.x500.X500Principal
-
 
 /**
  * Marshmallow specific Keystore implementation.
@@ -42,13 +41,14 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : Keystor
 		return keystoreCryptoM.encryptAES(secret, privateKeyEntry as KeyStore.SecretKeyEntry, useBase64Encoding)
 	}
 
-	override fun loadSecret(onSuccess: (cre: ByteArray) -> Unit,
-							onFailure: (e: Exception) -> Unit,
-							clearCredentials: () -> Unit,
-							forceFlag: Boolean?,
-							encryptedUserData: String,
-							keyEntry: KeyStore.Entry,
-							isBase64Encoded: Boolean) {
+	override fun loadSecret(context: Context,
+		onSuccess: (cre: ByteArray) -> Unit,
+		onFailure: (e: Exception) -> Unit,
+		clearCredentials: () -> Unit,
+		forceFlag: Boolean?,
+		encryptedUserData: String,
+		keyEntry: KeyStore.Entry,
+		isBase64Encoded: Boolean) {
 		try {
 
 			if (forceFlag == null || forceFlag) {
@@ -85,16 +85,16 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : Keystor
 			throw RuntimeException("${LOG_TAG} Unsupported usage of version ${Build.VERSION.SDK_INT}")
 		}
 		return KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT.or(KeyProperties.PURPOSE_DECRYPT))
-				.setBlockModes(KeyProperties.BLOCK_MODE_GCM)//follow used getCipherMode
-				.setCertificateSubject(certSubject)
-				.setKeyValidityStart(startDate)
-				.setKeyValidityEnd(endDate)
-				.setDigests(KeyProperties.DIGEST_SHA512)
-				.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)//follow used getCipherMode
-				.setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
-				.setUserAuthenticationRequired(keystoreCompatConfig.getUserAuthenticationRequired())
-				.setUserAuthenticationValidityDurationSeconds(keystoreCompatConfig.getUserAuthenticationValidityDurationSeconds())
-				.build()
+			.setBlockModes(KeyProperties.BLOCK_MODE_GCM)//follow used getCipherMode
+			.setCertificateSubject(certSubject)
+			.setKeyValidityStart(startDate)
+			.setKeyValidityEnd(endDate)
+			.setDigests(KeyProperties.DIGEST_SHA512)
+			.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)//follow used getCipherMode
+			.setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
+			.setUserAuthenticationRequired(keystoreCompatConfig.getUserAuthenticationRequired())
+			.setUserAuthenticationValidityDurationSeconds(keystoreCompatConfig.getUserAuthenticationValidityDurationSeconds())
+			.build()
 	}
 
 	override fun isSecurityEnabled(context: Context): Boolean {

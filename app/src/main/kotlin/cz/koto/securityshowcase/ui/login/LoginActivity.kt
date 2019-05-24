@@ -72,6 +72,7 @@ class LoginActivity : BaseArchActivity() {
 		runSinceKitKat {
 			if (keystoreCompat.hasSecretLoadable()) {
 				keystoreCompat.loadSecretAsString(
+					applicationContext,
 					{ decryptResult ->
 						decryptResult.split(';').let {
 							viewModel?.email?.set(it[0])
