@@ -243,6 +243,7 @@ class LoginActivity : AppCompatActivity() {
         
             if (keystoreCompat.hasSecretLoadable()) {
                 keystoreCompat.loadSecretAsString(
+                	applicationContext,
                     //Decrypt credentials from loaded secret and use them for sign in
 					{ decryptResult ->
 					    //email/password were saved together separated by semicolon
