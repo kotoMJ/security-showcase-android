@@ -43,7 +43,7 @@ If your application supports API lower than 19, include this line to app's Andro
 
 ```groovy
 dependencies {
-	api("cz.koto:android-keystore-compat:2.0.3") {
+	api("cz.koto:android-keystore-compat:2.1.0") {
 		exclude group: 'com.android.support'
 	}
 	api("cz.koto:android-keystore-compat-base:2.1.0")
