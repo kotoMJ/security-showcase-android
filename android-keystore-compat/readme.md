@@ -46,10 +46,10 @@ dependencies {
 	api("cz.koto:android-keystore-compat:2.0.3") {
 		exclude group: 'com.android.support'
 	}
-	api("cz.koto:android-keystore-compat-base:2.0.3")
-	api("cz.koto:android-keystore-compat-19:2.0.1")
-	api("cz.koto:android-keystore-compat-21:2.0.1")
-	api("cz.koto:android-keystore-compat-23:2.0.1")
+	api("cz.koto:android-keystore-compat-base:2.1.0")
+	api("cz.koto:android-keystore-compat-19:2.1.0")
+	api("cz.koto:android-keystore-compat-21:2.1.0")
+	api("cz.koto:android-keystore-compat-23:2.1.0")
 	implementation('com.scottyab:rootbeer-lib:0.0.6') {
 		exclude group: 'com.android.support'
 	}
@@ -63,12 +63,12 @@ dependencies {
 
 ```groovy
 dependencies {
-	api("cz.koto:android-keystore-compat-elpuls:2.0.3") {
+	api("cz.koto:android-keystore-compat-elpuls:2.1.0") {
 		exclude group: 'com.android.support'
 	}
-	api("cz.koto:android-keystore-compat-base:2.0.3")
-	api("cz.koto:android-keystore-compat-21:2.0.1")
-	api("cz.koto:android-keystore-compat-23:2.0.1")
+	api("cz.koto:android-keystore-compat-base:2.1.0")
+	api("cz.koto:android-keystore-compat-21:2.1.0")
+	api("cz.koto:android-keystore-compat-23:2.1.0")
 	implementation('com.scottyab:rootbeer-lib:0.0.6') {
 		exclude group: 'com.android.support'
 	}
@@ -82,11 +82,11 @@ dependencies {
 
 ```groovy
 dependencies {
-	api("cz.koto:android-keystore-compat-empuls:2.0.3") {
+	api("cz.koto:android-keystore-compat-empuls:2.1.0") {
 		exclude group: 'com.android.support'
 	}
-	api("cz.koto:android-keystore-compat-base:2.0.3")
-	api("cz.koto:android-keystore-compat-23:2.0.1")
+	api("cz.koto:android-keystore-compat-base:2.1.0")
+	api("cz.koto:android-keystore-compat-23:2.1.0")
 	implementation('com.scottyab:rootbeer-lib:0.0.6') {
 		exclude group: 'com.android.support'
 	}

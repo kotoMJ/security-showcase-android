@@ -1,5 +1,7 @@
 # Release notes for Security Showcase app
 
+## SHOWCASE-3.1.0
+* Update with usage of KeystoreCompat 2.1.0
 
 ## SHOWCASE-3.0.2
 * Update with usage of KeystoreCompat 2.0.3 (Prevent KeyNotValidException for some Huawei devices)
