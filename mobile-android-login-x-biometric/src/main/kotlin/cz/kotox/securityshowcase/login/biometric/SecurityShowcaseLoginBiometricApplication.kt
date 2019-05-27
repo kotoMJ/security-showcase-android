@@ -10,12 +10,12 @@ import cz.kotox.securityshowcase.R
 import cz.kotox.securityshowcase.core.BaseApplication
 import cz.kotox.securityshowcase.core.entity.AppVersion
 import cz.kotox.securityshowcase.core.ktools.lazyUnsafe
-import cz.kotox.securityshowcase.login.LoginActivity
 import cz.kotox.securityshowcase.login.biometric.di.AppComponent
 import cz.kotox.securityshowcase.login.biometric.di.DaggerAppComponent
 import cz.kotox.securityshowcase.login.biometric.ui.MainActivity
+import cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricActivity
 
-class SecurityShowcaseLoginApplication : BaseApplication(), LifecycleObserver {
+class SecurityShowcaseLoginBiometricApplication : BaseApplication(), LifecycleObserver {
 
 	internal val appComponent: AppComponent by lazyUnsafe {
 		DaggerAppComponent
@@ -56,7 +56,7 @@ class SecurityShowcaseLoginApplication : BaseApplication(), LifecycleObserver {
 ////			.setDestination(R.id.login_screen)
 ////			.createPendingIntent()
 ////		homePendingIntent.send()
-		val goToLoginIntent = Intent(this, LoginActivity::class.java)
+		val goToLoginIntent = Intent(this, LoginBiometricActivity::class.java)
 		goToLoginIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
 		startActivity(Intent(goToLoginIntent))
 	}

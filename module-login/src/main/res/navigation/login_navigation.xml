@@ -8,7 +8,7 @@
 
 	<fragment
 		android:id="@+id/login_screen"
-		android:name="cz.kotox.securityshowcase.login.LoginFragment"
+		android:name="cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricFragment"
 		android:label="Login screen"
 		tools:layout="@layout/fragment_login">
 		<argument

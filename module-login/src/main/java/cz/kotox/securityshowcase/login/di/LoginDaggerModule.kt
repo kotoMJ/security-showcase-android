@@ -3,10 +3,10 @@ package cz.kotox.securityshowcase.login.di
 import androidx.lifecycle.ViewModel
 import cz.kotox.securityshowcase.core.database.preferences.LocalPreferences
 import cz.kotox.securityshowcase.core.di.ViewModelKey
-import cz.kotox.securityshowcase.login.LoginActivity
-import cz.kotox.securityshowcase.login.LoginFragment
-import cz.kotox.securityshowcase.login.LoginViewModel
 import cz.kotox.securityshowcase.login.database.preference.PreferencesLogin
+import cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricActivity
+import cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricFragment
+import cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -22,13 +22,13 @@ abstract class LoginDaggerModule {
 	abstract fun bindsLocalPreferences(pref: PreferencesLogin): LocalPreferences
 
 	@ContributesAndroidInjector
-	abstract fun contributeSignInActivity(): LoginActivity
+	abstract fun contributeSignInActivity(): LoginBiometricActivity
 
 	@ContributesAndroidInjector
-	abstract fun contributeSignInFragment(): LoginFragment
+	abstract fun contributeSignInFragment(): LoginBiometricFragment
 
 	@Binds
 	@IntoMap
-	@ViewModelKey(LoginViewModel::class)
-	abstract fun bindSignInViewModel(signInViewModel: LoginViewModel): ViewModel
+	@ViewModelKey(LoginBiometricViewModel::class)
+	abstract fun bindSignInViewModel(signInViewModel: LoginBiometricViewModel): ViewModel
 }

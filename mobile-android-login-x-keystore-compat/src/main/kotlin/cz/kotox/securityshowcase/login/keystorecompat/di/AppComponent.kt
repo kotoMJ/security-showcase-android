@@ -6,7 +6,7 @@ import cz.kotox.securityshowcase.core.di.AppInitAction
 import cz.kotox.securityshowcase.core.di.CoreDaggerModule
 import cz.kotox.securityshowcase.core.entity.AppVersion
 import cz.kotox.securityshowcase.login.di.LoginDaggerModule
-import cz.kotox.securityshowcase.login.keystorecompat.SecurityShowcaseLoginApplication
+import cz.kotox.securityshowcase.login.keystorecompat.SecurityShowcaseLoginKeystoreCompatApplication
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -37,7 +37,7 @@ interface AppComponent {
 		fun build(): AppComponent
 	}
 
-	fun inject(loginApplication: SecurityShowcaseLoginApplication)
+	fun inject(loginApplication: SecurityShowcaseLoginKeystoreCompatApplication)
 
 	@get:AppInitAction
 	val initActions: Set<() -> Unit>

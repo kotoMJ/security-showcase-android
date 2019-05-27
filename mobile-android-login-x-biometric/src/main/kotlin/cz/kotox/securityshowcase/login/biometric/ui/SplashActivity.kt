@@ -2,7 +2,7 @@ package cz.kotox.securityshowcase.login.biometric.ui
 
 import android.os.Bundle
 import cz.kotox.securityshowcase.core.arch.BaseActivity
-import cz.kotox.securityshowcase.login.LoginActivityIntent
+import cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricActivityIntent
 
 class SplashActivity : BaseActivity() {
 
@@ -18,6 +18,6 @@ class SplashActivity : BaseActivity() {
 //		4) finish() vzdy
 
 		finish()
-		startActivity(LoginActivityIntent())
+		startActivity(LoginBiometricActivityIntent())
 	}
 }

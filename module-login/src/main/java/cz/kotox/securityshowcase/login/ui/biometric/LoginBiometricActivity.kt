@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.login
+package cz.kotox.securityshowcase.login.ui.biometric
 
 import android.content.Context
 import android.content.Intent
@@ -12,11 +12,12 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import cz.kotox.securityshowcase.core.arch.BaseActivity
 import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
+import cz.kotox.securityshowcase.login.R
 import timber.log.Timber
 import javax.inject.Inject
 
-fun Context.LoginActivityIntent(/*user: User*/): Intent {
-	val loginIntent = Intent(this, LoginActivity::class.java).apply {
+fun Context.LoginBiometricActivityIntent(/*user: User*/): Intent {
+	val loginIntent = Intent(this, LoginBiometricActivity::class.java).apply {
 		//putExtra(INTENT_USER_ID, user.id)
 	}
 	loginIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -25,7 +26,7 @@ fun Context.LoginActivityIntent(/*user: User*/): Intent {
 
 //private const val INTENT_USER_ID = "user_id"
 
-class LoginActivity : BaseActivity() {
+class LoginBiometricActivity : BaseActivity() {
 
 	@Inject
 	lateinit var preferencesCore: PreferencesCommon

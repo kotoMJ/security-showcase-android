@@ -5,7 +5,7 @@ import cz.kotox.securityshowcase.core.ApplicationInterfaceContract
 import cz.kotox.securityshowcase.core.di.AppInitAction
 import cz.kotox.securityshowcase.core.di.CoreDaggerModule
 import cz.kotox.securityshowcase.core.entity.AppVersion
-import cz.kotox.securityshowcase.login.biometric.SecurityShowcaseLoginApplication
+import cz.kotox.securityshowcase.login.biometric.SecurityShowcaseLoginBiometricApplication
 import cz.kotox.securityshowcase.login.di.LoginDaggerModule
 import dagger.BindsInstance
 import dagger.Component
@@ -37,7 +37,7 @@ interface AppComponent {
 		fun build(): AppComponent
 	}
 
-	fun inject(loginApplication: SecurityShowcaseLoginApplication)
+	fun inject(loginApplication: SecurityShowcaseLoginBiometricApplication)
 
 	@get:AppInitAction
 	val initActions: Set<() -> Unit>

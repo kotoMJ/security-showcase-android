@@ -7,7 +7,7 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 
 	<application
-		android:name="cz.kotox.securityshowcase.login.keystorecompat.SecurityShowcaseLoginApplication"
+		android:name="cz.kotox.securityshowcase.login.keystorecompat.SecurityShowcaseLoginKeystoreCompatApplication"
 		android:allowBackup="false"
 		android:icon="@mipmap/ic_launcher"
 		android:label="@string/appName"
