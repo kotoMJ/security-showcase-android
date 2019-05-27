@@ -14,9 +14,8 @@ import cz.koto.keystorecompat.base.utility.runSinceKitKat
 import cz.koto.keystorecompat.base.utility.stringPref
 import java.security.KeyStore
 import java.security.KeyStoreException
-import java.util.*
+import java.util.Calendar
 import javax.security.auth.x500.X500Principal
-
 
 abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, open val context: Context) {
 
@@ -63,7 +62,6 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 		Log.w(LOG_TAG, "Device Android version[${Build.VERSION.SDK_INT}] doesn't offer trusted keystore functionality!")
 	}
 
-
 	fun isKeystoreCompatAvailable(): Boolean {
 		val ret = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) && !isDeviceRooted(context);
 		if (!ret) {
@@ -71,7 +69,6 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 		}
 		return ret
 	}
-
 
 	/**
 	 * Keystore is available only for secured devices!
@@ -83,7 +80,6 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 			return keystoreCompatImpl.isSecurityEnabled(this.context)
 		}
 	}
-
 
 	/**
 	 * Store credentials string in encrypted form to shared preferences.
@@ -101,7 +97,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 				initKeyPairIfNecessary(uniqueId)
 				try {
 					encryptedSecret = keystoreCompatImpl.storeSecret(secret,
-							keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
+						keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
 					onSuccess.invoke()
 				} catch (fle: ForceLockScreenMarshmallowException) {
 					clearCredentials()
@@ -134,7 +130,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 				initKeyPairIfNecessary(uniqueId)
 				try {
 					encryptedSecret = keystoreCompatImpl.storeSecret(secret.toByteArray(Charsets.UTF_8),
-							keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
+						keyStore.getEntry(uniqueId, null) as KeyStore.Entry, useBase64Encoding)
 					onSuccess.invoke()
 				} catch (fle: ForceLockScreenMarshmallowException) {
 					clearCredentials()
@@ -158,29 +154,29 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 			if (isKeystoreCompatAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
 				if (lockScreenCancelled()) return false
 				return ((encryptedSecret?.isNotBlank() ?: false) //Is there content to decrypt
-						&& (keyStore.getEntry(uniqueId, null) != null))//Is there a key for decryption?
+					&& (keyStore.getEntry(uniqueId, null) != null))//Is there a key for decryption?
 			} else return false
 		} else return false
 	}
-
 
 	/**
 	 * Load secret byteArray in decrypted form from shared preferences
 	 * Function is using @JvmOverloads to force optional parameters be optional even in java code.
 	 */
 	@JvmOverloads
-	fun loadSecret(onSuccess: (cre: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
+	fun loadSecret(context: Context, onSuccess: (cre: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
 		runSinceKitKat {
 			val privateEntry: KeyStore.Entry? = keyStore.getEntry(uniqueId, null)
 			if (privateEntry == null) {
 				onFailure.invoke(RuntimeException("No entry in keystore available."))
 			} else {
-				keystoreCompatImpl.loadSecret(onSuccess,
-						onFailure,
-						{ clearCredentials() },
-						forceFlag,
-						this.encryptedSecret,
-						privateEntry, isBase64Encoded)
+				keystoreCompatImpl.loadSecret(context,
+					onSuccess,
+					onFailure,
+					{ clearCredentials() },
+					forceFlag,
+					this.encryptedSecret,
+					privateEntry, isBase64Encoded)
 			}
 		}
 	}
@@ -190,18 +186,19 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	 * Function is using @JvmOverloads to force optional parameters be optional even in java code.
 	 */
 	@JvmOverloads
-	fun loadSecretAsString(onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
+	fun loadSecretAsString(context: Context, onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
 		runSinceKitKat {
 			val keyEntry: KeyStore.Entry = keyStore.getEntry(uniqueId, null)
 			keystoreCompatImpl.loadSecret(
-					{ byteArray ->
-						onSuccess.invoke(String(byteArray, 0, byteArray.size, Charsets.UTF_8))
-					},
-					onFailure,
-					{ clearCredentials() },
-					forceFlag,
-					this.encryptedSecret,
-					keyEntry, isBase64Encoded)
+				context,
+				{ byteArray ->
+					onSuccess.invoke(String(byteArray, 0, byteArray.size, Charsets.UTF_8))
+				},
+				onFailure,
+				{ clearCredentials() },
+				forceFlag,
+				this.encryptedSecret,
+				keyEntry, isBase64Encoded)
 		}
 	}
 
@@ -259,9 +256,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 		}
 	}
 
-
 	private fun isCertificateValid(): Boolean = true //TODO solve real certificate validity
-
 
 	private fun createNewKeyPair(aliasText: String) {
 		try {

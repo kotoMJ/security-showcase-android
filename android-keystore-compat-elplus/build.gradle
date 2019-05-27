@@ -81,13 +81,13 @@ dependencies {
 	//	api(project(':android-keystore-compat-21'))
 	//	api(project(':android-keystore-compat-23'))
 
-	api('cz.koto:android-keystore-compat-base:2.0.1') {
+	api('cz.koto:android-keystore-compat-base:2.1.0') {
 		exclude group: 'org.jetbrains.kotlin'
 	}
-	api('cz.koto:android-keystore-compat-21:2.0.1') {
+	api('cz.koto:android-keystore-compat-21:2.1.0') {
 		exclude group: 'org.jetbrains.kotlin'
 	}
-	api('cz.koto:android-keystore-compat-23:2.0.1') {
+	api('cz.koto:android-keystore-compat-23:2.1.0') {
 		exclude group: 'org.jetbrains.kotlin'
 	}
 

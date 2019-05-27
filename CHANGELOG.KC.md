@@ -1,6 +1,14 @@
 
 # Release notes for Keystore Compat library
  
+## KC-2.1.0
+ * Fix crash when handling context in Android API19 (KitKat) - fix device admin dialog 
+## KC-2.0.3
+ * Prevent KeyNotValidException for some Huawei devices
+## KC-2.0.2
+ * Simplify installation configuration.
+## KC-2.0.1
+ * Connect impl libraries to JCenter.
 ## KC-2.0.0
  * Refactor structure to separate code specific for different API versions. KeystoreCompat can thus be composed 
  according to app requirements and doesn't force to depend on legacy code.

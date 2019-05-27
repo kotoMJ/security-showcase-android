@@ -83,7 +83,7 @@ dependencies {
 
 	//	api(project(':android-keystore-compat-base'))
 
-	api('cz.koto:android-keystore-compat-base:2.0.1') {
+	api('cz.koto:android-keystore-compat-base:2.1.0') {
 		exclude group: 'org.jetbrains.kotlin'
 	}
 
