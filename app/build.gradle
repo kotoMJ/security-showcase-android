@@ -82,29 +82,26 @@ dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-//	api(name: "android-keystore-compat-release", ext: "aar") {
-//		exclude group: 'org.jetbrains.kotlin'
-//		exclude group: 'com.android.support'
-//	}
-
-//	api(project(':android-keystore-compat')) {
-//		exclude group: 'com.android.support'
-//		exclude group: 'org.jetbrains.kotlin'
-//	}
-//	api(project(':android-keystore-compat-base'))
-//	api(project(':android-keystore-compat-19'))
-//	api(project(':android-keystore-compat-21'))
-//	api(project(':android-keystore-compat-23'))
-
-
-	api("cz.koto:android-keystore-compat:$keystore_compat_version_latest") {
-		exclude group: 'com.android.support'
+	if (project.hasProperty("keystore.compat.dependency.type")) {
+		if (project.property("keystore.compat.dependency.type") == "local") {
+			api(project(':android-keystore-compat')) {
+				exclude group: 'com.android.support'
+				exclude group: 'org.jetbrains.kotlin'
+			}
+			api(project(':android-keystore-compat-base'))
+			api(project(':android-keystore-compat-19'))
+			api(project(':android-keystore-compat-21'))
+			api(project(':android-keystore-compat-23'))
+		}
+	} else {
+//		api("cz.koto:android-keystore-compat:$keystore_compat_version_latest") {
+//			exclude group: 'com.android.support'
+//		}
+//		api("cz.koto:android-keystore-compat-base:$keystore_compat_version_latest")
+//		api("cz.koto:android-keystore-compat-19:$keystore_compat_version_impl")
+//		api("cz.koto:android-keystore-compat-21:$keystore_compat_version_impl")
+//		api("cz.koto:android-keystore-compat-23:$keystore_compat_version_impl")
 	}
-	api("cz.koto:android-keystore-compat-base:$keystore_compat_version_latest")
-	api("cz.koto:android-keystore-compat-19:$keystore_compat_version_impl")
-	api("cz.koto:android-keystore-compat-21:$keystore_compat_version_impl")
-	api("cz.koto:android-keystore-compat-23:$keystore_compat_version_impl")
-
 
 	implementation('com.scottyab:rootbeer-lib:0.0.6') {
 		exclude group: 'com.android.support'
@@ -155,7 +152,6 @@ dependencies {
 	debugCompile "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
 	releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
 	testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
-
 
 	compile "org.parceler:parceler-api:$parceler_version"
 	kapt "org.parceler:parceler:$parceler_version"

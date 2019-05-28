@@ -36,11 +36,9 @@ ext {
 	allLicenses = ["Apache-2.0"]
 }
 
-
 android {
 	compileSdkVersion compile_sdk_version
 	buildToolsVersion build_tools_version
-
 
 	defaultConfig {
 		minSdkVersion 21
@@ -77,14 +75,17 @@ buildscript {
 	}
 }
 
-
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-	//	api(project(':android-keystore-compat-base'))
-
-	api('cz.koto:android-keystore-compat-base:2.1.0') {
-		exclude group: 'org.jetbrains.kotlin'
+	if (project.hasProperty("keystore.compat.dependency.type")) {
+		if (project.property("keystore.compat.dependency.type") == "local") {
+			api(project(':android-keystore-compat-base'))
+		}
+	} else {
+		api('cz.koto:android-keystore-compat-base:2.1.0') {
+			exclude group: 'org.jetbrains.kotlin'
+		}
 	}
 
 	testImplementation 'junit:junit:4.12'

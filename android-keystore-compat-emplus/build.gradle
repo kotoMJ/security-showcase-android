@@ -63,7 +63,6 @@ android {
 	}
 }
 
-
 buildscript {
 	repositories {
 		jcenter()
@@ -77,14 +76,18 @@ buildscript {
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
-	//	api(project(':android-keystore-compat-base'))
-	//	api(project(':android-keystore-compat-23'))
-
-	api('cz.koto:android-keystore-compat-base:2.1.0') {
-		exclude group: 'org.jetbrains.kotlin'
-	}
-	api('cz.koto:android-keystore-compat-23:2.1.0') {
-		exclude group: 'org.jetbrains.kotlin'
+	if (project.hasProperty("keystore.compat.dependency.type")) {
+		if (project.property("keystore.compat.dependency.type") == "local") {
+			api(project(':android-keystore-compat-base'))
+			api(project(':android-keystore-compat-23'))
+		}
+	} else {
+		api('cz.koto:android-keystore-compat-base:2.1.0') {
+			exclude group: 'org.jetbrains.kotlin'
+		}
+		api('cz.koto:android-keystore-compat-23:2.1.0') {
+			exclude group: 'org.jetbrains.kotlin'
+		}
 	}
 
 	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -93,7 +96,7 @@ dependencies {
 	testCompile 'junit:junit:4.12'
 	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-	compile('com.scottyab:rootbeer-lib:0.0.6'){
+	compile('com.scottyab:rootbeer-lib:0.0.6') {
 		exclude group: 'com.android.support'
 	}
 
@@ -101,6 +104,5 @@ dependencies {
 repositories {
 	mavenCentral()
 }
-
 
 apply from: './publish.gradle'
