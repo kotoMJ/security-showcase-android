@@ -13,6 +13,7 @@
 		android:label="@string/appName"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.SecurityShowcase"
+		tools:replace="android:allowBackup"
 		tools:ignore="GoogleAppIndexingWarning">
 		<activity android:name="cz.kotox.securityshowcase.login.keystorecompat.ui.MainActivity" />
 
