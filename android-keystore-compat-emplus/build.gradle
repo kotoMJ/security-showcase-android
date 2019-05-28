@@ -77,14 +77,18 @@ buildscript {
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
-	//	api(project(':android-keystore-compat-base'))
-	//	api(project(':android-keystore-compat-23'))
-
-	api('cz.koto:android-keystore-compat-base:2.1.0') {
-		exclude group: 'org.jetbrains.kotlin'
-	}
-	api('cz.koto:android-keystore-compat-23:2.1.0') {
-		exclude group: 'org.jetbrains.kotlin'
+	if (project.hasProperty("keystore.compat.dependency.type")) {
+		if (project.property("keystore.compat.dependency.type") == "local") {
+			api(project(':android-keystore-compat-base'))
+			api(project(':android-keystore-compat-23'))
+		}
+	} else {
+		api('cz.koto:android-keystore-compat-base:2.1.0') {
+			exclude group: 'org.jetbrains.kotlin'
+		}
+		api('cz.koto:android-keystore-compat-23:2.1.0') {
+			exclude group: 'org.jetbrains.kotlin'
+		}
 	}
 
 	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

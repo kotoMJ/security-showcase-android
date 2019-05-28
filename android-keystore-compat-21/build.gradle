@@ -81,10 +81,14 @@ buildscript {
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-	//	api(project(':android-keystore-compat-base'))
-
-	api('cz.koto:android-keystore-compat-base:2.1.0') {
-		exclude group: 'org.jetbrains.kotlin'
+	if (project.hasProperty("keystore.compat.dependency.type")) {
+		if (project.property("keystore.compat.dependency.type") == "local") {
+			api(project(':android-keystore-compat-base'))
+		}
+	} else {
+		api('cz.koto:android-keystore-compat-base:2.1.0') {
+			exclude group: 'org.jetbrains.kotlin'
+		}
 	}
 
 	testImplementation 'junit:junit:4.12'
