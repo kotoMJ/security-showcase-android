@@ -83,3 +83,4 @@ hs_err_pid*
 /mobile-android-login-x-keystore-compat/extras/keystore/releaseKeystore.properties
 /mobile-android-login-x-keystore-compat/extras/keystore/RELEASE_KEYSTORE_BASE64.txt
 /mobile-android-login-x-keystore-compat/extras/keystore/releaseKeystore.jks
+/Gemfile.lock

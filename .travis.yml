@@ -61,6 +61,7 @@ script:
   - "./gradlew lint test"
   - "./gradlew assembleDevDebug --no-daemon --stacktrace"
 
+  bundle exec danger
 
 #script:
 #  - ./gradlew clean

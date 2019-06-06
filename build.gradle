@@ -40,7 +40,6 @@ buildscript {
 		app_moshi_version = '1.6.0'
 		//app_moshi_converter_version = '2.4.0'
 
-
 		app_leakcanary_version = '1.5.4'
 		app_dagger_version = '2.22.1'
 		app_espresso_version = '3.0.2-beta1'
@@ -94,10 +93,20 @@ allprojects {
 		maven {url 'https://maven.fabric.io/public'}
 		maven {url "https://www.jitpack.io"}
 		maven {url 'https://maven.fabric.io/public'}
-		maven { url "https://oss.sonatype.org/content/repositories/snapshots" } //RETROFIT-COROUTINES
+		maven {url "https://oss.sonatype.org/content/repositories/snapshots"} //RETROFIT-COROUTINES
 	}
 }
 
 task clean(type: Delete) {
 	delete rootProject.buildDir
+}
+
+task runChecksForDanger() {
+	group = "Reporting"
+	dependsOn 'detekt'
+	allprojects {
+		if (project.name.startsWith("mobile") || project.name.startsWith("module")) {
+			dependsOn "${project.name}:lintDevDebug"
+		}
+	}
 }
