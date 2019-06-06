@@ -57,16 +57,20 @@ before_script:
   - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
     $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > mobile-android-login-legacy/extras/keystore/releaseKeystore.properties
 
-install:
-  # Run lint checks reports for Danger
-  - "./gradlew runChecksForDanger"
-  # Run Danger
-  - "bundle exec danger"
+#install:
+#  # Run lint checks reports for Danger
+#  - "./gradlew runChecksForDanger"
+#  # Run Danger
+#  - "bundle exec danger"
 
 script:
+  # Run lint checks reports for Danger
+  - "./gradlew runChecksForDanger"
   - "./gradlew androidDependencies"
   - "./gradlew lint test"
   - "./gradlew assembleDevDebug --no-daemon --stacktrace"
+  # Run Danger
+  - "bundle exec danger"
 
 #script:
 #  - ./gradlew clean
