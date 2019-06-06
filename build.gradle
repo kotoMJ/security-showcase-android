@@ -2,6 +2,8 @@
 
 buildscript {
 	ext {
+		project_directory = "${rootProject.projectDir}"
+
 		keystore_compat_version = '2.1.0'
 
 		sdk_version = 28
@@ -76,6 +78,15 @@ buildscript {
 	}
 }
 
+plugins {
+	id "io.gitlab.arturbosch.detekt" version "1.0.0-RC14"
+}
+
+detekt {
+	input = files("$project_directory")
+	config = files("$project_directory/detekt-config-mj.yml")
+}
+
 allprojects {
 	repositories {
 		jcenter()
@@ -84,14 +95,6 @@ allprojects {
 		maven {url "https://www.jitpack.io"}
 		maven {url 'https://maven.fabric.io/public'}
 		maven { url "https://oss.sonatype.org/content/repositories/snapshots" } //RETROFIT-COROUTINES
-	}
-
-	// Put this in 'root' `build.gradle`, in allprojects or subprojects
-	tasks.withType(JavaCompile) {
-		//http://stackoverflow.com/questions/34148513/how-do-i-suppress-warnings-when-compiling-an-android-library-with-gradle
-		// Try to turn them all off automatically
-		//options.compilerArgs << '-Xlint:none'
-		//options.compilerArgs << '-nowarn' // same as '-Xlint:none'
 	}
 }
 

@@ -9,7 +9,6 @@ allprojects {
 	apply plugin: 'kotlin-kapt'
 	apply plugin: 'androidx.navigation.safeargs.kotlin'
 
-
 	def isTestTask = getGradle().getStartParameter().getTaskNames().any { name -> name.toLowerCase().contains("test") }
 
 	if (isTestTask) {
@@ -122,6 +121,10 @@ allprojects {
 				}
 				maxParallelForks = 8
 			}
+		}
+
+		lintOptions {
+			abortOnError false
 		}
 
 		configurations.all {
