@@ -14,15 +14,13 @@ warn("Big PR") if git.lines_of_code > 500
 fail("fdescribe left in tests") if `grep -r fdescribe specs/ `.length > 1
 fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 
-github.dismiss_out_of_range_messages
 
 # AndroidLint
-# android_lint.report_file = "app/build/reports/lint-results-debug.xml"
-# android_lint.skip_gradle_task = true
-# android_lint.severity = "Error"
-# android_lint.lint(inline_mode: true)
-# android_lint.gradle_task = "app:lintDebug"
-# android_lint.report_file = "app/build/reports/lint-results-debug.xml"
+
+#android_lint.gradle_task = "lintDevDebug"
+android_lint.skip_gradle_task = true
+android_lint.lint(inline_mode: true)
+android_lint.report_file = "/home/travis/build/kotomisak/security-showcase-android/build/reports/android-lint/android-lint.xml"
 
 message "Dangerfile, detekt.xml checking..."
 
@@ -33,6 +31,9 @@ else
 end
 
 message "Dangerfile, detekt processing started..."
+
+# Do not show out of range issues, not caused by the current PR
+github.dismiss_out_of_range_messages
 
 # Detekt
 kotlin_detekt.report_file = "/home/travis/build/kotomisak/security-showcase-android/build/reports/detekt/detekt.xml"

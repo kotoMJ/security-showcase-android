@@ -123,10 +123,6 @@ allprojects {
 			}
 		}
 
-		lintOptions {
-			abortOnError false
-		}
-
 		configurations.all {
 			resolutionStrategy {
 				//TODO force androix packages instead
@@ -142,6 +138,8 @@ allprojects {
 
 		lintOptions {
 			abortOnError false
+			xmlOutput file("$project_directory/build/reports/android-lint/android-lint.xml")
+			htmlOutput file("$project_directory/build/reports/android-lint/android-lint.html")
 		}
 	}
 
