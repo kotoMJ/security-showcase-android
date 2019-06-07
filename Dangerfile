@@ -1,3 +1,5 @@
+message "Dangerfile, processing started"
+
 # Sometimes it's a README fix, or something like that - which isn't relevant for
 # including in a project's CHANGELOG for example
 declared_trivial = github.pr_title.include? "#trivial"
@@ -19,6 +21,16 @@ fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 # android_lint.lint(inline_mode: true)
 # android_lint.gradle_task = "app:lintDebug"
 # android_lint.report_file = "app/build/reports/lint-results-debug.xml"
+
+message "Dangerfile, detekt.xml checking..."
+
+if(File.exist?('/home/travis/build/kotomisak/security-showcase-android/build/reports/detekt/detekt.xml'))
+	message "Dangerfile, detetk.xml detected..."
+else
+	message "Dangerfile, detetk.xml NOT on path specified!"
+end
+
+message "Dangerfile, detekt processing started..."
 
 # Detekt
 kotlin_detekt.report_file = "/home/travis/build/kotomisak/security-showcase-android/build/reports/detekt/detekt.xml"
