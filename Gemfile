@@ -8,4 +8,4 @@ gem 'danger'
 
 # gem "danger-checkstyle_format"
 gem 'danger-android_lint'
-gem 'danger-detekt'
+gem 'danger-kotlin_detekt'
