@@ -104,9 +104,9 @@ task clean(type: Delete) {
 task runChecksForDanger() {
 	group = "Reporting"
 	dependsOn 'detekt'
-	allprojects {
-		if (project.name.startsWith("mobile") || project.name.startsWith("module")) {
-			dependsOn "${project.name}:lintDevDebug"
-		}
-	}
+//	allprojects {
+//		if (project.name.startsWith("mobile") || project.name.startsWith("module")) {
+//			dependsOn "${project.name}:lintDevDebug"
+//		}
+//	}
 }

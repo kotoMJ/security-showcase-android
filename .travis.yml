@@ -69,7 +69,7 @@ script:
   #  - "./gradlew lint test"
   #  - "./gradlew assembleDevDebug --no-daemon --stacktrace"
   # Run lint checks reports for Danger
-  - "./gradlew runChecksForDanger"
+  #  - "./gradlew runChecksForDanger"
   # Run Danger
   - "bundle exec danger --verbose"
 
