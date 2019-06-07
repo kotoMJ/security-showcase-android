@@ -71,7 +71,7 @@ script:
   # Run lint checks reports for Danger
   - "./gradlew runChecksForDanger"
   # Run Danger
-  - "bundle exec danger --pry"
+  - "bundle exec danger --verbose"
 
 #script:
 #  - ./gradlew clean
