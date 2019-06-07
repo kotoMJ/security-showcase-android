@@ -21,6 +21,6 @@ fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 # android_lint.report_file = "app/build/reports/lint-results-debug.xml"
 
 # Detekt
-kotlin_detekt.report_file = "build/reports/detekt/detekt.xml"
+kotlin_detekt.report_file = "/home/travis/build/kotomisak/security-showcase-android/build/reports/detekt/detekt.xml"
 kotlin_detekt.skip_gradle_task = true
 kotlin_detekt.severity = "Error"
