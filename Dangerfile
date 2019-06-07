@@ -36,5 +36,5 @@ message "Dangerfile, detekt processing started..."
 kotlin_detekt.report_file = "/home/travis/build/kotomisak/security-showcase-android/build/reports/detekt/detekt.xml"
 #kotlin_detekt.skip_gradle_task = true
 kotlin_detekt.gradle_task = "runChecksForDanger"
-kotlin_detekt.severity = "Error"
+kotlin_detekt.severity = "error"
 kotlin_detekt.detekt
