@@ -1,4 +1,4 @@
-console.log("Dangerfile, processing started")
+message("Dangerfile, processing started")
 
 # Sometimes it's a README fix, or something like that - which isn't relevant for
 # including in a project's CHANGELOG for example
@@ -14,15 +14,15 @@ warn("Big PR") if git.lines_of_code > 500
 fail("fdescribe left in tests") if `grep -r fdescribe specs/ `.length > 1
 fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 
-console.log("Dangerfile, detekt.xml checking...")
+message("Dangerfile, detekt.xml checking...")
 
 if(File.exist?('/home/travis/build/kotomisak/security-showcase-android/build/reports/detekt/detekt.xml'))
-	console.log("Dangerfile, detetk.xml detected...")
+	message("Dangerfile, detetk.xml detected...")
 else
-	console.log("Dangerfile, detetk.xml NOT on path specified!")
+	message("Dangerfile, detetk.xml NOT on path specified!")
 end
 
-console.log("Dangerfile, detekt processing started...")
+message("Dangerfile, detekt processing started...")
 
 # Do not show out of range issues, not caused by the current PR
 github.dismiss_out_of_range_messages
