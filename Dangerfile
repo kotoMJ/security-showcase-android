@@ -38,5 +38,5 @@ kotlin_detekt.detekt
 android_lint.gradle_task = "lintDevDebug"
 #android_lint.skip_gradle_task = true
 android_lint.report_file = "/home/travis/build/kotomisak/security-showcase-android/build/reports/android-lint/android-lint.xml"
-android_lint.lint(inline_mode: true)
 android_lint.severity = "warning"
+android_lint.lint(inline_mode: true)
