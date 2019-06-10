@@ -25,7 +25,7 @@ end
 message("Dangerfile, detekt processing started...")
 
 # Do not show out of range issues, not caused by the current PR
-github.dismiss_out_of_range_messages
+github.dismiss_out_of_range_messages()
 
 # Detekt
 kotlin_detekt.report_file = "/home/travis/build/kotomisak/security-showcase-android/build/reports/detekt/detekt.xml"
