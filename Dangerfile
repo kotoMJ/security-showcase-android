@@ -31,7 +31,7 @@ github.dismiss_out_of_range_messages()
 kotlin_detekt.report_file = "/home/travis/build/kotomisak/security-showcase-android/build/reports/detekt/detekt.xml"
 #kotlin_detekt.skip_gradle_task = true
 kotlin_detekt.gradle_task = "detekt"
-kotlin_detekt.severity = "error"
+kotlin_detekt.severity = "warning"
 kotlin_detekt.detekt(inline_mode: true)
 
 ## AndroidLint
