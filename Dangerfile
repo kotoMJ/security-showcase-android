@@ -32,7 +32,7 @@ kotlin_detekt.report_file = "/home/travis/build/kotomisak/security-showcase-andr
 #kotlin_detekt.skip_gradle_task = true
 kotlin_detekt.gradle_task = "detekt"
 kotlin_detekt.severity = "error"
-kotlin_detekt.detekt
+kotlin_detekt.detekt(inline_mode: true)
 
 ## AndroidLint
 #android_lint.gradle_task = "lintDevDebug"
