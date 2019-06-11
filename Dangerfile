@@ -38,5 +38,5 @@ fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 #android_lint.skip_gradle_task = true
 #android_lint.severity = "warning"
 android_lint.gradle_task = "lintCustom"
-android_lint.report_file = "./build/reports/android-lint/android-lint.xml"
+#android_lint.report_file = "./build/reports/android-lint/android-lint.xml"
 android_lint.lint(inline_mode: true)
