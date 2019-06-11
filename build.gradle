@@ -101,9 +101,8 @@ task clean(type: Delete) {
 	delete rootProject.buildDir
 }
 
-task runChecksForDanger() {
+task runAndroidLintCheck() {
 	group = "Reporting"
-	dependsOn 'detekt'
 	allprojects {
 		if (project.name.startsWith("mobile") || project.name.startsWith("module")) {
 			dependsOn "${project.name}:lintDevDebug"
