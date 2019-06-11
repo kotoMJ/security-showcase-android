@@ -104,6 +104,10 @@ task clean(type: Delete) {
 task runAndroidLintCheck() {
 	group = "Reporting"
 	allprojects {
+		println(">>>${project.name}")
+		if (project.name.startsWith("android")) {
+			dependsOn "${project.name}:lintDebug"
+		}
 		if (project.name.startsWith("mobile") || project.name.startsWith("module")) {
 			dependsOn "${project.name}:lintDevDebug"
 		}

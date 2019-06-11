@@ -28,15 +28,15 @@ fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 #github.dismiss_out_of_range_messages()
 
 # Detekt
-kotlin_detekt.report_file = "/home/travis/build/kotomisak/security-showcase-android/build/reports/detekt/detekt.xml"
-#kotlin_detekt.skip_gradle_task = true
-kotlin_detekt.gradle_task = "detekt"
-kotlin_detekt.severity = "warning"
-kotlin_detekt.detekt(inline_mode: true)
+#kotlin_detekt.report_file = "/home/travis/build/kotomisak/security-showcase-android/build/reports/detekt/detekt.xml"
+#kotlin_detekt.gradle_task = "detekt"
+#kotlin_detekt.severity = "warning"
+#kotlin_detekt.detekt(inline_mode: true)
+
 
 ## AndroidLint
 #android_lint.skip_gradle_task = true
 #android_lint.severity = "warning"
-android_lint.gradle_task = "runAndroidLintCheck"
-android_lint.report_file = "/home/travis/build/kotomisak/security-showcase-android/build/reports/android-lint/android-lint.xml"
+android_lint.gradle_task = "lintDevDebug"
+android_lint.report_file = "build/reports/android-lint/android-lint.xml"
 android_lint.lint(inline_mode: true)
