@@ -101,9 +101,10 @@ task clean(type: Delete) {
 	delete rootProject.buildDir
 }
 
-task runAndroidLintCheck() {
+task lintCustom() {
 	group = "Reporting"
 	allprojects {
+
 		println(">>>${project.name}")
 		if (project.name.startsWith("android")) {
 			dependsOn "${project.name}:lintDebug"

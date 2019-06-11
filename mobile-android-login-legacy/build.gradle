@@ -19,6 +19,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 //apply from: '../jacoco.gradle' //since app module doesn't apply module-core/library.gradle, thus apply jacoco.gradle extra
 
+apply from: "${project_directory}/lint.gradle"
+
 final APK_NAME = "SecurityShowcaseLoginLegacy"
 
 kapt {
@@ -131,12 +133,6 @@ android {
 			resValue "string", "app_name", "ShowcaseLoginLegacy"
 			ext.enableCrashlytics = true
 		}
-	}
-
-	lintOptions {
-		abortOnError false
-		xmlOutput file("$projectDir/build/reports/android-lint/android-lint.xml")
-		htmlOutput file("$projectDir/build/reports/android-lint/android-lint.html")
 	}
 
 	applicationVariants.all {variant ->

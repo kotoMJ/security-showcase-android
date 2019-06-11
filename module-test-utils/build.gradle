@@ -10,6 +10,8 @@ kapt {
 	correctErrorTypes = true // avoid unknown type replacing with NonExistentClass
 }
 
+apply from: "${project_directory}/lint.gradle"
+
 //allOpen {
 //	annotation('cz.kotox.securityshowcase.core.OpenForMocking')
 //}
@@ -71,12 +73,6 @@ android {
 		production {
 			dimension = "env"
 		}
-	}
-
-	lintOptions {
-		abortOnError false
-		xmlOutput file("$projectDir/build/reports/android-lint/android-lint.xml")
-		htmlOutput file("$projectDir/build/reports/android-lint/android-lint.html")
 	}
 }
 

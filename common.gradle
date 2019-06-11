@@ -2,6 +2,7 @@
  * Contains directories for mocking responses (should be in all tests + mock version of app)
  */
 //def mock_files = ['src/mock/resources', '../mock_data/configs', '../mock_data/responses']
+apply from: "${project_directory}/lint.gradle"
 
 allprojects {
 	apply plugin: 'kotlin-android'
@@ -134,12 +135,6 @@ allprojects {
 //				force "com.android.support:gridlayout-v7:$android_support_version"
 //				force "com.android.support:customtabs:$android_support_version"
 			}
-		}
-
-		lintOptions {
-			abortOnError false
-			xmlOutput file("$projectDir/build/reports/android-lint/android-lint.xml")
-			htmlOutput file("$projectDir/build/reports/android-lint/android-lint.html")
 		}
 	}
 

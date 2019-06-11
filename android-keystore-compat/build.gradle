@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply from: "${project_directory}/lint.gradle"
+
 final KC_GIT_TAG_REGEX = "KC*"
 // Last Git tag name on current branch
 final KC_GIT_TAG_NAME = "git describe --tags --abbrev=0 --match ${KC_GIT_TAG_REGEX}".execute([], project.rootDir).text.trim()
