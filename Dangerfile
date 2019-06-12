@@ -17,6 +17,7 @@ fail("fit left in tests") if `grep -r fit specs/ `.length > 1
 
 # Detekt
 # "/home/travis/build/kotomisak/security-showcase-android/build/reports/detekt/detekt.xml"
+#android_lint.severity = "warning"
 kotlin_detekt.report_file = "./build/reports/detekt/detekt.xml"
 kotlin_detekt.gradle_task = "detekt"
 kotlin_detekt.detekt(inline_mode: true)
@@ -24,7 +25,7 @@ kotlin_detekt.detekt(inline_mode: true)
 
 ## AndroidLint
 #android_lint.skip_gradle_task = true
-android_lint.severity = "warning"
+#android_lint.severity = "Warning"
 android_lint.gradle_task = "runAndroidLintAndMergeResults"
 android_lint.report_file = "./build/reports/android-lint/android-lint.xml"
 android_lint.lint(inline_mode: true)
