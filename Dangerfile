@@ -24,7 +24,7 @@ kotlin_detekt.detekt(inline_mode: true)
 
 ## AndroidLint
 #android_lint.skip_gradle_task = true
-#android_lint.severity = "warning"
+android_lint.severity = "warning"
 android_lint.gradle_task = "runAndroidLintAndMergeResults"
 android_lint.report_file = "./build/reports/android-lint/android-lint.xml"
 android_lint.lint(inline_mode: true)
