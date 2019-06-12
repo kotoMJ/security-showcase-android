@@ -65,11 +65,11 @@ before_script:
 
 script:
   - "./gradlew clean"
-  #  - "./gradlew androidDependencies"
-  #  - "./gradlew lint test"
-  #  - "./gradlew assembleDevDebug --no-daemon --stacktrace"
+    #  - "./gradlew androidDependencies"
+    #  - "./gradlew lint test"
+    #  - "./gradlew assembleDevDebug --no-daemon --stacktrace"
   # Run lint checks reports for Danger
-  #  - "./gradlew runChecksForDanger"
+  - "./gradlew runAndroidLintAndMergeResults"
   # Run Danger
   - "bundle exec danger --verbose"
 

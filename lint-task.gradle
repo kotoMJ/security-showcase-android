@@ -20,15 +20,17 @@ task runAndroidLint() {
 task runAndroidLintAndMergeResults(dependsOn: runAndroidLint) {
 	group = "Reporting"
 	doLast {
+
+		//Create android-lint common result file
 		def commonResultDir = new File("$project_directory/build/reports/android-lint")
 		if (!commonResultDir.exists()) {commonResultDir.mkdirs()}
 		def commonResultXml = new File("$project_directory/build/reports/android-lint/android-lint.xml")
 		commonResultXml.createNewFile()
 
-		def overAllHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+		//Add header
+		def commonResultXmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 				"<issues format=\"5\" by=\"lint 3.4.0-rc03\"> \n"
-
-		commonResultXml << overAllHeader
+		commonResultXml << commonResultXmlHeader
 
 		subprojects {
 
@@ -51,20 +53,21 @@ task runAndroidLintAndMergeResults(dependsOn: runAndroidLint) {
 
 			DOMImplementationLS impl =
 					(DOMImplementationLS) registry.getDOMImplementation("LS");
-			LSSerializer writer = impl.createLSSerializer()
+			LSSerializer lssWriter = impl.createLSSerializer()
 
 			use(DOMCategory) {
-
 				records.issue.each {issueTag ->
-					String str = writer.writeToString(issueTag)
-					println("DDD ${str - xmlHeader}")
-					commonResultXml << str - xmlHeader
+					//Iterate over all issues from every sub-project
+					String issueTagAsString = lssWriter.writeToString(issueTag)
+					//DOMCategory add xml header for every issueTag, thus we have to remove it
+					commonResultXml << issueTagAsString - xmlHeader
 				}
 
 			}
 		}
 
-		def overallFooter = "\n</issues>"
-		commonResultXml << overallFooter
+		//Add footer
+		def commonResultXmlFooter = "\n</issues>"
+		commonResultXml << commonResultXmlFooter
 	}
 }
