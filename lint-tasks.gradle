@@ -4,10 +4,14 @@ import org.w3c.dom.bootstrap.DOMImplementationRegistry
 import org.w3c.dom.ls.DOMImplementationLS
 import org.w3c.dom.ls.LSSerializer
 
+detekt {
+	input = files("$project_directory")
+	config = files("$project_directory/detekt-config-mj.yml")
+}
+
 task runAndroidLint() {
 	group = "Reporting"
 	subprojects {
-		println(">>>${project.name}")
 		if (project.name.startsWith("android")) {
 			dependsOn "${project.name}:lintDebug"
 		}

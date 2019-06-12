@@ -81,11 +81,6 @@ plugins {
 	id "io.gitlab.arturbosch.detekt" version "1.0.0-RC14"
 }
 
-detekt {
-	input = files("$project_directory")
-	config = files("$project_directory/detekt-config-mj.yml")
-}
-
 allprojects {
 	repositories {
 		jcenter()
@@ -102,4 +97,4 @@ task clean(type: Delete) {
 }
 
 
-apply from: "${project_directory}/lint-task.gradle"
+apply from: "${project_directory}/lint-tasks.gradle"
