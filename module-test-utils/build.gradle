@@ -10,7 +10,7 @@ kapt {
 	correctErrorTypes = true // avoid unknown type replacing with NonExistentClass
 }
 
-apply from: "${project_directory}/lint-config.gradle"
+apply from: "${project_directory}/lint/lint-config.gradle"
 
 //allOpen {
 //	annotation('cz.kotox.securityshowcase.core.OpenForMocking')

@@ -6,7 +6,7 @@ import org.w3c.dom.ls.LSSerializer
 
 detekt {
 	input = files("$project_directory")
-	config = files("$project_directory/detekt-config-mj.yml")
+	config = files("$project_directory/lint/detekt-config-mj.yml")
 }
 
 task runAndroidLint() {

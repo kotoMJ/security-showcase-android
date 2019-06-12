@@ -97,4 +97,4 @@ task clean(type: Delete) {
 }
 
 
-apply from: "${project_directory}/lint-tasks.gradle"
+apply from: "${project_directory}/lint/lint-tasks.gradle"

@@ -3,6 +3,6 @@ android {
 		abortOnError false
 		xmlOutput file("$projectDir/build/reports/android-lint/android-lint.xml")
 		htmlOutput file("$projectDir/build/reports/android-lint/android-lint.html")
-		lintConfig file("$project_directory/lint-config-android.xml")
+		lintConfig file("$project_directory/lint/lint-config-android.xml")
 	}
 }

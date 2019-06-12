@@ -2,7 +2,7 @@
  * Contains directories for mocking responses (should be in all tests + mock version of app)
  */
 //def mock_files = ['src/mock/resources', '../mock_data/configs', '../mock_data/responses']
-apply from: "${project_directory}/lint-config.gradle"
+apply from: "${project_directory}/lint/lint-config.gradle"
 
 allprojects {
 	apply plugin: 'kotlin-android'

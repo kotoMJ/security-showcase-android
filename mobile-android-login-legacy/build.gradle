@@ -19,7 +19,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 //apply from: '../jacoco.gradle' //since app module doesn't apply module-core/library.gradle, thus apply jacoco.gradle extra
 
-apply from: "${project_directory}/lint-config.gradle"
+apply from: "${project_directory}/lint/lint-config.gradle"
 
 final APK_NAME = "SecurityShowcaseLoginLegacy"
 
