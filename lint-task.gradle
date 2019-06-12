@@ -1,0 +1,70 @@
+import groovy.xml.DOMBuilder
+import groovy.xml.dom.DOMCategory
+import org.w3c.dom.bootstrap.DOMImplementationRegistry
+import org.w3c.dom.ls.DOMImplementationLS
+import org.w3c.dom.ls.LSSerializer
+
+task runAndroidLint() {
+	group = "Reporting"
+	subprojects {
+		println(">>>${project.name}")
+		if (project.name.startsWith("android")) {
+			dependsOn "${project.name}:lintDebug"
+		}
+		if (project.name.startsWith("mobile") || project.name.startsWith("module")) {
+			dependsOn "${project.name}:lintDevDebug"
+		}
+	}
+}
+
+task runAndroidLintAndMergeResults(dependsOn: runAndroidLint) {
+	group = "Reporting"
+	doLast {
+		def commonResultDir = new File("$project_directory/build/reports/android-lint")
+		if (!commonResultDir.exists()) {commonResultDir.mkdirs()}
+		def commonResultXml = new File("$project_directory/build/reports/android-lint/android-lint.xml")
+		commonResultXml.createNewFile()
+
+		def overAllHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+				"<issues format=\"5\" by=\"lint 3.4.0-rc03\"> \n"
+
+		commonResultXml << overAllHeader
+
+		subprojects {
+
+//			copy {
+//				from "$projectDir/build/reports/android-lint"
+//				include "*.xml"
+//				rename {"${project.name}.xml"}
+//				into "$project_directory/build/reports/android-lint"
+//			}
+
+			def submoduleFile = new File("$projectDir/build/reports/android-lint/android-lint.xml")
+			def submoduleFileContent = submoduleFile.getText()
+
+			def reader = new StringReader(submoduleFileContent)
+			def doc = DOMBuilder.parse(reader)
+			def records = doc.documentElement
+			def xmlHeader = ~/^<\?xml.+\?>/
+
+			DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
+
+			DOMImplementationLS impl =
+					(DOMImplementationLS) registry.getDOMImplementation("LS");
+			LSSerializer writer = impl.createLSSerializer()
+
+			use(DOMCategory) {
+
+				records.issue.each {issueTag ->
+					String str = writer.writeToString(issueTag)
+					println("DDD ${str - xmlHeader}")
+					commonResultXml << str - xmlHeader
+				}
+
+			}
+		}
+
+		def overallFooter = "\n</issues>"
+		commonResultXml << overallFooter
+	}
+}

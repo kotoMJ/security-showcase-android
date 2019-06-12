@@ -101,16 +101,5 @@ task clean(type: Delete) {
 	delete rootProject.buildDir
 }
 
-task lintCustom() {
-	group = "Reporting"
-	allprojects {
 
-		println(">>>${project.name}")
-		if (project.name.startsWith("android")) {
-			dependsOn "${project.name}:lintDebug"
-		}
-		if (project.name.startsWith("mobile") || project.name.startsWith("module")) {
-			dependsOn "${project.name}:lintDevDebug"
-		}
-	}
-}
+apply from: "${project_directory}/lint-task.gradle"

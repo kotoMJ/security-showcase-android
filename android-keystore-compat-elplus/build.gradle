@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-apply from: "${project_directory}/lint.gradle"
+apply from: "${project_directory}/lint-config.gradle"
 
 final KC_GIT_TAG_REGEX = "21KC*"
 // Last Git tag name on current branch
