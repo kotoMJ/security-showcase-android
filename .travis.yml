@@ -24,11 +24,13 @@ android:
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
 rvm:
-  - 2.2
+  - 2.3
 before_install:
+  #https://docs.travis-ci.com/user/languages/ruby/
+  #If you are using Ruby 2.3.x but wish to stay on Bundler 1.x (e.g., for dependency reasons such as Rails 4.2.x), write:
   - gem uninstall -v '>= 2' -i $(rvm gemdir)@global -ax bundler || true
   - gem install bundler -v '< 2'
-  - "bundle install"
+  - bundle install
 
 before_script:
   - "echo \"Build process is started \U0001F46F\""
@@ -68,11 +70,8 @@ before_script:
 
 script:
   - "./gradlew clean"
-    #  - "./gradlew androidDependencies"
-    #  - "./gradlew lint test"
-    #  - "./gradlew assembleDevDebug --no-daemon --stacktrace"
-  # Run lint checks reports for Danger
-  # - "./gradlew runAndroidLintAndMergeResults"
+  #  - "./gradlew androidDependencies"
+  #  - "./gradlew assembleDevDebug --no-daemon --stacktrace"
   # Run Danger
   - "bundle exec danger --verbose"
 
