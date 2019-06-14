@@ -46,27 +46,31 @@ task runAndroidLintAndMergeResults(dependsOn: runAndroidLint) {
 //			}
 
 			def submoduleFile = new File("$projectDir/build/reports/android-lint/android-lint.xml")
-			def submoduleFileContent = submoduleFile.getText()
+			if (submoduleFile.exists()) {
 
-			def reader = new StringReader(submoduleFileContent)
-			def doc = DOMBuilder.parse(reader)
-			def records = doc.documentElement
-			def xmlHeader = ~/^<\?xml.+\?>/
+				def submoduleFileContent = submoduleFile.getText()
+				def reader = new StringReader(submoduleFileContent)
+				def doc = DOMBuilder.parse(reader)
+				def records = doc.documentElement
+				def xmlHeader = ~/^<\?xml.+\?>/
 
-			DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
+				DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
 
-			DOMImplementationLS impl =
-					(DOMImplementationLS) registry.getDOMImplementation("LS");
-			LSSerializer lssWriter = impl.createLSSerializer()
+				DOMImplementationLS impl =
+						(DOMImplementationLS) registry.getDOMImplementation("LS");
+				LSSerializer lssWriter = impl.createLSSerializer()
 
-			use(DOMCategory) {
-				records.issue.each {issueTag ->
-					//Iterate over all issues from every sub-project
-					String issueTagAsString = lssWriter.writeToString(issueTag)
-					//DOMCategory add xml header for every issueTag, thus we have to remove it
-					commonResultXml << issueTagAsString - xmlHeader
+				use(DOMCategory) {
+					records.issue.each {issueTag ->
+						//Iterate over all issues from every sub-project
+						String issueTagAsString = lssWriter.writeToString(issueTag)
+						//DOMCategory add xml header for every issueTag, thus we have to remove it
+						commonResultXml << issueTagAsString - xmlHeader
+					}
+
 				}
-
+			} else {
+				println("Module ${projectDir} has no android-lint output available for merge! It probably contains sub-projects, but don't worry, subprojects will be merged too.")
 			}
 		}
 
