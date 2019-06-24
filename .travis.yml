@@ -71,9 +71,10 @@ before_script:
 script:
   - "./gradlew clean"
   #  - "./gradlew androidDependencies"
-  #  - "./gradlew assembleDevDebug --no-daemon --stacktrace"
+  - "./gradlew assembleDevDebug --no-daemon --stacktrace"
   # Run Danger
-  - "bundle exec danger --verbose"
+  # - "bundle exec danger --verbose"
+  - "bundle exec danger"
 
 #script:
 #  - ./gradlew clean
