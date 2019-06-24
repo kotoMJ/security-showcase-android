@@ -77,37 +77,3 @@ SECURED REQUESTS / AUTHORIZATION
 * client/app bundle JWT to header of any secured request
 * server verify obtained JWT against original secret (to be not malformed) and then use any information (token validity, users role, users id ...) in the token to 
 authorize user for current operation.
-
-## GraphQL ##
-Showcase contains sample implementation of communication with the graphql endpoint (besides the REST).
-
-### Apollo client ###
-[Official Apollo Android doc](https://github.com/apollographql/apollo-android)
-#### Graph schema ####
-`schema.json` definition file is not composed manually, but is always completely downloaded from the server.
-Before download just ensure you have already installed `apollo-codegen`. If not install it by using `npm install apollo-codegen`  
-Generate `schema.json` using this command `apollo-codegen download-schema http://kotopeky.cz/graphql --output schema.json`
-
-#### GraphiQL ####
-GraphiQL console allows to try call query manually, let's try it here:  
-
-[Login GraphiQL](https://kotopeky.cz/graphiql/?query=query%20login(%24password%3A%20String!%2C%20%24email%3A%20String!)%20%7B%0A%20login(password%3A%24password%2C%20email%3A%24email)%20%7B%0A%20%20%20token%0A%20%20%20errorMessage%0A%20%7D%0A%7D%0A&variables=%7B%0A%20%20%22password%22%3A%20%22showcase1234%22%2C%0A%20%20%22email%22%3A%20%22security%40showcase.cz%22%0A%7D&operationName=login)
-
-
-#### About GraphQl on the web ####
- [02/2017 Using Apollo client for Android 0.1.0](http://engineering.dailymotion.com/using-the-apollo-graphql-client-for-android/)  
- [04/2017 Using Apollo client for Android 0.3.0 ](https://stackoverflow.com/questions/43304986/using-the-apollo-graphql-client-for-android/43306056)	  
-
-## SecurityShowcase gradle notes
-
-**Switch keystore-compat-dependency local/maven**
- To use keystore compat directly from local sources uncomment `keystore.compat.dependency.type=local` in `gradle.properties`
-
-**Build sample app**
-
- * `./gradlew assembleRostiRelease`
-
-**Dependency diagnostic**
-
-  * `./gradlew mobile-android-login-x:dependencies --scan`<br/>
-  
