@@ -58,7 +58,7 @@ open class KeystoreCompatK : KeystoreCompatFacade {
 	}
 
 	override fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) { //comment just to test inline android lint
 			throw RuntimeException("${LOG_TAG} Unsupported usage of version ${Build.VERSION.SDK_INT}")
 		}
 		return KeyPairGeneratorSpec.Builder(context)

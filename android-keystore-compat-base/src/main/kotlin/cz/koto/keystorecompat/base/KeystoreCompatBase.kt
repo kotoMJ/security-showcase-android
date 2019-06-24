@@ -156,7 +156,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 				return ((encryptedSecret?.isNotBlank() ?: false) //Is there content to decrypt
 					&& (keyStore.getEntry(uniqueId, null) != null))//Is there a key for decryption?
 			} else return false
-		} else return false
+		} else return false //dummy comment to try lint
 	}
 
 	/**

@@ -1,0 +1,81 @@
+import groovy.xml.DOMBuilder
+import groovy.xml.dom.DOMCategory
+import org.w3c.dom.bootstrap.DOMImplementationRegistry
+import org.w3c.dom.ls.DOMImplementationLS
+import org.w3c.dom.ls.LSSerializer
+
+detekt {
+	input = files("$project_directory")
+	config = files("$project_directory/lint/detekt-config-mj.yml")
+}
+
+task runAndroidLint() {
+	group = "Reporting"
+	subprojects {
+		if (project.name.startsWith("android")) {
+			dependsOn "${project.name}:lintDebug"
+		}
+		if (project.name.startsWith("mobile") || project.name.startsWith("module")) {
+			dependsOn "${project.name}:lintDevDebug"
+		}
+	}
+}
+
+task runAndroidLintAndMergeResults(dependsOn: runAndroidLint) {
+	group = "Reporting"
+	doLast {
+
+		//Create android-lint common result file
+		def commonResultDir = new File("$project_directory/build/reports/android-lint")
+		if (!commonResultDir.exists()) {commonResultDir.mkdirs()}
+		def commonResultXml = new File("$project_directory/build/reports/android-lint/android-lint.xml")
+		commonResultXml.createNewFile()
+
+		//Add header
+		def commonResultXmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+				"<issues format=\"5\" by=\"lint 3.4.0-rc03\"> \n"
+		commonResultXml << commonResultXmlHeader
+
+		subprojects {
+
+//			copy {
+//				from "$projectDir/build/reports/android-lint"
+//				include "*.xml"
+//				rename {"${project.name}.xml"}
+//				into "$project_directory/build/reports/android-lint"
+//			}
+
+			def submoduleFile = new File("$projectDir/build/reports/android-lint/android-lint.xml")
+			if (submoduleFile.exists()) {
+
+				def submoduleFileContent = submoduleFile.getText()
+				def reader = new StringReader(submoduleFileContent)
+				def doc = DOMBuilder.parse(reader)
+				def records = doc.documentElement
+				def xmlHeader = ~/^<\?xml.+\?>/
+
+				DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
+
+				DOMImplementationLS impl =
+						(DOMImplementationLS) registry.getDOMImplementation("LS");
+				LSSerializer lssWriter = impl.createLSSerializer()
+
+				use(DOMCategory) {
+					records.issue.each {issueTag ->
+						//Iterate over all issues from every sub-project
+						String issueTagAsString = lssWriter.writeToString(issueTag)
+						//DOMCategory add xml header for every issueTag, thus we have to remove it
+						commonResultXml << issueTagAsString - xmlHeader
+					}
+
+				}
+			} else {
+				println("Module ${projectDir} has no android-lint output available for merge! It probably contains sub-projects, but don't worry, subprojects will be merged too.")
+			}
+		}
+
+		//Add footer
+		def commonResultXmlFooter = "\n</issues>"
+		commonResultXml << commonResultXmlFooter
+	}
+}

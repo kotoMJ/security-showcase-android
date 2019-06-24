@@ -2,13 +2,13 @@
  * Contains directories for mocking responses (should be in all tests + mock version of app)
  */
 //def mock_files = ['src/mock/resources', '../mock_data/configs', '../mock_data/responses']
+apply from: "${project_directory}/lint/lint-config.gradle"
 
 allprojects {
 	apply plugin: 'kotlin-android'
 	apply plugin: 'kotlin-android-extensions'
 	apply plugin: 'kotlin-kapt'
 	apply plugin: 'androidx.navigation.safeargs.kotlin'
-
 
 	def isTestTask = getGradle().getStartParameter().getTaskNames().any { name -> name.toLowerCase().contains("test") }
 
@@ -135,10 +135,6 @@ allprojects {
 //				force "com.android.support:gridlayout-v7:$android_support_version"
 //				force "com.android.support:customtabs:$android_support_version"
 			}
-		}
-
-		lintOptions {
-			abortOnError false
 		}
 	}
 
