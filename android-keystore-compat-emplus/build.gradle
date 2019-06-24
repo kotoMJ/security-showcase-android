@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 apply from: "${project_directory}/lint/lint-config.gradle"
 
@@ -39,7 +39,7 @@ ext {
 }
 android {
 	compileSdkVersion sdk_version
-	buildToolsVersion build_tools_version
+	buildToolsVersion versions.build_tools
 
 	defaultConfig {
 		minSdkVersion 23
@@ -64,7 +64,6 @@ android {
 		main.java.srcDirs += 'src/debug/kotlin'
 	}
 }
-
 
 buildscript {
 	repositories {
@@ -96,10 +95,10 @@ dependencies {
 	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})
-	testCompile 'junit:junit:4.12'
-	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+	testImplementation 'junit:junit:4.12'
+	implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
 
-	compile('com.scottyab:rootbeer-lib:0.0.6'){
+	compile('com.scottyab:rootbeer-lib:0.0.6') {
 		exclude group: 'com.android.support'
 	}
 
@@ -107,6 +106,5 @@ dependencies {
 repositories {
 	mavenCentral()
 }
-
 
 apply from: './publish.gradle'

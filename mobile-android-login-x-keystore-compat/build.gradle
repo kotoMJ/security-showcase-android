@@ -25,11 +25,11 @@ apply from: "${project_directory}/lint/lint-config.gradle"
 final APK_NAME = "SecurityShowcaseKeystoreCompatX"
 
 android {
-	compileSdkVersion sdk_version
+	compileSdkVersion versions.sdk
 	defaultConfig {
 		applicationId 'cz.kotox.securityshowcase.login.keystorecompat'
 		minSdkVersion 19
-		targetSdkVersion sdk_version
+		targetSdkVersion versions.sdk
 		versionCode 1
 		versionName "1.0"
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -116,7 +116,7 @@ dependencies {
 	implementation project(':module-core')
 	implementation project(':module-login')
 	implementation project(':module-test-utils')
-	implementation "androidx.multidex:multidex:$app_multidex_version"
+	implementation "androidx.multidex:multidex:${versions.multidex}"
 
 	if (project.hasProperty("keystore.compat.dependency.type")) {
 		if (project.property("keystore.compat.dependency.type") == "local") {
@@ -139,13 +139,13 @@ dependencies {
 			api(name: ":android-keystore-compat-23", ext: "aar")
 		}
 	} else {
-		api("cz.koto:android-keystore-compat:$keystore_compat_version") {
+		api("cz.koto:android-keystore-compat:${versions.keystore_compat}") {
 			exclude group: 'com.android.support'
 		}
-		api("cz.koto:android-keystore-compat-base:$keystore_compat_version")
-		api("cz.koto:android-keystore-compat-19:$keystore_compat_version")
-		api("cz.koto:android-keystore-compat-21:$keystore_compat_version")
-		api("cz.koto:android-keystore-compat-23:$keystore_compat_version")
+		api("cz.koto:android-keystore-compat-base:${versions.keystore_compat}")
+		api("cz.koto:android-keystore-compat-19:${versions.keystore_compat}")
+		api("cz.koto:android-keystore-compat-21:${versions.keystore_compat}")
+		api("cz.koto:android-keystore-compat-23:${versions.keystore_compat}")
 	}
 
 }

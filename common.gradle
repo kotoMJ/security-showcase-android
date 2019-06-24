@@ -6,11 +6,11 @@ apply from: "${project_directory}/lint/lint-config.gradle"
 
 allprojects {
 	apply plugin: 'kotlin-android'
-	apply plugin: 'kotlin-android-extensions'
 	apply plugin: 'kotlin-kapt'
+	apply plugin: 'kotlin-android-extensions'
 	apply plugin: 'androidx.navigation.safeargs.kotlin'
 
-	def isTestTask = getGradle().getStartParameter().getTaskNames().any { name -> name.toLowerCase().contains("test") }
+	def isTestTask = getGradle().getStartParameter().getTaskNames().any {name -> name.toLowerCase().contains("test")}
 
 	if (isTestTask) {
 		println "Applying allopen"
@@ -24,7 +24,6 @@ allprojects {
 //		println "Applying jacoco"
 //		apply from: "$project_directory/jacoco.gradle"
 	}
-
 
 	kapt {
 		useBuildCache = true
@@ -42,7 +41,7 @@ allprojects {
 		}
 
 		compileSdkVersion sdk_version
-		buildToolsVersion build_tools_version
+		buildToolsVersion versions.build_tools
 		dataBinding.enabled true
 		flavorDimensions "env"
 
@@ -147,30 +146,30 @@ allprojects {
 
 		// Common Navigation
 		// Don't forget to apply plugin androidx.navigation.safeargs for every module with navigation (solved in common too)
-		implementation "androidx.navigation:navigation-fragment:$app_androidx_navigation_version"
-		implementation "androidx.navigation:navigation-ui:$app_androidx_navigation_version"
+		implementation "androidx.navigation:navigation-fragment:${versions.androidx_navigation}"
+		implementation "androidx.navigation:navigation-ui:${versions.androidx_navigation}"
 
 		// Common Support
-		implementation "androidx.appcompat:appcompat:$app_android_support_version"
+		implementation "androidx.appcompat:appcompat:${versions.android_support}"
 
 		// Common Dagger (minimal dagger dependency to generate classes across all modules)
-		kapt "com.google.dagger:dagger-compiler:$app_dagger_version"
-		kapt "com.google.dagger:dagger-android-processor:$app_dagger_version"
+		kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
+		kapt "com.google.dagger:dagger-android-processor:${versions.dagger}"
 
 		//Logging
-		implementation 'com.jakewharton.timber:timber:4.7.1'
+		implementation "com.jakewharton.timber:timber:${versions.timber}"
 
 		/* TEST DEPENDENCIES BASICS FOR EVERY MODULE - for ability to test modules with lower dependency than module-test-utils */
 
 		// Common AndroidJUnitRunner and JUnit Rules
-		androidTestImplementation "com.android.support.test:runner:$app_android_support_test_version"
-		androidTestImplementation "com.android.support.test:rules:$app_android_support_test_version"
+		androidTestImplementation "com.android.support.test:runner:${versions.android_support_test}"
+		androidTestImplementation "com.android.support.test:rules:${versions.android_support_test}"
 
 		//Common unit test
-		testImplementation "junit:junit:$app_junit_version"
+		testImplementation "junit:junit:${versions.junit}"
 
 		//Common UI test
-		androidTestImplementation "org.mockito:mockito-android:$app_mockito_version"
+		androidTestImplementation "org.mockito:mockito-android:${versions.mockito}"
 
 		// Common test objects
 		testImplementation project(':module-test-utils')

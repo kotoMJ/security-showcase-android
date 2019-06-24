@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 apply from: "${project_directory}/lint/lint-config.gradle"
 
@@ -41,7 +41,7 @@ ext {
 
 android {
 	compileSdkVersion sdk_version
-	buildToolsVersion build_tools_version
+	buildToolsVersion versions.build_tools
 
 
 	defaultConfig {
@@ -94,9 +94,9 @@ dependencies {
 	}
 
 	testImplementation 'junit:junit:4.12'
-	androidTestImplementation 'com.android.support.test:runner:1.0.1'
-	androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+	androidTestImplementation "com.android.support.test:runner:${versions.test_runner}"
+	androidTestImplementation "com.android.support.test.espresso:espresso-core:${versions.espresso_core}"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 }
 
 repositories {

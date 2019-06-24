@@ -28,7 +28,6 @@ kapt {
 	correctErrorTypes = true // avoid unknown type replacing with NonExistentClass
 }
 
-
 android {
 	compileOptions {
 		sourceCompatibility JavaVersion.VERSION_1_8
@@ -150,28 +149,27 @@ android {
 }
 
 ext {
-	legacy_build_tools_version = '28.0.0'
 	legacy_android_arch = '1.1.1'
-	legacy_dagger_version = '2.20'
+	legacy_dagger_version = '2.22.1'
 }
 
 dependencies {
 
 	implementation "com.android.support:multidex:1.0.3"
 
-	implementation "com.android.support:support-fragment:$legacy_build_tools_version"
-	implementation "com.android.support:support-compat:$legacy_build_tools_version"
-	implementation "com.android.support:appcompat-v7:$legacy_build_tools_version"
-	implementation "com.android.support:cardview-v7:$legacy_build_tools_version"
-	implementation "com.android.support:recyclerview-v7:$legacy_build_tools_version"
-	implementation "com.android.support:preference-v7:$legacy_build_tools_version"
-	implementation "com.android.support.constraint:constraint-layout:$app_androidx_constraintlayout_version"
-	implementation "com.android.support:design:$legacy_build_tools_version"
+	implementation "com.android.support:support-fragment:${versions_legacy.build_tools}"
+	implementation "com.android.support:support-compat:${versions_legacy.build_tools}"
+	implementation "com.android.support:appcompat-v7:${versions_legacy.build_tools}"
+	implementation "com.android.support:cardview-v7:${versions_legacy.build_tools}"
+	implementation "com.android.support:recyclerview-v7:${versions_legacy.build_tools}"
+	implementation "com.android.support:preference-v7:${versions_legacy.build_tools}"
+	implementation "com.android.support.constraint:constraint-layout:${versions.androidx_constraintlayout}"
+	implementation "com.android.support:design:${versions_legacy.build_tools}"
 
 	// Arch
-	implementation "android.arch.lifecycle:extensions:$legacy_android_arch"
-	annotationProcessor "android.arch.lifecycle:compiler:$legacy_android_arch"
-	implementation "android.arch.lifecycle:runtime:$legacy_android_arch"
+	implementation "android.arch.lifecycle:extensions:${versions_legacy.android_arch}"
+	annotationProcessor "android.arch.lifecycle:compiler:${versions_legacy.android_arch}"
+	implementation "android.arch.lifecycle:runtime:${versions_legacy.android_arch}"
 //	api "androidx.databinding:databinding-adapters:$app_androidx_databinding_version"
 
 	//api "androidx.core:core-ktx:${app_androidx_ktx_core_version}"
@@ -179,26 +177,26 @@ dependencies {
 	implementation 'android.arch.navigation:navigation-fragment:1.0.0'
 	implementation 'android.arch.navigation:navigation-ui:1.0.0'
 
-	api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$app_koroutines_version"
-	api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$app_koroutines_version"
+	api "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions_legacy.koroutines}"
+	api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions_legacy.koroutines}"
 
 	// Dagger (extended dependency on top of minimal dependency from common.gradle)
 	// Common Dagger (minimal dagger dependency to generate classes across all modules)
-	kapt "com.google.dagger:dagger-compiler:$legacy_dagger_version"
-	kapt "com.google.dagger:dagger-android-processor:$legacy_dagger_version"
+	kapt "com.google.dagger:dagger-compiler:${versions_legacy.dagger}"
+	kapt "com.google.dagger:dagger-android-processor:${versions_legacy.dagger}"
 
-	api "com.google.dagger:dagger:$legacy_dagger_version"
-	api "com.google.dagger:dagger-android:$legacy_dagger_version"
-	api "com.google.dagger:dagger-android-support:$legacy_dagger_version"
-	compileOnly "javax.annotation:jsr250-api:$app_jsr250api_version"
+	api "com.google.dagger:dagger:${versions_legacy.dagger}"
+	api "com.google.dagger:dagger-android:${versions_legacy.dagger}"
+	api "com.google.dagger:dagger-android-support:${versions_legacy.dagger}"
+	compileOnly "javax.annotation:jsr250-api:${versions_legacy.jsr250api}"
 
 	//Moshi (generic movement from gson to moshi)
-	api "com.squareup.moshi:moshi:$app_moshi_version"
-	api "com.squareup.retrofit2:retrofit:$app_retrofit_version"
-	api "com.squareup.retrofit2:converter-moshi:$app_retrofit_version"
+	api "com.squareup.moshi:moshi-kotlin:${versions_legacy.moshi_kotlin}"
+	api "com.squareup.retrofit2:retrofit:${versions_legacy.retrofit}"
+	api "com.squareup.retrofit2:converter-moshi:${versions_legacy.retrofit}"
 
 	//Logging
-	implementation 'com.jakewharton.timber:timber:4.7.1'
+	implementation "com.jakewharton.timber:timber:${versions_legacy.timber}"
 
 }
 

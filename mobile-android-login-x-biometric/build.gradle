@@ -25,11 +25,11 @@ apply from: "${project_directory}/lint/lint-config.gradle"
 final APK_NAME = "SecurityShowcaseBiometric"
 
 android {
-	compileSdkVersion sdk_version
+	compileSdkVersion versions.sdk
 	defaultConfig {
 		applicationId 'cz.kotox.securityshowcase.login.biometric'
 		minSdkVersion 19
-		targetSdkVersion sdk_version
+		targetSdkVersion versions.sdk
 		versionCode 1
 		versionName "1.0"
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -117,7 +117,7 @@ dependencies {
 	implementation project(':module-security')
 	implementation project(':module-login')
 	implementation project(':module-test-utils')
-	implementation "androidx.multidex:multidex:$app_multidex_version"
+	implementation "androidx.multidex:multidex:${versions.multidex}"
 }
 
 task askForPasswords {

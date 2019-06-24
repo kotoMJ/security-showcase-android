@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android-extensions'
 //apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 //apply plugin: 'androidx.navigation.safeargs'
 
 kapt {
@@ -19,16 +19,16 @@ apply from: "${project_directory}/lint/lint-config.gradle"
 android {
 
 	compileSdkVersion sdk_version
-	buildToolsVersion build_tools_version
+	buildToolsVersion versions.build_tools
 
 	compileSdkVersion sdk_version
-	buildToolsVersion build_tools_version
+	buildToolsVersion versions.build_tools
 	dataBinding.enabled true
 	flavorDimensions "env"
 
 	defaultConfig {
-		minSdkVersion min_sdk_version
-		targetSdkVersion sdk_version
+		minSdkVersion versions.min_sdk
+		targetSdkVersion versions.sdk
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		vectorDrawables.useSupportLibrary = true
 	}
@@ -86,35 +86,34 @@ dependencies {
 	/**
 	 *  UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST
 	 */
-	api "junit:junit:$app_junit_version"
-	api "org.mockito:mockito-core:$app_mockito_version"
+	api "junit:junit:${versions.junit}"
+	api "org.mockito:mockito-core:${versions.mockito}"
 //	https://proandroiddev.com/mockito-2-x-over-powermock-migration-tips-and-tricks-top-ten-118c52abd1d8
-	api "org.powermock:powermock-api-mockito2:$app_powermock_version"
-	api "androidx.arch.core:core-testing:$app_androidx_core_testing_version"
+	api "org.powermock:powermock-api-mockito2:${versions.powermock}"
+	api "androidx.arch.core:core-testing:${versions.androidx_core_testing}"
 
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-	api "org.hamcrest:hamcrest-library:$app_hamcrest_library_version"
+	api "org.hamcrest:hamcrest-library:${versions.hamcrest_library}"
 
 	/**
 	 *  UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST
 	 */
 
 	// Espresso core
-	api('androidx.test.espresso:espresso-core:3.1.0',{
+	api('androidx.test.espresso:espresso-core:3.1.0', {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})
 	// Espresso-contrib for DatePicker, RecyclerView, Drawer actions, Accessibility checks, CountingIdlingResource
-	api('androidx.test.espresso:espresso-contrib:3.1.0',{
+	api('androidx.test.espresso:espresso-contrib:3.1.0', {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})
-	api('androidx.test.espresso:espresso-intents:3.1.0',{
+	api('androidx.test.espresso:espresso-intents:3.1.0', {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})
-	api('androidx.annotation:annotation:1.0.0',{
+	api('androidx.annotation:annotation:1.0.0', {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})
-
 
 }
 repositories {
