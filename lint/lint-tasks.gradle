@@ -7,6 +7,8 @@ import org.w3c.dom.ls.LSSerializer
 detekt {
 	input = files("$project_directory")
 	config = files("$project_directory/lint/detekt-config-mj.yml")
+	//Comment baseline in order to not use baseline for detekt
+	baseline = file("$project_directory/lint/baseline/detekt-baseline.xml")
 }
 
 task runAndroidLint() {

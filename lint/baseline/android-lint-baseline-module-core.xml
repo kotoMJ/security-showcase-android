@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues by="lint 3.6.0-alpha03" client="gradle" format="5" variant="devDebug" version="3.6.0-alpha03">
+
+	<issue
+		errorLine1="   Log.w(&quot;EventLiveData&quot;, &quot;Multiple observers registered but only one will be notified of changes.&quot;)"
+		errorLine2="   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+		id="LogNotTimber"
+		message="Using &apos;Log&apos; instead of &apos;Timber&apos;">
+		<location
+			column="4"
+			file="src/main/kotlin/cz/kotox/securityshowcase/core/ktools/livedata.kt"
+			line="22" />
+	</issue>
+
+</issues>

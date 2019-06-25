@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues by="lint 3.6.0-alpha03" client="gradle" format="5" variant="devDebug" version="3.6.0-alpha03">
+
+	<issue
+		errorLine1=" api &quot;androidx.arch.core:core-testing:${versions.androidx_core_testing}&quot;"
+		errorLine2=" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+		id="GradleDependency"
+		message="A newer version of androidx.arch.core:core-testing than 2.0.0 is available: 2.0.1">
+		<location
+			column="2"
+			file="build.gradle"
+			line="93" />
+	</issue>
+
+</issues>
