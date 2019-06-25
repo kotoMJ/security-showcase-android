@@ -2,50 +2,107 @@
 
 buildscript {
 	ext {
-		keystore_compat_version_latest = '2.1.0'
-		keystore_compat_version_impl = '2.1.0'
+		project_directory = "${rootProject.projectDir}"
 
-		//BASE
-		min_sdk_version = 16
-		compile_sdk_version = 27
+		versions = [
+				keystore_compat                 : '2.1.0',
 
-		kotlin_version = '1.2.10'
-		build_tools_version = '27.0.0'
-		android_gradle_version = '3.0.1'
-		android_binding_version = '1.3.3'
-		arch_lifecycle_version = "1.0.0"
-		support_library_version = "27.0.2"
-		constraint_layout_version = "1.0.2"
+				sdk                             : 28,
+				min_sdk                         : 19,
+				build_tools                     : '28.0.3',
+				kotlin                          : '1.3.31',
 
-		rxandroid_version = '2.0.1'
-		rxjava_version = '2.1.2'
+				androidx_ktx_core               : '1.0.2',
+				androidx_lifecycle_viewmodel_ktx: '2.1.0-alpha02',
 
-		//TOOLS
-		gson_version = '2.8.1'
-		retrofit_version = "2.2.0"
-		okhttp_version = "3.8.1"
-		apollo_graphql_version = '0.3.0'
-		tatarka_version = "2.2.0"
-		leak_canary_version = "1.5.1"
-		parceler_version = "1.1.6"
-		jwtdecode = "1.1.0"
-		glide_version = "3.8.0"
+				android_binding                 : '1.3.3',
+				//Gradle versions from 3.5.0-alpha06 to 3.5.0-alpha10 are not rebuild-able because of transformClassesWithMultidexlistForDevDebug.
+				//https://issuetracker.google.com/issues/130463020
+				android_gradle                  : '3.6.0-alpha03',
+				android_support                 : '1.0.0',
+				android_play_services           : '11.0.1',
+				android_constraint_layout       : '1.1.3',
+				android_arch                    : '1.1.1',
+				android_support_test            : '1.0.1',
+				android_material                : '1.1.0-alpha07',
+				androidx_navigation             : '2.1.0-alpha02',
+				androidx_lifecycle              : '2.2.0-alpha01',
+				androidx_cardview               : '1.0.0',
+				androidx_recyclerview           : '1.1.0-alpha06',
+				androidx_preference             : '1.1.0-beta01',
+				androidx_constraintlayout       : '1.1.3',
+				androidx_databinding            : '3.5.0-alpha13',
 
-		//DEPRECATED
-		alfonz_version = '0.7.0'
+				koroutines                      : '1.0.1',
+
+				jsr250api                       : '1.0',
+				okhttp                          : '3.8.1',
+				retrofit                        : '2.6.0',
+				moshi_kotlin                    : '1.8.0',
+				//moshi_converter : '2.4.0'
+
+				leakcanary                      : '1.5.4',
+				dagger                          : '2.22.1',
+				espresso                        : '3.0.2-beta1',
+				junit                           : '4.12',
+				mockito                         : '2.22.0',
+				powermock                       : '2.0.0-beta.5',//https://github.com/powermock/powermock/wiki/Mockito#supported-versions
+				stetho                          : '1.5.0',
+				glide                           : '4.4.0',
+				crashlytics                     : '2.9.4@aar',
+				fabric                          : '1.25.4',
+				jacoco                          : '0.8.1',
+
+				runner                          : '1.0.2-beta1',
+				rules                           : '1.0.2-beta1',
+
+				multidex                        : '2.0.1',
+
+				androidx_core_testing           : '2.0.0',
+				androidx_biometric              : '1.0.0-alpha04',
+
+				timber                          : '4.7.1',
+
+				hamcrest_library                : '1.3',
+				test_runner                     : '1.0.2',
+				espresso_core                   : '3.0.2'
+		]
+
+		versions_legacy = [
+				build_tools : '28.0.0',
+				android_arch: '1.1.1',
+				dagger      : '2.22.1',
+				moshi_kotlin: '1.8.0',
+				retrofit    : '2.5.1-SNAPSHOT',
+				jsr250api   : '1.0',
+				koroutines  : '1.0.1',
+				timber      : '4.7.1',
+		]
+
+		keystore_compat_version = '2.1.0'
+
+		sdk_version = 28
+		min_sdk_version = 19
 	}
 
 	repositories {
 		maven {url 'https://maven.google.com'}
 		maven {url 'https://maven.fabric.io/public'}
 		jcenter()
+		google()
 	}
 	dependencies {
-		classpath "com.android.tools.build:gradle:$android_gradle_version"
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+		classpath "com.android.tools.build:gradle:${versions.android_gradle}"
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+		classpath "org.jetbrains.kotlin:kotlin-allopen:${versions.kotlin}"
+		classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.androidx_navigation}"
 		// NOTE: Do not place your application dependencies here; they belong
 		// in the individual module build.gradle files
 	}
+}
+
+plugins {
+	id "io.gitlab.arturbosch.detekt" version "1.0.0-RC14"
 }
 
 allprojects {
@@ -54,16 +111,8 @@ allprojects {
 		maven {url 'https://maven.google.com'}
 		maven {url 'https://maven.fabric.io/public'}
 		maven {url "https://www.jitpack.io"}
-		maven {url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'}
 		maven {url 'https://maven.fabric.io/public'}
-	}
-
-	// Put this in 'root' `build.gradle`, in allprojects or subprojects
-	tasks.withType(JavaCompile) {
-		//http://stackoverflow.com/questions/34148513/how-do-i-suppress-warnings-when-compiling-an-android-library-with-gradle
-		// Try to turn them all off automatically
-		//options.compilerArgs << '-Xlint:none'
-		//options.compilerArgs << '-nowarn' // same as '-Xlint:none'
+		maven {url "https://oss.sonatype.org/content/repositories/snapshots"} //RETROFIT-COROUTINES
 	}
 }
 
@@ -71,9 +120,4 @@ task clean(type: Delete) {
 	delete rootProject.buildDir
 }
 
-subprojects {
-	task dependencyInsighty(type: org.gradle.api.tasks.diagnostics.DependencyInsightReportTask) << {}
-}
-subprojects {
-	task dependencyReport(type: org.gradle.api.tasks.diagnostics.DependencyReportTask) {}
-}
+apply from: "${project_directory}/lint/lint-tasks.gradle"

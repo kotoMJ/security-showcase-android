@@ -1,0 +1,61 @@
+apply from: "../module-core/library.gradle"
+
+android {
+
+	defaultConfig {
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+	}
+
+	flavorDimensions "env"
+
+	productFlavors {
+		mock {
+			dimension = "env"
+		}
+
+		dev {
+			dimension = "env"
+		}
+
+		production {
+			dimension = "env"
+		}
+	}
+
+}
+
+dependencies {
+	implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+	// Arch
+	api "androidx.lifecycle:lifecycle-extensions:${versions.androidx_lifecycle}"
+	//annotationProcessor "androidx.lifecycle:lifecycle-compiler:${versions.androidx_lifecycle}"
+	implementation "androidx.lifecycle:lifecycle-common-java8:${versions.androidx_lifecycle}"
+
+	api "androidx.core:core-ktx:${versions.androidx_ktx_core}"
+
+	api "com.google.android.material:material:${versions.android_material}"
+	api "androidx.cardview:cardview:${versions.androidx_cardview}"
+	api "androidx.recyclerview:recyclerview:${versions.androidx_recyclerview}"
+	api "androidx.preference:preference:${versions.androidx_preference}"
+	api "androidx.constraintlayout:constraintlayout:${versions.androidx_constraintlayout}"
+
+	api "androidx.databinding:databinding-runtime:${versions.androidx_databinding}"
+	api "androidx.databinding:databinding-adapters:${versions.androidx_databinding}"
+
+	api "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.koroutines}"
+	api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.koroutines}"
+
+	// Dagger (extended dependency on top of minimal dependency from common.gradle)
+	api "com.google.dagger:dagger:${versions.dagger}"
+	api "com.google.dagger:dagger-android:${versions.dagger}"
+	api "com.google.dagger:dagger-android-support:${versions.dagger}"
+	compileOnly "javax.annotation:jsr250-api:${versions.jsr250api}"
+
+	//Moshi (generic movement from gson to moshi)
+	api "com.squareup.moshi:moshi:${versions.moshi}"
+	api "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+	api "com.squareup.retrofit2:converter-moshi:${versions.retrofit}"
+
+	api 'androidx.biometric:biometric:1.0.0-alpha04'
+}

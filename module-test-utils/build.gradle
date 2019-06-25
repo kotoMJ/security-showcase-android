@@ -1,0 +1,125 @@
+apply plugin: 'com.android.library'
+//apply plugin: 'kotlin-allopen'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'androidx.navigation.safeargs'
+
+kapt {
+	useBuildCache = true
+	correctErrorTypes = true // avoid unknown type replacing with NonExistentClass
+}
+
+apply from: "${project_directory}/lint/lint-config.gradle"
+
+//allOpen {
+//	annotation('cz.kotox.securityshowcase.core.OpenForMocking')
+//}
+
+android {
+
+	compileSdkVersion sdk_version
+	buildToolsVersion versions.build_tools
+
+	compileSdkVersion sdk_version
+	buildToolsVersion versions.build_tools
+	dataBinding.enabled true
+	flavorDimensions "env"
+
+	defaultConfig {
+		minSdkVersion versions.min_sdk
+		targetSdkVersion versions.sdk
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+		vectorDrawables.useSupportLibrary = true
+	}
+
+	sourceSets {
+		main.java.srcDirs += 'src/main/kotlin'
+
+		dev {
+			java.srcDirs += 'src/server/kotlin'
+		}
+		production {
+			java.srcDirs += 'src/server/kotlin'
+		}
+		mock {
+			java.srcDirs += 'src/mock/kotlin'
+		}
+	}
+
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+		debug {
+			minifyEnabled false
+		}
+	}
+	dataBinding {
+		enabled = true
+	}
+	flavorDimensions "env"
+
+	productFlavors {
+		mock {
+			dimension = "env"
+		}
+
+		dev {
+			dimension = "env"
+		}
+
+		production {
+			dimension = "env"
+		}
+	}
+}
+
+dependencies {
+
+	implementation project(':module-core')
+
+//	api "androidx.core:core-ktx:${app_androidx_ktx_core_version}"
+//	api "androidx.lifecycle:lifecycle-viewmodel-ktx:${app_androidx_lifecycle_viewmodel_ktx}"
+
+	/**
+	 *  UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST UNIT-TEST
+	 */
+	api "junit:junit:${versions.junit}"
+	api "org.mockito:mockito-core:${versions.mockito}"
+//	https://proandroiddev.com/mockito-2-x-over-powermock-migration-tips-and-tricks-top-ten-118c52abd1d8
+	api "org.powermock:powermock-api-mockito2:${versions.powermock}"
+	api "androidx.arch.core:core-testing:${versions.androidx_core_testing}"
+
+	implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+	api "org.hamcrest:hamcrest-library:${versions.hamcrest_library}"
+
+	/**
+	 *  UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST UI-TEST
+	 */
+
+	// Espresso core
+	api('androidx.test.espresso:espresso-core:3.1.0', {
+		exclude group: 'com.android.support', module: 'support-annotations'
+	})
+	// Espresso-contrib for DatePicker, RecyclerView, Drawer actions, Accessibility checks, CountingIdlingResource
+	api('androidx.test.espresso:espresso-contrib:3.1.0', {
+		exclude group: 'com.android.support', module: 'support-annotations'
+	})
+	api('androidx.test.espresso:espresso-intents:3.1.0', {
+		exclude group: 'com.android.support', module: 'support-annotations'
+	})
+	api('androidx.annotation:annotation:1.0.0', {
+		exclude group: 'com.android.support', module: 'support-annotations'
+	})
+
+}
+repositories {
+	maven {
+		url 'http://dl.bintray.com/kotlin/kotlin-eap'
+	}
+	mavenCentral()
+}
+

@@ -1,0 +1,266 @@
+/*
+ * Copyright 2017, The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+//apply from: '../jacoco.gradle' //since app module doesn't apply module-core/library.gradle, thus apply jacoco.gradle extra
+
+apply from: "${project_directory}/lint/lint-config.gradle"
+
+final APK_NAME = "SecurityShowcaseLoginLegacy"
+
+kapt {
+	useBuildCache = true
+	correctErrorTypes = true // avoid unknown type replacing with NonExistentClass
+}
+
+android {
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+
+	compileSdkVersion 28
+	buildToolsVersion "28.0.3"
+
+	dataBinding.enabled true
+	flavorDimensions "env"
+
+	defaultConfig {
+		applicationId 'cz.kotox.securityshowcase.login'
+		minSdkVersion 19
+		targetSdkVersion 28
+		versionCode 1
+		versionName "1.0"
+		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+		multiDexEnabled true
+		vectorDrawables.useSupportLibrary = true
+	}
+
+	signingConfigs {
+		release {
+			// passwords and alias are obtained via askForPasswords task
+			storeFile file("../${project.property('release.keystore.file')}")
+			storePassword "releaseUnitinitializedStorePassword"
+			keyAlias "releaseUnitializedKeyAlias"
+			keyPassword "releaseUninitializedKeyPassword"
+		}
+		debug {
+			// passwords and alias are obtained via askForPasswords task
+			storeFile file("../${project.property('debug.keystore.file')}")
+			storePassword "debugUnitinitializedStorePassword"
+			keyAlias "debugUnitializedKeyAlias"
+			keyPassword "debugUninitializedKeyPassword"
+		}
+	}
+
+	sourceSets {
+		main.java.srcDirs += 'src/main/kotlin'
+		test.java.srcDirs += 'src/test/kotlin'
+		androidTest.java.srcDirs += 'src/androidTest/kotlin'
+
+		dev {
+			java.srcDirs += 'src/server/kotlin'
+		}
+		production {
+			java.srcDirs += 'src/server/kotlin'
+		}
+		mock {
+			java.srcDirs += 'src/mock/kotlin'
+		}
+	}
+
+	buildTypes {
+
+		debug {
+			buildConfigField "boolean", "LOGS", "true"
+			signingConfig android.signingConfigs.debug
+			minifyEnabled false
+			ext.enableCrashlytics = false
+		}
+
+		release {
+			buildConfigField "boolean", "LOGS", "false"
+			signingConfig android.signingConfigs.release
+			zipAlignEnabled true
+			minifyEnabled true
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			ext.enableCrashlytics = true
+		}
+
+	}
+
+	dataBinding {
+		enabled = true
+	}
+	flavorDimensions "env"
+
+	productFlavors {
+		mock {
+			dimension = "env"
+			versionNameSuffix "-mock"
+			applicationIdSuffix ".mock"
+			resValue "string", "app_name", "Login-M-Legacy"
+			ext.enableCrashlytics = false
+		}
+
+		dev {
+			dimension = "env"
+			versionNameSuffix "-dev"
+			applicationIdSuffix ".dev"
+			resValue "string", "app_name", "Login-D-Legacy"
+			ext.enableCrashlytics = true
+		}
+
+		production {
+			dimension = "env"
+			applicationIdSuffix ".prod"
+			resValue "string", "app_name", "ShowcaseLoginLegacy"
+			ext.enableCrashlytics = true
+		}
+	}
+
+	applicationVariants.all {variant ->
+
+		//exclude test utils from any generated apk variant
+		variant.getCompileConfiguration().exclude module: 'module-test-utils'
+		variant.getRuntimeConfiguration().exclude module: 'modole-test-utils'
+		renameArtifact(variant, APK_NAME)
+
+//        def filesAuthorityValue = applicationId + ".fileprovider"
+//        variant.buildConfigField "String", "FILES_AUTHORITY", "\"${filesAuthorityValue}\""
+//        variant.getMergedFlavor().manifestPlaceholders = [filesAuthority: filesAuthorityValue]
+	}
+
+}
+
+ext {
+	legacy_android_arch = '1.1.1'
+	legacy_dagger_version = '2.22.1'
+}
+
+dependencies {
+
+	implementation "com.android.support:multidex:1.0.3"
+
+	implementation "com.android.support:support-fragment:${versions_legacy.build_tools}"
+	implementation "com.android.support:support-compat:${versions_legacy.build_tools}"
+	implementation "com.android.support:appcompat-v7:${versions_legacy.build_tools}"
+	implementation "com.android.support:cardview-v7:${versions_legacy.build_tools}"
+	implementation "com.android.support:recyclerview-v7:${versions_legacy.build_tools}"
+	implementation "com.android.support:preference-v7:${versions_legacy.build_tools}"
+	implementation "com.android.support.constraint:constraint-layout:${versions.androidx_constraintlayout}"
+	implementation "com.android.support:design:${versions_legacy.build_tools}"
+
+	// Arch
+	implementation "android.arch.lifecycle:extensions:${versions_legacy.android_arch}"
+	annotationProcessor "android.arch.lifecycle:compiler:${versions_legacy.android_arch}"
+	implementation "android.arch.lifecycle:runtime:${versions_legacy.android_arch}"
+//	api "androidx.databinding:databinding-adapters:$app_androidx_databinding_version"
+
+	//api "androidx.core:core-ktx:${app_androidx_ktx_core_version}"
+
+	implementation 'android.arch.navigation:navigation-fragment:1.0.0'
+	implementation 'android.arch.navigation:navigation-ui:1.0.0'
+
+	api "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions_legacy.koroutines}"
+	api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions_legacy.koroutines}"
+
+	// Dagger (extended dependency on top of minimal dependency from common.gradle)
+	// Common Dagger (minimal dagger dependency to generate classes across all modules)
+	kapt "com.google.dagger:dagger-compiler:${versions_legacy.dagger}"
+	kapt "com.google.dagger:dagger-android-processor:${versions_legacy.dagger}"
+
+	api "com.google.dagger:dagger:${versions_legacy.dagger}"
+	api "com.google.dagger:dagger-android:${versions_legacy.dagger}"
+	api "com.google.dagger:dagger-android-support:${versions_legacy.dagger}"
+	compileOnly "javax.annotation:jsr250-api:${versions_legacy.jsr250api}"
+
+	//Moshi (generic movement from gson to moshi)
+	api "com.squareup.moshi:moshi-kotlin:${versions_legacy.moshi_kotlin}"
+	api "com.squareup.retrofit2:retrofit:${versions_legacy.retrofit}"
+	api "com.squareup.retrofit2:converter-moshi:${versions_legacy.retrofit}"
+
+	//Logging
+	implementation "com.jakewharton.timber:timber:${versions_legacy.timber}"
+
+}
+
+task askForPasswords {
+
+	def storePass
+	def keyAlias
+	def keyPass
+
+	def isDebugTask = getGradle().getStartParameter().getTaskNames().any {name -> name.toLowerCase().contains("debug")}
+
+	def keystorePropertiesFile
+
+	if (isDebugTask && project.hasProperty("debug.keystore.properties")) {
+		if (!project.hasProperty("debug.keystore.properties")) {
+			throw IllegalStateException("Missing definition for debug.keystore.properties in gradle.properites!")
+		} else {
+			println "debug.keystore.properties value = ${project.property("debug.keystore.properties")}"
+		}
+		keystorePropertiesFile = new File((String) project.property("debug.keystore.properties"))
+	} else {
+		if (!project.hasProperty("release.keystore.properties")) {
+			throw IllegalStateException("Missing definition for release.keystore.properties in gradle.properites!")
+		} else {
+			println "release.keystore.properties value = ${project.property("release.keystore.properties")}"
+		}
+		keystorePropertiesFile = new File((String) project.property("release.keystore.properties"))
+	}
+
+	if (keystorePropertiesFile.exists()) {
+		println "Loading keystore passwords from property file..."
+		Properties properties = new Properties()
+		properties.load(new FileInputStream(keystorePropertiesFile))
+		storePass = properties['keystore.store.password']
+		println("storePass[$storePass]")
+		keyAlias = properties['keystore.key.alias']
+		println("keyAlias[$keyAlias]")
+		keyPass = properties['keystore.key.password']
+		println("keyPass[$keyPass] isEmpty=${keyPass.isEmpty()}")
+	} else {
+		throw IllegalStateException("Missing *.keystore.properties ${keystorePropertiesFile} file for isDebugTask=${isDebugTask}")
+	}
+
+	if (isDebugTask) {
+		android.signingConfigs.debug.storePassword = storePass
+		android.signingConfigs.debug.keyAlias = keyAlias
+		android.signingConfigs.debug.keyPassword = keyPass
+	} else {
+		android.signingConfigs.release.storePassword = storePass
+		android.signingConfigs.release.keyAlias = keyAlias
+		android.signingConfigs.release.keyPassword = keyPass
+	}
+}
+
+ext.renameArtifact = {variant, apkName ->
+	variant.outputs.all {
+		output ->
+			def date = new Date().format('yyyyMMdd')
+			outputFileName = "${apkName}-${variant.versionName}-${variant.versionCode}-${date}-${variant.name}.apk"
+			//outputFileName = "${apkName}-${project.name}-${variant.versionName}-${variant.versionCode}-${date}-${variant.name}.apk"
+	}
+}
+
+tasks.whenTaskAdded {
+	theTask ->
+		theTask.dependsOn "askForPasswords"
+}

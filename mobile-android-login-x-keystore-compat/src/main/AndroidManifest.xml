@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	package="cz.kotox.securityshowcase.login.keystorecompat">
+
+	<uses-permission android:name="android.permission.INTERNET" />
+
+	<application
+		android:name="cz.kotox.securityshowcase.login.keystorecompat.SecurityShowcaseLoginKeystoreCompatApplication"
+		android:allowBackup="false"
+		android:icon="@mipmap/ic_launcher"
+		android:label="@string/appName"
+		android:supportsRtl="true"
+		android:theme="@style/Theme.SecurityShowcase"
+		tools:replace="android:allowBackup"
+		tools:ignore="GoogleAppIndexingWarning">
+		<activity android:name="cz.kotox.securityshowcase.login.keystorecompat.ui.MainActivity" />
+
+		<activity android:name="cz.kotox.securityshowcase.login.keystorecompat.ui.SplashActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+
+	</application>
+
+</manifest>

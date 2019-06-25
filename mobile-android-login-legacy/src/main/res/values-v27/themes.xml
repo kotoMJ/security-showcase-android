@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Since API 27 we can define transparent system navigation bar. -->
+
+	<style name="Theme.SecurityShowcase" parent="BaseTheme.SecurityShowcase.TransparentStatusBar">
+		<item name="android:navigationBarDividerColor">@color/system_navigation_bar_divider</item>
+		<item name="android:navigationBarColor">@color/system_navigation_bar</item>
+		<item name="android:windowLightNavigationBar">true</item>
+	</style>
+
+	<style name="Theme.SecurityShowcase.SystemNavBarNoDivider"
+		parent="BaseTheme.SecurityShowcase.TransparentStatusBar">
+		<item name="android:navigationBarColor">@color/system_navigation_bar</item>
+		<item name="android:windowLightNavigationBar">true</item>
+	</style>
+
+	<!--<style name="Theme.SecurityShowcase.BottomSheetDialog" parent="BaseTheme.SecurityShowcase.BottomSheetDialog">-->
+	<!--<item name="android:navigationBarColor">@color/system_navigation_bar</item>-->
+	<!--<item name="android:navigationBarDividerColor">@color/system_navigation_bar</item>-->
+	<!--</style>-->
+
+</resources>

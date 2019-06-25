@@ -1,1 +1,16 @@
-include ':app', ':android-keystore-compat', ':android-keystore-compat-19', ':android-keystore-compat-21', ':android-keystore-compat-23', ':android-keystore-compat-elplus', ':android-keystore-compat-emplus', ':android-keystore-compat-base'
+include ':android-keystore-compat',
+		':android-keystore-compat-19',
+		':android-keystore-compat-21',
+		':android-keystore-compat-23',
+		':android-keystore-compat-elplus',
+		':android-keystore-compat-emplus',
+		':android-keystore-compat-base',
+		':module-test-utils',
+		":module-core",
+		":module-security",
+		':module-login',
+		':mobile-android-login-x-keystore-compat',
+		':mobile-android-login-x-biometric',
+		':mobile-android-login-legacy'
+
+//include ':mobile-android-login-legacy'

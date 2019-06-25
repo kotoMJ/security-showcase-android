@@ -1,7 +1,9 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-kapt'//http://stackoverflow.com/questions/42568394/build-errors-with-new-kotlin-1-1-kapt-cant-parse-databinding-params
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+
+apply from: "${project_directory}/lint/lint-config.gradle"
 
 final KC_GIT_TAG_REGEX = "IMPL23KC*"
 // Last Git tag name on current branch
@@ -37,13 +39,13 @@ ext {
 }
 
 android {
-	compileSdkVersion compile_sdk_version
-	buildToolsVersion build_tools_version
+	compileSdkVersion sdk_version
+	buildToolsVersion versions.build_tools
 
 
 	defaultConfig {
 		minSdkVersion 23
-		targetSdkVersion compile_sdk_version
+		targetSdkVersion sdk_version
 		versionCode 1
 		versionName "1.0"
 
@@ -78,17 +80,21 @@ buildscript {
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-	//	api(project(':android-keystore-compat-base'))
-
-	api('cz.koto:android-keystore-compat-base:2.1.0') {
-		exclude group: 'org.jetbrains.kotlin'
+	if (project.hasProperty("keystore.compat.dependency.type")) {
+		if (project.property("keystore.compat.dependency.type") == "local") {
+			api(project(':android-keystore-compat-base'))
+		}
+	} else {
+		api('cz.koto:android-keystore-compat-base:2.1.0') {
+			exclude group: 'org.jetbrains.kotlin'
+		}
 	}
 
 
 	testImplementation 'junit:junit:4.12'
-	androidTestImplementation 'com.android.support.test:runner:1.0.1'
-	androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+	androidTestImplementation "com.android.support.test:runner:${versions.test_runner}"
+	androidTestImplementation "com.android.support.test.espresso:espresso-core:${versions.espresso_core}"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 }
 
 repositories {

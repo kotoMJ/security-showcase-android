@@ -1,0 +1,469 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+	<Blacklist timestamp="1561449419217"></Blacklist>
+	<Whitelist timestamp="1561449419217">
+		<ID>ClassNaming:PrefDelegate.kt$byteArrayPrefDelegate : PrefDelegate</ID>
+		<ID>ComplexMethod:KeystoreCompatBase.kt$KeystoreCompatBase$protected fun isDeviceRooted(context: Context):
+			Boolean
+		</ID>
+		<ID>ComplexMethod:KeystoreCryptoM.kt$KeystoreCryptoM$@TargetApi(Build.VERSION_CODES.M) fun
+			decryptAES(secretKeyEntry: KeyStore.SecretKeyEntry, encryptedSecret: String, isBase64Encoded: Boolean):
+			ByteArray
+		</ID>
+		<ID>ComplexMethod:vmb.kt$ViewModelBinding$private fun initializeVmb()</ID>
+		<ID>EmptyClassBlock:ForceLockScreenMarshmallowException.kt$ForceLockScreenMarshmallowException :
+			KeystoreCompatException
+		</ID>
+		<ID>EmptyClassBlock:KeystoreCompatException.kt$KeystoreCompatException : RuntimeException</ID>
+		<ID>EmptyClassBlock:KeystoreInvalidKeyException.kt$KeystoreInvalidKeyException : KeystoreCompatException</ID>
+		<ID>EmptyDefaultConstructor:Dummy.kt$DummyWithoutPackage$()</ID>
+		<ID>EmptyDefaultConstructor:SecurityDeviceAdmin.kt$SecurityDeviceAdmin$()</ID>
+		<ID>FunctionNaming:LoginActivityLegacy.kt$fun Context.LoginActivityIntent(/*user: User*/): Intent</ID>
+		<ID>FunctionNaming:LoginBiometricActivity.kt$fun Context.LoginBiometricActivityIntent(/*user: User*/): Intent
+		</ID>
+		<ID>FunctionNaming:LoginCompatActivity.kt$fun Context.LoginActivityIntent(/*user: User*/): Intent</ID>
+		<ID>LongParameterList:KeystoreCompatFacade.kt$KeystoreCompatFacade$(context: Context, onSuccess: (cre:
+			ByteArray) -&gt; Unit, onFailure: (e: Exception) -&gt; Unit, clearCredentials: () -&gt; Unit, forceFlag:
+			Boolean?, encryptedUserData: String, keyEntry: KeyStore.Entry, isBase64Encoded: Boolean)
+		</ID>
+		<ID>MagicNumber:AppExecutors.kt$AppExecutors$3</ID>
+		<ID>MagicNumber:BiometricBaseActivity.kt$BiometricBaseActivity$30</ID>
+		<ID>MagicNumber:HashDaggerModule.kt$HashDaggerModule$4</ID>
+		<ID>MagicNumber:KeystoreCompatM.kt$KeystoreCompatM$512</ID>
+		<ID>MagicNumber:KeystoreCryptoM.kt$KeystoreCryptoM$128</ID>
+		<ID>MagicNumber:KeystoreHash.kt$256</ID>
+		<ID>MagicNumber:KeystoreHash.kt$512</ID>
+		<ID>MagicNumber:KeystoreHash.kt$64</ID>
+		<ID>MagicNumber:TaskExecutorWithIdlingResourceRule.kt$TaskExecutorWithIdlingResourceRule$10</ID>
+		<ID>MagicNumber:string.kt$31</ID>
+		<ID>MatchingDeclarationName:DaggerAction.kt$cz.kotox.securityshowcase.core.di.DaggerAction.kt</ID>
+		<ID>
+			MatchingDeclarationName:DaggerActionLegacy.kt$cz.kotox.securityshowcase.module_core.di.DaggerActionLegacy.kt
+		</ID>
+		<ID>MatchingDeclarationName:Dummy.kt$.Dummy.kt</ID>
+		<ID>
+			MatchingDeclarationName:ViewModelBinderLegacy.kt$cz.kotox.securityshowcase.module_core.arch.ViewModelBinderLegacy.kt
+		</ID>
+		<ID>MatchingDeclarationName:camera.kt$cz.kotox.securityshowcase.core.ktools.camera.kt</ID>
+		<ID>MatchingDeclarationName:livedata.kt$cz.kotox.securityshowcase.core.ktools.livedata.kt</ID>
+		<ID>MatchingDeclarationName:vmb.kt$cz.kotox.securityshowcase.core.ktools.vmb.kt</ID>
+		<ID>MaxLineLength:AndroidDaggerModule.kt$AndroidDaggerModule$@Provides @Singleton @JvmStatic fun
+			provideSharedPreferences(context: Context): SharedPreferences
+		</ID>
+		<ID>MaxLineLength:AndroidDaggerModuleLegacy.kt$AndroidDaggerModuleLegacy$@Provides @Singleton @JvmStatic fun
+			provideSharedPreferences(context: Context): SharedPreferences
+		</ID>
+		<ID>MaxLineLength:BaseActivityViewModel.kt$BaseActivityViewModel$inline fun &lt;reified VM : V&gt;
+			findViewModel(ofLifecycleOwner: FragmentActivity = this, factory: ViewModelProvider.Factory =
+			viewModelFactory)
+		</ID>
+		<ID>MaxLineLength:BaseActivityViewModelLegacy.kt$BaseActivityViewModelLegacy$inline fun &lt;reified VM : V&gt;
+			findViewModel(ofLifecycleOwner: FragmentActivity = this, factory: ViewModelProvider.Factory =
+			viewModelFactory)
+		</ID>
+		<ID>MaxLineLength:BaseActivityViewModelLegacy.kt$BaseActivityViewModelLegacy&lt;V : BaseViewModelLegacy, B :
+			ViewDataBinding&gt; : BaseActivityViewModelBinder
+		</ID>
+		<ID>MaxLineLength:BaseFragment.kt$cz.kotox.securityshowcase.core.arch.BaseFragment.kt</ID>
+		<ID>MaxLineLength:BaseFragmentLegacy.kt$cz.kotox.securityshowcase.module_core.arch.BaseFragmentLegacy.kt</ID>
+		<ID>MaxLineLength:BaseFragmentViewModel.kt$BaseFragmentViewModel$inline fun &lt;reified VM : V&gt;
+			findViewModel(ofLifecycleOwner: Fragment = this, factory: ViewModelProvider.Factory = viewModelFactory)
+		</ID>
+		<ID>MaxLineLength:BaseFragmentViewModel.kt$BaseFragmentViewModel$inline fun &lt;reified VM : V&gt;
+			findViewModel(ofLifecycleOwner: FragmentActivity, factory: ViewModelProvider.Factory = viewModelFactory)
+		</ID>
+		<ID>MaxLineLength:BaseFragmentViewModelLegacy.kt$BaseFragmentViewModelLegacy$inline fun &lt;reified VM : V&gt;
+			findViewModel(ofLifecycleOwner: Fragment = this, factory: ViewModelProvider.Factory = viewModelFactory)
+		</ID>
+		<ID>MaxLineLength:BaseFragmentViewModelLegacy.kt$BaseFragmentViewModelLegacy$inline fun &lt;reified VM : V&gt;
+			findViewModel(ofLifecycleOwner: FragmentActivity, factory: ViewModelProvider.Factory = viewModelFactory)
+		</ID>
+		<ID>MaxLineLength:BaseFragmentViewModelLegacy.kt$BaseFragmentViewModelLegacy&lt;V : BaseViewModelLegacy, B :
+			ViewDataBinding&gt; : BaseFragmentLegacyViewModelBinder
+		</ID>
+		<ID>MaxLineLength:BaseUIScreen.kt$BaseUIScreen$fun showSnackbar(view: View, @StringRes stringRes: Int, length:
+			Int = Snackbar.LENGTH_LONG, maxLines: Int = SNACK_BAR_MAX_LINES_DEFAULT, config: (Snackbar.() -&gt; Unit)? =
+			null)
+		</ID>
+		<ID>MaxLineLength:BaseUIScreen.kt$BaseUIScreen$fun showSnackbar(view: View, message: String, length: Int =
+			Snackbar.LENGTH_LONG, maxLines: Int = SNACK_BAR_MAX_LINES_DEFAULT, config: (Snackbar.() -&gt; Unit)? = null)
+		</ID>
+		<ID>MaxLineLength:BaseUIScreen.kt$cz.kotox.securityshowcase.core.arch.BaseUIScreen.kt</ID>
+		<ID>MaxLineLength:BaseUIScreenLegacy.kt$BaseUIScreenLegacy$fun showSnackbar(view: View, @StringRes stringRes:
+			Int, length: Int = Snackbar.LENGTH_LONG, maxLines: Int = SNACK_BAR_MAX_LINES_DEFAULT, config: (Snackbar.() -&gt;
+			Unit)? = null)
+		</ID>
+		<ID>MaxLineLength:BaseUIScreenLegacy.kt$BaseUIScreenLegacy$fun showSnackbar(view: View, message: String, length:
+			Int = Snackbar.LENGTH_LONG, maxLines: Int = SNACK_BAR_MAX_LINES_DEFAULT, config: (Snackbar.() -&gt; Unit)? =
+			null)
+		</ID>
+		<ID>MaxLineLength:BaseUIScreenLegacy.kt$cz.kotox.securityshowcase.module_core.arch.BaseUIScreenLegacy.kt</ID>
+		<ID>MaxLineLength:EventBus.kt$EventBus$@SuppressWarnings("unchecked") fun &lt;T : Event&gt; observe(@NonNull
+			lifecycleOwner: LifecycleOwner, @NonNull eventClass: Class&lt;T&gt;, @NonNull eventObserver: EventObserver&lt;T&gt;)
+		</ID>
+		<ID>MaxLineLength:KeystoreCompat.kt$KeystoreCompat : KeystoreCompatBase</ID>
+		<ID>MaxLineLength:KeystoreCompatBase.kt$KeystoreCompatBase$ @JvmOverloads fun loadSecret(context: Context,
+			onSuccess: (cre: ByteArray) -&gt; Unit, onFailure: (e: Exception) -&gt; Unit, forceFlag: Boolean?,
+			isBase64Encoded: Boolean = true)
+		</ID>
+		<ID>MaxLineLength:KeystoreCompatBase.kt$KeystoreCompatBase$ @JvmOverloads fun loadSecretAsString(context:
+			Context, onSuccess: (cre: String) -&gt; Unit, onFailure: (e: Exception) -&gt; Unit, forceFlag: Boolean?,
+			isBase64Encoded: Boolean = true)
+		</ID>
+		<ID>MaxLineLength:KeystoreCompatBase.kt$KeystoreCompatBase$ @JvmOverloads fun storeSecret(secret: ByteArray,
+			onError: (e: KeystoreCompatException) -&gt; Unit, onSuccess: () -&gt; Unit, useBase64Encoding: Boolean)
+		</ID>
+		<ID>MaxLineLength:KeystoreCompatBase.kt$KeystoreCompatBase$ @JvmOverloads fun storeSecret(secret: String,
+			onError: (e: KeystoreCompatException) -&gt; Unit, onSuccess: () -&gt; Unit, useBase64Encoding: Boolean =
+			true)
+		</ID>
+		<ID>MaxLineLength:KeystoreCompatBase.kt$cz.koto.keystorecompat.base.KeystoreCompatBase.kt</ID>
+		<ID>MaxLineLength:KeystoreCompatFacade.kt$KeystoreCompatFacade$fun getAlgorithmParameterSpec(certSubject:
+			X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec
+		</ID>
+		<ID>MaxLineLength:KeystoreCompatK.kt$KeystoreCompatK$override fun getAlgorithmParameterSpec(certSubject:
+			X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec
+		</ID>
+		<ID>MaxLineLength:KeystoreCompatK.kt$cz.koto.keystorecompat19.compat.KeystoreCompatK.kt</ID>
+		<ID>MaxLineLength:KeystoreCompatL.kt$KeystoreCompatL$override fun getAlgorithmParameterSpec(certSubject:
+			X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec
+		</ID>
+		<ID>MaxLineLength:KeystoreCompatL.kt$cz.koto.keystorecompat21.compat.KeystoreCompatL.kt</ID>
+		<ID>MaxLineLength:KeystoreCompatM.kt$KeystoreCompatM$ override fun getAlgorithmParameterSpec(certSubject:
+			X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec
+		</ID>
+		<ID>MaxLineLength:KeystoreCompatM.kt$cz.koto.keystorecompat23.compat.KeystoreCompatM.kt</ID>
+		<ID>MaxLineLength:KeystoreCryptoK.kt$KeystoreCryptoK$ @TargetApi(Build.VERSION_CODES.KITKAT) fun
+			decryptRSA(privateKeyEntry: KeyStore.PrivateKeyEntry, encryptedSecret: String, isBase64Encoded: Boolean):
+			ByteArray
+		</ID>
+		<ID>MaxLineLength:KeystoreCryptoK.kt$KeystoreCryptoK$var inputByteArray: ByteArray = if (isBase64Encoded)
+			Base64.decode(encryptedSecret, Base64.DEFAULT) else encryptedSecret.toByteArray(Charsets.UTF_8)
+		</ID>
+		<ID>MaxLineLength:KeystoreCryptoM.kt$KeystoreCryptoM$var ivAndEncryptedKey: ByteArray = if (isBase64Encoded)
+			Base64.decode(encryptedSecret, Base64.DEFAULT) else encryptedSecret.toByteArray(Charsets.UTF_8)
+		</ID>
+		<ID>MaxLineLength:KeystoreCryptoM.kt$cz.koto.keystorecompat23.crypto.KeystoreCryptoM.kt</ID>
+		<ID>MaxLineLength:KeystoreHash.kt$ @JvmOverloads inline fun createHashKey(basePassword: String, salt: ByteArray,
+			iterationCount: Int, sha512: Boolean, keyLengthInBit: Int = LENGTH32BYTES): ByteArray
+		</ID>
+		<ID>MaxLineLength:KeystoreHash.kt$ @JvmOverloads inline fun createHashKey(basePassword: String, sha512: Boolean,
+			keyLengthInBit: Int = LENGTH32BYTES): ByteArray
+		</ID>
+		<ID>MaxLineLength:KeystoreHash.kt$cz.koto.keystorecompat.base.hash.KeystoreHash.kt</ID>
+		<ID>
+			MaxLineLength:LoginBiometricFragmentArgs.kt$cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricFragmentArgs.kt
+		</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$BooleanPrefDelegate : PrefDelegate</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$BooleanPrefDelegate$override fun setValue(thisRef: Any?, property: KProperty&lt;*&gt;,
+			value: Boolean)
+		</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$IntPrefDelegate : PrefDelegate</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$LongPrefDelegate : PrefDelegate</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$LongPrefDelegate$override fun setValue(thisRef: Any?, property: KProperty&lt;*&gt;,
+			value: Long)
+		</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$StringPrefDelegate : PrefDelegate</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$StringPrefDelegate$override fun setValue(thisRef: Any?, property: KProperty&lt;*&gt;,
+			value: String?)
+		</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$byteArrayPrefDelegate : PrefDelegate</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$byteArrayPrefDelegate$override fun getValue(thisRef: Any?, property: KProperty&lt;*&gt;)</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$byteArrayPrefDelegate$override fun setValue(thisRef: Any?, property: KProperty&lt;*&gt;,
+			value: ByteArray)
+		</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$cz.koto.keystorecompat.base.utility.PrefDelegate.kt</ID>
+		<ID>MaxLineLength:SecurityDeviceAdmin.kt$SecurityDeviceAdmin$ fun forceLockPreLollipop(context: Context,
+			onLockActivityShouldBeInvoked: (Intent) -&gt; Unit, onSuccess: () -&gt; Unit)
+		</ID>
+		<ID>MaxLineLength:binding.kt$cz.kotox.securityshowcase.core.ktools.binding.kt</ID>
+		<ID>MaxLineLength:livedata.kt$ fun &lt;S, T&gt; LiveData&lt;T&gt;.switchMap(switchMapFunction: (T) -&gt;
+			LiveData&lt;S&gt;)
+		</ID>
+		<ID>MaxLineLength:livedata.kt$ fun &lt;S, T&gt; MediatorLiveData&lt;T&gt;.addValueSource(source: LiveData&lt;S&gt;,
+			resultFunction: (sourceValue: S?) -&gt; T)
+		</ID>
+		<ID>MaxLineLength:livedata.kt$cz.kotox.securityshowcase.core.ktools.livedata.kt</ID>
+		<ID>MaxLineLength:permissions.kt$FragmentPermissionManager$override fun performPermissionCheck(permission:
+			String)
+		</ID>
+		<ID>MaxLineLength:permissions.kt$SinglePermissionRequest$deniedCallback: (deniedPermission: String) -&gt; Unit =
+			{}
+		</ID>
+		<ID>MaxLineLength:vmb.kt$cz.kotox.securityshowcase.core.ktools.vmb.kt</ID>
+		<ID>MaxLineLength:vmb.kt$inline fun &lt;reified VM : ViewModel, B : ViewDataBinding&gt; Fragment.vmb(@LayoutRes
+			layoutResId: Int, noinline viewModelFactory: () -&gt; VM)
+		</ID>
+		<ID>MaxLineLength:vmb.kt$inline fun &lt;reified VM : ViewModel, B : ViewDataBinding&gt; Fragment.vmb(@LayoutRes
+			layoutResId: Int, viewModelProvider: ViewModelProvider? = null)
+		</ID>
+		<ID>MaxLineLength:vmb.kt$inline fun &lt;reified VM : ViewModel, B : ViewDataBinding&gt;
+			FragmentActivity.vmb(@LayoutRes layoutResId: Int, noinline viewModelFactory: () -&gt; VM)
+		</ID>
+		<ID>MaxLineLength:vmb.kt$inline fun &lt;reified VM : ViewModel, B : ViewDataBinding&gt;
+			FragmentActivity.vmb(@LayoutRes layoutResId: Int, viewModelProvider: ViewModelProvider? = null)
+		</ID>
+		<ID>NewLineAtEndOfFile:AndroidDaggerModule.kt$cz.kotox.securityshowcase.core.di.AndroidDaggerModule.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:AndroidDaggerModuleLegacy.kt$cz.kotox.securityshowcase.module_core.di.AndroidDaggerModuleLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:AppComponent.kt$cz.kotox.securityshowcase.login.biometric.di.AppComponent.kt</ID>
+		<ID>NewLineAtEndOfFile:AppComponent.kt$cz.kotox.securityshowcase.login.keystorecompat.di.AppComponent.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:AppComponentLegacy.kt$cz.kotox.securityshowcase.app_legacylogin.di.AppComponentLegacy.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:AppLoginDaggerModule.kt$cz.kotox.securityshowcase.login.biometric.di.AppLoginDaggerModule.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:AppLoginDaggerModule.kt$cz.kotox.securityshowcase.login.keystorecompat.di.AppLoginDaggerModule.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:AppLoginDaggerModuleLegacy.kt$cz.kotox.securityshowcase.app_legacylogin.di.AppLoginDaggerModuleLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:AppVersion.kt$cz.kotox.securityshowcase.core.entity.AppVersion.kt</ID>
+		<ID>NewLineAtEndOfFile:AppVersionLegacy.kt$cz.kotox.securityshowcase.module_core.entity.AppVersionLegacy.kt</ID>
+		<ID>NewLineAtEndOfFile:AppVersionUnitTest.kt$cz.kotox.securityshowcase.core.entity.AppVersionUnitTest.kt</ID>
+		<ID>NewLineAtEndOfFile:AuthRouter.kt$cz.kotox.securityshowcase.login.network.AuthRouter.kt</ID>
+		<ID>NewLineAtEndOfFile:BaseActivity.kt$cz.kotox.securityshowcase.core.arch.BaseActivity.kt</ID>
+		<ID>NewLineAtEndOfFile:BaseActivity.kt$cz.kotox.securityshowcase.module_core.arch.BaseActivity.kt</ID>
+		<ID>NewLineAtEndOfFile:BaseActivityViewModel.kt$cz.kotox.securityshowcase.core.arch.BaseActivityViewModel.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:BaseActivityViewModelLegacy.kt$cz.kotox.securityshowcase.module_core.arch.BaseActivityViewModelLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:BaseApplication.kt$cz.kotox.securityshowcase.core.BaseApplication.kt</ID>
+		<ID>NewLineAtEndOfFile:BaseApplicationLegacy.kt$cz.kotox.securityshowcase.module_core.BaseApplicationLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:BaseFragment.kt$cz.kotox.securityshowcase.core.arch.BaseFragment.kt</ID>
+		<ID>NewLineAtEndOfFile:BaseFragmentLegacy.kt$cz.kotox.securityshowcase.module_core.arch.BaseFragmentLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:BaseUIScreen.kt$cz.kotox.securityshowcase.core.arch.BaseUIScreen.kt</ID>
+		<ID>NewLineAtEndOfFile:BaseUIScreenLegacy.kt$cz.kotox.securityshowcase.module_core.arch.BaseUIScreenLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:BaseViewModel.kt$cz.kotox.securityshowcase.core.arch.BaseViewModel.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:BaseViewModelLegacy.kt$cz.kotox.securityshowcase.module_core.arch.BaseViewModelLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:BiometricBaseActivity.kt$cz.kotox.securityshowcase.security.ui.BiometricBaseActivity.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:CoreDaggerModule.kt$cz.kotox.securityshowcase.core.di.CoreDaggerModule.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:CoreDaggerModuleLegacy.kt$cz.kotox.securityshowcase.module_core.di.CoreDaggerModuleLegacy.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:CrashReportingTree.kt$cz.kotox.securityshowcase.core.logging.timber.CrashReportingTree.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:CrashReportingTreeLegacy.kt$cz.kotox.securityshowcase.module_core.logging.CrashReportingTreeLegacy.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:CredentialsDaggerModule.kt$cz.kotox.securityshowcase.login.di.CredentialsDaggerModule.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:CredentialsQualifier.kt$cz.kotox.securityshowcase.login.qualifier.CredentialsQualifier.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:FeatureCore.kt$cz.kotox.securityshowcase.core.FeatureCore.kt</ID>
+		<ID>NewLineAtEndOfFile:FeatureCoreLegacy.kt$cz.kotox.securityshowcase.module_core.FeatureCoreLegacy.kt</ID>
+		<ID>NewLineAtEndOfFile:HashDaggerModule.kt$cz.kotox.securityshowcase.core.crypto.hash.HashDaggerModule.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:HashDaggerModule.kt$cz.kotox.securityshowcase.module_core.crypto.hash.HashDaggerModule.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:HashQualifiers.kt$cz.kotox.securityshowcase.core.crypto.hash.HashQualifiers.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:HashQualifiersLegacy.kt$cz.kotox.securityshowcase.module_core.crypto.hash.HashQualifiersLegacy.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:HeaderRequestInterceptor.kt$cz.kotox.securityshowcase.core.network.rest.HeaderRequestInterceptor.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatConfig.kt$cz.koto.keystorecompat.compat.KeystoreCompatConfig.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatConfig.kt$cz.koto.keystorecompat.elplus.compat.KeystoreCompatConfig.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatConfig.kt$cz.koto.keystorecompat.emplus.compat.KeystoreCompatConfig.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatConfigBase.kt$cz.koto.keystorecompat.base.KeystoreCompatConfigBase.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatConfigM.kt$cz.koto.keystorecompat23.compat.KeystoreCompatConfigM.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatFacade.kt$cz.koto.keystorecompat.base.compat.KeystoreCompatFacade.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatL.kt$cz.koto.keystorecompat21.compat.KeystoreCompatL.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCryptoK.kt$cz.koto.keystorecompat.base.crypto.KeystoreCryptoK.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCryptoM.kt$cz.koto.keystorecompat23.crypto.KeystoreCryptoM.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:LocalPreferences.kt$cz.kotox.securityshowcase.core.database.preferences.LocalPreferences.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:LoginActivityLegacy.kt$cz.kotox.securityshowcase.module_login.LoginActivityLegacy.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:LoginBiometricActivity.kt$cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricActivity.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:LoginBiometricFragment.kt$cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricFragment.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:LoginBiometricViewModel.kt$cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricViewModel.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:LoginCompatActivity.kt$cz.kotox.securityshowcase.login.ui.keystorecompat.LoginCompatActivity.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:LoginCompatFragment.kt$cz.kotox.securityshowcase.login.ui.keystorecompat.LoginCompatFragment.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:LoginCompatViewModel.kt$cz.kotox.securityshowcase.login.ui.keystorecompat.LoginCompatViewModel.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:LoginDaggerModule.kt$cz.kotox.securityshowcase.login.di.LoginDaggerModule.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:LoginDaggerModuleLegacy.kt$cz.kotox.securityshowcase.module_login.di.LoginDaggerModuleLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:LoginFragmentLegacy.kt$cz.kotox.securityshowcase.module_login.LoginFragmentLegacy.kt</ID>
+		<ID>NewLineAtEndOfFile:LoginViewModelLegacy.kt$cz.kotox.securityshowcase.module_login.LoginViewModelLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:MainActivity.kt$cz.kotox.securityshowcase.login.biometric.ui.MainActivity.kt</ID>
+		<ID>NewLineAtEndOfFile:MainActivity.kt$cz.kotox.securityshowcase.login.keystorecompat.ui.MainActivity.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:MainActivityLegacy.kt$cz.kotox.securityshowcase.app_legacylogin.ui.MainActivityLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:MainViewModel.kt$cz.kotox.securityshowcase.login.biometric.ui.MainViewModel.kt</ID>
+		<ID>NewLineAtEndOfFile:MainViewModel.kt$cz.kotox.securityshowcase.login.keystorecompat.ui.MainViewModel.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:MainViewModelLegacy.kt$cz.kotox.securityshowcase.app_legacylogin.ui.MainViewModelLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:OpenForMocking.kt$cz.kotox.securityshowcase.core.OpenForMocking.kt</ID>
+		<ID>NewLineAtEndOfFile:OpenForMockingLegacy.kt$cz.kotox.securityshowcase.module_core.OpenForMockingLegacy.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:PreferencesCommon.kt$cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:PreferencesCommonLegacy.kt$cz.kotox.securityshowcase.module_core.database.preferences.PreferencesCommonLegacy.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:PreferencesCoreUnitTest.kt$cz.kotox.securityshowcase.core.database.preferences.PreferencesCoreUnitTest.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:PreferencesLogin.kt$cz.kotox.securityshowcase.login.database.preference.PreferencesLogin.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:PreferencesLoginLegacy.kt$cz.kotox.securityshowcase.module_login.database.preferences.PreferencesLoginLegacy.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:SecurityShowcaseLoginApplicationLegacy.kt$cz.kotox.securityshowcase.app_legacylogin.SecurityShowcaseLoginApplicationLegacy.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:SecurityShowcaseLoginBiometricApplication.kt$cz.kotox.securityshowcase.login.biometric.SecurityShowcaseLoginBiometricApplication.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:SecurityShowcaseLoginKeystoreCompatApplication.kt$cz.kotox.securityshowcase.login.keystorecompat.SecurityShowcaseLoginKeystoreCompatApplication.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:SingleFragmentActivity.kt$cz.kotox.securityshowcase.testutils.SingleFragmentActivity.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:SingletonHolder.kt$cz.koto.keystorecompat.base.SingletonHolder.kt</ID>
+		<ID>NewLineAtEndOfFile:SplashActivity.kt$cz.kotox.securityshowcase.login.biometric.ui.SplashActivity.kt</ID>
+		<ID>NewLineAtEndOfFile:SplashActivity.kt$cz.kotox.securityshowcase.login.keystorecompat.ui.SplashActivity.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:SplashActivityLegacy.kt$cz.kotox.securityshowcase.app_legacylogin.ui.SplashActivityLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:ViewModelBinder.kt$cz.kotox.securityshowcase.core.arch.ViewModelBinder.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:ViewModelBinderLegacy.kt$cz.kotox.securityshowcase.module_core.arch.ViewModelBinderLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:ViewModelFactory.kt$cz.kotox.securityshowcase.login.biometric.di.ViewModelFactory.kt</ID>
+		<ID>
+			NewLineAtEndOfFile:ViewModelFactory.kt$cz.kotox.securityshowcase.login.keystorecompat.di.ViewModelFactory.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:ViewModelFactoryLegacy.kt$cz.kotox.securityshowcase.app_legacylogin.di.ViewModelFactoryLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:ViewModelKey.kt$cz.kotox.securityshowcase.core.di.ViewModelKey.kt</ID>
+		<ID>NewLineAtEndOfFile:ViewModelKeyLegacy.kt$cz.kotox.securityshowcase.module_core.di.ViewModelKeyLegacy.kt</ID>
+		<ID>NewLineAtEndOfFile:ViewModelModule.kt$cz.kotox.securityshowcase.login.biometric.di.ViewModelModule.kt</ID>
+		<ID>NewLineAtEndOfFile:ViewModelModule.kt$cz.kotox.securityshowcase.login.keystorecompat.di.ViewModelModule.kt
+		</ID>
+		<ID>
+			NewLineAtEndOfFile:ViewModelModuleLegacy.kt$cz.kotox.securityshowcase.app_legacylogin.di.ViewModelModuleLegacy.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:WrapperData.kt$cz.kotox.securityshowcase.login.entity.WrapperData.kt</ID>
+		<ID>NewLineAtEndOfFile:async.kt$cz.kotox.securityshowcase.core.ktools.async.kt</ID>
+		<ID>NewLineAtEndOfFile:async.kt$cz.kotox.securityshowcase.module_core.ktools.async.kt</ID>
+		<ID>NewLineAtEndOfFile:camera.kt$cz.kotox.securityshowcase.core.ktools.camera.kt</ID>
+		<ID>NewLineAtEndOfFile:livedata.kt$cz.kotox.securityshowcase.core.ktools.livedata.kt</ID>
+		<ID>NewLineAtEndOfFile:mockito.kt$cz.kotox.securityshowcase.testutils.mockito.kt</ID>
+		<ID>NewLineAtEndOfFile:permissions.kt$cz.kotox.securityshowcase.core.ktools.permissions.kt</ID>
+		<ID>NewLineAtEndOfFile:string.kt$cz.kotox.securityshowcase.testutils.string.kt</ID>
+		<ID>NewLineAtEndOfFile:vmb.kt$cz.kotox.securityshowcase.core.ktools.vmb.kt</ID>
+		<ID>ObjectPropertyNaming:LoginBiometricFragmentArgs.kt$LoginBiometricFragmentArgs.Companion$val __setargs :
+			String?
+		</ID>
+		<ID>PackageNaming:AndroidDaggerModuleLegacy.kt$package cz.kotox.securityshowcase.module_core.di</ID>
+		<ID>PackageNaming:AppComponentLegacy.kt$package cz.kotox.securityshowcase.app_legacylogin.di</ID>
+		<ID>PackageNaming:AppLoginDaggerModuleLegacy.kt$package cz.kotox.securityshowcase.app_legacylogin.di</ID>
+		<ID>PackageNaming:AppVersionLegacy.kt$package cz.kotox.securityshowcase.module_core.entity</ID>
+		<ID>PackageNaming:BaseActivity.kt$package cz.kotox.securityshowcase.module_core.arch</ID>
+		<ID>PackageNaming:BaseActivityViewModelLegacy.kt$package cz.kotox.securityshowcase.module_core.arch</ID>
+		<ID>PackageNaming:BaseApplicationLegacy.kt$package cz.kotox.securityshowcase.module_core</ID>
+		<ID>PackageNaming:BaseFragmentLegacy.kt$package cz.kotox.securityshowcase.module_core.arch</ID>
+		<ID>PackageNaming:BaseFragmentViewModelLegacy.kt$package cz.kotox.securityshowcase.module_core.arch</ID>
+		<ID>PackageNaming:BaseUIScreenLegacy.kt$package cz.kotox.securityshowcase.module_core.arch</ID>
+		<ID>PackageNaming:BaseViewModelLegacy.kt$package cz.kotox.securityshowcase.module_core.arch</ID>
+		<ID>PackageNaming:CoreDaggerModuleLegacy.kt$package cz.kotox.securityshowcase.module_core.di</ID>
+		<ID>PackageNaming:CrashReportingTreeLegacy.kt$package cz.kotox.securityshowcase.module_core.logging</ID>
+		<ID>PackageNaming:DaggerActionLegacy.kt$package cz.kotox.securityshowcase.module_core.di</ID>
+		<ID>PackageNaming:EventBus.kt$package cz.kotox.securityshowcase.module_core.arch.event</ID>
+		<ID>PackageNaming:FeatureCoreLegacy.kt$package cz.kotox.securityshowcase.module_core</ID>
+		<ID>PackageNaming:HashDaggerModule.kt$package cz.kotox.securityshowcase.module_core.crypto.hash</ID>
+		<ID>PackageNaming:HashQualifiersLegacy.kt$package cz.kotox.securityshowcase.module_core.crypto.hash</ID>
+		<ID>PackageNaming:LiveEvent.kt$package cz.kotox.securityshowcase.module_core.arch.event</ID>
+		<ID>PackageNaming:LoginActivityLegacy.kt$package cz.kotox.securityshowcase.module_login</ID>
+		<ID>PackageNaming:LoginDaggerModuleLegacy.kt$package cz.kotox.securityshowcase.module_login.di</ID>
+		<ID>PackageNaming:LoginFragmentLegacy.kt$package cz.kotox.securityshowcase.module_login</ID>
+		<ID>PackageNaming:LoginViewModelLegacy.kt$package cz.kotox.securityshowcase.module_login</ID>
+		<ID>PackageNaming:MainActivityLegacy.kt$package cz.kotox.securityshowcase.app_legacylogin.ui</ID>
+		<ID>PackageNaming:MainFragmentLegacy.kt$package cz.kotox.securityshowcase.app_legacylogin.ui</ID>
+		<ID>PackageNaming:MainViewModelLegacy.kt$package cz.kotox.securityshowcase.app_legacylogin.ui</ID>
+		<ID>PackageNaming:OpenForMockingLegacy.kt$package cz.kotox.securityshowcase.module_core</ID>
+		<ID>PackageNaming:PreferencesCommonLegacy.kt$package
+			cz.kotox.securityshowcase.module_core.database.preferences
+		</ID>
+		<ID>PackageNaming:PreferencesLoginLegacy.kt$package
+			cz.kotox.securityshowcase.module_login.database.preferences
+		</ID>
+		<ID>PackageNaming:SecurityShowcaseLoginApplicationLegacy.kt$package cz.kotox.securityshowcase.app_legacylogin
+		</ID>
+		<ID>PackageNaming:SplashActivityLegacy.kt$package cz.kotox.securityshowcase.app_legacylogin.ui</ID>
+		<ID>PackageNaming:ViewModelBinderLegacy.kt$package cz.kotox.securityshowcase.module_core.arch</ID>
+		<ID>PackageNaming:ViewModelFactoryLegacy.kt$package cz.kotox.securityshowcase.app_legacylogin.di</ID>
+		<ID>PackageNaming:ViewModelKeyLegacy.kt$package cz.kotox.securityshowcase.module_core.di</ID>
+		<ID>PackageNaming:ViewModelModuleLegacy.kt$package cz.kotox.securityshowcase.app_legacylogin.di</ID>
+		<ID>PackageNaming:async.kt$package cz.kotox.securityshowcase.module_core.ktools</ID>
+		<ID>ReturnCount:KeystoreCompatBase.kt$KeystoreCompatBase$ fun hasSecretLoadable(): Boolean</ID>
+		<ID>ThrowsCount:KeystoreCryptoM.kt$KeystoreCryptoM$@TargetApi(Build.VERSION_CODES.M) fun encryptAES(secret:
+			ByteArray, secretKeyEntry: KeyStore.SecretKeyEntry, useBase64Encoding: Boolean): String
+		</ID>
+		<ID>TooGenericExceptionThrown:KeystoreCompatBase.kt$KeystoreCompatBase$throw RuntimeException("KeyPair was NOT
+			stored!")
+		</ID>
+		<ID>TooGenericExceptionThrown:KeystoreCompatImpl.kt$KeystoreCompatImpl$throw RuntimeException("Unsupported API
+			Version [$version] for KeystoreCompat ")
+		</ID>
+		<ID>TooGenericExceptionThrown:KeystoreCompatK.kt$KeystoreCompatK$throw RuntimeException("${LOG_TAG} Unsupported
+			usage of version ${Build.VERSION.SDK_INT}")
+		</ID>
+		<ID>TooGenericExceptionThrown:KeystoreCompatL.kt$KeystoreCompatL$throw RuntimeException("${LOG_TAG} Unsupported
+			usage of version ${Build.VERSION.SDK_INT}")
+		</ID>
+		<ID>TooGenericExceptionThrown:KeystoreCompatM.kt$KeystoreCompatM$throw RuntimeException("${LOG_TAG} Unsupported
+			usage of version ${Build.VERSION.SDK_INT}")
+		</ID>
+		<ID>TooGenericExceptionThrown:ViewModelFactory.kt$ViewModelFactory$throw RuntimeException(e)</ID>
+		<ID>TooGenericExceptionThrown:ViewModelFactoryLegacy.kt$ViewModelFactoryLegacy$throw RuntimeException(e)</ID>
+		<ID>TooManyFunctions:BaseFragment.kt$BaseFragment : FragmentBaseUIScreen</ID>
+		<ID>TooManyFunctions:BaseFragmentLegacy.kt$BaseFragmentLegacy : FragmentBaseUIScreenLegacy</ID>
+		<ID>TooManyFunctions:KeystoreCompatBase.kt$KeystoreCompatBase</ID>
+		<ID>VariableNaming:KeystoreCompatBase.kt$KeystoreCompatBase$protected val LOG_TAG = javaClass.name</ID>
+		<ID>VariableNaming:KeystoreCompatK.kt$KeystoreCompatK$private val LOG_TAG = javaClass.name</ID>
+		<ID>VariableNaming:KeystoreCompatL.kt$KeystoreCompatL$private val LOG_TAG = javaClass.name</ID>
+		<ID>VariableNaming:KeystoreCompatM.kt$KeystoreCompatM$private val LOG_TAG = javaClass.name</ID>
+		<ID>VariableNaming:KeystoreCryptoK.kt$KeystoreCryptoK$private val LOG_TAG = javaClass.name</ID>
+		<ID>VariableNaming:KeystoreCryptoM.kt$KeystoreCryptoM$private val LOG_TAG = javaClass.name</ID>
+		<ID>VariableNaming:KeystoreCryptoM.kt$KeystoreCryptoM$val ORDER_FOR_ENCRYPTED_DATA = ByteOrder.BIG_ENDIAN</ID>
+		<ID>VariableNaming:KeystoreHash.kt$val KEY_LENGTH = 64</ID>
+		<ID>WildcardImport:KeystoreCryptoM.kt$import java.security.*</ID>
+	</Whitelist>
+</SmellBaseline>

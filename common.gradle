@@ -1,0 +1,178 @@
+/**
+ * Contains directories for mocking responses (should be in all tests + mock version of app)
+ */
+//def mock_files = ['src/mock/resources', '../mock_data/configs', '../mock_data/responses']
+apply from: "${project_directory}/lint/lint-config.gradle"
+
+allprojects {
+	apply plugin: 'kotlin-android'
+	apply plugin: 'kotlin-kapt'
+	apply plugin: 'kotlin-android-extensions'
+	apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+	def isTestTask = getGradle().getStartParameter().getTaskNames().any {name -> name.toLowerCase().contains("test")}
+
+	if (isTestTask) {
+		println "Applying allopen"
+
+		apply plugin: 'kotlin-allopen'
+		allOpen {
+			annotation('cz.kotox.securityshowcase.core.OpenForMocking')
+		}
+
+//		TODO enable code coverage here
+//		println "Applying jacoco"
+//		apply from: "$project_directory/jacoco.gradle"
+	}
+
+	kapt {
+		useBuildCache = true
+		correctErrorTypes = true // avoid unknown type replacing with NonExistentClass
+	}
+
+	androidExtensions {
+		experimental = true
+	}
+
+	android {
+		compileOptions {
+			sourceCompatibility JavaVersion.VERSION_1_8
+			targetCompatibility JavaVersion.VERSION_1_8
+		}
+
+		compileSdkVersion sdk_version
+		buildToolsVersion versions.build_tools
+		dataBinding.enabled true
+		flavorDimensions "env"
+
+		defaultConfig {
+			minSdkVersion min_sdk_version
+			targetSdkVersion sdk_version
+			testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+			vectorDrawables.useSupportLibrary = true
+		}
+
+		flavorDimensions "env"
+
+		productFlavors {
+			mock {
+				dimension = "env"
+			}
+
+			dev {
+				dimension = "env"
+			}
+
+			production {
+				dimension = "env"
+			}
+		}
+
+		sourceSets {
+			main.java.srcDirs += 'src/main/kotlin'
+			test.java.srcDirs += 'src/test/kotlin'
+			androidTest.java.srcDirs += 'src/androidTest/kotlin'
+
+			dev {
+				java.srcDirs += 'src/server/kotlin'
+			}
+			production {
+				java.srcDirs += 'src/server/kotlin'
+			}
+			mock {
+				java.srcDirs += 'src/mock/kotlin'
+			}
+		}
+
+		buildTypes {
+			debug {
+				buildConfigField "boolean", "LOGS", "true"
+			}
+
+			release {
+				buildConfigField "boolean", "LOGS", "false"
+
+				zipAlignEnabled true
+				minifyEnabled true
+
+				proguardFile '../proguard-rules/proguard-square-retrofit2.pro'
+				proguardFile '../proguard-rules/proguard-square-leakcanary.pro'
+				proguardFile '../proguard-rules/proguard-square-okio.pro'
+				proguardFile '../proguard-rules/proguard-glide.pro'
+				proguardFile '../proguard-rules/proguard-gson.pro'
+				proguardFile '../proguard-rules/proguard-square-okhttp3.pro'
+				proguardFile '../proguard-rules/proguard-support-design.pro'
+				proguardFile '../proguard-rules/proguard-support-v7-appcompat.pro'
+				proguardFile '../proguard-rules/proguard-support-v7-cardview.pro'
+				proguardFile '../proguard-rules/proguard-realm.pro'
+				proguardFile '../proguard-rules/proguard-reactive.pro'
+				proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			}
+		}
+
+		testOptions {
+			unitTests.returnDefaultValues = true
+
+			unitTests.all {
+				testLogging {
+					events "passed", "skipped", "failed", "standardOut", "standardError"
+					outputs.upToDateWhen {false}
+					showStandardStreams = true
+				}
+				maxParallelForks = 8
+			}
+		}
+
+		configurations.all {
+			resolutionStrategy {
+				//TODO force androix packages instead
+//				force "com.android.support:support-v4:$android_support_version"
+//				force "com.android.support:appcompat-v7:$android_support_version"
+//				force "com.android.support:cardview-v7:$android_support_version"
+//				force "com.android.support:design:$android_support_version"
+//				force "com.android.support:recyclerview-v7:$android_support_version"
+//				force "com.android.support:gridlayout-v7:$android_support_version"
+//				force "com.android.support:customtabs:$android_support_version"
+			}
+		}
+	}
+
+	/**
+	 * Every subproject will have these dependencies
+	 * [all kapts] 	- because it's generating per module :(
+	 * [tests] 		- becasuse dependencies in tests don't work :(
+	 */
+	dependencies {
+
+		// Common Navigation
+		// Don't forget to apply plugin androidx.navigation.safeargs for every module with navigation (solved in common too)
+		implementation "androidx.navigation:navigation-fragment:${versions.androidx_navigation}"
+		implementation "androidx.navigation:navigation-ui:${versions.androidx_navigation}"
+
+		// Common Support
+		implementation "androidx.appcompat:appcompat:${versions.android_support}"
+
+		// Common Dagger (minimal dagger dependency to generate classes across all modules)
+		kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
+		kapt "com.google.dagger:dagger-android-processor:${versions.dagger}"
+
+		//Logging
+		implementation "com.jakewharton.timber:timber:${versions.timber}"
+
+		/* TEST DEPENDENCIES BASICS FOR EVERY MODULE - for ability to test modules with lower dependency than module-test-utils */
+
+		// Common AndroidJUnitRunner and JUnit Rules
+		androidTestImplementation "com.android.support.test:runner:${versions.android_support_test}"
+		androidTestImplementation "com.android.support.test:rules:${versions.android_support_test}"
+
+		//Common unit test
+		testImplementation "junit:junit:${versions.junit}"
+
+		//Common UI test
+		androidTestImplementation "org.mockito:mockito-android:${versions.mockito}"
+
+		// Common test objects
+		testImplementation project(':module-test-utils')
+
+	}
+}
