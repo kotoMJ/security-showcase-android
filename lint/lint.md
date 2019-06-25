@@ -72,3 +72,25 @@ android {
 ```
 ## Create baseline
 `./gradlew runAndroidLintAndMergeResults -Dlint.baselines.continue=true`
+
+# Danger
+Automatic code-review tool with ability to connect lint tools to be executed on every PR automatically.  
+It's convenient to use `RUBY` version of Danger tool for Android project (it requires to have `ruby & bundle` support installed on target CI or local).
+
+<https://danger.systems/ruby/>
+
+Danger is highly customizable opensource project. Ready for almost any git repo and for almost every CI.
+It allows to write plugin almost for every existing code automation tool.
+
+## On local
+```
+In order to solve MacOs issue with ruby-ll (invalid active developer path) use this fix:
+sudo xcode-select —install 
+```
+## Detekt plugin
+<https://rubygems.org/gems/danger-kotlin_detekt>
+<https://github.com/NFesquet/danger-kotlin_detekt/>
+
+## Android lint plugin
+<https://rubygems.org/gems/danger-android_lint>
+<https://github.com/loadsmart/danger-android_lint>
