@@ -82,11 +82,29 @@ It's convenient to use `RUBY` version of Danger tool for Android project (it req
 Danger is highly customizable opensource project. Ready for almost any git repo and for almost every CI.
 It allows to write plugin almost for every existing code automation tool.
 
-## On local
+## Run on local
+
+Danger last merged PR in my current branch
+ `bundle exec danger local`
+ 
+Danger specific PR 
+ `bundle exec danger https://github.com/kotomisak/security-showcase-android/pull/43`
+
+
 ```
 In order to solve MacOs issue with ruby-ll (invalid active developer path) use this fix:
 sudo xcode-select —install 
 ```
+
+## Run on CI
+
+https://danger.systems/guides/getting_started.html
+
+For Travis CI just ensure [travis.yml](../travis.yml) install ruby and bundle (see the `before_install` part).  
+And then executes danger in `script` part:  `bundle exec danger`
+
+
+
 ## Detekt plugin
 <https://rubygems.org/gems/danger-kotlin_detekt>
 <https://github.com/NFesquet/danger-kotlin_detekt/>
@@ -94,3 +112,5 @@ sudo xcode-select —install
 ## Android lint plugin
 <https://rubygems.org/gems/danger-android_lint>
 <https://github.com/loadsmart/danger-android_lint>
+
+
