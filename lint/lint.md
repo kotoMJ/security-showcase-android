@@ -82,6 +82,8 @@ It's convenient to use `RUBY` version of Danger tool for Android project (it req
 Danger is highly customizable opensource project. Ready for almost any git repo and for almost every CI.
 It allows to write plugin almost for every existing code automation tool.
 
+Every step to be executed by Danger is located in [Dangerfile](../Dangerfile)
+
 ## Run on local
 
 Danger last merged PR in my current branch
