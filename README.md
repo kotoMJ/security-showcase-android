@@ -10,7 +10,6 @@
 | master | [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg?branch=master)](https://travis-ci.org/kotomisak/security-showcase-android) | 
 | developV2| [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg?branch=developV2)](https://travis-ci.org/kotomisak/security-showcase-android) | 
 | developV3| [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg?branch=developV3)](https://travis-ci.org/kotomisak/security-showcase-android) | 
-| feature/version_3| [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg?branch=feature/version_3)](https://travis-ci.org/kotomisak/security-showcase-android) |
 This is sample application pointing some security related practices on Android device.  
 SecurityShowcase architecture is **MVVM based on Google's architecture component**.  
 Complete server-side endpoint implementation for this project is available on GitHub [KoTiNode](https://github.com/kotomisak/kotinode).
