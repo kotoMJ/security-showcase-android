@@ -16,20 +16,20 @@ ext {
 	artifact = 'android-keystore-compat'
 
 	bintrayUser = 'kotomisak'
-	bintrayRepo = 'cz.koto'
+	bintrayRepo = 'cz.kotox'
 
-	publishedGroupId = 'cz.koto'
+	publishedGroupId = 'cz.kotox'
 	libraryName = 'android-keystore-compat'
 
 	libraryDescription = 'Wrapper library designed to simplify secure handling string secret in shared preferences using Keystore as private key storage.'
 
-	siteUrl = 'https://github.com/kotomisak/security-showcase-android/tree/develop/keystorecompat'
-	gitUrl = 'https://github.com/kotomisak/security-showcase-android'
+	siteUrl = 'https://github.com/kotoMJ/security-showcase-android/tree/develop/keystorecompat'
+	gitUrl = 'https://github.com/kotoMJ/security-showcase-android'
 
 	libraryVersion = KC_GIT_TAG_NAME.replaceAll("KC-", "")
 	libraryCode = KC_GIT_TAG_COUNT
 
-	developerId = 'kotomisak'
+	developerId = 'kotoMJ'
 	developerName = 'Michal Jenicek'
 	developerEmail = 'jenicek.michal@gmail.com'
 
@@ -86,16 +86,16 @@ dependencies {
 			api(project(':android-keystore-compat-23'))
 		}
 	} else {
-		api('cz.koto:android-keystore-compat-base:2.1.0') {
+		api('cz.kotox:android-keystore-compat-base:2.1.0') {
 			exclude group: 'org.jetbrains.kotlin'
 		}
-		api('cz.koto:android-keystore-compat-19:2.1.0') {
+		api('cz.kotox:android-keystore-compat-19:2.1.0') {
 			exclude group: 'org.jetbrains.kotlin'
 		}
-		api('cz.koto:android-keystore-compat-21:2.1.0') {
+		api('cz.kotox:android-keystore-compat-21:2.1.0') {
 			exclude group: 'org.jetbrains.kotlin'
 		}
-		api('cz.koto:android-keystore-compat-23:2.1.0') {
+		api('cz.kotox:android-keystore-compat-23:2.1.0') {
 			exclude group: 'org.jetbrains.kotlin'
 		}
 	}

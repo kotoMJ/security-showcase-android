@@ -16,20 +16,20 @@ ext {
 	artifact = 'android-keystore-compat-23'
 
 	bintrayUser = 'kotomisak'
-	bintrayRepo = 'cz.koto'
+	bintrayRepo = 'cz.kotox'
 
-	publishedGroupId = 'cz.koto'
+	publishedGroupId = 'cz.kotox'
 	libraryName = 'android-keystore-compat-23'
 
 	libraryDescription = 'KystoreCompat implementation specific for Android API 23.'
 
-	siteUrl = 'https://github.com/kotomisak/security-showcase-android/tree/develop/keystorecompat'
-	gitUrl = 'https://github.com/kotomisak/security-showcase-android'
+	siteUrl = 'https://github.com/kotoMJ/security-showcase-android/tree/develop/keystorecompat'
+	gitUrl = 'https://github.com/kotoMJ/security-showcase-android'
 
 	libraryVersion = KC_GIT_TAG_NAME.replaceAll("IMPL23KC-", "")
 	libraryCode = KC_GIT_TAG_COUNT
 
-	developerId = 'kotomisak'
+	developerId = 'kotoMJ'
 	developerName = 'Michal Jenicek'
 	developerEmail = 'jenicek.michal@gmail.com'
 
@@ -79,13 +79,14 @@ buildscript {
 
 dependencies {
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
 	if (project.hasProperty("keystore.compat.dependency.type")) {
 		if (project.property("keystore.compat.dependency.type") == "local") {
 			api(project(':android-keystore-compat-base'))
 		}
 	} else {
-		api('cz.koto:android-keystore-compat-base:2.1.0') {
+		api('cz.kotox:android-keystore-compat-base:2.1.0') {
 			exclude group: 'org.jetbrains.kotlin'
 		}
 	}
@@ -94,7 +95,6 @@ dependencies {
 	testImplementation 'junit:junit:4.12'
 	androidTestImplementation "com.android.support.test:runner:${versions.test_runner}"
 	androidTestImplementation "com.android.support.test.espresso:espresso-core:${versions.espresso_core}"
-	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 }
 
 repositories {

@@ -6,7 +6,7 @@
 	android:id="@+id/mobile_navigation"
 	app:startDestination="@id/launcher_home">
 
-	<include app:graph="@navigation/login_navigation" />
+	<include app:graph="@navigation/login_biometric_navigation" />
 
 	<fragment
 		android:id="@+id/launcher_home"

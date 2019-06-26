@@ -1,5 +1,5 @@
 <manifest xmlns:tools="http://schemas.android.com/tools"
-	package="cz.koto.keystorecompat21">
+	package="cz.kotox.keystorecompat21">
 
-	<uses-sdk tools:overrideLibrary="cz.koto.base" />
+	<uses-sdk tools:overrideLibrary="cz.kotox.base" />
 </manifest>

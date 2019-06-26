@@ -1,6 +1,10 @@
 
 # Release notes for Keystore Compat library
  
+## KC-3.0.0
+ ```
+   KeystoreCompat 3.0.0 has NEW PACKAGE! cz.kotox:android-keystore-compat:3.0.0  
+   ```
 ## KC-2.1.0
  * Fix crash when handling context in Android API19 (KitKat) - fix device admin dialog 
 ## KC-2.0.3
