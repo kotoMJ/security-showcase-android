@@ -10,14 +10,16 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.net.Uri
 import android.support.v4.app.ActivityCompat
-import com.apollographql.android.rx2.Rx2Apollo
-import cz.koto.securityshowcase.Login
 import cz.koto.securityshowcase.SecurityConfig
 import cz.koto.securityshowcase.api.SecurityShowcaseApiProvider
 import cz.koto.securityshowcase.model.AuthRequestSimple
 import cz.koto.securityshowcase.storage.CredentialStorage
 import cz.koto.securityshowcase.ui.StateListener
-import cz.koto.securityshowcase.utility.*
+import cz.koto.securityshowcase.utility.ApplicationEvent
+import cz.koto.securityshowcase.utility.Logcat
+import cz.koto.securityshowcase.utility.applicationEvents
+import cz.koto.securityshowcase.utility.isValidJWT
+import cz.koto.securityshowcase.utility.longPref
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.alfonz.view.StatefulLayout
@@ -37,7 +39,7 @@ class LoginViewModel(context: Application) : /*BaseViewModel<ActivityLoginBindin
 
 	val userNameChanged = object : Observable.OnPropertyChangedCallback() {
 		override fun onPropertyChanged(p0: Observable?, p1: Int) {
-			showSignIn.set(email.get().isNotEmpty())
+			showSignIn.set(email.get()!!.isNotEmpty())
 		}
 	}
 
@@ -105,19 +107,6 @@ class LoginViewModel(context: Application) : /*BaseViewModel<ActivityLoginBindin
 							}
 							setContent()
 						})
-	}
-
-	fun signInGql() {
-		setProgress()
-		val query = Login.builder().email(email.get() ?: "").password(password.get() ?: "").build()
-		Rx2Apollo.from(SecurityShowcaseApiProvider.gqlRouter.newCall(query))
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(
-						{ onSuccessfulLogin(it.login()?.token()) },
-						{ setContent(); it.printStackTrace() }
-				)
-
 	}
 
 	private fun onSuccessfulLogin(token: String?) =

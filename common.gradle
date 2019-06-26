@@ -1,0 +1,188 @@
+/**
+ * Contains directories for mocking responses (should be in all tests + mock version of app)
+ */
+//def mock_files = ['src/mock/resources', '../mock_data/configs', '../mock_data/responses']
+//apply from: "${project_directory}/lint/lint-config.gradle"
+
+allprojects {
+	apply plugin: 'kotlin-android'
+	apply plugin: 'kotlin-android-extensions'
+	apply plugin: 'kotlin-kapt'
+
+	def isTestTask = getGradle().getStartParameter().getTaskNames().any {name -> name.toLowerCase().contains("test")}
+
+	if (isTestTask) {
+		println "Applying allopen"
+
+		apply plugin: 'kotlin-allopen'
+		allOpen {
+			annotation('cz.kotox.securityshowcase.core.OpenForMocking')
+		}
+
+//		TODO enable code coverage here
+//		println "Applying jacoco"
+//		apply from: "$project_directory/jacoco.gradle"
+	}
+
+	kapt {
+		//useBuildCache = true
+		correctErrorTypes = true // avoid unknown type replacing with NonExistentClass
+	}
+
+	androidExtensions {
+		experimental = true
+	}
+
+	android {
+		compileOptions {
+			sourceCompatibility JavaVersion.VERSION_1_8
+			targetCompatibility JavaVersion.VERSION_1_8
+		}
+
+		compileSdkVersion versions.sdk
+		buildToolsVersion versions.build_tools
+		dataBinding.enabled true
+		flavorDimensions "env"
+
+		defaultConfig {
+			minSdkVersion versions.min_sdk
+			targetSdkVersion versions.sdk
+			testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+			vectorDrawables.useSupportLibrary = true
+		}
+
+		flavorDimensions "env"
+
+		productFlavors {
+			mock {
+				dimension = "env"
+			}
+
+			dev {
+				dimension = "env"
+			}
+
+			production {
+				dimension = "env"
+			}
+		}
+
+		sourceSets {
+			main.java.srcDirs += 'src/main/kotlin'
+			test.java.srcDirs += 'src/test/kotlin'
+			androidTest.java.srcDirs += 'src/androidTest/kotlin'
+
+			dev {
+				java.srcDirs += 'src/server/kotlin'
+			}
+			production {
+				java.srcDirs += 'src/server/kotlin'
+			}
+			mock {
+				java.srcDirs += 'src/mock/kotlin'
+			}
+		}
+
+		buildTypes {
+			debug {
+				buildConfigField "boolean", "LOGS", "true"
+			}
+
+			release {
+				buildConfigField "boolean", "LOGS", "false"
+
+				zipAlignEnabled true
+				minifyEnabled true
+
+				proguardFile '../proguard-rules/proguard-square-retrofit2.pro'
+				proguardFile '../proguard-rules/proguard-square-leakcanary.pro'
+				proguardFile '../proguard-rules/proguard-square-okio.pro'
+				proguardFile '../proguard-rules/proguard-glide.pro'
+				proguardFile '../proguard-rules/proguard-gson.pro'
+				proguardFile '../proguard-rules/proguard-square-okhttp3.pro'
+				proguardFile '../proguard-rules/proguard-support-design.pro'
+				proguardFile '../proguard-rules/proguard-support-v7-appcompat.pro'
+				proguardFile '../proguard-rules/proguard-support-v7-cardview.pro'
+				proguardFile '../proguard-rules/proguard-realm.pro'
+				proguardFile '../proguard-rules/proguard-reactive.pro'
+				proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			}
+		}
+
+		testOptions {
+			unitTests.returnDefaultValues = true
+
+			unitTests.all {
+				testLogging {
+					events "passed", "skipped", "failed", "standardOut", "standardError"
+					outputs.upToDateWhen {false}
+					showStandardStreams = true
+				}
+				maxParallelForks = 8
+			}
+		}
+
+		configurations.all {
+			resolutionStrategy {
+				//TODO force androix packages instead
+//				force "com.android.support:support-v4:$android_support_version"
+//				force "com.android.support:appcompat-v7:$android_support_version"
+//				force "com.android.support:cardview-v7:$android_support_version"
+//				force "com.android.support:design:$android_support_version"
+//				force "com.android.support:recyclerview-v7:$android_support_version"
+//				force "com.android.support:gridlayout-v7:$android_support_version"
+//				force "com.android.support:customtabs:$android_support_version"
+			}
+		}
+	}
+
+	/**
+	 * Every subproject will have these dependencies
+	 * [all kapts] 	- because it's generating per module :(
+	 * [tests] 		- becasuse dependencies in tests don't work :(
+	 */
+	dependencies {
+
+		implementation "com.android.support:support-fragment:${versions.build_tools}"
+		implementation "com.android.support:support-compat:${versions.build_tools}"
+		implementation "com.android.support:appcompat-v7:${versions.build_tools}"
+		implementation "com.android.support:cardview-v7:${versions.build_tools}"
+		implementation "com.android.support:recyclerview-v7:${versions.build_tools}"
+		implementation "com.android.support:preference-v7:${versions.build_tools}"
+		implementation "com.android.support.constraint:constraint-layout:${versions.androidx_constraintlayout}"
+		implementation "com.android.support:design:${versions.build_tools}"
+
+		// Arch
+		implementation "android.arch.lifecycle:extensions:${versions.android_arch}"
+		implementation "android.arch.lifecycle:common-java8:${versions.android_arch}"
+
+//	api "androidx.databinding:databinding-adapters:$app_androidx_databinding_version"
+
+		//api "androidx.core:core-ktx:${app_androidx_ktx_core_version}"
+
+		implementation 'android.arch.navigation:navigation-fragment:1.0.0'
+		implementation 'android.arch.navigation:navigation-ui:1.0.0'
+
+//		api "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.koroutines}"
+//		api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.koroutines}"
+
+		// Dagger (extended dependency on top of minimal dependency from common.gradle)
+		// Common Dagger (minimal dagger dependency to generate classes across all modules)
+		kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
+		kapt "com.google.dagger:dagger-android-processor:${versions.dagger}"
+
+		api "com.google.dagger:dagger:${versions.dagger}"
+		api "com.google.dagger:dagger-android:${versions.dagger}"
+		api "com.google.dagger:dagger-android-support:${versions.dagger}"
+		compileOnly "javax.annotation:jsr250-api:${versions.jsr250api}"
+
+		//Moshi (generic movement from gson to moshi)
+		api "com.squareup.moshi:moshi-kotlin:${versions.moshi_kotlin}"
+		api "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+		api "com.squareup.retrofit2:converter-moshi:${versions.retrofit}"
+
+		//Logging
+		implementation "com.jakewharton.timber:timber:${versions.timber}"
+
+	}
+}

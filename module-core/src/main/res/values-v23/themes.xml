@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<!-- Since API 23 we can define transparent system status bar. -->
+	<!-- Abstract themes are not supposed to be used directly (in Manifest for instance). -->
+	<!-- We usually need to override them in themes.xml for different Android version. -->
+
+	<style name="BaseTheme.SecurityShowcase.TransparentStatusBar" parent="BaseTheme.SecurityShowcase">
+		<!-- Abstract theme - should not be used directly. -->
+		<item name="android:statusBarColor">@android:color/transparent</item>
+		<item name="android:windowLightStatusBar">true</item>
+	</style>
+
+	<style name="Theme.SecurityShowcase" parent="BaseTheme.SecurityShowcase.TransparentStatusBar" />
+
+	<style name="Theme.SecurityShowcase.SystemNavBarNoDivider"
+		parent="BaseTheme.SecurityShowcase.TransparentStatusBar" />
+
+
+</resources>

@@ -11,7 +11,7 @@ buildscript {
 
 		kotlin_version = '1.2.10'
 		build_tools_version = '27.0.0'
-		android_gradle_version = '3.0.1'
+		android_gradle_version = '3.6.0-alpha03'
 		android_binding_version = '1.3.3'
 		arch_lifecycle_version = "1.0.0"
 		support_library_version = "27.0.2"
@@ -33,16 +33,32 @@ buildscript {
 
 		//DEPRECATED
 		alfonz_version = '0.7.0'
+
+		versions = [
+				sdk           : 28,
+				min_sdk       : 19,
+				kotlin        : '1.3.31',
+				build_tools   : '28.0.0',
+				android_arch  : '1.1.1',
+				android_gradle: '3.6.0-alpha03',
+				dagger        : '2.22.1',
+				moshi_kotlin  : '1.8.0',
+				retrofit      : '2.5.1-SNAPSHOT',
+				jsr250api     : '1.0',
+				koroutines    : '1.0.1',
+				timber        : '4.7.1',
+		]
 	}
 
 	repositories {
 		maven {url 'https://maven.google.com'}
 		maven {url 'https://maven.fabric.io/public'}
 		jcenter()
+		google()
 	}
 	dependencies {
-		classpath "com.android.tools.build:gradle:$android_gradle_version"
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+		classpath "com.android.tools.build:gradle:${versions.android_gradle}"
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
 		// NOTE: Do not place your application dependencies here; they belong
 		// in the individual module build.gradle files
 	}
@@ -56,24 +72,10 @@ allprojects {
 		maven {url "https://www.jitpack.io"}
 		maven {url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'}
 		maven {url 'https://maven.fabric.io/public'}
-	}
-
-	// Put this in 'root' `build.gradle`, in allprojects or subprojects
-	tasks.withType(JavaCompile) {
-		//http://stackoverflow.com/questions/34148513/how-do-i-suppress-warnings-when-compiling-an-android-library-with-gradle
-		// Try to turn them all off automatically
-		//options.compilerArgs << '-Xlint:none'
-		//options.compilerArgs << '-nowarn' // same as '-Xlint:none'
+		maven {url "https://oss.sonatype.org/content/repositories/snapshots"} //RETROFIT-COROUTINES
 	}
 }
 
 task clean(type: Delete) {
 	delete rootProject.buildDir
-}
-
-subprojects {
-	task dependencyInsighty(type: org.gradle.api.tasks.diagnostics.DependencyInsightReportTask) << {}
-}
-subprojects {
-	task dependencyReport(type: org.gradle.api.tasks.diagnostics.DependencyReportTask) {}
 }

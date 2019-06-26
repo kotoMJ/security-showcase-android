@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:ignore="MissingDefaultResource">
+
+	<!--<androidx.coordinatorlayout.widget.CoordinatorLayout-->
+	<!--android:layout_width="match_parent"-->
+	<!--android:layout_height="match_parent">-->
+
+	<android.support.constraint.ConstraintLayout
+		android:id="@+id/constraintLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<ImageView
+			android:id="@+id/loginBackground"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:layout_marginTop="24dp"
+			android:layout_marginBottom="24dp"
+			android:alpha='0.04'
+			android:contentDescription="@string/loginBackground"
+			app:layout_constraintBottom_toTopOf="@+id/inputEmail"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:srcCompat="@drawable/ic_security" />
+		<android.support.constraint.Guideline
+			android:id="@+id/guideline"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			app:layout_constraintGuide_percent="0.5" />
+
+		<android.support.design.widget.TextInputLayout
+			android:id="@+id/inputEmail"
+			style="@style/Widget.SecurityShowcase.TextInputLayout.OutlinedBox"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginEnd="8dp"
+			android:hint="@string/hint_email"
+			app:errorEnabled="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/guideline">
+			<EditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:ellipsize="none"
+				android:inputType="textEmailAddress|textEmailSubject"
+				android:singleLine="true" />
+		</android.support.design.widget.TextInputLayout>
+
+
+		<android.support.design.widget.TextInputLayout
+			android:id="@+id/inputPassword"
+			style="@style/Widget.SecurityShowcase.TextInputLayout.OutlinedBox"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginTop="24dp"
+			android:layout_marginEnd="8dp"
+			android:hint="@string/hint_password"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/inputEmail"
+			app:passwordToggleEnabled="true">
+			<EditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:inputType="textPassword"
+				tools:layout_editor_absoluteX="7dp" />
+		</android.support.design.widget.TextInputLayout>
+
+		<Button
+			android:id="@+id/loginButton"
+			style="@style/Widget.MaterialComponents.Button"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginTop="32dp"
+			android:layout_marginEnd="8dp"
+			android:text="@string/button_signin"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
+
+
+	</android.support.constraint.ConstraintLayout>
+
+	<!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
+	<!--android:id="@+id/floating_action_button"-->
+	<!--android:layout_width="wrap_content"-->
+	<!--android:layout_height="wrap_content"-->
+	<!--android:layout_gravity="bottom|end"-->
+	<!--android:layout_margin="16dp"-->
+	<!--android:layout_marginEnd="8dp"-->
+	<!--android:layout_marginBottom="8dp"-->
+	<!--app:srcCompat="@drawable/ic_adjust_black_24dp" />-->
+	<!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+</layout>
