@@ -1,5 +1,6 @@
 package cz.koto.keystorecompat23.compat
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.KeyguardManager
 import android.content.Context
@@ -80,11 +81,12 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : Keystor
 	 * This failure is actually enforced by the secure hardware, if your device has it,
 	 * so even if an attacker roots the device the key can still only be used in the defined ways.
 	 */
+	@SuppressLint("ObsoleteSdkInt")
 	override fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
 			throw RuntimeException("${LOG_TAG} Unsupported usage of version ${Build.VERSION.SDK_INT}")
 		}
-		return KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT.or(KeyProperties.PURPOSE_DECRYPT))
+		val builder = KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT.or(KeyProperties.PURPOSE_DECRYPT))
 			.setBlockModes(KeyProperties.BLOCK_MODE_GCM)//follow used getCipherMode
 			.setCertificateSubject(certSubject)
 			.setKeyValidityStart(startDate)
@@ -94,7 +96,11 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : Keystor
 			.setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
 			.setUserAuthenticationRequired(keystoreCompatConfig.getUserAuthenticationRequired())
 			.setUserAuthenticationValidityDurationSeconds(keystoreCompatConfig.getUserAuthenticationValidityDurationSeconds())
-			.build()
+		if (Build.VERSION.SDK_INT > 23) {
+			// Generated keys will be invalidated if the biometric templates are added more to user device
+			builder.setInvalidatedByBiometricEnrollment(true)
+		}
+		return builder.build()
 	}
 
 	override fun isSecurityEnabled(context: Context): Boolean {

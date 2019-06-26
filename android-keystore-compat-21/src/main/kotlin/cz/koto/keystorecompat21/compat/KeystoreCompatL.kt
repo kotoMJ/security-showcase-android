@@ -1,5 +1,6 @@
 package cz.koto.keystorecompat21.compat
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.KeyguardManager
 import android.content.Context
@@ -58,8 +59,9 @@ open class KeystoreCompatL : KeystoreCompatFacade {
 		}
 	}
 
+	@SuppressLint("ObsoleteSdkInt")
 	override fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+		if (Build.VERSION.SDK_INT < 21) {
 			throw RuntimeException("${LOG_TAG} Unsupported usage of version ${Build.VERSION.SDK_INT}")
 		}
 		return KeyPairGeneratorSpec.Builder(context)
@@ -73,7 +75,7 @@ open class KeystoreCompatL : KeystoreCompatFacade {
 	}
 
 	override fun isSecurityEnabled(context: Context): Boolean {
-		var km: KeyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+		val km: KeyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 		Log.d(LOG_TAG, "KEYGUARD-SECURE:%s${km.isKeyguardSecure}")
 		Log.d(LOG_TAG, "KEYGUARD-LOCKED:%s${km.isKeyguardLocked}")
 		return km.isKeyguardSecure

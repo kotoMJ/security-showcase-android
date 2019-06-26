@@ -18,10 +18,10 @@ apply from: "${project_directory}/lint/lint-config.gradle"
 
 android {
 
-	compileSdkVersion sdk_version
+	compileSdkVersion versions.sdk
 	buildToolsVersion versions.build_tools
 
-	compileSdkVersion sdk_version
+	compileSdkVersion versions.sdk
 	buildToolsVersion versions.build_tools
 	dataBinding.enabled true
 	flavorDimensions "env"

@@ -13,10 +13,10 @@ import cz.kotox.securityshowcase.R
 import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
 import cz.kotox.securityshowcase.security.ui.BiometricBaseActivity
 import timber.log.Timber
+import java.security.InvalidAlgorithmParameterException
 import javax.inject.Inject
 
 class MainActivity : BiometricBaseActivity() {
-
 
 	@Inject
 	lateinit var preferencesCore: PreferencesCommon
@@ -50,8 +50,13 @@ class MainActivity : BiometricBaseActivity() {
 			val keyPair = generateKeyPair(BIOMETRIC_KEY, true)
 		} catch (unae: UserNotAuthenticatedException) {
 			biometricPrompt.authenticate(promptInfo)
+			Timber.e(unae)
+		} catch (ia: InvalidAlgorithmParameterException) {
+			//Secure lock screen must be enabled to create keys requiring user authentication
+			Timber.e(ia)
 		} catch (th: Throwable) {
 			biometricPrompt.authenticate(promptInfo)
+			Timber.e(th)
 		}
 	}
 

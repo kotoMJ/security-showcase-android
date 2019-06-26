@@ -12,6 +12,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import cz.kotox.securityshowcase.core.arch.BaseActivity
+import timber.log.Timber
 import java.security.KeyPair
 import java.security.KeyPairGenerator
 import java.security.KeyStore
@@ -76,7 +77,17 @@ abstract class BiometricBaseActivity : BaseActivity() {
 							Toast.LENGTH_SHORT
 						).show()
 					}
+					BiometricConstants.ERROR_NO_BIOMETRICS -> {
+						runOnUiThread {
+							Toast.makeText(
+								applicationContext,
+								"$errString ,No biometrics on device",
+								Toast.LENGTH_SHORT
+							).show()
+						}
+					}
 					else -> {
+						Timber.e("Unhandled errorCode $errorCode")
 						finish()
 						appInterface.redirectToLogin()
 					}
@@ -114,7 +125,7 @@ abstract class BiometricBaseActivity : BaseActivity() {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequiresApi(Build.VERSION_CODES.N)
+	@RequiresApi(23)
 	@Throws(Exception::class)
 	protected fun generateKeyPair(keyName: String, invalidatedByBiometricEnrollment: Boolean): KeyPair {
 		val keyPairGenerator = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_EC, "AndroidKeyStore")
@@ -128,10 +139,13 @@ abstract class BiometricBaseActivity : BaseActivity() {
 			// Require the user to authenticate with a biometric to authorize every use of the key
 			.setUserAuthenticationRequired(true)
 			.setUserAuthenticationValidityDurationSeconds(30)
-			// Generated keys will be invalidated if the biometric templates are added more to user device
-			.setInvalidatedByBiometricEnrollment(invalidatedByBiometricEnrollment)
 
+		if (Build.VERSION.SDK_INT > 23) {
+			// Generated keys will be invalidated if the biometric templates are added more to user device
+			builder.setInvalidatedByBiometricEnrollment(invalidatedByBiometricEnrollment)
+		}
 		keyPairGenerator.initialize(builder.build())
+
 
 		return keyPairGenerator.generateKeyPair()
 	}

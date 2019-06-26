@@ -38,12 +38,12 @@ ext {
 	allLicenses = ["Apache-2.0"]
 }
 android {
-	compileSdkVersion sdk_version
+	compileSdkVersion versions.sdk
 	buildToolsVersion versions.build_tools
 
 	defaultConfig {
 		minSdkVersion 19
-		targetSdkVersion sdk_version
+		targetSdkVersion versions.sdk
 		versionCode libraryCode
 		versionName libraryVersion
 
