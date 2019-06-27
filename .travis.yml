@@ -41,9 +41,18 @@ cache:
     - $HOME/.gradle/native
     - $HOME/.gradle/wrapper
 
-#before_script:
+before_script:
 #  - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
 #  - emulator -avd test -no-skin -no-audio -no-window &
+
+  - "echo \"Setup mobile-android-login keystore\""
+  #  - mkdir mobile-android-login-legacy/extras/keystore
+  - echo $DEBUG_KEYSTORE_BASE64 | base64 --decode > mobile-android-login/extras/keystore/debugKeystore.jks
+  - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
+    $debugStorePassword $debugKeyAlias $debugKeyPassword > mobile-android-login/extras/keystore/debugKeystore.properties
+  - echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > mobile-android-login/extras/keystore/releaseKeystore.jks
+  - printf 'keystore.store.password=%s\nkeystore.key.alias=%s\nkeystore.key.password=%s'
+    $releaseStorePassword $releaseKeyAlias $releaseKeyPassword > mobile-android-login/extras/keystore/releaseKeystore.properties
 
 script:
 
@@ -59,4 +68,5 @@ script:
 # If successful and Git TAG ends with "BETA" - release to Crashlytics BETA
 #  - '[[ $TRAVIS_TAG != *BETA ]]  || ./gradlew assembleLiveRelease crashlyticsUploadDistributionLiveRelease -q'
 #
-  - './gradlew assembleProductionDebug'
+  - "./gradlew clean"
+  - './gradlew assembleProductionDebug --no-daemon --stacktrace'
