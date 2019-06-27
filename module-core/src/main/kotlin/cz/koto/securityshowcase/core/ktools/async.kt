@@ -1,4 +1,4 @@
-package cz.koto.securityshowcase.module_core.ktools
+package cz.koto.securityshowcase.core.ktools
 
 /**
  * Shortcut for lazy with no thread safety

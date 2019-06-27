@@ -8,7 +8,7 @@
 
 	<fragment
 		android:id="@+id/login_screen"
-		android:name="cz.koto.securityshowcase.module_login.LoginFragmentLegacy"
+		android:name="cz.koto.securityshowcase.login.LoginFragmentLegacy"
 		android:label="Login screen"
 		tools:layout="@layout/fragment_login_legacy">
 		<argument

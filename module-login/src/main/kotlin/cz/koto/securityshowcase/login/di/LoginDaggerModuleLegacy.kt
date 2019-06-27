@@ -1,12 +1,12 @@
-package cz.koto.securityshowcase.module_login.di
+package cz.koto.securityshowcase.login.di
 
 import android.arch.lifecycle.ViewModel
-import cz.koto.securityshowcase.module_core.database.preferences.LocalPreferences
-import cz.koto.securityshowcase.module_core.di.ViewModelKeyLegacy
-import cz.koto.securityshowcase.module_login.LoginActivityLegacy
-import cz.koto.securityshowcase.module_login.LoginFragmentLegacy
+import cz.koto.securityshowcase.core.database.preferences.LocalPreferences
+import cz.koto.securityshowcase.core.di.ViewModelKeyLegacy
+import cz.koto.securityshowcase.login.LoginActivityLegacy
+import cz.koto.securityshowcase.login.LoginFragmentLegacy
+import cz.koto.securityshowcase.login.database.preferences.PreferencesLoginLegacy
 import cz.koto.securityshowcase.module_login.LoginViewModelLegacy
-import cz.koto.securityshowcase.module_login.database.preferences.PreferencesLoginLegacy
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

@@ -1,9 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
 	tools:ignore="ExtraTranslation">
 	<string name="appName">Login</string>
-	<string name="hintEmail">Enter email</string>
-	<string name="hintPassword">Enter password</string>
-	<string name="buttonSignIn">SignIn</string>
 	<string name="loginBackground">Login screen</string>
 	<string name="buttonFillTestCredentials">Test credentials</string>
+
+	<string name="hint_email">Enter email</string>
+	<string name="hint_password">Enter password</string>
+	<string name="button_signin">SignIn</string>
 </resources>

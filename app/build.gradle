@@ -129,8 +129,8 @@ dependencies {
 	implementation "com.android.support:cardview-v7:${versions.support_library}"
 	implementation "com.android.support.constraint:constraint-layout:${versions.constraint_layout}"
 
-	implementation "android.arch.lifecycle:extensions:${versions.android_arch}"
-	implementation "android.arch.lifecycle:common-java8:${versions.android_arch}"
+	implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
+	implementation "android.arch.lifecycle:common-java8:${versions.lifecycle}"
 
 
 	// rxjava

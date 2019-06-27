@@ -8,9 +8,9 @@ import cz.koto.securityshowcase.BuildConfig
 import cz.koto.securityshowcase.R
 import cz.koto.securityshowcase.app_legacylogin.di.AppComponentLegacy
 import cz.koto.securityshowcase.app_legacylogin.di.DaggerAppComponentLegacy
-import cz.koto.securityshowcase.module_core.BaseApplication
-import cz.koto.securityshowcase.module_core.entity.AppVersionLegacy
-import cz.koto.securityshowcase.module_core.ktools.lazyUnsafe
+import cz.koto.securityshowcase.core.BaseApplication
+import cz.koto.securityshowcase.core.entity.AppVersionLegacy
+import cz.koto.securityshowcase.core.ktools.lazyUnsafe
 
 class SecurityShowcaseLoginApplicationLegacy : BaseApplication(), LifecycleObserver {
 

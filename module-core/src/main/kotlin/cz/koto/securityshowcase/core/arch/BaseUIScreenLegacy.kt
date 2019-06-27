@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import cz.koto.securityshowcase.core.R
+import cz.koto.securityshowcase.core.arch.BaseFragmentLegacy.Companion.SNACK_BAR_MAX_LINES_DEFAULT
 
 interface BaseUIScreenLegacy {
 	val baseActivity: BaseActivity

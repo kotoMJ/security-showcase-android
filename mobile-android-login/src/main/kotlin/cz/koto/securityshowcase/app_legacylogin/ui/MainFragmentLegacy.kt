@@ -7,7 +7,7 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import cz.koto.securityshowcase.R
-import cz.koto.securityshowcase.module_core.arch.BaseFragmentLegacy
+import cz.koto.securityshowcase.core.arch.BaseFragmentLegacy
 
 /**
  * Fragment used to show how to navigate to another destination

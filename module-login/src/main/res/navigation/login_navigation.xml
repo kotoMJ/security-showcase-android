@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/login_navigation"
@@ -8,16 +7,13 @@
 
 	<fragment
 		android:id="@+id/login_screen"
-		android:name="cz.koto.securityshowcase.login.ui.biometric.LoginBiometricFragment"
+		android:name="cz.koto.securityshowcase.login.LoginFragmentLegacy"
 		android:label="Login screen"
-		tools:layout="@layout/fragment_login">
+		tools:layout="@layout/fragment_login_legacy">
 		<argument
-			android:name="setargs"
-			android:defaultValue="Android!" />
+			android:name="setargs" android:defaultValue="Android!" />
 
-		<action
-			android:id="@+id/next_action">
-		</action>
+		<action android:id="@+id/next_action" />
 	</fragment>
 
 </navigation>

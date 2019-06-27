@@ -5,7 +5,7 @@ import cz.koto.securityshowcase.app_legacylogin.ui.MainActivityLegacy
 import cz.koto.securityshowcase.app_legacylogin.ui.MainFragmentLegacy
 import cz.koto.securityshowcase.app_legacylogin.ui.MainViewModelLegacy
 import cz.koto.securityshowcase.app_legacylogin.ui.SplashActivityLegacy
-import cz.koto.securityshowcase.module_core.di.ViewModelKeyLegacy
+import cz.koto.securityshowcase.core.di.ViewModelKeyLegacy
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

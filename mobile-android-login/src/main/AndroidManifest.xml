@@ -31,7 +31,7 @@
 		<activity android:name=".app_legacylogin.ui.MainActivityLegacy" />
 
 		<activity
-			android:name=".module_login.LoginActivityLegacy"
+			android:name=".login.LoginActivityLegacy"
 			android:theme="@style/Theme.SecurityShowcase.SystemNavBarNoDivider"
 			android:windowSoftInputMode="stateAlwaysHidden" />
 

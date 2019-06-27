@@ -15,11 +15,12 @@
  */
 
 apply plugin: 'com.android.application'
+apply from: '../common.gradle'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 //apply from: '../jacoco.gradle' //since app module doesn't apply module-core/library.gradle, thus apply jacoco.gradle extra
 
-apply from: "${project_directory}/lint/lint-config.gradle"
+//apply from: "${project_directory}/lint/lint-config.gradle"
 
 final APK_NAME = "SecurityShowcaseLoginLegacy"
 
@@ -157,6 +158,8 @@ dependencies {
 
 	implementation "com.android.support:multidex:1.0.3"
 
+	implementation project(':module-core')
+	implementation project(':module-login')
 
 }
 

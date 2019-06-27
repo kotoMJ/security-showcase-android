@@ -151,16 +151,18 @@ allprojects {
 		api "com.android.support.constraint:constraint-layout:${versions.constraint_layout}"
 		api "com.android.support:design:${versions.support_library}"
 
+		//api "com.google.android.material:material:${versions.android_material}"
+
 		// Arch
-		implementation "android.arch.lifecycle:extensions:${versions.android_arch}"
-		implementation "android.arch.lifecycle:common-java8:${versions.android_arch}"
+		implementation "android.arch.lifecycle:extensions:${versions.lifecycle}"
+		implementation "android.arch.lifecycle:common-java8:${versions.lifecycle}"
 
 //	api "androidx.databinding:databinding-adapters:$app_androidx_databinding_version"
 
 		//api "androidx.core:core-ktx:${app_androidx_ktx_core_version}"
 
-		implementation 'android.arch.navigation:navigation-fragment:1.0.0'
-		implementation 'android.arch.navigation:navigation-ui:1.0.0'
+		implementation "android.arch.navigation:navigation-fragment-ktx:${versions.navigation}"
+		implementation "android.arch.navigation:navigation-ui-ktx:${versions.navigation}"
 
 //		api "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.koroutines}"
 //		api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.koroutines}"

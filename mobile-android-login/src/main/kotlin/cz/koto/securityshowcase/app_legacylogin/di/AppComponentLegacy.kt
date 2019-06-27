@@ -2,11 +2,11 @@ package cz.koto.securityshowcase.app_legacylogin.di
 
 import android.app.Application
 import cz.koto.securityshowcase.app_legacylogin.SecurityShowcaseLoginApplicationLegacy
-import cz.koto.securityshowcase.module_core.ApplicationInterfaceContract
-import cz.koto.securityshowcase.module_core.di.AppInitAction
-import cz.koto.securityshowcase.module_core.di.CoreDaggerModule
-import cz.koto.securityshowcase.module_core.entity.AppVersionLegacy
-import cz.koto.securityshowcase.module_login.di.LoginDaggerModuleLegacy
+import cz.koto.securityshowcase.core.ApplicationInterfaceContract
+import cz.koto.securityshowcase.core.di.AppInitAction
+import cz.koto.securityshowcase.core.di.CoreDaggerModule
+import cz.koto.securityshowcase.core.entity.AppVersionLegacy
+import cz.koto.securityshowcase.login.di.LoginDaggerModuleLegacy
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

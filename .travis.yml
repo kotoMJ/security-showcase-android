@@ -41,12 +41,6 @@ cache:
     - $HOME/.gradle/native
     - $HOME/.gradle/wrapper
 
-install:
-#   - sdkmanager --list || true
-#   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
-#   - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
-
-
 #before_script:
 #  - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
 #  - emulator -avd test -no-skin -no-audio -no-window &
