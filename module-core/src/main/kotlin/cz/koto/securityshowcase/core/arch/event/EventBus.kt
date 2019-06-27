@@ -1,4 +1,9 @@
-package cz.kotox.securityshowcase.module_core.arch.event
+package cz.koto.securityshowcase.core.arch.event
+
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.Observer
+import android.support.annotation.NonNull
+import android.support.v4.util.ArrayMap
 
 abstract class Event
 

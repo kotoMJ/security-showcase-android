@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.core.entity
+package cz.koto.securityshowcase.core.entity
 
 class AppVersionUnitTest {
 

@@ -1,8 +1,11 @@
-package cz.kotox.securityshowcase.module_core.arch
+package cz.koto.securityshowcase.core.arch
 
+import android.arch.lifecycle.LifecycleOwner
+import android.databinding.ViewDataBinding
+import android.support.v4.app.FragmentManager
 import android.view.LayoutInflater
-import cz.kotox.securityshowcase.module_core.arch.event.Event
-import cz.kotox.securityshowcase.module_core.arch.event.EventObserver
+import cz.koto.securityshowcase.core.arch.event.Event
+import cz.koto.securityshowcase.core.arch.event.EventObserver
 
 interface ViewModelBinder<V : BaseViewModelLegacy, B : ViewDataBinding> : LifecycleOwner, BaseUIScreenLegacy {
 	var binding: B

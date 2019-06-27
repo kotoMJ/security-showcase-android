@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.module_core.crypto.hash
+package cz.koto.securityshowcase.core.crypto.hash
 
 import dagger.Module
 import dagger.Provides

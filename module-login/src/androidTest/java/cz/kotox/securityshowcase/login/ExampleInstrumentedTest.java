@@ -1,12 +1,10 @@
-package cz.kotox.securityshowcase.login;
+package cz.koto.securityshowcase.login;
 
 import android.content.Context;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,6 +20,6 @@ public class ExampleInstrumentedTest {
 		// Context of the app under test.
 		Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-		assertEquals("cz.kotox.securityshowcase.login.test", appContext.getPackageName());
+		assertEquals("cz.koto.securityshowcase.login.test", appContext.getPackageName());
 	}
 }

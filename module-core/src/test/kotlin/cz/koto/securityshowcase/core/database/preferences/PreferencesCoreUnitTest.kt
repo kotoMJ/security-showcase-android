@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.core.database.preferences
+package cz.koto.securityshowcase.core.database.preferences
 
 import android.content.Context
 import android.content.SharedPreferences

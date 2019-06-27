@@ -1,5 +1,6 @@
-package cz.kotox.securityshowcase.module_core.di
+package cz.koto.securityshowcase.core.di
 
+import android.arch.lifecycle.ViewModel
 import dagger.MapKey
 import kotlin.reflect.KClass
 

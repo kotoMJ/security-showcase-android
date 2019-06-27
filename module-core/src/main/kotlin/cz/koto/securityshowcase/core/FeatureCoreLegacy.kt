@@ -1,7 +1,12 @@
-package cz.kotox.securityshowcase.module_core
+package cz.koto.securityshowcase.core
 
 import android.app.Application
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.OnLifecycleEvent
+import android.arch.lifecycle.ProcessLifecycleOwner
 import android.content.Context
+import android.support.v4.app.NotificationManagerCompat
 import timber.log.Timber
 
 interface ApplicationInterface {

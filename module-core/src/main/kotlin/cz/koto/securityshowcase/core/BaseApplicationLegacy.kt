@@ -1,10 +1,14 @@
-package cz.kotox.securityshowcase.module_core
+package cz.koto.securityshowcase.core
 
 import android.app.Activity
 import android.app.Application
 import android.app.Service
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.OnLifecycleEvent
+import android.arch.lifecycle.ProcessLifecycleOwner
 import android.os.Bundle
-import cz.kotox.securityshowcase.module_core.logging.CrashReportingTreeLegacy
+import cz.koto.securityshowcase.core.logging.CrashReportingTreeLegacy
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector

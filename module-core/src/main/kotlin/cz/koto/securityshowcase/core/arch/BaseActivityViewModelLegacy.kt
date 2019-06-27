@@ -1,6 +1,12 @@
-package cz.kotox.securityshowcase.module_core.arch
+package cz.koto.securityshowcase.core.arch
 
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
+import android.databinding.ViewDataBinding
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentManager
 import javax.inject.Inject
 
 abstract class BaseActivityViewModelLegacy<V : BaseViewModelLegacy, B : ViewDataBinding> : BaseActivity(), ViewModelBinder<V, B> {

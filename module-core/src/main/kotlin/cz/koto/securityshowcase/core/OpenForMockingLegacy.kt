@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.module_core
+package cz.koto.securityshowcase.core
 
 /**
  * For testing purposes, annotate class with this, which opens the class for mocking (Mockito)

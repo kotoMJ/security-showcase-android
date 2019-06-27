@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.app_legacylogin.ui
+package cz.koto.securityshowcase.app_legacylogin.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import cz.kotox.securityshowcase.R
-import cz.kotox.securityshowcase.module_core.arch.BaseFragmentLegacy
+import cz.koto.securityshowcase.R
+import cz.koto.securityshowcase.module_core.arch.BaseFragmentLegacy
 
 /**
  * Fragment used to show how to navigate to another destination

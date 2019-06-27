@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.login;
+package cz.koto.securityshowcase.login;
 
 import org.junit.Test;
 

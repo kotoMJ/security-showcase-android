@@ -41,7 +41,7 @@ android {
 	flavorDimensions "env"
 
 	defaultConfig {
-		applicationId 'cz.kotox.securityshowcase.login'
+		applicationId 'cz.koto.securityshowcase.login'
 		minSdkVersion 19
 		targetSdkVersion 28
 		versionCode 1

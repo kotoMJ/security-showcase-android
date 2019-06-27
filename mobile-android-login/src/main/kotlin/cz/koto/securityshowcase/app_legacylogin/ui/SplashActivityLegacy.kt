@@ -1,8 +1,8 @@
-package cz.kotox.securityshowcase.app_legacylogin.ui
+package cz.koto.securityshowcase.app_legacylogin.ui
 
 import android.os.Bundle
-import cz.kotox.securityshowcase.module_core.arch.BaseActivity
-import cz.kotox.securityshowcase.module_login.LoginActivityIntent
+import cz.koto.securityshowcase.module_core.arch.BaseActivity
+import cz.koto.securityshowcase.module_login.LoginActivityIntent
 
 class SplashActivityLegacy : BaseActivity() {
 

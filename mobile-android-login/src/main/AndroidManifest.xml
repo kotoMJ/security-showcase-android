@@ -16,7 +16,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	package="cz.kotox.securityshowcase">
+	package="cz.koto.securityshowcase">
 
 	<uses-permission android:name="android.permission.INTERNET" />
 

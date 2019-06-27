@@ -1,8 +1,12 @@
-package cz.kotox.securityshowcase.module_core.arch
+package cz.koto.securityshowcase.core.arch
 
-import cz.kotox.securityshowcase.module_core.arch.event.Event
-import cz.kotox.securityshowcase.module_core.arch.event.EventBus
-import cz.kotox.securityshowcase.module_core.arch.event.EventObserver
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.ViewModel
+import android.databinding.Observable
+import android.databinding.PropertyChangeRegistry
+import cz.koto.securityshowcase.core.arch.event.Event
+import cz.koto.securityshowcase.core.arch.event.EventBus
+import cz.koto.securityshowcase.core.arch.event.EventObserver
 
 abstract class BaseViewModelLegacy : Observable, ViewModel() {
 	@Transient

@@ -1,8 +1,8 @@
-package cz.kotox.securityshowcase.module_core.di
+package cz.koto.securityshowcase.core.di
 
-import cz.kotox.securityshowcase.module_core.crypto.hash.HashDaggerModule
-import cz.kotox.securityshowcase.module_core.database.preferences.LocalPreferences
-import cz.kotox.securityshowcase.module_core.database.preferences.PreferencesCommon
+import cz.koto.securityshowcase.core.crypto.hash.HashDaggerModule
+import cz.koto.securityshowcase.core.database.preferences.LocalPreferences
+import cz.koto.securityshowcase.core.database.preferences.PreferencesCommon
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

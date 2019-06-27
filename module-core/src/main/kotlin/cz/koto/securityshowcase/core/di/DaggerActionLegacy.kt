@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.module_core.di
+package cz.koto.securityshowcase.core.di
 
 import javax.inject.Qualifier
 

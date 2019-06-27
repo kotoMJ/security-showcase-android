@@ -16,7 +16,7 @@ allprojects {
 
 		apply plugin: 'kotlin-allopen'
 		allOpen {
-			annotation('cz.kotox.securityshowcase.core.OpenForMocking')
+			annotation('cz.koto.securityshowcase.core.OpenForMocking')
 		}
 
 //		TODO enable code coverage here
@@ -124,14 +124,13 @@ allprojects {
 
 		configurations.all {
 			resolutionStrategy {
-				//TODO force androix packages instead
-//				force "com.android.support:support-v4:$android_support_version"
-//				force "com.android.support:appcompat-v7:$android_support_version"
-//				force "com.android.support:cardview-v7:$android_support_version"
-//				force "com.android.support:design:$android_support_version"
-//				force "com.android.support:recyclerview-v7:$android_support_version"
-//				force "com.android.support:gridlayout-v7:$android_support_version"
-//				force "com.android.support:customtabs:$android_support_version"
+				force "com.android.support:support-v4:${versions.support_library}"
+				force "com.android.support:appcompat-v7:${versions.support_library}"
+				force "com.android.support:cardview-v7:${versions.support_library}"
+				force "com.android.support:design:${versions.support_library}"
+				force "com.android.support:recyclerview-v7:${versions.support_library}"
+				force "com.android.support:gridlayout-v7:${versions.support_library}"
+				force "com.android.support:customtabs:${versions.support_library}"
 			}
 		}
 	}
@@ -143,14 +142,14 @@ allprojects {
 	 */
 	dependencies {
 
-		implementation "com.android.support:support-fragment:${versions.build_tools}"
-		implementation "com.android.support:support-compat:${versions.build_tools}"
-		implementation "com.android.support:appcompat-v7:${versions.build_tools}"
-		implementation "com.android.support:cardview-v7:${versions.build_tools}"
-		implementation "com.android.support:recyclerview-v7:${versions.build_tools}"
-		implementation "com.android.support:preference-v7:${versions.build_tools}"
-		implementation "com.android.support.constraint:constraint-layout:${versions.androidx_constraintlayout}"
-		implementation "com.android.support:design:${versions.build_tools}"
+		api "com.android.support:support-fragment:${versions.support_library}"
+		api "com.android.support:support-compat:${versions.support_library}"
+		api "com.android.support:appcompat-v7:${versions.support_library}"
+		api "com.android.support:cardview-v7:${versions.support_library}"
+		api "com.android.support:recyclerview-v7:${versions.support_library}"
+		api "com.android.support:preference-v7:${versions.support_library}"
+		api "com.android.support.constraint:constraint-layout:${versions.constraint_layout}"
+		api "com.android.support:design:${versions.support_library}"
 
 		// Arch
 		implementation "android.arch.lifecycle:extensions:${versions.android_arch}"

@@ -1,11 +1,11 @@
-package cz.kotox.securityshowcase.module_login
+package cz.koto.securityshowcase.module_login
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cz.kotox.securityshowcase.databinding.FragmentLoginLegacyBinding
-import cz.kotox.securityshowcase.module_core.arch.BaseFragmentViewModelLegacy
+import cz.koto.securityshowcase.databinding.FragmentLoginLegacyBinding
+import cz.koto.securityshowcase.module_core.arch.BaseFragmentViewModelLegacy
 
 class LoginFragmentLegacy : BaseFragmentViewModelLegacy<LoginViewModelLegacy, FragmentLoginLegacyBinding>() {
 //	override val baseActivity: BaseActivity

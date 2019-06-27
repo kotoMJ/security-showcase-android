@@ -1,11 +1,11 @@
-package cz.kotox.securityshowcase.app_legacylogin.ui
+package cz.koto.securityshowcase.app_legacylogin.ui
 
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.Bindable
-import cz.kotox.securityshowcase.module_core.FeatureCore
-import cz.kotox.securityshowcase.module_core.arch.BaseViewModelLegacy
-import cz.kotox.securityshowcase.module_core.database.preferences.PreferencesCommon
-import cz.kotox.securityshowcase.module_core.entity.AppVersionLegacy
+import cz.koto.securityshowcase.module_core.FeatureCore
+import cz.koto.securityshowcase.module_core.arch.BaseViewModelLegacy
+import cz.koto.securityshowcase.module_core.database.preferences.PreferencesCommon
+import cz.koto.securityshowcase.module_core.entity.AppVersionLegacy
 import javax.inject.Inject
 
 class MainViewModelLegacy @Inject constructor(appVersion: AppVersionLegacy) : BaseViewModelLegacy() {

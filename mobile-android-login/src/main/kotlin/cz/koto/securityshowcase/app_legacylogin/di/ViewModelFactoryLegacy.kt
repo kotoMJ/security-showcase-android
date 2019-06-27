@@ -1,10 +1,7 @@
-package cz.kotox.securityshowcase.app_legacylogin.di
+package cz.koto.securityshowcase.app_legacylogin.di
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import javax.inject.Inject
-import javax.inject.Provider
-import javax.inject.Singleton
 
 @Singleton
 class ViewModelFactoryLegacy @Inject constructor(

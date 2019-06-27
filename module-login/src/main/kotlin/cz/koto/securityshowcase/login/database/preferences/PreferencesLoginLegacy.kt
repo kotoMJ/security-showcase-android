@@ -1,8 +1,8 @@
-package cz.kotox.securityshowcase.module_login.database.preferences
+package cz.koto.securityshowcase.module_login.database.preferences
 
 import android.content.SharedPreferences
-import cz.kotox.securityshowcase.module_core.OpenForMockingLegacy
-import cz.kotox.securityshowcase.module_core.database.preferences.LocalPreferences
+import cz.koto.securityshowcase.module_core.OpenForMockingLegacy
+import cz.koto.securityshowcase.module_core.database.preferences.LocalPreferences
 import javax.inject.Inject
 import javax.inject.Singleton
 

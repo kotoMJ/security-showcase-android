@@ -1,12 +1,14 @@
-package cz.kotox.securityshowcase.module_core.arch
+package cz.koto.securityshowcase.core.arch
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.support.annotation.StringRes
+import android.support.design.widget.Snackbar
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import cz.kotox.securityshowcase.module_core.arch.BaseFragmentLegacy.Companion.SNACK_BAR_MAX_LINES_DEFAULT
+import cz.koto.securityshowcase.core.R
 
 interface BaseUIScreenLegacy {
 	val baseActivity: BaseActivity

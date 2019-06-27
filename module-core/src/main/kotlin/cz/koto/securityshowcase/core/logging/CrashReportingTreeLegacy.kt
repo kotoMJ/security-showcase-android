@@ -1,5 +1,6 @@
-package cz.kotox.securityshowcase.module_core.logging
+package cz.koto.securityshowcase.core.logging
 
+import android.support.annotation.Nullable
 import android.util.Log
 import timber.log.Timber
 

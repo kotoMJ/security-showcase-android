@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.module_login
+package cz.koto.securityshowcase.module_login
 
 import android.content.Context
 import android.content.Intent
@@ -6,13 +6,9 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import cz.kotox.securityshowcase.R
-import cz.kotox.securityshowcase.module_core.arch.BaseActivity
-import cz.kotox.securityshowcase.module_core.database.preferences.PreferencesCommon
+import cz.koto.securityshowcase.R
+import cz.koto.securityshowcase.module_core.arch.BaseActivity
+import cz.koto.securityshowcase.module_core.database.preferences.PreferencesCommon
 import timber.log.Timber
 import javax.inject.Inject
 

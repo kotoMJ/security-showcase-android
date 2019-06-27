@@ -10,7 +10,7 @@
 
 	<fragment
 		android:id="@+id/launcher_home"
-		android:name="cz.kotox.securityshowcase.app_legacylogin.ui.MainFragmentLegacy"
+		android:name="cz.koto.securityshowcase.app_legacylogin.ui.MainFragmentLegacy"
 		android:label="@string/home"
 		tools:layout="@layout/main_fragment_legacy">
 	</fragment>
