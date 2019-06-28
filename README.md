@@ -7,13 +7,13 @@
 
 | Branch | Status |
 | --- | --- |
-| master | [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg?branch=master)](https://travis-ci.org/kotomisak/security-showcase-android) | 
-| developV2| [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg?branch=developV2)](https://travis-ci.org/kotomisak/security-showcase-android) | 
-| developV3| [![Build Status](https://travis-ci.org/kotomisak/security-showcase-android.svg?branch=developV3)](https://travis-ci.org/kotomisak/security-showcase-android) | 
+| master | [![Build Status](https://api.travis-ci.org/kotoMJ/security-showcase-android.svg?branch=master)](https://travis-ci.org/kotoMJ/security-showcase-android/branches) | 
+| developV2| [![Build Status](https://api.travis-ci.org/kotoMJ/security-showcase-android.svg?branch=developV2)](https://travis-ci.org/kotoMJ/security-showcase-android/branches) | 
+| developV3| [![Build Status](https://api.travis-ci.org/kotoMJ/security-showcase-android.svg?branch=developV3)](https://travis-ci.org/kotoMJ/security-showcase-android/branches) | 
 
 This is sample application pointing some security related practices on Android device.  
 SecurityShowcase architecture is **MVVM based on Google's architecture component**.  
-Complete server-side endpoint implementation for this project is available on GitHub [KoTiNode](https://github.com/kotomisak/kotinode).
+Complete server-side endpoint implementation for this project is available on GitHub [KoTiNode](https://github.com/kotoMJ/kotinode).
 
 ## Android keystore ##
 
@@ -51,7 +51,7 @@ The backward support is something, what all available libraries and blog posts l
 
 ## Encrypted Realm ##
 
-For sample implementation of the Realm persistence encryption look at [DB Showcase repository](https://github.com/kotomisak/db-showcase-android).  
+For sample implementation of the Realm persistence encryption look at [DB Showcase repository](https://github.com/kotoMJ/db-showcase-android).  
 Related article describing this encryption is available on Medium [Encrypted Realm & Android Keystore](https://medium.com/@strv/encrypted-realm-android-keystore-d4f0915905e9)
 
 ## Rooted device detection ##
