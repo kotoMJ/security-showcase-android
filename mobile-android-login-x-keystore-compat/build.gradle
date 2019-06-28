@@ -34,6 +34,7 @@ android {
 		versionName "1.0"
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		multiDexEnabled true
+		resValue "string", "app_name", "LoginCompat"
 	}
 
 	signingConfigs {
@@ -77,7 +78,7 @@ android {
 			dimension = "env"
 			versionNameSuffix "-mock"
 			applicationIdSuffix ".mock"
-			resValue "string", "app_name", "Login-M"
+			resValue "string", "app_name", "LoginCompat (Mock)"
 			ext.enableCrashlytics = false
 		}
 
@@ -85,14 +86,14 @@ android {
 			dimension = "env"
 			versionNameSuffix "-dev"
 			applicationIdSuffix ".dev"
-			resValue "string", "app_name", "Login-D"
+			resValue "string", "app_name", "LoginCompat (Dev)"
 			ext.enableCrashlytics = true
 		}
 
 		production {
 			dimension = "env"
 			applicationIdSuffix ".prod"
-			resValue "string", "app_name", "ShowcaseLogin"
+			resValue "string", "app_name", "LoginCompat"
 			ext.enableCrashlytics = true
 		}
 	}
