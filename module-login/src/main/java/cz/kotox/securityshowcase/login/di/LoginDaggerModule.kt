@@ -7,6 +7,9 @@ import cz.kotox.securityshowcase.login.database.preference.PreferencesLogin
 import cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricActivity
 import cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricFragment
 import cz.kotox.securityshowcase.login.ui.biometric.LoginBiometricViewModel
+import cz.kotox.securityshowcase.login.ui.keystorecompat.LoginCompatActivity
+import cz.kotox.securityshowcase.login.ui.keystorecompat.LoginCompatFragment
+import cz.kotox.securityshowcase.login.ui.keystorecompat.LoginCompatViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -31,4 +34,15 @@ abstract class LoginDaggerModule {
 	@IntoMap
 	@ViewModelKey(LoginBiometricViewModel::class)
 	abstract fun bindSignInViewModel(signInViewModel: LoginBiometricViewModel): ViewModel
+
+	@ContributesAndroidInjector
+	abstract fun contributeSignInCompatActivity(): LoginCompatActivity
+
+	@ContributesAndroidInjector
+	abstract fun contributeSignInCompatFragment(): LoginCompatFragment
+
+	@Binds
+	@IntoMap
+	@ViewModelKey(LoginCompatViewModel::class)
+	abstract fun bindSignInCompatViewModel(signInViewModel: LoginCompatViewModel): ViewModel
 }

@@ -29,7 +29,8 @@ abstract class BiometricBaseActivity : BaseActivity() {
 
 	lateinit var biometricPrompt: BiometricPrompt
 
-	@RequiresApi(Build.VERSION_CODES.M)
+	@Suppress("MagicNumber")
+	@RequiresApi(23)
 	val observer = Observer<Boolean>() {
 		if (it) {
 			try {
@@ -125,6 +126,7 @@ abstract class BiometricBaseActivity : BaseActivity() {
 	 * @return
 	 * @throws Exception
 	 */
+	@Suppress("MagicNumber")
 	@RequiresApi(23)
 	@Throws(Exception::class)
 	protected fun generateKeyPair(keyName: String, invalidatedByBiometricEnrollment: Boolean): KeyPair {
@@ -140,6 +142,7 @@ abstract class BiometricBaseActivity : BaseActivity() {
 			.setUserAuthenticationRequired(true)
 			.setUserAuthenticationValidityDurationSeconds(30)
 
+		@Suppress("MagicNumber")
 		if (Build.VERSION.SDK_INT > 23) {
 			// Generated keys will be invalidated if the biometric templates are added more to user device
 			builder.setInvalidatedByBiometricEnrollment(invalidatedByBiometricEnrollment)

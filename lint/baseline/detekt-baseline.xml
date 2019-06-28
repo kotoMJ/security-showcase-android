@@ -117,22 +117,22 @@
 			onError: (e: KeystoreCompatException) -&gt; Unit, onSuccess: () -&gt; Unit, useBase64Encoding: Boolean =
 			true)
 		</ID>
-		<ID>MaxLineLength:KeystoreCompatBase.kt$cz.koto.keystorecompat.base.KeystoreCompatBase.kt</ID>
+		<ID>MaxLineLength:KeystoreCompatBase.kt$cz.kotox.keystorecompat.base.KeystoreCompatBase.kt</ID>
 		<ID>MaxLineLength:KeystoreCompatFacade.kt$KeystoreCompatFacade$fun getAlgorithmParameterSpec(certSubject:
 			X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec
 		</ID>
 		<ID>MaxLineLength:KeystoreCompatK.kt$KeystoreCompatK$override fun getAlgorithmParameterSpec(certSubject:
 			X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec
 		</ID>
-		<ID>MaxLineLength:KeystoreCompatK.kt$cz.koto.keystorecompat19.compat.KeystoreCompatK.kt</ID>
+		<ID>MaxLineLength:KeystoreCompatK.kt$cz.kotox.keystorecompat19.compat.KeystoreCompatK.kt</ID>
 		<ID>MaxLineLength:KeystoreCompatL.kt$KeystoreCompatL$override fun getAlgorithmParameterSpec(certSubject:
 			X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec
 		</ID>
-		<ID>MaxLineLength:KeystoreCompatL.kt$cz.koto.keystorecompat21.compat.KeystoreCompatL.kt</ID>
+		<ID>MaxLineLength:KeystoreCompatL.kt$cz.kotox.keystorecompat21.compat.KeystoreCompatL.kt</ID>
 		<ID>MaxLineLength:KeystoreCompatM.kt$KeystoreCompatM$ override fun getAlgorithmParameterSpec(certSubject:
 			X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec
 		</ID>
-		<ID>MaxLineLength:KeystoreCompatM.kt$cz.koto.keystorecompat23.compat.KeystoreCompatM.kt</ID>
+		<ID>MaxLineLength:KeystoreCompatM.kt$cz.kotox.keystorecompat23.compat.KeystoreCompatM.kt</ID>
 		<ID>MaxLineLength:KeystoreCryptoK.kt$KeystoreCryptoK$ @TargetApi(Build.VERSION_CODES.KITKAT) fun
 			decryptRSA(privateKeyEntry: KeyStore.PrivateKeyEntry, encryptedSecret: String, isBase64Encoded: Boolean):
 			ByteArray
@@ -143,7 +143,7 @@
 		<ID>MaxLineLength:KeystoreCryptoM.kt$KeystoreCryptoM$var ivAndEncryptedKey: ByteArray = if (isBase64Encoded)
 			Base64.decode(encryptedSecret, Base64.DEFAULT) else encryptedSecret.toByteArray(Charsets.UTF_8)
 		</ID>
-		<ID>MaxLineLength:KeystoreCryptoM.kt$cz.koto.keystorecompat23.crypto.KeystoreCryptoM.kt</ID>
+		<ID>MaxLineLength:KeystoreCryptoM.kt$cz.kotox.keystorecompat23.crypto.KeystoreCryptoM.kt</ID>
 		<ID>MaxLineLength:KeystoreHash.kt$ @JvmOverloads inline fun createHashKey(basePassword: String, salt: ByteArray,
 			iterationCount: Int, sha512: Boolean, keyLengthInBit: Int = LENGTH32BYTES): ByteArray
 		</ID>
@@ -172,7 +172,7 @@
 		<ID>MaxLineLength:PrefDelegate.kt$byteArrayPrefDelegate$override fun setValue(thisRef: Any?, property: KProperty&lt;*&gt;,
 			value: ByteArray)
 		</ID>
-		<ID>MaxLineLength:PrefDelegate.kt$cz.koto.keystorecompat.base.utility.PrefDelegate.kt</ID>
+		<ID>MaxLineLength:PrefDelegate.kt$cz.kotox.keystorecompat.base.utility.PrefDelegate.kt</ID>
 		<ID>MaxLineLength:SecurityDeviceAdmin.kt$SecurityDeviceAdmin$ fun forceLockPreLollipop(context: Context,
 			onLockActivityShouldBeInvoked: (Intent) -&gt; Unit, onSuccess: () -&gt; Unit)
 		</ID>
@@ -276,15 +276,17 @@
 		<ID>
 			NewLineAtEndOfFile:HeaderRequestInterceptor.kt$cz.kotox.securityshowcase.core.network.rest.HeaderRequestInterceptor.kt
 		</ID>
-		<ID>NewLineAtEndOfFile:KeystoreCompatConfig.kt$cz.koto.keystorecompat.compat.KeystoreCompatConfig.kt</ID>
-		<ID>NewLineAtEndOfFile:KeystoreCompatConfig.kt$cz.koto.keystorecompat.elplus.compat.KeystoreCompatConfig.kt</ID>
-		<ID>NewLineAtEndOfFile:KeystoreCompatConfig.kt$cz.koto.keystorecompat.emplus.compat.KeystoreCompatConfig.kt</ID>
-		<ID>NewLineAtEndOfFile:KeystoreCompatConfigBase.kt$cz.koto.keystorecompat.base.KeystoreCompatConfigBase.kt</ID>
-		<ID>NewLineAtEndOfFile:KeystoreCompatConfigM.kt$cz.koto.keystorecompat23.compat.KeystoreCompatConfigM.kt</ID>
-		<ID>NewLineAtEndOfFile:KeystoreCompatFacade.kt$cz.koto.keystorecompat.base.compat.KeystoreCompatFacade.kt</ID>
-		<ID>NewLineAtEndOfFile:KeystoreCompatL.kt$cz.koto.keystorecompat21.compat.KeystoreCompatL.kt</ID>
-		<ID>NewLineAtEndOfFile:KeystoreCryptoK.kt$cz.koto.keystorecompat.base.crypto.KeystoreCryptoK.kt</ID>
-		<ID>NewLineAtEndOfFile:KeystoreCryptoM.kt$cz.koto.keystorecompat23.crypto.KeystoreCryptoM.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatConfig.kt$cz.kotox.keystorecompat.compat.KeystoreCompatConfig.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatConfig.kt$cz.kotox.keystorecompat.elplus.compat.KeystoreCompatConfig.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatConfig.kt$cz.kotox.keystorecompat.emplus.compat.KeystoreCompatConfig.kt
+		</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatConfigBase.kt$cz.kotox.keystorecompat.base.KeystoreCompatConfigBase.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatConfigM.kt$cz.kotox.keystorecompat23.compat.KeystoreCompatConfigM.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatFacade.kt$cz.kotox.keystorecompat.base.compat.KeystoreCompatFacade.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCompatL.kt$cz.kotox.keystorecompat21.compat.KeystoreCompatL.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCryptoK.kt$cz.kotox.keystorecompat.base.crypto.KeystoreCryptoK.kt</ID>
+		<ID>NewLineAtEndOfFile:KeystoreCryptoM.kt$cz.kotox.keystorecompat23.crypto.KeystoreCryptoM.kt</ID>
 		<ID>
 			NewLineAtEndOfFile:LocalPreferences.kt$cz.kotox.securityshowcase.core.database.preferences.LocalPreferences.kt
 		</ID>
@@ -353,7 +355,7 @@
 		</ID>
 		<ID>NewLineAtEndOfFile:SingleFragmentActivity.kt$cz.kotox.securityshowcase.testutils.SingleFragmentActivity.kt
 		</ID>
-		<ID>NewLineAtEndOfFile:SingletonHolder.kt$cz.koto.keystorecompat.base.SingletonHolder.kt</ID>
+		<ID>NewLineAtEndOfFile:SingletonHolder.kt$cz.kotox.keystorecompat.base.SingletonHolder.kt</ID>
 		<ID>NewLineAtEndOfFile:SplashActivity.kt$cz.kotox.securityshowcase.login.biometric.ui.SplashActivity.kt</ID>
 		<ID>NewLineAtEndOfFile:SplashActivity.kt$cz.kotox.securityshowcase.login.keystorecompat.ui.SplashActivity.kt
 		</ID>

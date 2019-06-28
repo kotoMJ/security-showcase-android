@@ -1,6 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
 	tools:ignore="ExtraTranslation">
-	<string name="appName">Login</string>
 	<string name="hintEmail">Enter email</string>
 	<string name="hintPassword">Enter password</string>
 	<string name="buttonSignIn">SignIn</string>

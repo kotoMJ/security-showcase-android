@@ -16,20 +16,20 @@ ext {
 	artifact = 'android-keystore-compat-elplus'
 
 	bintrayUser = 'kotomisak'
-	bintrayRepo = 'cz.koto'
+	bintrayRepo = 'cz.kotox'
 
-	publishedGroupId = 'cz.koto'
+	publishedGroupId = 'cz.kotox'
 	libraryName = 'android-keystore-compat-elplus'
 
 	libraryDescription = 'Lightweight variant of KeystoreCompat with support for API 21 and above.'
 
-	siteUrl = 'https://github.com/kotomisak/security-showcase-android/tree/develop/android-keystore-compat-elplus'
-	gitUrl = 'https://github.com/kotomisak/security-showcase-android'
+	siteUrl = 'https://github.com/kotoMJ/security-showcase-android/tree/develop/android-keystore-compat-elplus'
+	gitUrl = 'https://github.com/kotoMJ/security-showcase-android'
 
 	libraryVersion = KC_GIT_TAG_NAME.replaceAll("21KC-", "")
 	libraryCode = KC_GIT_TAG_COUNT
 
-	developerId = 'kotomisak'
+	developerId = 'kotoMJ'
 	developerName = 'Michal Jenicek'
 	developerEmail = 'jenicek.michal@gmail.com'
 
@@ -77,7 +77,8 @@ buildscript {
 }
 
 dependencies {
-	compile fileTree(dir: 'libs', include: ['*.jar'])
+	implementation fileTree(dir: 'libs', include: ['*.jar'])
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
 	if (project.hasProperty("keystore.compat.dependency.type")) {
 		if (project.property("keystore.compat.dependency.type") == "local") {
@@ -86,13 +87,13 @@ dependencies {
 			api(project(':android-keystore-compat-23'))
 		}
 	} else {
-		api('cz.koto:android-keystore-compat-base:2.1.0') {
+		api('cz.kotox:android-keystore-compat-base:2.1.0') {
 			exclude group: 'org.jetbrains.kotlin'
 		}
-		api('cz.koto:android-keystore-compat-21:2.1.0') {
+		api('cz.kotox:android-keystore-compat-21:2.1.0') {
 			exclude group: 'org.jetbrains.kotlin'
 		}
-		api('cz.koto:android-keystore-compat-23:2.1.0') {
+		api('cz.kotox:android-keystore-compat-23:2.1.0') {
 			exclude group: 'org.jetbrains.kotlin'
 		}
 	}
@@ -100,8 +101,7 @@ dependencies {
 	androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
 		exclude group: 'com.android.support', module: 'support-annotations'
 	})
-	testCompile 'junit:junit:4.12'
-	compile "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+	testImplementation 'junit:junit:4.12'
 
 	compile('com.scottyab:rootbeer-lib:0.0.6'){
 		exclude group: 'com.android.support'

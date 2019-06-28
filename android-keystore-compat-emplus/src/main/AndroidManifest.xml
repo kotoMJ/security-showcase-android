@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	package="cz.koto.keystorecompat.emplus">
+	package="cz.kotox.keystorecompat.emplus">
 
-	<uses-sdk tools:overrideLibrary="cz.koto.keystorecompat23" />
+	<uses-sdk tools:overrideLibrary="cz.kotox.keystorecompat23" />
 
 	<application
 		android:allowBackup="true"

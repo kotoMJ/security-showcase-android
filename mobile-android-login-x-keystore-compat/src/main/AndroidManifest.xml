@@ -10,7 +10,7 @@
 		android:name="cz.kotox.securityshowcase.login.keystorecompat.SecurityShowcaseLoginKeystoreCompatApplication"
 		android:allowBackup="false"
 		android:icon="@mipmap/ic_launcher"
-		android:label="@string/appName"
+		android:label="@string/app_name"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.SecurityShowcase"
 		tools:replace="android:allowBackup"
