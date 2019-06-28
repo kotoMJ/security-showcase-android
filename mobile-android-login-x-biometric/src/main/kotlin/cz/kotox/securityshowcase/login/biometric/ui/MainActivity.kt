@@ -1,5 +1,6 @@
 package cz.kotox.securityshowcase.login.biometric.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.security.keystore.UserNotAuthenticatedException
 import android.view.Menu
@@ -45,18 +46,21 @@ class MainActivity : BiometricBaseActivity() {
 			Timber.d("Navigated to %s", dest)
 		}
 
-		//TODO temporarily always enroll in MainActivity. This can be once per app installation.
-		try {
-			val keyPair = generateKeyPair(BIOMETRIC_KEY, true)
-		} catch (unae: UserNotAuthenticatedException) {
-			biometricPrompt.authenticate(promptInfo)
-			Timber.e(unae)
-		} catch (ia: InvalidAlgorithmParameterException) {
-			//Secure lock screen must be enabled to create keys requiring user authentication
-			Timber.e(ia)
-		} catch (th: Throwable) {
-			biometricPrompt.authenticate(promptInfo)
-			Timber.e(th)
+
+		if (Build.VERSION.SDK_INT >= 23) {
+			//TODO temporarily always enroll in MainActivity. This can be once per app installation.
+			try {
+				val keyPair = generateKeyPair(BIOMETRIC_KEY, true)
+			} catch (unae: UserNotAuthenticatedException) {
+				biometricPrompt.authenticate(promptInfo)
+				Timber.e(unae)
+			} catch (ia: InvalidAlgorithmParameterException) {
+				//Secure lock screen must be enabled to create keys requiring user authentication
+				Timber.e(ia)
+			} catch (th: Throwable) {
+				biometricPrompt.authenticate(promptInfo)
+				Timber.e(th)
+			}
 		}
 	}
 
