@@ -16,7 +16,7 @@ import cz.kotox.securityshowcase.login.R
 import timber.log.Timber
 import javax.inject.Inject
 
-fun Context.LoginBiometricActivityIntent(/*user: User*/): Intent {
+fun Context.loginBiometricActivityIntent(/*user: User*/): Intent {
 	val loginIntent = Intent(this, LoginBiometricActivity::class.java).apply {
 		//putExtra(INTENT_USER_ID, user.id)
 	}

@@ -16,3 +16,4 @@ class KeystoreCompatImpl(val keystoreCompatConfig: KeystoreCompatConfig) {
 		else -> throw IllegalAccessException("Unsupported API Version [$version] for KeystoreCompat ")
 	}
 }
+

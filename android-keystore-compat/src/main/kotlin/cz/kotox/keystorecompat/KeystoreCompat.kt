@@ -44,4 +44,3 @@ class KeystoreCompat private constructor(override val context: Context, override
 	}
 
 }
-
