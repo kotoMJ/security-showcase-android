@@ -74,10 +74,11 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	 * Keystore is available only for secured devices!
 	 */
 	fun isSecurityEnabled(): Boolean {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-			return false
+		@Suppress("MagicNumber")
+		return if (Build.VERSION.SDK_INT < 19) {
+			false
 		} else {
-			return keystoreCompatImpl.isSecurityEnabled(this.context)
+			keystoreCompatImpl.isSecurityEnabled(this.context)
 		}
 	}
 
@@ -150,6 +151,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	 * Check if shared preferences contains secret credentials to be loadable.
 	 */
 	fun hasSecretLoadable(): Boolean {
+		@Suppress("MagicNumber")
 		if (Build.VERSION.SDK_INT >= 19) {
 			if (isKeystoreCompatAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
 				if (lockScreenCancelled()) return false

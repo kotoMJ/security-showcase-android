@@ -60,6 +60,7 @@ open class KeystoreCompatK : KeystoreCompatFacade {
 
 	@SuppressLint("ObsoleteSdkInt")
 	override fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec {
+		@Suppress("MagicNumber")
 		if (Build.VERSION.SDK_INT < 19) { //Just be sure there is no accidental usage below API 19
 			throw IllegalAccessException("$LOG_TAG Unsupported usage of version ${Build.VERSION.SDK_INT}")
 		}

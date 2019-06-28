@@ -23,7 +23,8 @@ import javax.security.auth.x500.X500Principal
 /**
  * Marshmallow specific Keystore implementation.
  */
-@TargetApi(Build.VERSION_CODES.M)
+@Suppress("MagicNumber")
+@TargetApi(23)
 class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : KeystoreCompatFacade {
 
 	private val keystoreCryptoM by lazy { KeystoreCryptoM(this) }
@@ -83,6 +84,7 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : Keystor
 	 */
 	@SuppressLint("ObsoleteSdkInt")
 	override fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec {
+		@Suppress("MagicNumber")
 		if (Build.VERSION.SDK_INT < 23) { //Just be sure there is no accidental usage below API 23
 			throw IllegalAccessException("$logTag Unsupported usage of version ${Build.VERSION.SDK_INT}")
 		}
@@ -96,6 +98,7 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : Keystor
 			.setAlgorithmParameterSpec(RSAKeyGenParameterSpec(512, RSAKeyGenParameterSpec.F4))//TODO verify this row
 			.setUserAuthenticationRequired(keystoreCompatConfig.getUserAuthenticationRequired())
 			.setUserAuthenticationValidityDurationSeconds(keystoreCompatConfig.getUserAuthenticationValidityDurationSeconds())
+		@Suppress("MagicNumber")
 		if (Build.VERSION.SDK_INT > 23) {
 			// Generated keys will be invalidated if the biometric templates are added more to user device
 			builder.setInvalidatedByBiometricEnrollment(true)

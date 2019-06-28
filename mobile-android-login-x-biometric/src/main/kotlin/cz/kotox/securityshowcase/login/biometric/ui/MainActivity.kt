@@ -46,7 +46,7 @@ class MainActivity : BiometricBaseActivity() {
 			Timber.d("Navigated to %s", dest)
 		}
 
-
+		@Suppress("MagicNumber")
 		if (Build.VERSION.SDK_INT >= 23) {
 			//TODO temporarily always enroll in MainActivity. This can be once per app installation.
 			try {
