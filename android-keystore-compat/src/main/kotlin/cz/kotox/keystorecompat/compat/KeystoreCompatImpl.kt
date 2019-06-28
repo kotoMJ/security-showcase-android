@@ -16,6 +16,6 @@ class KeystoreCompatImpl(val keystoreCompatConfig: KeystoreCompatConfig) {
 	} else if (version >= Build.VERSION_CODES.KITKAT) {
 		keystoreCompat = KeystoreCompatK()
 	} else {
-		throw RuntimeException("Unsupported API Version [$version] for KeystoreCompat ")
+		throw IllegalAccessException("Unsupported API Version [$version] for KeystoreCompat ")
 	}
 }

@@ -25,7 +25,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	protected lateinit var certSubject: X500Principal
 	protected lateinit var uniqueId: String
 
-	protected val LOG_TAG = javaClass.name
+	protected val logTag = javaClass.name
 	protected var encryptedSecret by stringPref("secure_string")
 	protected var lockScreenCancelCount by intPref("sign_up_cancel_count")
 
@@ -37,18 +37,18 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 		if (this.isRooted == null) {
 			if (ret) {
 				val check: RootBeer = RootBeer(context)
-				Log.w(LOG_TAG, "RootDetection enabled ${config.isRootDetectionEnabled()}")
-				Log.w(LOG_TAG, "Root Management Apps ${if (check.detectRootManagementApps()) "detected" else "not detected"}")
-				Log.w(LOG_TAG, "PotentiallyDangerousApps ${if (check.detectPotentiallyDangerousApps()) "detected" else "not detected"}")
-				Log.w(LOG_TAG, "TestKeys ${if (check.detectTestKeys()) "detected" else "not detected"}")
-				Log.w(LOG_TAG, "BusyBoxBinary ${if (check.checkForBusyBoxBinary()) "detected" else "not detected"}")
-				Log.w(LOG_TAG, "SU Binary ${if (check.checkForSuBinary()) "detected" else "not detected"}")
-				Log.w(LOG_TAG, "2nd SU Binary check ${if (check.checkSuExists()) "detected" else "not detected"}")
-				Log.w(LOG_TAG, "ForRWPaths ${if (check.checkForRWPaths()) "detected" else "not detected"}")
-				Log.w(LOG_TAG, "DangerousProps ${if (check.checkForDangerousProps()) "detected" else "not detected"}")
-				Log.w(LOG_TAG, "Root via native check ${if (check.checkForRootNative()) "detected" else "not detected"}")
-				Log.w(LOG_TAG, "RootCloakingApps ${if (check.detectRootCloakingApps()) "detected" else "not detected"}")
-				Log.w(LOG_TAG, "Selinux Flag Is Enabled ${if (Utils.isSelinuxFlagInEnabled()) "true" else "false"}")
+				Log.w(logTag, "RootDetection enabled ${config.isRootDetectionEnabled()}")
+				Log.w(logTag, "Root Management Apps ${if (check.detectRootManagementApps()) "detected" else "not detected"}")
+				Log.w(logTag, "PotentiallyDangerousApps ${if (check.detectPotentiallyDangerousApps()) "detected" else "not detected"}")
+				Log.w(logTag, "TestKeys ${if (check.detectTestKeys()) "detected" else "not detected"}")
+				Log.w(logTag, "BusyBoxBinary ${if (check.checkForBusyBoxBinary()) "detected" else "not detected"}")
+				Log.w(logTag, "SU Binary ${if (check.checkForSuBinary()) "detected" else "not detected"}")
+				Log.w(logTag, "2nd SU Binary check ${if (check.checkSuExists()) "detected" else "not detected"}")
+				Log.w(logTag, "ForRWPaths ${if (check.checkForRWPaths()) "detected" else "not detected"}")
+				Log.w(logTag, "DangerousProps ${if (check.checkForDangerousProps()) "detected" else "not detected"}")
+				Log.w(logTag, "Root via native check ${if (check.checkForRootNative()) "detected" else "not detected"}")
+				Log.w(logTag, "RootCloakingApps ${if (check.detectRootCloakingApps()) "detected" else "not detected"}")
+				Log.w(logTag, "Selinux Flag Is Enabled ${if (Utils.isSelinuxFlagInEnabled()) "true" else "false"}")
 			}
 			this.isRooted = ret && config.isRootDetectionEnabled()
 		}
@@ -59,7 +59,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	}
 
 	protected fun logUnsupportedVersionForKeystore() {
-		Log.w(LOG_TAG, "Device Android version[${Build.VERSION.SDK_INT}] doesn't offer trusted keystore functionality!")
+		Log.w(logTag, "Device Android version[${Build.VERSION.SDK_INT}] doesn't offer trusted keystore functionality!")
 	}
 
 	fun isKeystoreCompatAvailable(): Boolean {
@@ -92,7 +92,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	@JvmOverloads
 	fun storeSecret(secret: ByteArray, onError: (e: KeystoreCompatException) -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean) {
 		runSinceKitKat {
-			Log.d(LOG_TAG, "Before load KeyPair...")
+			Log.d(logTag, "Before load KeyPair...")
 			if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
 				initKeyPairIfNecessary(uniqueId)
 				try {
@@ -125,7 +125,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	@JvmOverloads
 	fun storeSecret(secret: String, onError: (e: KeystoreCompatException) -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true) {
 		runSinceKitKat {
-			Log.d(LOG_TAG, "Before load KeyPair...")
+			Log.d(logTag, "Before load KeyPair...")
 			if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
 				initKeyPairIfNecessary(uniqueId)
 				try {
@@ -150,7 +150,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	 * Check if shared preferences contains secret credentials to be loadable.
 	 */
 	fun hasSecretLoadable(): Boolean {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+		if (Build.VERSION.SDK_INT >= 19) {
 			if (isKeystoreCompatAvailable() && isSecurityEnabled()) {//Is usage of Keystore allowed?
 				if (lockScreenCancelled()) return false
 				return ((encryptedSecret?.isNotBlank() ?: false) //Is there content to decrypt
@@ -221,7 +221,7 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 			try {
 				keyStore.deleteEntry(uniqueId)
 			} catch (ke: KeyStoreException) {
-				Log.w(LOG_TAG, "Unable to delete entry:" + uniqueId, ke)
+				Log.w(logTag, "Unable to delete entry:" + uniqueId, ke)
 			}
 		}
 	}
@@ -261,14 +261,15 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	private fun createNewKeyPair(aliasText: String) {
 		try {
 			val start = Calendar.getInstance()
+			//Use DAY_OF_YEAR to prevent KeyNotYetValidException for some Huawei devices
 			start.add(Calendar.DAY_OF_YEAR, -1)//Prevent KeyNotYetValidException for encryption
 			val end = Calendar.getInstance()
 			end.add(Calendar.YEAR, 1)//TODO handle with outdated certificates!
 			keystoreCompatImpl.generateKeyPair(aliasText, start.time, end.time, this.certSubject, this.context)
 			if (!keyStore.containsAlias(aliasText))
-				throw RuntimeException("KeyPair was NOT stored!")
+				throw IllegalStateException("KeyPair was NOT stored!")
 		} catch (e: Exception) {
-			Log.e(LOG_TAG, "Unable to create keys!", e)
+			Log.e(logTag, "Unable to create keys!", e)
 			throw e
 		}
 	}

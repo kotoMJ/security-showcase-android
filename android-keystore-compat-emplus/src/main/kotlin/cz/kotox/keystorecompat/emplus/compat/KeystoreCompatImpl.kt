@@ -10,6 +10,6 @@ class KeystoreCompatImpl(val keystoreCompatConfig: KeystoreCompatConfig) {
 	fun init(version: Int) = if (version >= Build.VERSION_CODES.M) {
 		keystoreCompat = KeystoreCompatM(keystoreCompatConfig)
 	} else {
-		throw RuntimeException("Unsupported API Version [$version] for KeystoreCompat ")
+		throw IllegalAccessException("Unsupported API Version [$version] for KeystoreCompat ")
 	}
 }

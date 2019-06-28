@@ -28,7 +28,7 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : Keystor
 
 	private val keystoreCryptoM by lazy { KeystoreCryptoM(this) }
 
-	private val LOG_TAG = javaClass.name
+	private val logTag = javaClass.name
 
 	override fun getAlgorithm(): String {
 		return KeyProperties.KEY_ALGORITHM_AES
@@ -62,11 +62,11 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : Keystor
 		} catch (e: UserNotAuthenticatedException) {
 			onFailure.invoke(e)
 		} catch (e: KeyPermanentlyInvalidatedException) {
-			Log.w(LOG_TAG, "KeyPermanentlyInvalidatedException: cleanUp credentials for storage!")
+			Log.w(logTag, "KeyPermanentlyInvalidatedException: cleanUp credentials for storage!")
 			clearCredentials.invoke()
 			onFailure.invoke(e)
 		} catch (e: KeystoreInvalidKeyException) {
-			Log.w(LOG_TAG, "KeystoreInvalidKeyException: user might dismiss lockScreen.")
+			Log.w(logTag, "KeystoreInvalidKeyException: user might dismiss lockScreen.")
 			onFailure.invoke(e)
 		} catch (e: Exception) {
 			onFailure.invoke(e)
@@ -83,8 +83,8 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : Keystor
 	 */
 	@SuppressLint("ObsoleteSdkInt")
 	override fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-			throw RuntimeException("${LOG_TAG} Unsupported usage of version ${Build.VERSION.SDK_INT}")
+		if (Build.VERSION.SDK_INT < 23) { //Just be sure there is no accidental usage below API 23
+			throw IllegalAccessException("$logTag Unsupported usage of version ${Build.VERSION.SDK_INT}")
 		}
 		val builder = KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT.or(KeyProperties.PURPOSE_DECRYPT))
 			.setBlockModes(KeyProperties.BLOCK_MODE_GCM)//follow used getCipherMode
@@ -104,11 +104,11 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : Keystor
 	}
 
 	override fun isSecurityEnabled(context: Context): Boolean {
-		var km: KeyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-		Log.d(LOG_TAG, "DEVICE-SECURE:${km.isDeviceSecure}")
-		Log.d(LOG_TAG, "DEVICE-LOCKED:${km.isDeviceLocked}")
-		Log.d(LOG_TAG, "KEYGUARD-SECURE:${km.isKeyguardSecure}")
-		Log.d(LOG_TAG, "KEYGUARD-LOCKED:${km.isKeyguardLocked}")
+		val km: KeyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+		Log.d(logTag, "DEVICE-SECURE:${km.isDeviceSecure}")
+		Log.d(logTag, "DEVICE-LOCKED:${km.isDeviceLocked}")
+		Log.d(logTag, "KEYGUARD-SECURE:${km.isKeyguardSecure}")
+		Log.d(logTag, "KEYGUARD-LOCKED:${km.isKeyguardLocked}")
 		return km.isDeviceSecure
 	}
 

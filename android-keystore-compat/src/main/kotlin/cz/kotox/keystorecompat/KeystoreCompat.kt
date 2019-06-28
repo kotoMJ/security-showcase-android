@@ -33,7 +33,7 @@ class KeystoreCompat private constructor(override val context: Context, override
 
 		runSinceKitKat {
 			this.uniqueId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID)
-			Log.d(LOG_TAG, "uniqueId:${uniqueId}")
+			Log.d(logTag, "uniqueId:${uniqueId}")
 			PrefDelegate.initialize(this.context)
 			certSubject = X500Principal("CN=$uniqueId, O=Android Authority")
 

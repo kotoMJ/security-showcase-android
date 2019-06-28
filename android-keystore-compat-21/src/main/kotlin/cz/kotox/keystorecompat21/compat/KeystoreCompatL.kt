@@ -21,7 +21,7 @@ import javax.security.auth.x500.X500Principal
  */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 open class KeystoreCompatL : KeystoreCompatFacade {
-	private val LOG_TAG = javaClass.name
+	private val logTag = javaClass.name
 
 	private val keystoreCryptoK by lazy { KeystoreCryptoK(this) }
 
@@ -61,8 +61,8 @@ open class KeystoreCompatL : KeystoreCompatFacade {
 
 	@SuppressLint("ObsoleteSdkInt")
 	override fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec {
-		if (Build.VERSION.SDK_INT < 21) {
-			throw RuntimeException("${LOG_TAG} Unsupported usage of version ${Build.VERSION.SDK_INT}")
+		if (Build.VERSION.SDK_INT < 21) {    //Just be sure there is no accidental usage below API 21
+			throw IllegalAccessException("${logTag} Unsupported usage of version ${Build.VERSION.SDK_INT}")
 		}
 		return KeyPairGeneratorSpec.Builder(context)
 			.setAlias(alias)
@@ -76,8 +76,8 @@ open class KeystoreCompatL : KeystoreCompatFacade {
 
 	override fun isSecurityEnabled(context: Context): Boolean {
 		val km: KeyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-		Log.d(LOG_TAG, "KEYGUARD-SECURE:%s${km.isKeyguardSecure}")
-		Log.d(LOG_TAG, "KEYGUARD-LOCKED:%s${km.isKeyguardLocked}")
+		Log.d(logTag, "KEYGUARD-SECURE:%s${km.isKeyguardSecure}")
+		Log.d(logTag, "KEYGUARD-LOCKED:%s${km.isKeyguardLocked}")
 		return km.isKeyguardSecure
 	}
 
