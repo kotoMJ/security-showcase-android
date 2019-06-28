@@ -83,7 +83,13 @@ class KeystoreCompatM(val keystoreCompatConfig: KeystoreCompatConfigM) : Keystor
 	 * so even if an attacker roots the device the key can still only be used in the defined ways.
 	 */
 	@SuppressLint("ObsoleteSdkInt")
-	override fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec {
+	override fun getAlgorithmParameterSpec(
+		certSubject: X500Principal,
+		alias: String,
+		startDate: Date,
+		endDate: Date,
+		context: Context
+	): AlgorithmParameterSpec {
 		@Suppress("MagicNumber")
 		if (Build.VERSION.SDK_INT < 23) { //Just be sure there is no accidental usage below API 23
 			throw IllegalAccessException("$logTag Unsupported usage of version ${Build.VERSION.SDK_INT}")

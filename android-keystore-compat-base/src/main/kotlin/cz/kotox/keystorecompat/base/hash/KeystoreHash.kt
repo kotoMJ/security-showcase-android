@@ -44,7 +44,14 @@ inline fun createRandomHashKey(): ByteArray {
  * in the specification (SHA1 can be unsafe outside of the context of PBKDF2).
  * @param keyLengthInBit - define max/preferred bits of the key (256bits means 32bytes output),look at LENGTH32BYTES,LENGTH64BYTES constants.
  */
-@JvmOverloads inline fun createHashKey(basePassword: String, salt: ByteArray, iterationCount: Int, sha512: Boolean, keyLengthInBit: Int = LENGTH32BYTES): ByteArray {
+@JvmOverloads
+inline fun createHashKey(
+	basePassword: String,
+	salt: ByteArray,
+	iterationCount: Int,
+	sha512: Boolean,
+	keyLengthInBit: Int = LENGTH32BYTES
+): ByteArray {
 	try {
 		val skf = SecretKeyFactory.getInstance(if (sha512) PBKDF2WithHmacSHA512 else PBKDF2WithHmacSHA1)
 		val spec = PBEKeySpec(basePassword.toCharArray(), salt, iterationCount, keyLengthInBit)//65536, 256
@@ -68,6 +75,17 @@ inline fun createRandomHashKey(): ByteArray {
  * in the specification (SHA1 can be unsafe outside of the context of PBKDF2).
  * @param keyLengthInBit - define max/preferred bits of the key (256bits means 32bytes output), look at LENGTH32BYTES,LENGTH64BYTES constants.
  */
-@JvmOverloads inline fun createHashKey(basePassword: String, sha512: Boolean, keyLengthInBit: Int = LENGTH32BYTES): ByteArray {
-	return createHashKey(basePassword, basePassword.toByteArray(Charset.forName("UTF-32")), basePassword.length, sha512, keyLengthInBit)
+@JvmOverloads
+inline fun createHashKey(
+	basePassword: String,
+	sha512: Boolean,
+	keyLengthInBit: Int = LENGTH32BYTES
+): ByteArray {
+	return createHashKey(
+		basePassword,
+		basePassword.toByteArray(Charset.forName("UTF-32")),
+		basePassword.length,
+		sha512,
+		keyLengthInBit
+	)
 }

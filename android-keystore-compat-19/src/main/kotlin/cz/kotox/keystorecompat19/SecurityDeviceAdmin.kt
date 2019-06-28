@@ -12,12 +12,15 @@ import android.util.Log
  */
 class SecurityDeviceAdmin() : DeviceAdminReceiver() {
 
-
 	/**
 	 *
 	 * https://rootfs.wordpress.com/2010/09/09/android-make-your-application-a-device-administrator/
 	 */
-	fun forceLockPreLollipop(context: Context, onLockActivityShouldBeInvoked: (Intent) -> Unit, onSuccess: () -> Unit) = if (!getDevicePolicyManager(context).isAdminActive(getAdminName(context))) {
+	fun forceLockPreLollipop(
+		context: Context,
+		onLockActivityShouldBeInvoked: (Intent) -> Unit,
+		onSuccess: () -> Unit) = if (!getDevicePolicyManager(context).isAdminActive(getAdminName(context))
+	) {
 		//try become active
 		val intent: Intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN)
 		intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, getAdminName(context))

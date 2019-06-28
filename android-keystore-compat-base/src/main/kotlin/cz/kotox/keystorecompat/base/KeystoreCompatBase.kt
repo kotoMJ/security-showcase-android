@@ -91,7 +91,12 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	 * @exception ForceLockScreenMarshmallowException
 	 */
 	@JvmOverloads
-	fun storeSecret(secret: ByteArray, onError: (e: KeystoreCompatException) -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean) {
+	fun storeSecret(
+		secret: ByteArray,
+		onError: (e: KeystoreCompatException) -> Unit,
+		onSuccess: () -> Unit,
+		useBase64Encoding: Boolean
+	) {
 		runSinceKitKat {
 			Log.d(logTag, "Before load KeyPair...")
 			if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
@@ -124,7 +129,12 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	 * @exception ForceLockScreenMarshmallowException
 	 */
 	@JvmOverloads
-	fun storeSecret(secret: String, onError: (e: KeystoreCompatException) -> Unit, onSuccess: () -> Unit, useBase64Encoding: Boolean = true) {
+	fun storeSecret(
+		secret: String,
+		onError: (e: KeystoreCompatException) -> Unit,
+		onSuccess: () -> Unit,
+		useBase64Encoding: Boolean = true
+	) {
 		runSinceKitKat {
 			Log.d(logTag, "Before load KeyPair...")
 			if (isKeystoreCompatAvailable() && isSecurityEnabled()) {
@@ -166,7 +176,13 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	 * Function is using @JvmOverloads to force optional parameters be optional even in java code.
 	 */
 	@JvmOverloads
-	fun loadSecret(context: Context, onSuccess: (cre: ByteArray) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
+	fun loadSecret(
+		context: Context,
+		onSuccess: (cre: ByteArray) -> Unit,
+		onFailure: (e: Exception) -> Unit,
+		forceFlag: Boolean?,
+		isBase64Encoded: Boolean = true
+	) {
 		runSinceKitKat {
 			val privateEntry: KeyStore.Entry? = keyStore.getEntry(uniqueId, null)
 			if (privateEntry == null) {
@@ -188,7 +204,13 @@ abstract class KeystoreCompatBase(open val config: KeystoreCompatConfigBase, ope
 	 * Function is using @JvmOverloads to force optional parameters be optional even in java code.
 	 */
 	@JvmOverloads
-	fun loadSecretAsString(context: Context, onSuccess: (cre: String) -> Unit, onFailure: (e: Exception) -> Unit, forceFlag: Boolean?, isBase64Encoded: Boolean = true) {
+	fun loadSecretAsString(
+		context: Context,
+		onSuccess: (cre: String) -> Unit,
+		onFailure: (e: Exception) -> Unit,
+		forceFlag: Boolean?,
+		isBase64Encoded: Boolean = true
+	) {
 		runSinceKitKat {
 			val keyEntry: KeyStore.Entry = keyStore.getEntry(uniqueId, null)
 			keystoreCompatImpl.loadSecret(

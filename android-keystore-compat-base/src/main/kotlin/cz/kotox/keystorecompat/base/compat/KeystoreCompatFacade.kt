@@ -18,14 +18,18 @@ import javax.security.auth.x500.X500Principal
 interface KeystoreCompatFacade {
 
 	companion object {
-		val KEYSTORE_KEYWORD = "AndroidKeyStore"
+		const val KEYSTORE_KEYWORD = "AndroidKeyStore"
 	}
 
 	fun getAlgorithm(): String
 
 	fun getCipherMode(): String
 
-	fun storeSecret(secret: ByteArray, privateKeyEntry: KeyStore.Entry, useBase64Encoding: Boolean): String
+	fun storeSecret(
+		secret: ByteArray,
+		privateKeyEntry: KeyStore.Entry,
+		useBase64Encoding: Boolean
+	): String
 
 	fun loadSecret(context: Context,
 		onSuccess: (cre: ByteArray) -> Unit,
@@ -36,11 +40,23 @@ interface KeystoreCompatFacade {
 		keyEntry: KeyStore.Entry,
 		isBase64Encoded: Boolean)
 
-	fun getAlgorithmParameterSpec(certSubject: X500Principal, alias: String, startDate: Date, endDate: Date, context: Context): AlgorithmParameterSpec
+	fun getAlgorithmParameterSpec(
+		certSubject: X500Principal,
+		alias: String,
+		startDate: Date,
+		endDate: Date,
+		context: Context
+	): AlgorithmParameterSpec
 
 	fun isSecurityEnabled(context: Context): Boolean
 
-	fun generateKeyPair(alias: String, start: Date, end: Date, certSubject: X500Principal, context: Context)
+	fun generateKeyPair(
+		alias: String,
+		start: Date,
+		end: Date,
+		certSubject: X500Principal,
+		context: Context
+	)
 
 	fun deactivateRights(context: Context)
 }

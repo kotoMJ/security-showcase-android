@@ -82,8 +82,7 @@ class KeystoreCryptoM(val keystoreCompat: KeystoreCompatFacade) {
 	@TargetApi(Build.VERSION_CODES.M)
 	fun decryptAES(secretKeyEntry: KeyStore.SecretKeyEntry, encryptedSecret: String, isBase64Encoded: Boolean): ByteArray {
 
-		var ivAndEncryptedKey: ByteArray = if (isBase64Encoded) Base64.decode(encryptedSecret, Base64.DEFAULT) else encryptedSecret.toByteArray(Charsets.UTF_8)
-
+		val ivAndEncryptedKey: ByteArray = if (isBase64Encoded) Base64.decode(encryptedSecret, Base64.DEFAULT) else encryptedSecret.toByteArray(Charsets.UTF_8)
 
 		val buffer = ByteBuffer.wrap(ivAndEncryptedKey)
 		buffer.order(ORDER_FOR_ENCRYPTED_DATA)
@@ -107,17 +106,14 @@ class KeystoreCryptoM(val keystoreCompat: KeystoreCompatFacade) {
 				is InvalidKeyException -> {
 					throw KeystoreInvalidKeyException()
 				}
-				is UnrecoverableKeyException -> {
-				}
-				is NoSuchAlgorithmException -> {
-				}
-				is BadPaddingException -> {
-				}
-				is KeyStoreException -> {
-				}
-				is IllegalBlockSizeException -> {
-				}
+				is UnrecoverableKeyException,
+				is NoSuchAlgorithmException,
+				is BadPaddingException,
+				is KeyStoreException,
+				is IllegalBlockSizeException,
 				is InvalidAlgorithmParameterException -> {
+					//TODO MJ - really want just do nothing?
+					Log.e(LOG_TAG, "Silent failure when decryptAES!", e)
 				}
 			}
 			Log.e(LOG_TAG, "decryptAES error", e)
