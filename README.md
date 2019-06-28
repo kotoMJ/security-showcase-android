@@ -1,7 +1,11 @@
 # Security showcase #
 
-![SecurityShowcase](./app/src/main/res/mipmap-hdpi/ic_launcher.png "SecurityShowcase") <a href="https://play.google.com/store/apps/details?id=cz.koto.securityshowcase"><img src="./extras/banner/google-play-badge.png" height="72"/></a>  
+<p style="color:red">Sample application was <b style="color:black">suspended from GooglePlay</b> because it again: <b style="color:black">violates the deceptive device settings changes policy</b>. Even when I already fixed first violation.   
+It's again because of usage of <b style="color:black">BIND_DEVICE_ADMIN</b> for API 19.
+<b style="color:gray">Since I have been actively working on <b style="color:blue">version 3 of the KeystoreCompat</b> library, I will solve this violation with releasing that new library version</b>  
+</p>
 
+![SecurityShowcase](./app/src/main/res/mipmap-hdpi/ic_launcher.png "SecurityShowcase") <!--a href="https://play.google.com/store/apps/details?id=cz.koto.securityshowcase"--><img src="./extras/banner/google-play-badge.png" height="72"/></a>  
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
