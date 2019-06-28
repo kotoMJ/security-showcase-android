@@ -10,7 +10,4 @@ include ':android-keystore-compat',
 		":module-security",
 		':module-login',
 		':mobile-android-login-x-keystore-compat',
-		':mobile-android-login-x-biometric',
-		':mobile-android-login-legacy'
-
-//include ':mobile-android-login-legacy'
+		':mobile-android-login-x-biometric'
