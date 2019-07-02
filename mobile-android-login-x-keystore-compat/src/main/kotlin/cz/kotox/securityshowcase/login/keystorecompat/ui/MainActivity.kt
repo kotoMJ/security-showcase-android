@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import cz.kotox.securityshowcase.core.arch.BaseActivity
 import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
 import cz.kotox.securityshowcase.login.keystorecompat.R
@@ -33,6 +34,8 @@ class MainActivity : BaseActivity() {
 		val navController = host.navController
 		setupActionBar(navController)
 
+		setupBottomNavMenu(navController)
+
 		navController.addOnDestinationChangedListener { _, destination, _ ->
 			val dest: String = try {
 				resources.getResourceName(destination.id)
@@ -48,6 +51,12 @@ class MainActivity : BaseActivity() {
 
 	private fun setupActionBar(navController: NavController) {
 		NavigationUI.setupActionBarWithNavController(this, navController)
+	}
+
+	private fun setupBottomNavMenu(navController: NavController) {
+		findViewById<BottomNavigationView>(R.id.bottom_nav_view)?.let { bottomNavView ->
+			NavigationUI.setupWithNavController(bottomNavView, navController)
+		}
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -116,28 +116,30 @@ dependencies {
 
 	implementation project(':module-core')
 	implementation project(':module-login')
+	implementation project(':module-security')
 	implementation project(':module-test-utils')
 	implementation "androidx.multidex:multidex:${versions.multidex}"
 
+	//TODO MJ - extract this copy&paste block of code
 	if (project.hasProperty("keystore.compat.dependency.type")) {
 		if (project.property("keystore.compat.dependency.type") == "local") {
 			api(project(':android-keystore-compat')) {
 				exclude group: 'com.android.support'
 				exclude group: 'org.jetbrains.kotlin'
 			}
-			api(project(':android-keystore-compat-base'))
-			api(project(':android-keystore-compat-19'))
-			api(project(':android-keystore-compat-21'))
-			api(project(':android-keystore-compat-23'))
+//			api(project(':android-keystore-compat-base'))
+//			api(project(':android-keystore-compat-19'))
+//			api(project(':android-keystore-compat-21'))
+//			api(project(':android-keystore-compat-23'))
 		} else if (project.property("keystore.compat.dependency.type") == "aar") {
 			api(name: "android-keystore-compat", ext: "aar") {
 				exclude group: 'com.android.support'
 				exclude group: 'org.jetbrains.kotlin'
 			}
-			api(name: ":android-keystore-compat-base", ext: "aar")
-			api(name: ":android-keystore-compat-19", ext: "aar")
-			api(name: ":android-keystore-compat-21", ext: "aar")
-			api(name: ":android-keystore-compat-23", ext: "aar")
+//			api(name: ":android-keystore-compat-base", ext: "aar")
+//			api(name: ":android-keystore-compat-19", ext: "aar")
+//			api(name: ":android-keystore-compat-21", ext: "aar")
+//			api(name: ":android-keystore-compat-23", ext: "aar")
 		}
 	} else {
 		api("cz.koto:android-keystore-compat:${versions.keystore_compat}") {

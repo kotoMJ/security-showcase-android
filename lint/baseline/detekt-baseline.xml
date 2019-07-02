@@ -245,7 +245,8 @@
 		<ID>
 			NewLineAtEndOfFile:BaseViewModelLegacy.kt$cz.kotox.securityshowcase.module_core.arch.BaseViewModelLegacy.kt
 		</ID>
-		<ID>NewLineAtEndOfFile:BiometricBaseActivity.kt$cz.kotox.securityshowcase.security.ui.BiometricBaseActivity.kt
+		<ID>
+			NewLineAtEndOfFile:BiometricBaseActivity.kt$cz.kotox.securityshowcase.security.ui.biometric.BiometricBaseActivity.kt
 		</ID>
 		<ID>NewLineAtEndOfFile:CoreDaggerModule.kt$cz.kotox.securityshowcase.core.di.CoreDaggerModule.kt</ID>
 		<ID>

@@ -15,4 +15,11 @@
 		tools:layout="@layout/main_fragment">
 	</fragment>
 
+	<fragment
+		android:id="@+id/settings_fragment"
+		android:name="cz.kotox.securityshowcase.security.ui.keystorecompat.enrollment.SettingsFragment"
+		android:label="@string/label_fragment_settings"
+		tools:layout="@layout/fragment_settings">
+	</fragment>
+
 </navigation>

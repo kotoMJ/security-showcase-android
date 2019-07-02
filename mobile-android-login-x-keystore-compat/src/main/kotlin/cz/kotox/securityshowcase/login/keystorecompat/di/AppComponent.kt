@@ -7,6 +7,7 @@ import cz.kotox.securityshowcase.core.di.CoreDaggerModule
 import cz.kotox.securityshowcase.core.entity.AppVersion
 import cz.kotox.securityshowcase.login.di.LoginDaggerModule
 import cz.kotox.securityshowcase.login.keystorecompat.SecurityShowcaseLoginKeystoreCompatApplication
+import cz.kotox.securityshowcase.security.di.SecurityDaggerModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -20,6 +21,7 @@ import javax.inject.Singleton
 	ViewModelModule::class,
 	CoreDaggerModule::class,
 	LoginDaggerModule::class,
+	SecurityDaggerModule::class,
 	AppLoginDaggerModule::class
 ])
 interface AppComponent {

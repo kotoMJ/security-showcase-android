@@ -1,16 +1,20 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript {
+buildscript { 
 	ext {
 		project_directory = "${rootProject.projectDir}"
 
 		versions = [
 				keystore_compat                 : '2.1.0',
 
+				multidex                        : '2.0.1',
+
 				sdk                             : 28,
 				min_sdk                         : 19,
 				build_tools                     : '28.0.3',
-				kotlin                          : '1.3.31',
+
+				kotlin                          : '1.3.40',
+				koroutines                      : '1.0.1',
 
 				androidx_ktx_core               : '1.0.2',
 				androidx_lifecycle_viewmodel_ktx: '2.1.0-alpha02',
@@ -33,8 +37,6 @@ buildscript {
 				androidx_constraintlayout       : '1.1.3',
 				androidx_databinding            : '3.5.0-alpha13',
 
-				koroutines                      : '1.0.1',
-
 				jsr250api                       : '1.0',
 				okhttp                          : '3.8.1',
 				retrofit                        : '2.6.0',
@@ -55,8 +57,6 @@ buildscript {
 
 				runner                          : '1.0.2-beta1',
 				rules                           : '1.0.2-beta1',
-
-				multidex                        : '2.0.1',
 
 				androidx_core_testing           : '2.0.0',
 				androidx_biometric              : '1.0.0-alpha04',
@@ -95,8 +95,10 @@ buildscript {
 		classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.androidx_navigation}"
 		// NOTE: Do not place your application dependencies here; they belong
 		// in the individual module build.gradle files
-	}
-}
+	classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}" }
+
+    
+    }
 
 plugins {
 	id "io.gitlab.arturbosch.detekt" version "1.0.0-RC14"
@@ -117,4 +119,4 @@ task clean(type: Delete) {
 	delete rootProject.buildDir
 }
 
-apply from: "${project_directory}/lint/lint-tasks.gradle"
+apply from: "${project_directory}/lint/lint-tasks.gradle" 
