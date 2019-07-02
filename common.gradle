@@ -146,8 +146,8 @@ allprojects {
 
 		// Common Navigation
 		// Don't forget to apply plugin androidx.navigation.safeargs for every module with navigation (solved in common too)
-		implementation "androidx.navigation:navigation-fragment:${versions.androidx_navigation}"
-		implementation "androidx.navigation:navigation-ui:${versions.androidx_navigation}"
+		implementation "androidx.navigation:navigation-fragment-ktx:${versions.androidx_navigation}"
+		implementation "androidx.navigation:navigation-ui-ktx:${versions.androidx_navigation}"
 
 		// Common Support
 		implementation "androidx.appcompat:appcompat:${versions.android_support}"
