@@ -127,28 +127,16 @@ dependencies {
 				exclude group: 'com.android.support'
 				exclude group: 'org.jetbrains.kotlin'
 			}
-//			api(project(':android-keystore-compat-base'))
-//			api(project(':android-keystore-compat-19'))
-//			api(project(':android-keystore-compat-21'))
-//			api(project(':android-keystore-compat-23'))
 		} else if (project.property("keystore.compat.dependency.type") == "aar") {
 			api(name: "android-keystore-compat", ext: "aar") {
 				exclude group: 'com.android.support'
 				exclude group: 'org.jetbrains.kotlin'
 			}
-//			api(name: ":android-keystore-compat-base", ext: "aar")
-//			api(name: ":android-keystore-compat-19", ext: "aar")
-//			api(name: ":android-keystore-compat-21", ext: "aar")
-//			api(name: ":android-keystore-compat-23", ext: "aar")
 		}
 	} else {
 		api("cz.koto:android-keystore-compat:${versions.keystore_compat}") {
 			exclude group: 'com.android.support'
 		}
-		api("cz.koto:android-keystore-compat-base:${versions.keystore_compat}")
-		api("cz.koto:android-keystore-compat-19:${versions.keystore_compat}")
-		api("cz.koto:android-keystore-compat-21:${versions.keystore_compat}")
-		api("cz.koto:android-keystore-compat-23:${versions.keystore_compat}")
 	}
 
 }

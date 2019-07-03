@@ -1,12 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/linearLayout"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:ignore="MissingDefaultResource"
-	tools:layout_editor_absoluteY="25dp">
+	tools:ignore="MissingDefaultResource">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:id="@+id/linearLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:layout_editor_absoluteY="25dp">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+		<TextView
+			android:id="@+id/lock_screen_label_kitkat_disclaimer"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="16dp"
+			android:layout_marginEnd="16dp"
+			android:text="@string/settings_security_explanation_android_security"
+			android:textAppearance="@style/Theme.SecurityShowcase.TextAppearance.Subtitle1.Secondary"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:text="Enabling security option for current version of Android system (API 4.4.4 KitKat) will force you to enable DEVICE ADMIN RIGHTS for LOCK SCREEN. This step is necessary to keep application secure on old Android system." />
+		<TextView
+			android:id="@+id/lock_screen_label"
+			android:layout_width="122dp"
+			android:layout_height="18dp"
+			android:layout_gravity="center_vertical"
+			android:layout_marginStart="16dp"
+			android:text="@string/settings_security_label_android_security"
+			android:textAppearance="@style/Theme.SecurityShowcase.TextAppearance.Subtitle1.Secondary"
+			app:layout_constraintBaseline_toBaselineOf="@+id/lock_screen_switch"
+			app:layout_constraintStart_toStartOf="parent" />
+		<com.google.android.material.switchmaterial.SwitchMaterial
+			android:id="@+id/lock_screen_switch"
+			android:layout_width="110dp"
+			android:layout_height="60dp"
+			android:layout_gravity="center_vertical|end"
+			android:layout_marginStart="16dp"
+			android:layout_marginEnd="16dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/lock_screen_label"
+			app:layout_constraintTop_toBottomOf="@+id/lock_screen_label_kitkat_disclaimer" />
+		<TextView
+			android:id="@+id/lock_screen_description"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="16dp"
+			android:layout_marginEnd="16dp"
+			android:text="@string/settings_security_tip_android_security"
+			android:textAppearance="@style/Theme.SecurityShowcase.TextAppearance.Subtitle1.Secondary"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/lock_screen_switch"
+			tools:text="Enable Android Security to use this option." />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/lockScreenSettingsLink"
+			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="16dp"
+			android:layout_marginEnd="16dp"
+			android:text="@string/settings_security_link_android_security"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/lock_screen_description"
+			tools:text="Go to Android Security Settings" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
