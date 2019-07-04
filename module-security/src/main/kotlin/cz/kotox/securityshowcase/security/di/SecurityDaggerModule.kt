@@ -19,4 +19,5 @@ abstract class SecurityDaggerModule {
 	@IntoMap
 	@ViewModelKey(SettingsViewModel::class)
 	abstract fun bindSignInViewModel(signInViewModel: SettingsViewModel): ViewModel
+
 }

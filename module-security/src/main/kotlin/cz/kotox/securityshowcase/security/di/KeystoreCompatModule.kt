@@ -5,6 +5,7 @@ import android.os.Build
 import cz.kotox.keystorecompat.BuildConfig
 import cz.kotox.keystorecompat.KeystoreCompat
 import cz.kotox.keystorecompat.compat.KeystoreCompatConfig
+import cz.kotox.securityshowcase.security.entity.CredentialStorage
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -21,6 +22,11 @@ object KeystoreCompatModule {
 	@JvmStatic
 	@Singleton
 	fun provideKeystoreCompat(context: Context, config: KeystoreCompatConfig): KeystoreCompat = KeystoreCompat.getInstance(context, config)
+
+	@Provides
+	@JvmStatic
+	@Singleton
+	fun provideCredentialStorage() = CredentialStorage()
 }
 
 class ShowcaseKeystoreCompatConfig : KeystoreCompatConfig() {

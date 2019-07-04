@@ -45,6 +45,18 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toEndOf="@+id/lock_screen_switch_label"
 			app:layout_constraintTop_toBottomOf="@+id/lock_screen_label_kitkat_disclaimer" />
+		<ProgressBar
+			android:id="@+id/progressBar"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="16dp"
+			android:layout_marginEnd="16dp"
+			android:indeterminate="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/lock_screen_switch" />
+
 		<TextView
 			android:id="@+id/lock_screen_settings_disclaimer"
 			android:layout_width="0dp"
@@ -58,8 +70,7 @@
 			android:textAppearance="@style/Theme.SecurityShowcase.TextAppearance.Subtitle1.Secondary"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/lock_screen_switch" />
-
+			app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 		<com.google.android.material.button.MaterialButton
 			android:id="@+id/lock_screen_settings_link"
 			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -70,6 +81,7 @@
 			android:layout_marginEnd="16dp"
 			android:text="@string/settings_security_link_android_security_enable"
 			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.0"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/lock_screen_settings_disclaimer" />
 

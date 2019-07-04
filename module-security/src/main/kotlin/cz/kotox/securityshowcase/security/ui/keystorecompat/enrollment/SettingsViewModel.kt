@@ -1,28 +1,54 @@
 package cz.kotox.securityshowcase.security.ui.keystorecompat.enrollment
 
-import android.app.Application
-import android.os.Build
-import androidx.databinding.ObservableBoolean
-import cz.kotox.keystorecompat.base.utility.showLockScreenSettings
+import android.content.Context
+import android.content.Intent
+import androidx.lifecycle.MutableLiveData
+import cz.kotox.keystorecompat.KeystoreCompat
+import cz.kotox.keystorecompat.base.exception.ForceLockScreenKitKatException
+import cz.kotox.keystorecompat.base.exception.ForceLockScreenMarshmallowException
+import cz.kotox.keystorecompat.base.utility.forceAndroidAuth
 import cz.kotox.securityshowcase.core.arch.BaseViewModel
+import cz.kotox.securityshowcase.security.R
+import cz.kotox.securityshowcase.security.entity.CredentialStorage
+import timber.log.Timber
 import javax.inject.Inject
 
-class SettingsViewModel @Inject constructor(private val context: Application) : BaseViewModel() {
+class SettingsViewModel @Inject constructor(
+	private val appContext: Context,
+	private val keystoreCompat: KeystoreCompat,
+	private val credentialStorage: CredentialStorage
+) : BaseViewModel() {
 
-	//TODO MJ - livedata!!!
-	val androidSecurityAvailable = ObservableBoolean(false)
-	val androidSecuritySelectable = ObservableBoolean(false)
-	val androidSecurityValue = ObservableBoolean(false)
+	val enrollmentInProgress: MutableLiveData<Boolean> = MutableLiveData(false)
 
-	companion object {
-		val EXTRA_ENCRYPTION_REQUEST_SCHEDULED = "EXTRA_ENCRYPTION_REQUEST_SCHEDULED"
+	fun enrollKeystoreCompat(onIntentReady: (intent: Intent) -> Unit, finished: () -> Unit) {
+		enrollmentInProgress.value = true
+		keystoreCompat.storeSecret(
+			credentialStorage.toStoreString(),
+			{ exception ->
+				when (exception) {
+					is ForceLockScreenMarshmallowException -> {
+						forceAndroidAuth(
+							appContext.getString(R.string.kc_lock_screen_title),
+							appContext.getString(R.string.kc_lock_screen_description),
+							{ intent ->
+								Timber.e("ForceLockScreenMarshmallowException.onIntentReady...")
+								//TODO("ForceLockScreenMarshmallowException.onIntentReady... is NOT implemented!")
+								//intent -> activity?.startActivityForResult(intent, MainActivity.FORCE_ENCRYPTION_REQUEST_M)
+								onIntentReady.invoke(intent)
+							},
+							keystoreCompat.context)
+					}
+					is ForceLockScreenKitKatException -> {
+					}
+				}
+				enrollmentInProgress.value = false
+				finished()
+			},
+			{
+				enrollmentInProgress.value = false
+				finished()
+			})
 	}
 
-	fun onClickSecuritySettings() {
-		showLockScreenSettings(context) //TODO MJ - this is from android-keystore-compat-base
-	}
-
-	fun isKitkat(): Boolean {
-		return Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT
-	}
 }

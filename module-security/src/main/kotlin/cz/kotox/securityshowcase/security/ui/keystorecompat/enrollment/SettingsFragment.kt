@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import cz.kotox.keystorecompat.KeystoreCompat
 import cz.kotox.keystorecompat.base.utility.showLockScreenSettings
 import cz.kotox.securityshowcase.core.arch.BaseFragmentViewModel
 import cz.kotox.securityshowcase.security.R
 import cz.kotox.securityshowcase.security.databinding.FragmentSettingsBinding
+import timber.log.Timber
 import javax.inject.Inject
 
 class SettingsFragment : BaseFragmentViewModel<SettingsViewModel, FragmentSettingsBinding>() {
@@ -22,6 +24,16 @@ class SettingsFragment : BaseFragmentViewModel<SettingsViewModel, FragmentSettin
 
 	override fun inflateBindingLayout(inflater: LayoutInflater): FragmentSettingsBinding = FragmentSettingsBinding.inflate(inflater)
 
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		savedInstanceState?.let {
+			if (it.get("EXTRA_ENCRYPTION_REQUEST_SCHEDULED") == true) {
+				activateKeystoreCompat()
+			}
+		}
+	}
+
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 		val view = super.onCreateView(inflater, container, savedInstanceState)
 
@@ -29,7 +41,40 @@ class SettingsFragment : BaseFragmentViewModel<SettingsViewModel, FragmentSettin
 			showLockScreenSettings(context)
 		}
 
+		binding.lockScreenLayout.lockScreenSwitch.setOnCheckedChangeListener { _, isChecked ->
+			if (isChecked) {
+				activateKeystoreCompat()
+			} else {
+				keystoreCompat.deactivate()
+			}
+		}
+
+		setupEnrollmentProgressView()
+
 		return view
+	}
+
+	private fun setupEnrollmentProgressView() {
+		binding.lockScreenLayout.progressBar.visibility = View.GONE
+		viewModel.enrollmentInProgress.observe(this, Observer<Boolean> { progress ->
+			Timber.w(">>> progress[${progress}]")
+			if (progress == true) {
+				binding.lockScreenLayout.progressBar.visibility = View.VISIBLE
+				binding.lockScreenLayout.lockScreenSwitch.isEnabled = false
+			} else {
+				binding.lockScreenLayout.lockScreenSwitch.isChecked = keystoreCompat.hasSecretLoadable()
+				binding.lockScreenLayout.progressBar.visibility = View.GONE
+				updateView()
+			}
+		})
+	}
+
+	private fun activateKeystoreCompat() {
+		viewModel.enrollKeystoreCompat({ intent ->
+			baseActivity.startActivityForResult(intent, 666)
+		}, {
+			Timber.d(">>>Enroll finished")
+		})
 	}
 
 	override fun onResume() {
