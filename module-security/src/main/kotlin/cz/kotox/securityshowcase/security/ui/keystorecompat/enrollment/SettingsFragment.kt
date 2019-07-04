@@ -70,11 +70,9 @@ class SettingsFragment : BaseFragmentViewModel<SettingsViewModel, FragmentSettin
 	}
 
 	private fun activateKeystoreCompat() {
-		viewModel.enrollKeystoreCompat({ intent ->
-			baseActivity.startActivityForResult(intent, 666)
-		}, {
-			Timber.d(">>>Enroll finished")
-		})
+		viewModel.enrollKeystoreCompat { intent ->
+			baseActivity.startActivityForResult(intent, 99)
+		}
 	}
 
 	override fun onResume() {

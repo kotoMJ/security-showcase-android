@@ -1,5 +1,7 @@
 package cz.kotox.securityshowcase.login.keystorecompat.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -73,4 +75,17 @@ class MainActivity : BaseActivity() {
 			|| super.onOptionsItemSelected(item)
 	}
 
+	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+		if (requestCode == 99) {
+			when (resultCode) {
+				Activity.RESULT_CANCELED -> Timber.d(">>> canceled")
+				Activity.RESULT_OK -> {
+					Timber.d(">>> ok")
+					//TODO navigate to settings fragment with automatic action enrollment
+				}
+				else -> Timber.d(">>> unknown")
+			}
+		} else
+			super.onActivityResult(requestCode, resultCode, data)
+	}
 }

@@ -1,7 +1,5 @@
 package cz.kotox.securityshowcase.login.biometric.ui
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.security.keystore.UserNotAuthenticatedException
@@ -84,19 +82,4 @@ class MainActivity : BiometricBaseActivity() {
 			Navigation.findNavController(this, R.id.my_nav_host_fragment))
 			|| super.onOptionsItemSelected(item)
 	}
-
-	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-		if (requestCode == 666) {
-			when (resultCode) {
-				Activity.RESULT_CANCELED -> Timber.d(">>> canceled")
-				//switchToFragment(SettingsFragment.newInstance())
-				Activity.RESULT_OK -> Timber.d(">>> ok")
-				//switchToFragment(SettingsFragment.newInstance(true))
-				else -> Timber.d(">>> unknown")
-				//switchToFragment(SettingsFragment.newInstance())
-			}
-		} else
-			super.onActivityResult(requestCode, resultCode, data)
-	}
-
 }

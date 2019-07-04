@@ -21,7 +21,7 @@ class SettingsViewModel @Inject constructor(
 
 	val enrollmentInProgress: MutableLiveData<Boolean> = MutableLiveData(false)
 
-	fun enrollKeystoreCompat(onIntentReady: (intent: Intent) -> Unit, finished: () -> Unit) {
+	fun enrollKeystoreCompat(onIntentReady: (intent: Intent) -> Unit) {
 		enrollmentInProgress.value = true
 		keystoreCompat.storeSecret(
 			credentialStorage.toStoreString(),
@@ -43,11 +43,9 @@ class SettingsViewModel @Inject constructor(
 					}
 				}
 				enrollmentInProgress.value = false
-				finished()
 			},
 			{
 				enrollmentInProgress.value = false
-				finished()
 			})
 	}
 
