@@ -4,7 +4,7 @@
 	tools:ignore="MissingDefaultResource">
 
 	<LinearLayout
-		android:id="@+id/rootElement"
+		android:id="@+id/root_element"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical">

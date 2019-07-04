@@ -5,7 +5,7 @@
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		xmlns:app="http://schemas.android.com/apk/res-auto"
-		android:id="@+id/linearLayout"
+		android:id="@+id/lock_screen_container"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		tools:layout_editor_absoluteY="25dp">
@@ -62,7 +62,7 @@
 			tools:text="Enable Android Security to use this option." />
 
 		<com.google.android.material.button.MaterialButton
-			android:id="@+id/lockScreenSettingsLink"
+			android:id="@+id/lock_screen_settings_link"
 			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
