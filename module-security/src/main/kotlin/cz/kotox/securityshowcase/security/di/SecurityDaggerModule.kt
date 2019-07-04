@@ -9,7 +9,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
-@Module
+@Module(includes = [KeystoreCompatModule::class])
 abstract class SecurityDaggerModule {
 
 	@ContributesAndroidInjector

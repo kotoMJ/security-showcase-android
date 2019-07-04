@@ -5,10 +5,12 @@
 
 	<string name="settings_security_label">Security</string>
 	<string name="settings_security_empty">No security options available for your device.</string>
-	<string name="settings_security_label_android_security">Android security</string>
-	<string name="settings_security_tip_android_security">Enable Android Security to use this option.</string>
-	<string name="settings_security_link_android_security">Go to Android Security Settings</string>
-	<string name="settings_security_store_failed">Store credentails failed unexpctedly!</string>
+	<string name="settings_security_label_android_security">Secure application</string>
+	<string name="settings_security_action_enable">Enable Android Security in order to allow application to be secured.</string>
+	<string name="settings_security_action_update">You can optionally update authorization method for the device.</string>
+	<string name="settings_security_link_android_security_enable">Enable Android Security settings</string>
+	<string name="settings_security_link_android_security_update">Update authorization method</string>
+	<string name="settings_security_store_failed">Store credentials failed unexpectedly!</string>
 	<string name="settings_security_explanation_android_security">Enabling security option for current version of Android system (API 4.4.4 KitKat) will force you to enable DEVICE ADMIN RIGHTS for LOCK SCREEN. This step is necessary to keep application secure on old Android system.</string>
 
 

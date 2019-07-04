@@ -21,6 +21,12 @@
 		<item name="android:textColor">@color/global_text_secondary</item>
 	</style>
 
+	<style name="Theme.SecurityShowcase.TextAppearance.Subtitle1.Secondary.Focused"
+		parent="TextAppearance.MaterialComponents.Subtitle1">
+		<item name="android:textColor">@color/global_text_secondary</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+
 
 	<!--<style name="TextAppearance.Coverage.Display4" parent="@style/TextAppearance.AppCompat.Display4">-->
 	<!--<item name="android:textSize">@dimen/global_text_size_display_4</item>-->

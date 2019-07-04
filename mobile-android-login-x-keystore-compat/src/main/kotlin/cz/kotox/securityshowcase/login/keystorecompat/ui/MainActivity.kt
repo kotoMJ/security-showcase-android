@@ -3,7 +3,6 @@ package cz.kotox.securityshowcase.login.keystorecompat.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
@@ -24,15 +23,15 @@ class MainActivity : BaseActivity() {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.main_activity)
 
-		val toolbar = findViewById<Toolbar>(R.id.toolbar)
-		setSupportActionBar(toolbar)
+//		val toolbar = findViewById<Toolbar>(R.id.toolbar)
+//		setSupportActionBar(toolbar)
 
 		val host: NavHostFragment = supportFragmentManager
 			.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment? ?: return
 
 		// Set up Action Bar
 		val navController = host.navController
-		setupActionBar(navController)
+//		setupActionBar(navController)
 
 		setupBottomNavMenu(navController)
 
@@ -49,9 +48,9 @@ class MainActivity : BaseActivity() {
 		//TODO Timber.d(">>>${preferencesCore.sampleToken}")
 	}
 
-	private fun setupActionBar(navController: NavController) {
-		NavigationUI.setupActionBarWithNavController(this, navController)
-	}
+//	private fun setupActionBar(navController: NavController) {
+//		NavigationUI.setupActionBarWithNavController(this, navController)
+//	}
 
 	private fun setupBottomNavMenu(navController: NavController) {
 		findViewById<BottomNavigationView>(R.id.bottom_nav_view)?.let { bottomNavView ->
