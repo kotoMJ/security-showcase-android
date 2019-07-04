@@ -10,7 +10,6 @@ import cz.kotox.keystorecompat.base.utility.forceAndroidAuth
 import cz.kotox.securityshowcase.core.arch.BaseViewModel
 import cz.kotox.securityshowcase.security.R
 import cz.kotox.securityshowcase.security.entity.CredentialStorage
-import timber.log.Timber
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
@@ -31,12 +30,7 @@ class SettingsViewModel @Inject constructor(
 						forceAndroidAuth(
 							appContext.getString(R.string.kc_lock_screen_title),
 							appContext.getString(R.string.kc_lock_screen_description),
-							{ intent ->
-								Timber.e("ForceLockScreenMarshmallowException.onIntentReady...")
-								//TODO("ForceLockScreenMarshmallowException.onIntentReady... is NOT implemented!")
-								//intent -> activity?.startActivityForResult(intent, MainActivity.FORCE_ENCRYPTION_REQUEST_M)
-								onIntentReady.invoke(intent)
-							},
+							{ intent -> onIntentReady.invoke(intent) },
 							keystoreCompat.context)
 					}
 					is ForceLockScreenKitKatException -> {

@@ -81,7 +81,7 @@ class MainActivity : BaseActivity() {
 				Activity.RESULT_CANCELED -> Timber.d(">>> canceled")
 				Activity.RESULT_OK -> {
 					Timber.d(">>> ok")
-					//TODO navigate to settings fragment with automatic action enrollment
+					//TODO navigate to settings fragment with automatic action enrollment ... using Args?
 				}
 				else -> Timber.d(">>> unknown")
 			}

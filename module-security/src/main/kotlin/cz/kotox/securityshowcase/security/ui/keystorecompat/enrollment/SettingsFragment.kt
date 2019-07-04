@@ -28,6 +28,7 @@ class SettingsFragment : BaseFragmentViewModel<SettingsViewModel, FragmentSettin
 		super.onCreate(savedInstanceState)
 
 		savedInstanceState?.let {
+			//TODO handle automatic activation here .... based on args?
 			if (it.get("EXTRA_ENCRYPTION_REQUEST_SCHEDULED") == true) {
 				activateKeystoreCompat()
 			}
