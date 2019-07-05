@@ -134,7 +134,7 @@ dependencies {
 			}
 		}
 	} else {
-		api("cz.koto:android-keystore-compat:${versions.keystore_compat}") {
+		api("cz.kotox:android-keystore-compat:${versions.keystore_compat}") {
 			exclude group: 'com.android.support'
 		}
 	}
