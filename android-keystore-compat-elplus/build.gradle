@@ -71,13 +71,13 @@ buildscript {
 		jcenter()
 	}
 	dependencies {
-		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-		classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+		classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${versions.gradle_bintray}"
+		classpath "com.github.dcendents:android-maven-gradle-plugin:${versions.gradle_maven}"
 	}
 }
 
 dependencies {
-	implementation fileTree(dir: 'libs', include: ['*.jar'])
+	implementation fileTree(dir: 'libs', include: ['*.aar'])
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
 	if (project.hasProperty("keystore.compat.dependency.type")) {
@@ -87,13 +87,16 @@ dependencies {
 			api(project(':android-keystore-compat-23'))
 		}
 	} else {
-		api('cz.kotox:android-keystore-compat-base:2.1.0') {
+		api("cz.kotox:android-keystore-compat-base:${versions.keystore_compat}") {
+			transitive = true
 			exclude group: 'org.jetbrains.kotlin'
 		}
-		api('cz.kotox:android-keystore-compat-21:2.1.0') {
+		api("cz.kotox:android-keystore-compat-21:${versions.keystore_compat}") {
+			transitive = true
 			exclude group: 'org.jetbrains.kotlin'
 		}
-		api('cz.kotox:android-keystore-compat-23:2.1.0') {
+		api("cz.kotox:android-keystore-compat-23:${versions.keystore_compat}") {
+			transitive = true
 			exclude group: 'org.jetbrains.kotlin'
 		}
 	}
@@ -113,4 +116,4 @@ repositories {
 }
 
 
-apply from: './publish.gradle'
+apply from: '../publish.gradle'

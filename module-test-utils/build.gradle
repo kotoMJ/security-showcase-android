@@ -92,7 +92,7 @@ dependencies {
 	api "org.powermock:powermock-api-mockito2:${versions.powermock}"
 	api "androidx.arch.core:core-testing:${versions.androidx_core_testing}"
 
-	implementation fileTree(dir: 'libs', include: ['*.jar'])
+	implementation fileTree(dir: 'libs', include: ['*.aar'])
 
 	api "org.hamcrest:hamcrest-library:${versions.hamcrest_library}"
 

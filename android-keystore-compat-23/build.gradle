@@ -42,7 +42,6 @@ android {
 	compileSdkVersion versions.sdk
 	buildToolsVersion versions.build_tools
 
-
 	defaultConfig {
 		minSdkVersion 23
 		targetSdkVersion versions.sdk
@@ -72,25 +71,28 @@ buildscript {
 		jcenter()
 	}
 	dependencies {
-		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-		classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+		classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${versions.gradle_bintray}"
+		classpath "com.github.dcendents:android-maven-gradle-plugin:${versions.gradle_maven}"
 	}
 }
 
 dependencies {
-	implementation fileTree(dir: 'libs', include: ['*.jar'])
+//	implementation fileTree(dir: 'libs', include: ['*.aar'])
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 
 	if (project.hasProperty("keystore.compat.dependency.type")) {
 		if (project.property("keystore.compat.dependency.type") == "local") {
 			api(project(':android-keystore-compat-base'))
 		}
+		else if (project.property("keystore.compat.dependency.type") == "aar") {
+			api(name: "android-keystore-compat-base-release", ext: "aar")
+		}
 	} else {
-		api('cz.kotox:android-keystore-compat-base:2.1.0') {
+		api("cz.kotox:android-keystore-compat-base:${versions.keystore_compat}") {
+			transitive = true
 			exclude group: 'org.jetbrains.kotlin'
 		}
 	}
-
 
 	testImplementation 'junit:junit:4.12'
 	androidTestImplementation "com.android.support.test:runner:${versions.test_runner}"
@@ -101,4 +103,4 @@ repositories {
 	mavenCentral()
 }
 
-apply from: './publish.gradle'
+apply from: '../publish.gradle'

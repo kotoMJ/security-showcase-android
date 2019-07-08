@@ -5,4 +5,10 @@
 
 #There is some alternative with `bintray.properties` in `~/.gradle` but not tested for this project
 
+./gradlew clean :android-keystore-compat-base:bintrayUpload
+./gradlew clean :android-keystore-compat-19:bintrayUpload
+./gradlew clean :android-keystore-compat-21:bintrayUpload
+./gradlew clean :android-keystore-compat-23:bintrayUpload
+./gradlew clean :android-keystore-compat-emplus:bintrayUpload
+./gradlew clean :android-keystore-compat-elplus:bintrayUpload
 ./gradlew clean :android-keystore-compat:bintrayUpload

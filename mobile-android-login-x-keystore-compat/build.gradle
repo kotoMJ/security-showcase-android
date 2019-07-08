@@ -113,6 +113,7 @@ android {
 }
 
 dependencies {
+	api fileTree(dir: 'libs', include: ['*.aar'])
 
 	implementation project(':module-core')
 	implementation project(':module-login')
@@ -128,15 +129,14 @@ dependencies {
 				exclude group: 'org.jetbrains.kotlin'
 			}
 		} else if (project.property("keystore.compat.dependency.type") == "aar") {
-			api(name: "android-keystore-compat", ext: "aar") {
+			api(name: "android-keystore-compat-emplus-release", ext: "aar") {
 				exclude group: 'com.android.support'
 				exclude group: 'org.jetbrains.kotlin'
 			}
 		}
 	} else {
-		api("cz.kotox:android-keystore-compat:${versions.keystore_compat}") {
-			exclude group: 'com.android.support'
-		}
+		implementation("cz.kotox:android-keystore-compat:${versions.keystore_compat}")
+//		implementation("cz.kotox:android-keystore-compat-23:${versions.keystore_compat}")
 	}
 
 }

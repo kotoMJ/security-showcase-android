@@ -10,7 +10,7 @@ android {
 }
 
 dependencies {
-	implementation fileTree(dir: 'libs', include: ['*.jar'])
+	implementation fileTree(dir: 'libs', include: ['*.aar'])
 
 	implementation "androidx.biometric:biometric:${versions.androidx_biometric}"
 
@@ -23,11 +23,19 @@ dependencies {
 				exclude group: 'com.android.support'
 				exclude group: 'org.jetbrains.kotlin'
 			}
+		} else if (project.property("keystore.compat.dependency.type") == "aar") {
+			api(name: "android-keystore-compat-emplus-release", ext: "aar") {
+				exclude group: 'com.android.support'
+				exclude group: 'org.jetbrains.kotlin'
+			}
 		}
 	} else {
-		api("cz.koto:android-keystore-compat:${versions.keystore_compat}") {
+		implementation("cz.kotox:android-keystore-compat:${versions.keystore_compat}") {
+			transitive = true
 			exclude group: 'com.android.support'
 		}
+//		implementation("cz.kotox:android-keystore-compat-base:${versions.keystore_compat}")
+//		implementation("cz.kotox:android-keystore-compat-23:${versions.keystore_compat}")
 	}
 }
 
