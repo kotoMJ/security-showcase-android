@@ -23,11 +23,6 @@ dependencies {
 				exclude group: 'com.android.support'
 				exclude group: 'org.jetbrains.kotlin'
 			}
-		} else if (project.property("keystore.compat.dependency.type") == "aar") {
-			api(name: "android-keystore-compat-emplus-release", ext: "aar") {
-				exclude group: 'com.android.support'
-				exclude group: 'org.jetbrains.kotlin'
-			}
 		}
 	} else {
 		implementation("cz.kotox:android-keystore-compat:${versions.keystore_compat}") {
