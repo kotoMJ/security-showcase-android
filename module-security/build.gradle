@@ -34,8 +34,6 @@ dependencies {
 			transitive = true
 			exclude group: 'com.android.support'
 		}
-//		implementation("cz.kotox:android-keystore-compat-base:${versions.keystore_compat}")
-//		implementation("cz.kotox:android-keystore-compat-23:${versions.keystore_compat}")
 	}
 }
 

@@ -136,7 +136,6 @@ dependencies {
 		}
 	} else {
 		implementation("cz.kotox:android-keystore-compat:${versions.keystore_compat}")
-//		implementation("cz.kotox:android-keystore-compat-23:${versions.keystore_compat}")
 	}
 
 }
