@@ -23,8 +23,8 @@ ext {
 
 	libraryDescription = 'Wrapper library designed to simplify secure handling string secret in shared preferences using Keystore as private key storage.'
 
-	siteUrl = 'https://github.com/kotoMJ/security-showcase-android/tree/develop/keystorecompat'
-	gitUrl = 'https://github.com/kotoMJ/security-showcase-android'
+	siteUrl = 'https://github.com/kotoMJ/security-showcase-android/tree/featureV3/library_dependency/android-keystore-compat-kplus'
+	gitUrl = 'https://github.com/kotoMJ/security-showcase-android/tree/featureV3/library_dependency'
 
 	libraryVersion = KC_GIT_TAG_NAME.replaceAll("KC-", "")
 	libraryCode = KC_GIT_TAG_COUNT
