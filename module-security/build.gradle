@@ -19,13 +19,13 @@ dependencies {
 
 	if (project.hasProperty("keystore.compat.dependency.type")) {
 		if (project.property("keystore.compat.dependency.type") == "local") {
-			api(project(':android-keystore-compat')) {
+			api(project(':android-keystore-compat-kplus')) {
 				exclude group: 'com.android.support'
 				exclude group: 'org.jetbrains.kotlin'
 			}
 		}
 	} else {
-		implementation("cz.kotox:android-keystore-compat:${versions.keystore_compat}") {
+		implementation("cz.kotox:android-keystore-compat-kplus:${versions.keystore_compat}") {
 			transitive = true
 			exclude group: 'com.android.support'
 		}

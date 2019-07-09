@@ -124,18 +124,16 @@ dependencies {
 	//TODO MJ - extract this copy&paste block of code
 	if (project.hasProperty("keystore.compat.dependency.type")) {
 		if (project.property("keystore.compat.dependency.type") == "local") {
-			api(project(':android-keystore-compat')) {
-				exclude group: 'com.android.support'
-				exclude group: 'org.jetbrains.kotlin'
-			}
+			api(project(':android-keystore-compat-kplus'))
 		} else if (project.property("keystore.compat.dependency.type") == "aar") {
-			api(name: "android-keystore-compat-emplus-release", ext: "aar") {
+			throw new IllegalThreadStateException("AAR is not supported yet!")
+			api(name: "android-keystore-compat-kplus-release", ext: "aar") {
 				exclude group: 'com.android.support'
 				exclude group: 'org.jetbrains.kotlin'
 			}
 		}
 	} else {
-		implementation("cz.kotox:android-keystore-compat:${versions.keystore_compat}")
+		api("cz.kotox:android-keystore-compat-kplus:${versions.keystore_compat}")
 	}
 
 }

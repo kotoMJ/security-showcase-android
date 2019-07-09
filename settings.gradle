@@ -1,4 +1,4 @@
-include ':android-keystore-compat',
+include ':android-keystore-compat-kplus',
 		':android-keystore-compat-19',
 		':android-keystore-compat-21',
 		':android-keystore-compat-23',

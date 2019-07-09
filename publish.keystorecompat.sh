@@ -11,4 +11,4 @@
 ./gradlew clean :android-keystore-compat-23:bintrayUpload
 ./gradlew clean :android-keystore-compat-emplus:bintrayUpload
 ./gradlew clean :android-keystore-compat-elplus:bintrayUpload
-./gradlew clean :android-keystore-compat:bintrayUpload
+./gradlew clean :android-keystore-compat-kplus:bintrayUpload

@@ -12,14 +12,14 @@ final KC_GIT_TAG_NAME = "git describe --tags --abbrev=0 --match ${KC_GIT_TAG_REG
 final KC_GIT_TAG_COUNT = "git tag --list ${KC_GIT_TAG_REGEX}".execute([], project.rootDir).text.split("\n").size()
 
 ext {
-	bintrayName = 'android-keystore-compat'
-	artifact = 'android-keystore-compat'
+	bintrayName = 'android-keystore-compat-kplus'
+	artifact = 'android-keystore-compat-kplus'
 
 	bintrayUser = 'kotomisak'
 	bintrayRepo = 'cz.kotox'
 
 	publishedGroupId = 'cz.kotox'
-	libraryName = 'android-keystore-compat'
+	libraryName = 'android-keystore-compat-kplus'
 
 	libraryDescription = 'Wrapper library designed to simplify secure handling string secret in shared preferences using Keystore as private key storage.'
 
@@ -80,26 +80,26 @@ dependencies {
 
 	if (project.hasProperty("keystore.compat.dependency.type")) {
 		if (project.property("keystore.compat.dependency.type") == "local") {
-			implementation(project(':android-keystore-compat-base'))
-			implementation(project(':android-keystore-compat-19'))
-			implementation(project(':android-keystore-compat-21'))
-			implementation(project(':android-keystore-compat-23'))
+			api(project(':android-keystore-compat-base'))
+			api(project(':android-keystore-compat-19')){
+				exclude group: 'org.jetbrains.kotlin'
+			}
+			api(project(':android-keystore-compat-21')){
+				exclude group: 'org.jetbrains.kotlin'
+			}
+			api(project(':android-keystore-compat-23')){
+				exclude group: 'org.jetbrains.kotlin'
+			}
 		}
 	} else {
-		api("cz.kotox:android-keystore-compat-base:${versions.keystore_compat}") {
-			transitive = true
+		api("cz.kotox:android-keystore-compat-base:${versions.keystore_compat}")
+		api("cz.kotox:android-keystore-compat-19:${versions.keystore_compat}"){
 			exclude group: 'org.jetbrains.kotlin'
 		}
-		api("cz.kotox:android-keystore-compat-19:${versions.keystore_compat}") {
-			transitive = true
-			exclude group: 'org.jetbrains.kotlin'
-		}
-		api("cz.kotox:android-keystore-compat-21:${versions.keystore_compat}") {
-			transitive = true
+		api("cz.kotox:android-keystore-compat-21:${versions.keystore_compat}"){
 			exclude group: 'org.jetbrains.kotlin'
 		}
 		api("cz.kotox:android-keystore-compat-23:${versions.keystore_compat}") {
-			transitive = true
 			exclude group: 'org.jetbrains.kotlin'
 		}
 	}
