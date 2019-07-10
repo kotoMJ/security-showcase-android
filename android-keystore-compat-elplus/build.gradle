@@ -86,6 +86,7 @@ dependencies {
 			api(project(':android-keystore-compat-21'))
 			api(project(':android-keystore-compat-23'))
 		}
+		throw new IllegalThreadStateException("Unsupported dependency type=" + project.property("keystore.compat.dependency.type"))
 	} else {
 		api("cz.kotox:android-keystore-compat-base:${versions.keystore_compat}") {
 			transitive = true

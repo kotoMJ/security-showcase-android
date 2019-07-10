@@ -89,6 +89,7 @@ dependencies {
 		if (project.property("keystore.compat.dependency.type") == "local") {
 			api(project(':android-keystore-compat-base'))
 		}
+		throw new IllegalThreadStateException("Unsupported dependency type=" + project.property("keystore.compat.dependency.type"))
 	} else {
 		api("cz.kotox:android-keystore-compat-base:${versions.keystore_compat}") {
 			transitive = true
