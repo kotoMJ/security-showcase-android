@@ -9,5 +9,5 @@ include ':android-keystore-compat-kplus',
 		":module-core",
 		":module-security",
 		':module-login',
-		':mobile-android-login-x-keystore-compat'
-//		':mobile-android-login-x-biometric'
+		':mobile-android-login-x-keystore-compat',
+		':mobile-android-login-x-biometric'
