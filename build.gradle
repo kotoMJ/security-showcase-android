@@ -5,12 +5,14 @@ buildscript {
 		project_directory = "${rootProject.projectDir}"
 
 		versions = [
-				keystore_compat                 : '2.1.0',
+				multidex                        : '2.0.1',
 
 				sdk                             : 28,
 				min_sdk                         : 19,
 				build_tools                     : '28.0.3',
-				kotlin                          : '1.3.31',
+
+				kotlin                          : '1.3.40',
+				koroutines                      : '1.0.1',
 
 				androidx_ktx_core               : '1.0.2',
 				androidx_lifecycle_viewmodel_ktx: '2.1.0-alpha02',
@@ -18,22 +20,20 @@ buildscript {
 				android_binding                 : '1.3.3',
 				//Gradle versions from 3.5.0-alpha06 to 3.5.0-alpha10 are not rebuild-able because of transformClassesWithMultidexlistForDevDebug.
 				//https://issuetracker.google.com/issues/130463020
-				android_gradle                  : '3.6.0-alpha03',
+				android_gradle                  : '3.6.0-alpha04',
 				android_support                 : '1.0.0',
 				android_play_services           : '11.0.1',
 				android_constraint_layout       : '1.1.3',
 				android_arch                    : '1.1.1',
 				android_support_test            : '1.0.1',
 				android_material                : '1.1.0-alpha07',
-				androidx_navigation             : '2.1.0-alpha02',
+				androidx_navigation             : '2.1.0-alpha05',
 				androidx_lifecycle              : '2.2.0-alpha01',
 				androidx_cardview               : '1.0.0',
 				androidx_recyclerview           : '1.1.0-alpha06',
 				androidx_preference             : '1.1.0-beta01',
 				androidx_constraintlayout       : '1.1.3',
 				androidx_databinding            : '3.5.0-alpha13',
-
-				koroutines                      : '1.0.1',
 
 				jsr250api                       : '1.0',
 				okhttp                          : '3.8.1',
@@ -56,8 +56,6 @@ buildscript {
 				runner                          : '1.0.2-beta1',
 				rules                           : '1.0.2-beta1',
 
-				multidex                        : '2.0.1',
-
 				androidx_core_testing           : '2.0.0',
 				androidx_biometric              : '1.0.0-alpha04',
 
@@ -65,7 +63,11 @@ buildscript {
 
 				hamcrest_library                : '1.3',
 				test_runner                     : '1.0.2',
-				espresso_core                   : '3.0.2'
+				espresso_core                   : '3.0.2',
+
+				keystore_compat                 : '3.0.0',
+				gradle_bintray                  : '1.7.3',
+				gradle_maven                    : '2.1'
 		]
 
 		versions_legacy = [
@@ -95,7 +97,9 @@ buildscript {
 		classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.androidx_navigation}"
 		// NOTE: Do not place your application dependencies here; they belong
 		// in the individual module build.gradle files
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
 	}
+
 }
 
 plugins {
@@ -110,6 +114,9 @@ allprojects {
 		maven {url "https://www.jitpack.io"}
 		maven {url 'https://maven.fabric.io/public'}
 		maven {url "https://oss.sonatype.org/content/repositories/snapshots"} //RETROFIT-COROUTINES
+		flatDir {
+			dirs 'libs'
+		}
 	}
 }
 
@@ -117,4 +124,4 @@ task clean(type: Delete) {
 	delete rootProject.buildDir
 }
 
-apply from: "${project_directory}/lint/lint-tasks.gradle"
+apply from: "${project_directory}/lint/lint-tasks.gradle" 

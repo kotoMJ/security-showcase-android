@@ -6,7 +6,7 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical">
 
-	<include layout="@layout/app_toolbar" />
+	<!--	<include layout="@layout/app_toolbar" />-->
 
 	<fragment
 		android:id="@+id/my_nav_host_fragment"

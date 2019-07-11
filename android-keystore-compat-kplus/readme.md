@@ -39,57 +39,33 @@ If your application supports API lower than 19, include this line to app's Andro
 ### Install KeystoreCompat min. API 19
 | KeystoreCompat variant        | JCenter 											 |
 | ----------------------------- | -------------------------------------------------- |
-| KeystoreCompat      		    | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat/_latestVersion) |
+| KeystoreCompat      		    | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.kotox/android-keystore-compat-kplus/images/download.svg?version=3.0.0) ](https://bintray.com/kotomisak/cz.kotox/android-keystore-compat-kplus/3.0.0/link) |
 
 ```groovy
 dependencies {
-	api("cz.koto:android-keystore-compat:2.1.0") {
-		exclude group: 'com.android.support'
-	}
-	api("cz.koto:android-keystore-compat-base:2.1.0")
-	api("cz.koto:android-keystore-compat-19:2.1.0")
-	api("cz.koto:android-keystore-compat-21:2.1.0")
-	api("cz.koto:android-keystore-compat-23:2.1.0")
-	implementation('com.scottyab:rootbeer-lib:0.0.6') {
-		exclude group: 'com.android.support'
-	}
+	api("cz.kotox:android-keystore-compat-kplus:3.0.0")
 }
 ```
 
 ### Install KeystoreCompat min. API 21
 | KeystoreCompat variant        | Readme  															| JCenter 											 |
 | ----------------------------- | ----------------------------------------------------------------- | -------------------------------------------------- |
-| KeystoreCompat L+      		| [KeystoreCompat-elPlus](../android-keystore-compat-elplus/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat-elplus/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat-elplus/_latestVersion) |
+| KeystoreCompat L+      		| [KeystoreCompat-elPlus](../android-keystore-compat-elplus/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.kotox/android-keystore-compat-elplus/images/download.svg?version=3.0.0) ](https://bintray.com/kotomisak/cz.kotox/android-keystore-compat-elplus/3.0.0/link)|
 
 ```groovy
 dependencies {
-	api("cz.koto:android-keystore-compat-elpuls:2.1.0") {
-		exclude group: 'com.android.support'
-	}
-	api("cz.koto:android-keystore-compat-base:2.1.0")
-	api("cz.koto:android-keystore-compat-21:2.1.0")
-	api("cz.koto:android-keystore-compat-23:2.1.0")
-	implementation('com.scottyab:rootbeer-lib:0.0.6') {
-		exclude group: 'com.android.support'
-	}
+	api("cz.koto:android-keystore-compat-elpuls:3.0.0")
 }
 ```
 
 ### Install KeystoreCompat min. API 23
 | KeystoreCompat variant        | Readme  															| JCenter 											 |
 | ----------------------------- | ----------------------------------------------------------------- | -------------------------------------------------- |
-| KeystoreCompat M+				| [KeystoreCompat-emPlus](../android-keystore-compat-emplus/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.koto/android-keystore-compat-emplus/images/download.svg) ](https://bintray.com/kotomisak/cz.koto/android-keystore-compat-emplus/_latestVersion) |
+| KeystoreCompat M+				| [KeystoreCompat-emPlus](../android-keystore-compat-emplus/readme.md) | [ ![Download](https://api.bintray.com/packages/kotomisak/cz.kotox/android-keystore-compat-emplus/images/download.svg?version=3.0.0) ](https://bintray.com/kotomisak/cz.kotox/android-keystore-compat-emplus/3.0.0/link)|
 
 ```groovy
 dependencies {
-	api("cz.koto:android-keystore-compat-empuls:2.1.0") {
-		exclude group: 'com.android.support'
-	}
-	api("cz.koto:android-keystore-compat-base:2.1.0")
-	api("cz.koto:android-keystore-compat-23:2.1.0")
-	implementation('com.scottyab:rootbeer-lib:0.0.6') {
-		exclude group: 'com.android.support'
-	}
+	api("cz.koto:android-keystore-compat-empuls:3.0.0")
 }
 ```
 

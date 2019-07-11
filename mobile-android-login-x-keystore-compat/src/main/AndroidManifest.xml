@@ -5,7 +5,7 @@
 	package="cz.kotox.securityshowcase.login.keystorecompat">
 
 	<uses-permission android:name="android.permission.INTERNET" />
-
+	<uses-sdk tools:overrideLibrary="cz.kotox.keystorecompat, cz.kotox.keystorecompat23" />
 	<application
 		android:name="cz.kotox.securityshowcase.login.keystorecompat.SecurityShowcaseLoginKeystoreCompatApplication"
 		android:allowBackup="false"

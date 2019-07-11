@@ -6,16 +6,23 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical">
 
-	<include layout="@layout/app_toolbar" />
+	<!--	<include layout="@layout/app_toolbar" />-->
 
 	<fragment
 		android:id="@+id/my_nav_host_fragment"
 		android:name="androidx.navigation.fragment.NavHostFragment"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
 		app:navGraph="@navigation/mobile_navigation"
 		app:defaultNavHost="true"
 		/>
+
+	<com.google.android.material.bottomnavigation.BottomNavigationView
+		android:id="@+id/bottom_nav_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:menu="@menu/menu_bottom_nav" />
 
 </LinearLayout>
 

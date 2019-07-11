@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item
+		android:id="@id/launcher_home"
+		android:icon="@drawable/ic_home"
+		android:title="@string/launcher_label_home" />
+
+	<item
+		android:id="@id/settings_fragment"
+		android:icon="@drawable/ic_settings"
+		android:title="@string/launcher_label_settings" />
+
+</menu>

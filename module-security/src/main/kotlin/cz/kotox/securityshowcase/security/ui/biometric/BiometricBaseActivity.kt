@@ -1,4 +1,4 @@
-package cz.kotox.securityshowcase.security.ui
+package cz.kotox.securityshowcase.security.ui.biometric
 
 import android.os.Build
 import android.os.Bundle

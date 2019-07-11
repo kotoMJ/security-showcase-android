@@ -4,7 +4,7 @@
 	<!-- Abstract themes are not supposed to be used directly (in Manifest for instance). -->
 	<!-- We usually need to override them in themes.xml for different Android version. -->
 
-	<style name="BaseTheme.SecurityShowcase" parent="@style/Theme.MaterialComponents.Light">
+	<style name="BaseTheme.SecurityShowcase" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
 		<!-- Abstract theme - should not be used directly. -->
 		<item name="windowActionBar">false</item>
@@ -58,7 +58,9 @@
 	</style>
 
 
-	<style name="Theme.SecurityShowcase" parent="BaseTheme.SecurityShowcase" />
+	<style name="Theme.SecurityShowcase" parent="BaseTheme.SecurityShowcase">
+
+	</style>
 
 	<!--<style name="Theme.SecurityShowcase.Light.Dialog.Alert" parent="@style/Theme.AppCompat.Light.Dialog.Alert">-->
 	<!--<item name="colorAccent">@color/global_accent</item>-->

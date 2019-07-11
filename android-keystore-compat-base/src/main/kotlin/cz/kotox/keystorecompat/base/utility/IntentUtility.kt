@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 
-inline fun showLockScreenSettings(context: Context) {
+fun showLockScreenSettings(context: Context) {
 	val intent = Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD)
 	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 	intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
@@ -16,7 +16,7 @@ inline fun showLockScreenSettings(context: Context) {
 
 inline fun forceAndroidAuth(title: String, desc: String, onIntentReady: (intent: Intent) -> Unit, context: Context) {
 	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-		var km: KeyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+		val km: KeyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 		val intent = km.createConfirmDeviceCredentialIntent(title, desc)
 		if (intent != null) {
 			onIntentReady.invoke(intent)

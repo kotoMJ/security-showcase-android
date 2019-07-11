@@ -10,11 +10,25 @@ android {
 }
 
 dependencies {
-	implementation fileTree(dir: 'libs', include: ['*.jar'])
+	implementation fileTree(dir: 'libs', include: ['*.aar'])
 
 	implementation "androidx.biometric:biometric:${versions.androidx_biometric}"
 
 	implementation project(':module-core')
 	implementation project(':module-test-utils')
+
+	if (project.hasProperty("keystore.compat.dependency.type")) {
+		if (project.property("keystore.compat.dependency.type") == "local") {
+			api(project(':android-keystore-compat-kplus')) {
+				exclude group: 'com.android.support'
+				exclude group: 'org.jetbrains.kotlin'
+			}
+		}
+	} else {
+		implementation("cz.kotox:android-keystore-compat-kplus:${versions.keystore_compat}") {
+			transitive = true
+			exclude group: 'com.android.support'
+		}
+	}
 }
 

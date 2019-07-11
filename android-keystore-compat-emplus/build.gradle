@@ -70,13 +70,12 @@ buildscript {
 		jcenter()
 	}
 	dependencies {
-		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-		classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+		classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${versions.gradle_bintray}"
+		classpath "com.github.dcendents:android-maven-gradle-plugin:${versions.gradle_maven}"
 	}
 }
 
 dependencies {
-	implementation fileTree(dir: 'libs', include: ['*.jar'])
 	implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
 
 	if (project.hasProperty("keystore.compat.dependency.type")) {
@@ -84,11 +83,18 @@ dependencies {
 			api(project(':android-keystore-compat-base'))
 			api(project(':android-keystore-compat-23'))
 		}
+		throw new IllegalThreadStateException("Unsupported dependency type=" + project.property("keystore.compat.dependency.type"))
+//		else if (project.property("keystore.compat.dependency.type") == "aar") {
+//			api(name: "android-keystore-compat-23-release", ext: "aar")
+//			api(name: "android-keystore-compat-base-release", ext: "aar")
+//		}
 	} else {
-		api('cz.kotox:android-keystore-compat-base:2.1.0') {
+		api("cz.kotox:android-keystore-compat-base:${versions.keystore_compat}") {
+			transitive = true
 			exclude group: 'org.jetbrains.kotlin'
 		}
-		api('cz.kotox:android-keystore-compat-23:2.1.0') {
+		api("cz.kotox:android-keystore-compat-23:${versions.keystore_compat}") {
+			transitive = true
 			exclude group: 'org.jetbrains.kotlin'
 		}
 	}
@@ -107,4 +113,4 @@ repositories {
 	mavenCentral()
 }
 
-apply from: './publish.gradle'
+apply from: '../publish.gradle'

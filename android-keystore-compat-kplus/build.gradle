@@ -12,19 +12,19 @@ final KC_GIT_TAG_NAME = "git describe --tags --abbrev=0 --match ${KC_GIT_TAG_REG
 final KC_GIT_TAG_COUNT = "git tag --list ${KC_GIT_TAG_REGEX}".execute([], project.rootDir).text.split("\n").size()
 
 ext {
-	bintrayName = 'android-keystore-compat'
-	artifact = 'android-keystore-compat'
+	bintrayName = 'android-keystore-compat-kplus'
+	artifact = 'android-keystore-compat-kplus'
 
 	bintrayUser = 'kotomisak'
 	bintrayRepo = 'cz.kotox'
 
 	publishedGroupId = 'cz.kotox'
-	libraryName = 'android-keystore-compat'
+	libraryName = 'android-keystore-compat-kplus'
 
 	libraryDescription = 'Wrapper library designed to simplify secure handling string secret in shared preferences using Keystore as private key storage.'
 
-	siteUrl = 'https://github.com/kotoMJ/security-showcase-android/tree/develop/keystorecompat'
-	gitUrl = 'https://github.com/kotoMJ/security-showcase-android'
+	siteUrl = 'https://github.com/kotoMJ/security-showcase-android/tree/featureV3/library_dependency/android-keystore-compat-kplus'
+	gitUrl = 'https://github.com/kotoMJ/security-showcase-android/tree/featureV3/library_dependency'
 
 	libraryVersion = KC_GIT_TAG_NAME.replaceAll("KC-", "")
 	libraryCode = KC_GIT_TAG_COUNT
@@ -70,32 +70,37 @@ buildscript {
 		jcenter()
 	}
 	dependencies {
-		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-		classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+		classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:${versions.gradle_bintray}"
+		classpath "com.github.dcendents:android-maven-gradle-plugin:${versions.gradle_maven}"
 	}
 }
 
 dependencies {
-	implementation fileTree(dir: 'libs', include: ['*.jar'])
+	implementation fileTree(dir: 'libs', include: ['*.aar'])
 
 	if (project.hasProperty("keystore.compat.dependency.type")) {
 		if (project.property("keystore.compat.dependency.type") == "local") {
 			api(project(':android-keystore-compat-base'))
-			api(project(':android-keystore-compat-19'))
-			api(project(':android-keystore-compat-21'))
-			api(project(':android-keystore-compat-23'))
+			api(project(':android-keystore-compat-19')){
+				exclude group: 'org.jetbrains.kotlin'
+			}
+			api(project(':android-keystore-compat-21')){
+				exclude group: 'org.jetbrains.kotlin'
+			}
+			api(project(':android-keystore-compat-23')){
+				exclude group: 'org.jetbrains.kotlin'
+			}
 		}
+		throw new IllegalThreadStateException("Unsupported dependency type=" + project.property("keystore.compat.dependency.type"))
 	} else {
-		api('cz.kotox:android-keystore-compat-base:2.1.0') {
+		api("cz.kotox:android-keystore-compat-base:${versions.keystore_compat}")
+		api("cz.kotox:android-keystore-compat-19:${versions.keystore_compat}"){
 			exclude group: 'org.jetbrains.kotlin'
 		}
-		api('cz.kotox:android-keystore-compat-19:2.1.0') {
+		api("cz.kotox:android-keystore-compat-21:${versions.keystore_compat}"){
 			exclude group: 'org.jetbrains.kotlin'
 		}
-		api('cz.kotox:android-keystore-compat-21:2.1.0') {
-			exclude group: 'org.jetbrains.kotlin'
-		}
-		api('cz.kotox:android-keystore-compat-23:2.1.0') {
+		api("cz.kotox:android-keystore-compat-23:${versions.keystore_compat}") {
 			exclude group: 'org.jetbrains.kotlin'
 		}
 	}
@@ -112,10 +117,5 @@ repositories {
 	mavenCentral()
 }
 
-repositories {
-	flatDir {
-		dirs 'libs'
-	}
-}
 
-apply from: './publish.gradle'
+apply from: '../publish.gradle'

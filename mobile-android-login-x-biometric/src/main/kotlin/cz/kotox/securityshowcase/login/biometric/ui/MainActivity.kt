@@ -12,7 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import cz.kotox.securityshowcase.R
 import cz.kotox.securityshowcase.core.database.preferences.PreferencesCommon
-import cz.kotox.securityshowcase.security.ui.BiometricBaseActivity
+import cz.kotox.securityshowcase.security.ui.biometric.BiometricBaseActivity
 import timber.log.Timber
 import java.security.InvalidAlgorithmParameterException
 import javax.inject.Inject
