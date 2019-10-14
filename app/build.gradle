@@ -48,6 +48,9 @@ android {
 	}
 
 	sourceSets {
+		main {
+			jni.srcDirs = [] //disable automatic ndk-build
+		}
 		main.java.srcDirs += 'src/main/kotlin'
 		main.java.srcDirs += 'src/debug/kotlin'
 		rosti.java.srcDirs += 'src/rosti/kotlin'
