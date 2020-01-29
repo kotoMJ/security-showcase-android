@@ -1,16 +1,20 @@
- # Security Showcase version 2 - Warning
- ## This is versionn 2 of Security showcase  
- ⚠ **Security Showcase version 2** is NOT under further maintenance!
+  # Security Showcase is not under further maintenance anymore!
  
- _If you want to work with this old version, use Android Studio 3.0.1 (NDK17) SDK27_
+ 
+  ## ⚠ Few reasons to quit:
+  - project mix KeystoreCompatLibrary with some security related samples, which is not maintenable from the long therm perspecitve
+  - KeystoreCompatLibrary has it's meaning just for API 19 & API 21, it's not meaningful for newer versions - and the cost for maintanence and enhancement is high when compared with the scope.
+  - KeystoreCompatLibrary has no place on android since BiometricPrompt in AndroidX
+  - SecurityShowcase samples are obsolete and mixed together, they should be available in more convenient way.
+  
+  
+  **I will personally think about better scoped project also with security topic, but better scalable, up to date and worth for Android world.**
+ 
+ 
+ Old sources:
  [Security Showcase version 2](./README.obsolete.md)
- 
- 
- # New version at disposal
- I highly recommend you to visit new version of Security Showcase in version 3
  [Security Showcase version 3]( https://github.com/kotoMJ/security-showcase-android/tree/developV3/README.md)
  
- https://github.com/kotoMJ/security-showcase-android/tree/developV3
 
  
  
