@@ -11,9 +11,9 @@
   **I will personally think about better scoped project also with security topic, but better scalable, up to date and worth for Android world.**
  
  
- Old sources:
- [Security Showcase version 2](./README.obsolete.md)
- [Security Showcase version 3]( https://github.com/kotoMJ/security-showcase-android/tree/developV3/README.md)
+ Archived sources:  
+ [Security Showcase version 2](./README.obsolete.md)  
+ [Security Showcase version 3]( https://github.com/kotoMJ/security-showcase-android/tree/developV3/README.md)  
  
 
  
